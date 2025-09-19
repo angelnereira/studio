@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Code, Menu, Moon, Sun } from "lucide-react";
+import { Code, Menu, Moon, Sun, Download } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,6 @@ const navItems = [
   { href: "/services", label: "Servicios" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contacto" },
-  { href: "/admin", label: "Admin" },
 ];
 
 export function SiteHeader() {
@@ -50,6 +49,13 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex flex-1 items-center justify-end space-x-2">
+          <Button variant="ghost" asChild>
+              <a href="/Angel_Nereira_CV.pdf" download>
+                <Download className="h-4 w-4 mr-2" />
+                <span className="hidden sm:inline">CV</span>
+              </a>
+          </Button>
+
           <Button
             variant="ghost"
             size="icon"
@@ -70,7 +76,7 @@ export function SiteHeader() {
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <SheetHeader>
-                <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                <SheetTitle className="sr-only">Menú Móvil</SheetTitle>
               </SheetHeader>
               <div className="flex flex-col h-full">
                 <div className="flex items-center space-x-2 mb-8">
@@ -91,6 +97,15 @@ export function SiteHeader() {
                       {item.label}
                     </Link>
                   ))}
+                  <a
+                    href="/Angel_Nereira_CV.pdf"
+                    download
+                    className="text-lg font-medium text-foreground/60 transition-colors hover:text-foreground/80 flex items-center"
+                    onClick={() => setSheetOpen(false)}
+                  >
+                    <Download className="h-5 w-5 mr-2" />
+                    Descargar CV
+                  </a>
                 </div>
               </div>
             </SheetContent>

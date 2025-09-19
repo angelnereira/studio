@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Check, Cloud, Code, GitMerge, Building, Puzzle } from "lucide-react";
+import { Check, Building, Puzzle, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -8,32 +8,25 @@ import { Badge } from "@/components/ui/badge";
 const services = [
   {
     title: "Páginas Web para PYMES",
-    description: "Soluciones web accesibles, optimizadas y modernas para pequeñas y medianas empresas que buscan una presencia digital de impacto.",
+    description: "Soluciones web accesibles, modernas y optimizadas para pequeñas y medianas empresas que buscan una presencia digital de impacto, listas para crecer.",
     technologies: ["Next.js", "React", "Vercel", "SEO"],
     deliverable: "Sitio web profesional, rápido y production-ready.",
-    icon: <Code />
+    icon: <Code2 />
   },
   {
     title: "Soluciones Enterprise",
-    description: "Desarrollo de aplicaciones escalables, integraciones en la nube y optimización de procesos con un enfoque DevOps para grandes empresas.",
+    description: "Desarrollo de aplicaciones robustas y escalables, integraciones en la nube y optimización de procesos con un enfoque DevOps para grandes empresas.",
     technologies: ["Google Cloud", "Firebase", "Docker", "CI/CD"],
-    deliverable: "Arquitectura cloud robusta e implementación técnica.",
+    deliverable: "Arquitectura cloud-native e implementación técnica de alto nivel.",
     icon: <Building />
   },
   {
     title: "Software a Medida",
-    description: "Aplicaciones personalizadas y flujos de automatización diseñados para resolver necesidades específicas y optimizar operaciones.",
+    description: "Aplicaciones personalizadas y flujos de automatización diseñados para resolver necesidades específicas y optimizar operaciones complejas.",
     technologies: ["Node.js", "Python", "APIs", "Cloud Functions"],
-    deliverable: "Solución de software adaptada a tus requerimientos.",
+    deliverable: "Solución de software única, adaptada a tus requerimientos.",
     icon: <Puzzle />
   },
-  {
-    title: "Consultoría y Mentoría",
-    description: "Guía estratégica en arquitectura cloud, DevOps y desarrollo profesional para equipos y personas que buscan crecer.",
-    focus: ["Arquitectura de Software", "Mejores Prácticas", "Carrera en Tech"],
-    deliverable: "Plan de desarrollo y acompañamiento técnico.",
-    icon: <GitMerge />
-  }
 ];
 
 export default function ServicesPage() {
@@ -43,11 +36,11 @@ export default function ServicesPage() {
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Servicios y Soluciones</h1>
           <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Ofreciendo soluciones técnicas, desde webs para PYMES hasta complejas arquitecturas empresariales, para transformar tus ideas en realidad.
+            Ofrezco soluciones de software confiables y adaptadas, desde sitios web para PYMES hasta sistemas enterprise integrados en la nube. Mis precios son flexibles y se alinean al mercado.
           </p>
         </div>
       </div>
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-3">
         {services.map((service) => (
           <Card key={service.title} className="flex flex-col hover:shadow-xl transition-shadow">
             <CardHeader className="flex flex-row items-start gap-4">
@@ -62,23 +55,23 @@ export default function ServicesPage() {
             <CardContent className="flex-1 space-y-4">
               <div>
                 <h4 className="font-semibold mb-2">Entregable Clave:</h4>
-                <p className="text-sm text-muted-foreground flex items-center gap-2">
-                  <Check className="h-4 w-4 text-accent" />
+                <p className="text-sm text-muted-foreground flex items-start gap-2">
+                  <Check className="h-4 w-4 text-accent flex-shrink-0 mt-1" />
                   <span>{service.deliverable}</span>
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold mb-2">{service.technologies ? "Tecnologías:" : "Enfoque:"}</h4>
+                <h4 className="font-semibold mb-2">Tecnologías Principales:</h4>
                 <div className="flex flex-wrap gap-2">
-                  {(service.technologies || service.focus)?.map((item) => (
+                  {(service.technologies)?.map((item) => (
                     <Badge key={item} variant="secondary">{item}</Badge>
                   ))}
                 </div>
               </div>
             </CardContent>
-            <div className="p-6 pt-0">
+            <div className="p-6 pt-0 mt-auto">
                <Button asChild className="w-full">
-                  <Link href="/contact">Conversa conmigo</Link>
+                  <Link href="/contact">Solicitar cotización</Link>
                 </Button>
             </div>
           </Card>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Cloud, Code, GitBranch, Github, Linkedin, Server, Terminal, Twitter, BrainCircuit, BotMessageSquare, Languages } from "lucide-react";
+import { ArrowRight, Cloud, Code, GitBranch, Github, Linkedin, Server, Terminal, Twitter, BrainCircuit, BotMessageSquare, Languages, Mic, Music, FunctionSquare, Gitlab, Download } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,32 +28,37 @@ const skills = [
   { name: "Firebase", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-firebase"><path d="M4.62 16.22c-.12.48-.12.96.02 1.42.23.73.66 1.35 1.28 1.83.6.46 1.3.74 2.06.82a5.57 5.57 0 0 0 2.22-.44l.2-.08.14-.06.13-.05c.4-.2.8-.43 1.15-.71l.1-.08c.17-.15.33-.3.48-.47L19.5 8.5 14.5 3.5 4.62 16.22Z"/><path d="m19.5 8.5-1-1-3-3-1.42-1.42c-.2-.2-.45-.36-.72-.48a4.99 4.99 0 0 0-2.2-0l-.16.03-.18.04-.18.05s-.1.03-.14.05L3.5 8.5l6 12 5-5-1.5-1.5-3.5 3.5-3-3L12.5 10l7-1.5Z"/></svg> },
   { name: "Docker", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-docker"><path d="M22 12.5c0-2.2-2-3.5-4-3.5-1.2 0-2.7.9-3.5 2.1-.8-1.2-2.3-2.1-3.5-2.1-2 0-4 1.3-4 3.5 0 .9.3 2.1 1.2 3.1-1.1.4-2.2 1.5-2.2 3.4 0 2.2 2 4 4 4h8c2 0 4-1.8 4-4 0-1.9-1.1-3-2.2-3.4.9-1 1.2-2.2 1.2-3.1Z" /><path d="M5 12.5H3" /><path d="M6 15.5H3" /><path d="M6 9.5H3" /><path d="M8 6.5H6" /><path d="M9 3.5H7" /></svg> },
   { name: "Git", icon: <GitBranch /> },
-  { name: "Data Science", icon: <BrainCircuit /> },
-  { name: "AI/ML", icon: <BotMessageSquare /> },
+  { name: "GitHub/GitLab", icon: <Gitlab /> },
   { name: "CI/CD", icon: <Terminal /> },
-  { name: "APIs", icon: <Code /> },
+  { name: "Linux", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-linux"><path d="M13.8 17.5c-1.2 1.2-3 2-4.8 2s-3.6-.8-4.8-2c-1.2-1.2-2-3-2-4.8s.8-3.6 2-4.8c1.2-1.2 3-2 4.8-2l7.1 7.1c.3-.2.5-.3.7-.5 1.2-1.2 2-3 2-4.8s-.8-3.6-2-4.8c-1.2-1.2-3-2-4.8-2s-3.6.8-4.8 2-2 3-2 4.8c0 1.3.4 2.6 1 3.8"/><path d="M12.5 12.5a3.5 3.5 0 1 0-5 0 3.5 3.5 0 0 0 5 0Z"/><path d="M18.8 15.2c1.2 1.2 2 3 2 4.8s-.8 3.6-2 4.8-3 2-4.8 2-3.6-.8-4.8-2c-.3-.3-.6-.6-.8-1"/></svg> },
+  { name: "Music Production", icon: <Music /> },
 ];
 
 const projects = [
   {
-    title: "Plataforma SaaS con Enfoque Cloud",
-    description: "Una plataforma SaaS multi-tenant con facturación, diseñada con arquitectura serverless en Google Cloud y Firebase.",
-    technologies: ["Next.js", "Firebase", "Google Cloud", "Stripe"],
+    title: "Proyecto DevOps con IBM",
+    description: "Un proyecto académico que demuestra la implementación de un pipeline de CI/CD completo, desde el control de versiones hasta el despliegue automatizado en un entorno de nube, utilizando herramientas estándar de la industria.",
+    technologies: ["Docker", "Kubernetes", "Jenkins", "IBM Cloud"],
+    problem: "Simular un flujo de trabajo DevOps profesional para una aplicación web, garantizando la integración y entrega continuas.",
+    impact: "Adquisición de experiencia práctica en la automatización de procesos de software, fundamental para roles de DevOps y SRE.",
     image: projectImages.proj1,
-    liveUrl: "#",
     githubUrl: "#",
   },
   {
-    title: "Dashboard de Analítica con IA",
-    description: "Un panel de control que ofrece insights profundos mediante el análisis de datos con IA, procesando información en tiempo real.",
-    technologies: ["React", "Node.js", "Google Cloud", "AI Platform"],
+    title: "Ingeniería de Sonido y Producción Musical",
+    description: "Aplicación de principios técnicos de psicoacústica, edición de audio y mezcla en proyectos musicales reales. Este campo combina la creatividad artística con una profunda comprensión de la física del sonido y el procesamiento de señales digitales.",
+    technologies: ["DAW (Ableton/Pro Tools)", "Procesamiento de Señales", "Acústica"],
+    problem: "Lograr una calidad de audio profesional, equilibrada y emotiva, traduciendo la intención artística en un producto sonoro final.",
+    impact: "Desarrollo de un oído crítico y habilidades de resolución de problemas técnicos en un dominio diferente al software, pero con paralelismos en la atención al detalle y la optimización.",
     image: projectImages.proj2,
     liveUrl: "#",
   },
   {
-    title: "Pipeline de Automatización y CI/CD",
-    description: "Implementación de un pipeline de CI/CD para automatizar el despliegue de aplicaciones web en Vercel y Google Cloud.",
-    technologies: ["GitHub Actions", "Docker", "Git", "Terraform"],
+    title: "Teoría de los Anillos del Tiempo",
+    description: "Una iniciativa de investigación personal que explora conceptos de física teórica y cosmología. Este proyecto es un ejercicio de pensamiento abstracto, lógica y la capacidad de sintetizar información compleja de diversas fuentes.",
+    technologies: ["Investigación", "Pensamiento Crítico", "Lógica"],
+    problem: "Abordar y tratar de comprender teorías complejas sobre la naturaleza del tiempo y el universo, ejercitando la capacidad de análisis y abstracción.",
+    impact: "Fortalecimiento de la capacidad para enfrentar problemas altamente complejos y no estructurados, una habilidad transferible a la resolución de desafíos de ingeniería de software a gran escala.",
     image: projectImages.proj3,
     githubUrl: "#",
   },
@@ -84,7 +89,7 @@ export default function Home() {
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <Badge variant="outline" className="text-sm">Software Engineer & Aspiring Data Scientist | Panamá 🇵🇦</Badge>
+                  <Badge variant="outline" className="text-sm">Software Engineer | Panamá 🇵🇦</Badge>
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none font-headline">
                     Ángel Nereira
                   </h1>
@@ -97,7 +102,10 @@ export default function Home() {
                     <Link href="/contact">¿Hablamos?</Link>
                   </Button>
                   <Button asChild variant="secondary" size="lg">
-                    <Link href="/services">Ver Servicios</Link>
+                    <a href="/Angel_Nereira_CV.pdf" download>
+                      <Download className="mr-2" />
+                      Descargar CV
+                    </a>
                   </Button>
                 </div>
                  <div className="flex items-center gap-4 text-sm text-muted-foreground pt-4">
@@ -128,16 +136,16 @@ export default function Home() {
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Sobre Mí</h2>
                  <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Soy un desarrollador panameño apasionado por la tecnología, en transición para convertirme en un ingeniero de software y científico de datos de alto impacto.
+                    Soy un ingeniero de software panameño con una visión clara: impulsar la transformación tecnológica en Panamá y más allá, creando soluciones innovadoras, eficientes y de alto impacto.
                 </p>
               </div>
             </div>
             <div className="mx-auto max-w-3xl pt-8 text-lg text-center text-foreground/80 space-y-4">
                 <p>
-                    Mi carrera es una transición consciente desde el desarrollo web moderno hacia la ingeniería de software y la ciencia de datos. Mi filosofía se enfoca en la resolución de problemas como el camino hacia la innovación y la eficiencia.
+                    Mi trayectoria es una fusión poco común entre la ingeniería de sonido y la ingeniería de software. Esta dualidad me ha enseñado a abordar los problemas con la precisión técnica de un ingeniero y la creatividad de un artista. Mi filosofía es simple: "Solucionar problemas para disfrutar la vida". Aplico esta mentalidad para desarrollar software robusto, escalable y seguro que genera valor real.
                 </p>
                 <p>
-                    Mi visión es clara: contribuir en proyectos de escala global que transformen la forma en que interactuamos con los datos, la nube y la inteligencia artificial. Combino experiencia práctica con un pensamiento analítico para diseñar siempre soluciones escalables, seguras y eficientes.
+                    Mi objetivo es ser un pionero en la innovación tecnológica de Panamá, con un enfoque en software, ciencia de datos e inteligencia artificial, siempre con una proyección global. Apuesto por la inclusión y el empoderamiento de las personas a través de la tecnología.
                 </p>
             </div>
           </div>
@@ -150,7 +158,7 @@ export default function Home() {
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Stack Tecnológico</h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Un conjunto de herramientas versátil para el desarrollo de soluciones modernas, desde la web hasta la nube y la IA.
+                  Un conjunto de herramientas versátil para resolver problemas reales, desde el desarrollo web hasta la infraestructura en la nube.
                 </p>
               </div>
             </div>
@@ -172,38 +180,44 @@ export default function Home() {
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Proyectos Destacados</h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Proyectos donde aplico mi conocimiento técnico para crear soluciones con impacto.
+                  Una selección de proyectos que demuestran mi enfoque en la resolución de problemas y la aplicación de tecnología.
                 </p>
               </div>
             </div>
-            <div className="grid gap-6 lg:grid-cols-3 py-12">
+            <div className="grid gap-8 lg:grid-cols-1 py-12">
               {projects.map((project) => (
-                <Card key={project.title} className="flex flex-col overflow-hidden transition-shadow hover:shadow-xl">
+                <Card key={project.title} className="flex flex-col md:flex-row overflow-hidden transition-shadow hover:shadow-xl w-full">
                   {project.image && (
                     <Image
                       src={project.image.imageUrl}
                       alt={project.image.description}
                       data-ai-hint={project.image.imageHint}
-                      width={600}
-                      height={400}
-                      className="aspect-video w-full object-cover"
+                      width={450}
+                      height={250}
+                      className="aspect-video w-full md:w-1/3 object-cover"
                     />
                   )}
-                  <CardHeader>
-                    <CardTitle>{project.title}</CardTitle>
-                    <CardDescription>{project.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-1">
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map((tech) => (
-                        <Badge key={tech} variant="secondary">{tech}</Badge>
-                      ))}
+                  <div className="flex flex-col justify-between p-6 w-full md:w-2/3">
+                    <div>
+                      <CardTitle className="mb-2">{project.title}</CardTitle>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.technologies.map((tech) => (
+                          <Badge key={tech} variant="secondary">{tech}</Badge>
+                        ))}
+                      </div>
+                      <CardDescription className="mb-4">{project.description}</CardDescription>
+                      <div>
+                        <h4 className="font-semibold text-sm">Problema Resuelto</h4>
+                        <p className="text-sm text-muted-foreground mb-2">{project.problem}</p>
+                        <h4 className="font-semibold text-sm">Impacto</h4>
+                        <p className="text-sm text-muted-foreground">{project.impact}</p>
+                      </div>
                     </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-between">
-                    {project.liveUrl && <Button asChild><Link href={project.liveUrl}>Ver Demo <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>}
-                    {project.githubUrl && <Button variant="ghost" asChild><Link href={project.githubUrl}><Github className="mr-2 h-4 w-4" /> Código</Link></Button>}
-                  </CardFooter>
+                    <CardFooter className="flex justify-start p-0 pt-4 mt-auto">
+                      {project.liveUrl && <Button asChild size="sm"><Link href={project.liveUrl}>Ver Demo <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>}
+                      {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><Github className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
+                    </CardFooter>
+                  </div>
                 </Card>
               ))}
             </div>
@@ -243,7 +257,7 @@ export default function Home() {
           <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight font-headline">
-                ¿Buscas talento panameño para tu equipo global?
+                ¿Buscas un desarrollador panameño para tu equipo global?
               </h2>
               <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Colaboremos en soluciones que escalen globalmente. Estoy disponible para nuevos desafíos y oportunidades.
