@@ -134,10 +134,10 @@ export default function Home() {
             </div>
             <div className="mx-auto max-w-3xl pt-8 text-lg text-center text-foreground/80 space-y-4">
                 <p>
-                    Mi carrera es una transición consciente desde el desarrollo web moderno hacia la ingeniería de software y la ciencia de datos. Combino experiencia práctica en tecnologías de vanguardia con un pensamiento crítico y analítico para resolver problemas complejos.
+                    Mi carrera es una transición consciente desde el desarrollo web moderno hacia la ingeniería de software y la ciencia de datos. Mi filosofía se enfoca en la resolución de problemas como el camino hacia la innovación y la eficiencia.
                 </p>
                 <p>
-                    Mi visión es clara: contribuir en proyectos de escala global que transformen la forma en que interactuamos con los datos, la nube y la inteligencia artificial, diseñando siempre soluciones escalables, seguras y eficientes.
+                    Mi visión es clara: contribuir en proyectos de escala global que transformen la forma en que interactuamos con los datos, la nube y la inteligencia artificial. Combino experiencia práctica con un pensamiento analítico para diseñar siempre soluciones escalables, seguras y eficientes.
                 </p>
             </div>
           </div>

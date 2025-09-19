@@ -1,38 +1,38 @@
 import * as React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Check, Cloud, Code, GitMerge, UserCheck } from "lucide-react";
+import { Check, Cloud, Code, GitMerge, Building, Puzzle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 const services = [
   {
-    title: "Desarrollo Web Moderno",
-    description: "Aplicaciones Next.js, integraciones cloud, y arquitectura escalable para llevar tu idea a producción.",
-    technologies: ["Next.js", "TypeScript", "Firebase", "Google Cloud"],
-    deliverable: "Aplicaciones web production-ready con CI/CD",
+    title: "Páginas Web para PYMES",
+    description: "Soluciones web accesibles, optimizadas y modernas para pequeñas y medianas empresas que buscan una presencia digital de impacto.",
+    technologies: ["Next.js", "React", "Vercel", "SEO"],
+    deliverable: "Sitio web profesional, rápido y production-ready.",
     icon: <Code />
   },
   {
-    title: "Consultoría en Cloud",
-    description: "Diseño de arquitecturas, migración a la nube, y optimización de costos para una infraestructura eficiente.",
-    technologies: ["Google Cloud", "Firebase", "Docker", "Serverless"],
-    deliverable: "Estrategia cloud e implementación técnica",
-    icon: <Cloud />
+    title: "Soluciones Enterprise",
+    description: "Desarrollo de aplicaciones escalables, integraciones en la nube y optimización de procesos con un enfoque DevOps para grandes empresas.",
+    technologies: ["Google Cloud", "Firebase", "Docker", "CI/CD"],
+    deliverable: "Arquitectura cloud robusta e implementación técnica.",
+    icon: <Building />
   },
   {
-    title: "Automatización y DevOps",
-    description: "Pipelines de CI/CD, containerización y automatización de despliegues para acelerar tu ciclo de desarrollo.",
-    technologies: ["GitHub Actions", "Docker", "Git", "Cloud Functions"],
-    deliverable: "Flujos automatizados e infrastructure as code",
+    title: "Software a Medida",
+    description: "Aplicaciones personalizadas y flujos de automatización diseñados para resolver necesidades específicas y optimizar operaciones.",
+    technologies: ["Node.js", "Python", "APIs", "Cloud Functions"],
+    deliverable: "Solución de software adaptada a tus requerimientos.",
+    icon: <Puzzle />
+  },
+  {
+    title: "Consultoría y Mentoría",
+    description: "Guía estratégica en arquitectura cloud, DevOps y desarrollo profesional para equipos y personas que buscan crecer.",
+    focus: ["Arquitectura de Software", "Mejores Prácticas", "Carrera en Tech"],
+    deliverable: "Plan de desarrollo y acompañamiento técnico.",
     icon: <GitMerge />
-  },
-  {
-    title: "Mentoría Técnica",
-    description: "Guía personalizada en desarrollo web, mejores prácticas, y cómo avanzar en tu carrera tecnológica.",
-    focus: ["Desarrollo profesional", "Transición a roles senior", "Tecnologías modernas"],
-    deliverable: "Plan de desarrollo personalizado y mentoring 1:1",
-    icon: <UserCheck />
   }
 ];
 
@@ -41,9 +41,9 @@ export default function ServicesPage() {
     <div className="container py-12 md:py-24 lg:py-32">
       <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Servicios Profesionales</h1>
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Servicios y Soluciones</h1>
           <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Ofreciendo soluciones técnicas para transformar tus ideas en realidad digital.
+            Ofreciendo soluciones técnicas, desde webs para PYMES hasta complejas arquitecturas empresariales, para transformar tus ideas en realidad.
           </p>
         </div>
       </div>
