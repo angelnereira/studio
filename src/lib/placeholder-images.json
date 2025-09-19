@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "profile-photo",
+      "description": "A professional headshot of the developer.",
+      "imageUrl": "https://picsum.photos/seed/profile/400/400",
+      "imageHint": "professional headshot"
+    },
+    {
+      "id": "project-1",
+      "description": "Screenshot of project one.",
+      "imageUrl": "https://picsum.photos/seed/proj1/600/400",
+      "imageHint": "web application"
+    },
+    {
+      "id": "project-2",
+      "description": "Screenshot of project two.",
+      "imageUrl": "https://picsum.photos/seed/proj2/600/400",
+      "imageHint": "dashboard interface"
+    },
+    {
+      "id": "project-3",
+      "description": "Screenshot of project three.",
+      "imageUrl": "https://picsum.photos/seed/proj3/600/400",
+      "imageHint": "mobile app"
+    },
+    {
+      "id": "testimonial-1",
+      "description": "Avatar for first testimonial.",
+      "imageUrl": "https://picsum.photos/seed/test1/100/100",
+      "imageHint": "person avatar"
+    },
+    {
+      "id": "testimonial-2",
+      "description": "Avatar for second testimonial.",
+      "imageUrl": "https://picsum.photos/seed/test2/100/100",
+      "imageHint": "person avatar"
+    },
+    {
+      "id": "testimonial-3",
+      "description": "Avatar for third testimonial.",
+      "imageUrl": "https://picsum.photos/seed/test3/100/100",
+      "imageHint": "person avatar"
+    }
+  ]
 }
