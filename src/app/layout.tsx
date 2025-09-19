@@ -6,8 +6,8 @@ import { SiteFooter } from '@/components/site-footer';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Persona AI - Professional Portfolio',
-  description: 'A professional portfolio for a growing software developer, built with Next.js and Firebase.',
+  title: 'Ángel Nereira - Ingeniero de Software',
+  description: 'Portafolio de Ángel Nereira, un desarrollador de Panamá construyendo soluciones de software modernas.',
 };
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

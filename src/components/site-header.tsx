@@ -12,9 +12,9 @@ import * as React from "react";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
+  { href: "/services", label: "Servicios" },
   { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
+  { href: "/contact", label: "Contacto" },
   { href: "/admin", label: "Admin" },
 ];
 
@@ -30,7 +30,7 @@ export function SiteHeader() {
         <div className="mr-4 flex items-center">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Code className="h-6 w-6 text-primary" />
-            <span className="font-bold sm:inline-block">Persona AI</span>
+            <span className="font-bold sm:inline-block">Ángel Nereira</span>
           </Link>
         </div>
 
@@ -75,7 +75,7 @@ export function SiteHeader() {
               <div className="flex flex-col h-full">
                 <div className="flex items-center space-x-2 mb-8">
                    <Code className="h-6 w-6 text-primary" />
-                  <span className="font-bold">Persona AI</span>
+                  <span className="font-bold">Ángel Nereira</span>
                 </div>
                 <div className="flex flex-col space-y-4">
                   {navItems.map((item) => (
