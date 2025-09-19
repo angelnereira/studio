@@ -1,10 +1,24 @@
 import * as React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { Check } from "lucide-react";
+import { Check, Rocket, Code2, Receipt, Briefcase, Building, ShoppingCart, Puzzle, BrainCircuit, Bot, Database, KeyRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { services } from "@/lib/services.tsx";
+import { services, Service } from "@/lib/services";
+
+const iconMap: { [key: string]: React.ReactElement } = {
+  Rocket: <Rocket />,
+  Code2: <Code2 />,
+  Receipt: <Receipt />,
+  Briefcase: <Briefcase />,
+  Building: <Building />,
+  ShoppingCart: <ShoppingCart />,
+  Puzzle: <Puzzle />,
+  BrainCircuit: <BrainCircuit />,
+  Bot: <Bot />,
+  Database: <Database />,
+  KeyRound: <KeyRound />,
+};
 
 export default function ServicesPage() {
   return (
@@ -18,11 +32,11 @@ export default function ServicesPage() {
         </div>
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((service) => (
+        {services.map((service: Service) => (
           <Card key={service.slug} className="flex flex-col hover:shadow-xl transition-shadow bg-card">
             <CardHeader className="flex flex-row items-start gap-4">
               <div className="bg-primary/10 text-primary p-3 rounded-full">
-                {React.cloneElement(service.icon, { className: "h-6 w-6" })}
+                {React.cloneElement(iconMap[service.iconName], { className: "h-6 w-6" })}
               </div>
               <div className="flex-1">
                 <CardTitle className="text-xl font-headline">{service.title}</CardTitle>
