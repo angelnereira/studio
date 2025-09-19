@@ -64,7 +64,7 @@ export const services: Service[] = [
       storagePath: "storage/services/creacion-de-aplicaciones-moviles/illustration.jpg",
       alt: "Desarrollo de aplicaciones móviles con React Native y Firebase",
       caption: "Apps móviles modernas y escalables.",
-      promptForGenerator": "Isometric illustration of a mobile app development workspace — smartphone screens, code snippets, cloud icons, TypeScript and React Native logos, modern flat style, high detail"
+      promptForGenerator: "Isometric illustration of a mobile app development workspace — smartphone screens, code snippets, cloud icons, TypeScript and React Native logos, modern flat style, high detail"
     },
     cta: { buttonText: "Cotizar App Móvil", contactFormRef: "forms/estimateRequest" },
     tags: ["movil", "react-native", "firebase", "ios", "android"],
@@ -95,7 +95,7 @@ export const services: Service[] = [
       storagePath: "storage/services/creacion-de-aplicaciones-web/illustration.jpg",
       alt: "Desarrollo de aplicaciones web con Next.js",
       caption: "Web apps rápidas y optimizadas para SEO.",
-      promptForGenerator": "Modern web app illustration — developer desk, monitors with UI wireframes, server rack, Next.js and Firebase icons, clean aesthetic"
+      promptForGenerator: "Modern web app illustration — developer desk, monitors with UI wireframes, server rack, Next.js and Firebase icons, clean aesthetic"
     },
     cta: { buttonText: "Cotizar App Web", contactFormRef: "forms/estimateRequest" },
     tags: ["web", "nextjs", "react", "seo", "pwa"],
@@ -126,7 +126,7 @@ export const services: Service[] = [
       storagePath: "storage/services/sistemas-de-facturacion/illustration.jpg",
       alt: "Sistema de facturación en la nube",
       caption: "Facturación automatizada y segura.",
-      promptForGenerator": "Billing system illustration — invoices, receipts, secure shield icon, database, smooth vector art"
+      promptForGenerator: "Billing system illustration — invoices, receipts, secure shield icon, database, smooth vector art"
     },
     cta: { buttonText: "Cotizar Sistema", contactFormRef: "forms/estimateRequest" },
     tags: ["facturacion", "fintech", "api", "seguridad", "enterprise"],
@@ -157,7 +157,7 @@ export const services: Service[] = [
       storagePath: "storage/services/portafolios-profesionales/illustration.jpg",
       alt: "Portafolio profesional en múltiples dispositivos",
       caption: "Tu marca personal, elevada.",
-      promptForGenerator": "Professional portfolio mockups on devices — lawyer, architect and doctor themed, clean minimal UI, responsive screens"
+      promptForGenerator: "Professional portfolio mockups on devices — lawyer, architect and doctor themed, clean minimal UI, responsive screens"
     },
     cta: { buttonText: "Crear mi Portafolio", contactFormRef: "forms/estimateRequest" },
     tags: ["portafolio", "web", "diseño", "marca-personal"],
@@ -188,7 +188,7 @@ export const services: Service[] = [
       storagePath: "storage/services/sistemas-de-inventario/illustration.jpg",
       alt: "Sistema de gestión de inventario",
       caption: "Control total sobre tu inventario.",
-      promptForGenerator": "Inventory system illustration — warehouse shelves, barcode scanners, dashboard analytics, logistic icons"
+      promptForGenerator: "Inventory system illustration — warehouse shelves, barcode scanners, dashboard analytics, logistic icons"
     },
     cta: { buttonText: "Cotizar Sistema de Inventario", contactFormRef: "forms/estimateRequest" },
     tags: ["inventario", "logistica", "erp", "retail"],
@@ -219,7 +219,7 @@ export const services: Service[] = [
       storagePath: "storage/services/e-commerce/illustration.jpg",
       alt: "Plataforma de E-commerce",
       caption: "Vende online con una tienda profesional.",
-      promptForGenerator": "E-commerce platform illustration — shopping cart, product cards, payment gateway integration, seamless checkout flow"
+      promptForGenerator: "E-commerce platform illustration — shopping cart, product cards, payment gateway integration, seamless checkout flow"
     },
     cta: { buttonText: "Construir mi Tienda", contactFormRef: "forms/estimateRequest" },
     tags: ["ecommerce", "tienda-online", "shopify", "pagos"],
@@ -250,7 +250,7 @@ export const services: Service[] = [
       storagePath: "storage/services/consultoria-de-software/illustration.jpg",
       alt: "Consultoría de arquitectura de software",
       caption: "Estrategia y experiencia para tu proyecto.",
-      promptForGenerator": "Consultancy illustration — meeting table, architectural diagrams, lightbulb ideas, arrows showing strategy and planning"
+      promptForGenerator: "Consultancy illustration — meeting table, architectural diagrams, lightbulb ideas, arrows showing strategy and planning"
     },
     cta: { buttonText: "Agendar Consultoría", contactFormRef: "forms/estimateRequest" },
     tags: ["consultoria", "arquitectura", "devops", "estrategia"],
@@ -281,7 +281,7 @@ export const services: Service[] = [
       storagePath: "storage/services/integracion-de-inteligencia-artificial/illustration.jpg",
       alt: "Integración de Inteligencia Artificial en apps",
       caption: "Inteligencia artificial para potenciar tu negocio.",
-      promptForGenerator": "AI integration illustration — neural network overlay on existing app screens, data flow, models running in cloud"
+      promptForGenerator: "AI integration illustration — neural network overlay on existing app screens, data flow, models running in cloud"
     },
     cta: { buttonText: "Cotizar Integración IA", contactFormRef: "forms/estimateRequest" },
     tags: ["ia", "ai", "machine-learning", "gemini", "openai"],
@@ -312,7 +312,7 @@ export const services: Service[] = [
       storagePath: "storage/services/chatbots/illustration.jpg",
       alt: "Desarrollo de chatbots inteligentes",
       caption: "Automatiza la comunicación con tus clientes.",
-      promptForGenerator": "Chatbot illustration — chat window, bot avatar, flowchart, user interactions, conversational UI"
+      promptForGenerator: "Chatbot illustration — chat window, bot avatar, flowchart, user interactions, conversational UI"
     },
     cta: { buttonText: "Crear mi Chatbot", contactFormRef: "forms/estimateRequest" },
     tags: ["chatbot", "ia", "atencion-al-cliente", "automatizacion"],
@@ -343,7 +343,7 @@ export const services: Service[] = [
       storagePath: "storage/services/bases-de-datos-y-registros/illustration.jpg",
       alt: "Diseño y optimización de bases de datos",
       caption: "Datos organizados, seguros y rápidos.",
-      promptForGenerator": "Database illustration — stacked databases, secure storage, replication arrows and backups"
+      promptForGenerator: "Database illustration — stacked databases, secure storage, replication arrows and backups"
     },
     cta: { buttonText: "Optimizar mi Base de Datos", contactFormRef: "forms/estimateRequest" },
     tags: ["database", "sql", "nosql", "postgres", "firestore"],
@@ -374,7 +374,7 @@ icon: <Database />
       storagePath: "storage/services/controles-de-acceso/illustration.jpg",
       alt: "Implementación de control de acceso y seguridad",
       caption: "Protege tus datos y aplicaciones.",
-      promptForGenerator": "Access control illustration — locks, keys, user roles, SSO icons, secure shield"
+      promptForGenerator: "Access control illustration — locks, keys, user roles, SSO icons, secure shield"
     },
     cta: { buttonText: "Asegurar mi App", contactFormRef: "forms/estimateRequest" },
     tags: ["seguridad", "auth", "rbac", "sso", "jwt"],

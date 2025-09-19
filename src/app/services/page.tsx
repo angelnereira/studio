@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { Check, Building, Puzzle, Code2, Bot, Database, KeyRound, Briefcase, ShoppingCart, Receipt, BrainCircuit, Rocket } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { services } from "@/lib/services";
+import { services } from "@/lib/services.tsx";
 
 export default function ServicesPage() {
   return (
