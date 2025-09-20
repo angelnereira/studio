@@ -19,49 +19,55 @@ export default function ServicesPage() {
         </div>
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((service: Service) => (
-          <SpotlightCard key={service.slug} className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
-            <CardHeader className="flex flex-row items-start gap-4">
-              <div className="bg-primary/10 text-primary p-3 rounded-full">
-                {React.cloneElement(service.icon, { className: "h-6 w-6" })}
-              </div>
-              <div className="flex-1">
-                <CardTitle className="text-xl font-headline transition-colors duration-300 ease-geist group-hover:text-primary">{service.title}</CardTitle>
-                <CardDescription className="text-sm">{service.shortDescription}</CardDescription>
-              </div>
-            </CardHeader>
-            <CardContent className="flex-1 space-y-4">
-              <div>
-                <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Stack Principal</h4>
-                <div className="flex flex-wrap gap-2">
-                  {service.architecture.recommendedStack.slice(0, 4).map((tech) => (
-                    <Badge key={tech} variant="secondary">{tech}</Badge>
-                  ))}
+        {services.map((service: Service) => {
+          const discountedPrice = service.pricing.startingPrice * 0.7;
+          return (
+            <SpotlightCard key={service.slug} className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
+              <CardHeader className="flex flex-row items-start gap-4">
+                <div className="bg-primary/10 text-primary p-3 rounded-full">
+                  {React.cloneElement(service.icon, { className: "h-6 w-6" })}
                 </div>
-              </div>
-               <div>
-                <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Entregables Clave</h4>
-                <ul className="space-y-1">
-                 {service.deliverables.slice(0, 2).map((item) => (
-                    <li key={item} className="text-sm text-foreground flex items-start gap-2">
-                      <Check className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CardContent>
-            <CardFooter className="flex-col items-start gap-4 pt-4">
-              <div className="w-full">
-                <p className="text-xs text-muted-foreground">Desde</p>
-                <p className="text-2xl font-bold text-primary">${service.pricing.startingPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground"> USD</span></p>
-              </div>
-              <Button asChild className="w-full">
-                <Link href={`/contact?service=${service.slug}`}>Solicitar cotización</Link>
-              </Button>
-            </CardFooter>
-          </SpotlightCard>
-        ))}
+                <div className="flex-1">
+                  <CardTitle className="text-xl font-headline transition-colors duration-300 ease-geist group-hover:text-primary">{service.title}</CardTitle>
+                  <CardDescription className="text-sm">{service.shortDescription}</CardDescription>
+                </div>
+              </CardHeader>
+              <CardContent className="flex-1 space-y-4">
+                <div>
+                  <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Stack Principal</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {service.architecture.recommendedStack.slice(0, 4).map((tech) => (
+                      <Badge key={tech} variant="secondary">{tech}</Badge>
+                    ))}
+                  </div>
+                </div>
+                 <div>
+                  <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Entregables Clave</h4>
+                  <ul className="space-y-1">
+                   {service.deliverables.slice(0, 2).map((item) => (
+                      <li key={item} className="text-sm text-foreground flex items-start gap-2">
+                        <Check className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </CardContent>
+              <CardFooter className="flex-col items-start gap-4 pt-4">
+                <div className="w-full">
+                  <p className="text-xs text-muted-foreground">Desde</p>
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-2xl font-bold text-primary">${discountedPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground"> USD</span></p>
+                    <p className="text-sm font-normal text-muted-foreground line-through">${service.pricing.startingPrice.toLocaleString()}</p>
+                  </div>
+                </div>
+                <Button asChild className="w-full">
+                  <Link href={`/contact?service=${service.slug}`}>Solicitar cotización</Link>
+                </Button>
+              </CardFooter>
+            </SpotlightCard>
+          );
+        })}
       </div>
         <div className="text-center mt-16">
             <h2 className="text-2xl font-bold tracking-tighter font-headline">¿No encuentras lo que buscas?</h2>
