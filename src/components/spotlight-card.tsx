@@ -4,7 +4,11 @@ import { useRef, useState, MouseEvent } from 'react';
 import { Card, CardProps } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
-export function SpotlightCard({ className, children, ...props }: CardProps) {
+interface SpotlightCardProps extends CardProps {
+  as?: React.ElementType;
+}
+
+export function SpotlightCard({ className, children, as: Comp = 'div', ...props }: SpotlightCardProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -38,25 +42,29 @@ export function SpotlightCard({ className, children, ...props }: CardProps) {
   };
 
   return (
-    <div
+    <Comp
       ref={divRef}
       onMouseMove={handleMouseMove}
       onFocus={handleFocus}
       onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full"
+      className={cn("relative w-full", Comp === 'div' && 'card-spotlight', className)}
     >
       <div
         className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300"
         style={{
           opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, hsla(var(--primary) / 0.1), transparent 80%)`,
+          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, hsla(var(--primary) / 0.15), transparent 60%)`,
         }}
       />
-      <Card className={cn("card-spotlight", className)} {...props}>
-        {children}
-      </Card>
-    </div>
+      {Comp === 'div' ? (
+        <Card className={cn("h-full w-full", props.className)} {...props}>
+          {children}
+        </Card>
+      ) : (
+        children
+      )}
+    </Comp>
   );
 }
