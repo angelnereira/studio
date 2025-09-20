@@ -19,7 +19,7 @@ export default function ServicesPage() {
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service: Service) => (
-          <Card key={service.slug} className="flex flex-col hover:shadow-xl transition-shadow bg-card">
+          <Card key={service.slug} className="flex flex-col transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 bg-card">
             <CardHeader className="flex flex-row items-start gap-4">
               <div className="bg-primary/10 text-primary p-3 rounded-full">
                 {React.cloneElement(service.icon, { className: "h-6 w-6" })}

@@ -24,7 +24,7 @@ export default async function BlogPage() {
       <div className="grid gap-8 mt-12 max-w-4xl mx-auto">
         {posts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className="group block">
-            <Card className="transition-all duration-300 group-hover:shadow-xl group-hover:border-primary/50">
+            <Card className="transition-all duration-300 ease-out group-hover:shadow-xl group-hover:border-primary/50 group-hover:-translate-y-1">
               <CardHeader>
                 <div className="flex items-center gap-4 mb-4">
                   {post.tags.map(tag => <Badge key={tag} variant="secondary">{tag}</Badge>)}

@@ -190,7 +190,7 @@ export default function Home() {
               {skills.map((skill) => (
                 <Tooltip key={skill.name}>
                   <TooltipTrigger asChild>
-                    <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-card p-6 shadow-sm transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:bg-primary/10">
+                    <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-card p-6 shadow-sm transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg hover:bg-primary/10 hover:-translate-y-1">
                       <div className="text-primary">{React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10' })}</div>
                       <span className="font-medium text-center">{skill.name}</span>
                     </div>
@@ -219,16 +219,18 @@ export default function Home() {
             </div>
             <div className="grid gap-8 lg:grid-cols-1 py-12">
               {projects.map((project) => (
-                <Card key={project.title} className="flex flex-col md:flex-row overflow-hidden transition-shadow hover:shadow-xl w-full">
+                <Card key={project.title} className="flex flex-col md:flex-row overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 w-full">
                   {project.image && (
-                    <Image
-                      src={project.image.imageUrl}
-                      alt={project.image.description}
-                      data-ai-hint={project.image.imageHint}
-                      width={450}
-                      height={250}
-                      className="aspect-video w-full md:w-1/3 object-cover"
-                    />
+                    <div className="w-full md:w-1/3 aspect-video overflow-hidden">
+                      <Image
+                        src={project.image.imageUrl}
+                        alt={project.image.description}
+                        data-ai-hint={project.image.imageHint}
+                        width={450}
+                        height={250}
+                        className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                      />
+                    </div>
                   )}
                   <div className="flex flex-col justify-between p-6 w-full md:w-2/3">
                     <div>
@@ -263,7 +265,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl font-headline">Lo que dicen otros</h2>
             <div className="grid gap-8 mt-12 sm:grid-cols-1 md:grid-cols-2">
               {testimonials.map((testimonial) => (
-                <Card key={testimonial.name}>
+                <Card key={testimonial.name} className="transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1">
                   <CardContent className="pt-6">
                     <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
                   </CardContent>
