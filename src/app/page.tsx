@@ -10,7 +10,7 @@ import * as React from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { SpotlightCard } from "@/components/spotlight-card";
-import EngineerAvatar from "@/components/EngineerAvatar";
+import { ServicesCarousel } from "@/components/services-carousel";
 
 
 const testimonialImages = {
@@ -302,8 +302,8 @@ export default function Home() {
                   <span>English (Advanced)</span>
                 </div>
               </div>
-              <div className="relative w-full max-w-sm mx-auto lg:max-w-md h-auto lg:-mb-24">
-                <EngineerAvatar size="xl" />
+              <div className="relative w-full max-w-xl mx-auto lg:max-w-2xl h-auto">
+                <ServicesCarousel />
               </div>
             </div>
           </div>
@@ -493,3 +493,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
