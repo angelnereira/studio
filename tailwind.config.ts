@@ -14,7 +14,7 @@ export default {
       fontFamily: {
         body: ['"Geist Sans"', 'sans-serif'],
         headline: ['"Geist Sans"', 'sans-serif'],
-        code: ['"Geist Mono"', 'monospace'],
+        code: ['"Fira Code"', '"Geist Mono"', 'monospace'],
       },
       colors: {
         background: 'hsl(var(--background))',

@@ -63,7 +63,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   });
 
   return (
-    <article className="container max-w-3xl py-12 md:py-24">
+    <article className="container max-w-4xl py-12 md:py-24">
       <header className="mb-8 text-center">
         <div className="mb-4 flex justify-center gap-2">
           {post.tags.map(tag => (

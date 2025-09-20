@@ -34,6 +34,32 @@
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 217.2 32.6% 17.5%;
     --sidebar-ring: 196 82% 57%;
+
+    /* Sistema de espaciado fluido */
+    --space-unit: 1rem;
+    --space-xs: calc(0.25 * var(--space-unit));
+    --space-sm: calc(0.5 * var(--space-unit));
+    --space-md: var(--space-unit);
+    --space-lg: calc(1.5 * var(--space-unit));
+    --space-xl: calc(2 * var(--space-unit));
+    --space-2xl: calc(3 * var(--space-unit));
+    
+    /* Tipografía fluida con clamp() */
+    --font-size-base: clamp(1rem, 2vw, 1.125rem);
+    --font-size-sm: clamp(0.875rem, 1.5vw, 1rem);
+    --font-size-lg: clamp(1.125rem, 2.5vw, 1.25rem);
+    --font-size-xl: clamp(1.5rem, 3vw, 2rem);
+    --font-size-2xl: clamp(2rem, 4vw, 3rem);
+    
+    /* Container adaptativo */
+    --container-max: 1200px;
+    --container-padding: clamp(1rem, 5vw, 3rem);
+    
+    /* Breakpoints */
+    --bp-sm: 640px;
+    --bp-md: 768px;
+    --bp-lg: 1024px;
+    --bp-xl: 1280px;
   }
 
   .dark {
@@ -75,6 +101,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-size: var(--font-size-base);
   }
 }
 
@@ -97,5 +124,43 @@
   }
   .card-spotlight:hover::before {
     opacity: 1;
+  }
+
+  /* Sistema de contenedor fluido centrado */
+  .container-fluid {
+    @apply w-full mx-auto px-[var(--container-padding)] grid place-items-center min-h-screen;
+    max-width: var(--container-max);
+  }
+
+  /* Grid system adaptativo tipo Flutter */
+  .adaptive-grid {
+    @apply grid w-full;
+    gap: clamp(1rem, 2vw, 2rem);
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, 300px), 1fr)
+    );
+  }
+
+  /* Flexbox centrado intuitivo */
+  .flex-center {
+    @apply flex justify-center items-center flex-wrap;
+    gap: var(--space-md);
+  }
+
+  /* Texto fluido y centrado */
+  .text-adaptive {
+    @apply text-center mx-auto;
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    max-width: 65ch;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Sistema de espaciado dinámico */
+  .dynamic-spacing {
+    padding-block: clamp(2rem, 5vh, 4rem);
+    padding-inline: clamp(1rem, 5vw, 3rem);
   }
 }
