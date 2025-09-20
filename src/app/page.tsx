@@ -7,6 +7,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import * as React from "react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 
 const profileImage = PlaceHolderImages.find(p => p.id === 'profile-photo');
 const projectImages = {
@@ -22,18 +24,18 @@ const testimonialImages = {
 };
 
 const skills = [
-  { name: "Python", icon: <Code /> },
-  { name: "TypeScript", icon: <Code /> },
-  { name: "Next.js", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-nextjs"><path d="M9 15V9l7.7 10.6A9 9 0 1 1 8.3 4.2"/></svg> },
-  { name: "Node.js", icon: <Server /> },
-  { name: "Google Cloud", icon: <Cloud /> },
-  { name: "Firebase", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-firebase"><path d="M4.62 16.22c-.12.48-.12.96.02 1.42.23.73.66 1.35 1.28 1.83.6.46 1.3.74 2.06.82a5.57 5.57 0 0 0 2.22-.44l.2-.08.14-.06.13-.05c.4-.2.8-.43 1.15-.71l.1-.08c.17-.15.33-.3.48-.47L19.5 8.5 14.5 3.5 4.62 16.22Z"/><path d="m19.5 8.5-1-1-3-3-1.42-1.42c-.2-.2-.45-.36-.72-.48a4.99 4.99 0 0 0-2.2-0l-.16.03-.18.04-.18.05s-.1.03-.14.05L3.5 8.5l6 12 5-5-1.5-1.5-3.5 3.5-3-3L12.5 10l7-1.5Z"/></svg> },
-  { name: "Docker", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-docker"><path d="M22 12.5c0-2.2-2-3.5-4-3.5-1.2 0-2.7.9-3.5 2.1-.8-1.2-2.3-2.1-3.5-2.1-2 0-4 1.3-4 3.5 0 .9.3 2.1 1.2 3.1-1.1.4-2.2 1.5-2.2 3.4 0 2.2 2 4 4 4h8c2 0 4-1.8 4-4 0-1.9-1.1-3-2.2-3.4.9-1 1.2-2.2 1.2-3.1Z" /><path d="M5 12.5H3" /><path d="M6 15.5H3" /><path d="M6 9.5H3" /><path d="M8 6.5H6" /><path d="M9 3.5H7" /></svg> },
-  { name: "Git", icon: <GitBranch /> },
-  { name: "GitHub/GitLab", icon: <Gitlab /> },
-  { name: "CI/CD", icon: <Terminal /> },
-  { name: "Linux", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-linux"><path d="M13.8 17.5c-1.2 1.2-3 2-4.8 2s-3.6-.8-4.8-2c-1.2-1.2-2-3-2-4.8s.8-3.6 2-4.8c1.2-1.2 3-2 4.8-2l7.1 7.1c.3-.2.5-.3.7-.5 1.2-1.2 2-3 2-4.8s-.8-3.6-2-4.8c-1.2-1.2-3-2-4.8-2s-3.6.8-4.8 2-2 3-2 4.8c0 1.3.4 2.6 1 3.8"/><path d="M12.5 12.5a3.5 3.5 0 1 0-5 0 3.5 3.5 0 0 0 5 0Z"/><path d="M18.8 15.2c1.2 1.2 2 3 2 4.8s-.8 3.6-2 4.8-3 2-4.8 2-3.6-.8-4.8-2c-.3-.3-.6-.6-.8-1"/></svg> },
-  { name: "Music Production", icon: <Music /> },
+  { name: "Python", icon: <Code />, description: "Versátil y potente, ideal para backend, análisis de datos y scripts de automatización. Su sintaxis limpia permite un desarrollo rápido y mantenible." },
+  { name: "TypeScript", icon: <Code />, description: "Añade seguridad de tipos a JavaScript, lo que reduce errores en tiempo de ejecución y mejora la colaboración en proyectos grandes. Imprescindible para aplicaciones robustas." },
+  { name: "Next.js", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-nextjs"><path d="M9 15V9l7.7 10.6A9 9 0 1 1 8.3 4.2"/></svg>, description: "Framework de React para producción. Permite crear aplicaciones web ultrarrápidas con renderizado en el servidor (SSR) y generación de sitios estáticos (SSG), mejorando el SEO y la performance." },
+  { name: "Node.js", icon: <Server />, description: "Entorno de ejecución para JavaScript en el backend. Su modelo asíncrono es perfecto para construir APIs rápidas y escalables que manejan múltiples conexiones simultáneamente." },
+  { name: "Google Cloud", icon: <Cloud />, description: "Plataforma en la nube con un ecosistema completo de servicios (Compute Engine, Cloud Functions, AI Platform) que permiten construir y desplegar aplicaciones escalables y seguras." },
+  { name: "Firebase", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-firebase"><path d="M4.62 16.22c-.12.48-.12.96.02 1.42.23.73.66 1.35 1.28 1.83.6.46 1.3.74 2.06.82a5.57 5.57 0 0 0 2.22-.44l.2-.08.14-.06.13-.05c.4-.2.8-.43 1.15-.71l.1-.08c.17-.15.33-.3.48-.47L19.5 8.5 14.5 3.5 4.62 16.22Z"/><path d="m19.5 8.5-1-1-3-3-1.42-1.42c-.2-.2-.45-.36-.72-.48a4.99 4.99 0 0 0-2.2-0l-.16.03-.18.04-.18.05s-.1.03-.14.05L3.5 8.5l6 12 5-5-1.5-1.5-3.5 3.5-3-3L12.5 10l7-1.5Z"/></svg>, description: "Backend-como-Servicio que acelera el desarrollo. Ofrece autenticación, bases de datos en tiempo real (Firestore) y hosting, todo integrado para un despliegue rápido de MVPs." },
+  { name: "Docker", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-docker"><path d="M22 12.5c0-2.2-2-3.5-4-3.5-1.2 0-2.7.9-3.5 2.1-.8-1.2-2.3-2.1-3.5-2.1-2 0-4 1.3-4 3.5 0 .9.3 2.1 1.2 3.1-1.1.4-2.2 1.5-2.2 3.4 0 2.2 2 4 4 4h8c2 0 4-1.8 4-4 0-1.9-1.1-3-2.2-3.4.9-1 1.2-2.2 1.2-3.1Z" /><path d="M5 12.5H3" /><path d="M6 15.5H3" /><path d="M6 9.5H3" /><path d="M8 6.5H6" /><path d="M9 3.5H7" /></svg>, description: "Plataforma de contenedores que empaqueta las aplicaciones y sus dependencias. Garantiza que el software se ejecute de la misma manera en cualquier entorno, eliminando el 'en mi máquina funciona'." },
+  { name: "Git", icon: <GitBranch />, description: "Sistema de control de versiones distribuido. Es la herramienta fundamental para el trabajo en equipo, permitiendo gestionar cambios, experimentar en ramas y mantener un historial completo del proyecto." },
+  { name: "GitHub/GitLab", icon: <Gitlab />, description: "Plataformas de hospedaje para repositorios Git que facilitan la colaboración, la revisión de código (Pull Requests) y la integración con pipelines de CI/CD." },
+  { name: "CI/CD", icon: <Terminal />, description: "Prácticas de Integración y Entrega Continuas. Automatizan las pruebas y el despliegue del software, permitiendo entregas más rápidas, frecuentes y fiables." },
+  { name: "Linux", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-linux"><path d="M13.8 17.5c-1.2 1.2-3 2-4.8 2s-3.6-.8-4.8-2c-1.2-1.2-2-3-2-4.8s.8-3.6 2-4.8c1.2-1.2 3-2 4.8-2l7.1 7.1c.3-.2.5-.3.7-.5 1.2-1.2 2-3 2-4.8s-.8-3.6-2-4.8c-1.2-1.2-3-2-4.8-2s-3.6.8-4.8 2-2 3-2 4.8c0 1.3.4 2.6 1 3.8"/><path d="M12.5 12.5a3.5 3.5 0 1 0-5 0 3.5 3.5 0 0 0 5 0Z"/><path d="M18.8 15.2c1.2 1.2 2 3 2 4.8s-.8 3.6-2 4.8-3 2-4.8 2-3.6-.8-4.8-2c-.3-.3-.6-.6-.8-1"/></svg>, description: "Sistema operativo de código abierto, robusto y seguro. Es el estándar de facto para servidores y entornos de despliegue en la nube por su estabilidad y flexibilidad." },
+  { name: "Music Production", icon: <Music />, description: "Mi lado creativo. La producción musical me ha enseñado sobre ingeniería de sonido, mezcla y masterización, habilidades que aplico para crear experiencias de usuario inmersivas y de alta calidad." },
 ];
 
 const projects = [
@@ -183,13 +185,23 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 py-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 py-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            <TooltipProvider>
               {skills.map((skill) => (
-                <div key={skill.name} className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-card p-6 shadow-sm transition-transform hover:scale-105 hover:shadow-lg">
-                  <div className="text-primary">{React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10' })}</div>
-                  <span className="font-medium">{skill.name}</span>
-                </div>
+                <Tooltip key={skill.name}>
+                  <TooltipTrigger asChild>
+                    <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-card p-6 shadow-sm transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:bg-primary/10">
+                      <div className="text-primary">{React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10' })}</div>
+                      <span className="font-medium text-center">{skill.name}</span>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs text-center">
+                    <p className="font-bold mb-2">{skill.name}</p>
+                    <p>{skill.description}</p>
+                  </TooltipContent>
+                </Tooltip>
               ))}
+            </TooltipProvider>
             </div>
           </div>
         </section>
