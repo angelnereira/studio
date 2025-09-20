@@ -8,81 +8,113 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import * as React from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 
 const profileImage = PlaceHolderImages.find(p => p.id === 'profile-photo');
-const projectImages = {
-  proj1: PlaceHolderImages.find(p => p.id === 'project-1'),
-  proj2: PlaceHolderImages.find(p => p.id === 'project-2'),
-  proj3: PlaceHolderImages.find(p => p.id === 'project-3'),
-  proj4: PlaceHolderImages.find(p => p.id === 'project-4'),
-  proj5: PlaceHolderImages.find(p => p.id === 'project-5'),
-};
 const testimonialImages = {
   test1: PlaceHolderImages.find(p => p.id === 'testimonial-1'),
   test2: PlaceHolderImages.find(p => p.id === 'testimonial-2'),
 };
 
 const skills = [
-  { name: "Python", icon: <Code />, description: "Versátil y potente, ideal para backend, análisis de datos y scripts de automatización. Su sintaxis limpia permite un desarrollo rápido y mantenible." },
-  { name: "TypeScript", icon: <Code />, description: "Añade seguridad de tipos a JavaScript, lo que reduce errores en tiempo de ejecución y mejora la colaboración en proyectos grandes. Imprescindible para aplicaciones robustas." },
-  { name: "Next.js", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-nextjs"><path d="M9 15V9l7.7 10.6A9 9 0 1 1 8.3 4.2"/></svg>, description: "Framework de React para producción. Permite crear aplicaciones web ultrarrápidas con renderizado en el servidor (SSR) y generación de sitios estáticos (SSG), mejorando el SEO y la performance." },
-  { name: "Node.js", icon: <Server />, description: "Entorno de ejecución para JavaScript en el backend. Su modelo asíncrono es perfecto para construir APIs rápidas y escalables que manejan múltiples conexiones simultáneamente." },
-  { name: "Google Cloud", icon: <Cloud />, description: "Plataforma en la nube con un ecosistema completo de servicios (Compute Engine, Cloud Functions, AI Platform) que permiten construir y desplegar aplicaciones escalables y seguras." },
-  { name: "Firebase", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-firebase"><path d="M4.62 16.22c-.12.48-.12.96.02 1.42.23.73.66 1.35 1.28 1.83.6.46 1.3.74 2.06.82a5.57 5.57 0 0 0 2.22-.44l.2-.08.14-.06.13-.05c.4-.2.8-.43 1.15-.71l.1-.08c.17-.15.33-.3.48-.47L19.5 8.5 14.5 3.5 4.62 16.22Z"/><path d="m19.5 8.5-1-1-3-3-1.42-1.42c-.2-.2-.45-.36-.72-.48a4.99 4.99 0 0 0-2.2-0l-.16.03-.18.04-.18.05s-.1.03-.14.05L3.5 8.5l6 12 5-5-1.5-1.5-3.5 3.5-3-3L12.5 10l7-1.5Z"/></svg>, description: "Backend-como-Servicio que acelera el desarrollo. Ofrece autenticación, bases de datos en tiempo real (Firestore) y hosting, todo integrado para un despliegue rápido de MVPs." },
-  { name: "Docker", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-docker"><path d="M22 12.5c0-2.2-2-3.5-4-3.5-1.2 0-2.7.9-3.5 2.1-.8-1.2-2.3-2.1-3.5-2.1-2 0-4 1.3-4 3.5 0 .9.3 2.1 1.2 3.1-1.1.4-2.2 1.5-2.2 3.4 0 2.2 2 4 4 4h8c2 0 4-1.8 4-4 0-1.9-1.1-3-2.2-3.4.9-1 1.2-2.2 1.2-3.1Z" /><path d="M5 12.5H3" /><path d="M6 15.5H3" /><path d="M6 9.5H3" /><path d="M8 6.5H6" /><path d="M9 3.5H7" /></svg>, description: "Plataforma de contenedores que empaqueta las aplicaciones y sus dependencias. Garantiza que el software se ejecute de la misma manera en cualquier entorno, eliminando el 'en mi máquina funciona'." },
-  { name: "Git", icon: <GitBranch />, description: "Sistema de control de versiones distribuido. Es la herramienta fundamental para el trabajo en equipo, permitiendo gestionar cambios, experimentar en ramas y mantener un historial completo del proyecto." },
-  { name: "GitHub/GitLab", icon: <Gitlab />, description: "Plataformas de hospedaje para repositorios Git que facilitan la colaboración, la revisión de código (Pull Requests) y la integración con pipelines de CI/CD." },
-  { name: "CI/CD", icon: <Terminal />, description: "Prácticas de Integración y Entrega Continuas. Automatizan las pruebas y el despliegue del software, permitiendo entregas más rápidas, frecuentes y fiables." },
-  { name: "Linux", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-linux"><path d="M13.8 17.5c-1.2 1.2-3 2-4.8 2s-3.6-.8-4.8-2c-1.2-1.2-2-3-2-4.8s.8-3.6 2-4.8c1.2-1.2 3-2 4.8-2l7.1 7.1c.3-.2.5-.3.7-.5 1.2-1.2 2-3 2-4.8s-.8-3.6-2-4.8c-1.2-1.2-3-2-4.8-2s-3.6.8-4.8 2-2 3-2 4.8c0 1.3.4 2.6 1 3.8"/><path d="M12.5 12.5a3.5 3.5 0 1 0-5 0 3.5 3.5 0 0 0 5 0Z"/><path d="M18.8 15.2c1.2 1.2 2 3 2 4.8s-.8 3.6-2 4.8-3 2-4.8 2-3.6-.8-4.8-2c-.3-.3-.6-.6-.8-1"/></svg>, description: "Sistema operativo de código abierto, robusto y seguro. Es el estándar de facto para servidores y entornos de despliegue en la nube por su estabilidad y flexibilidad." },
+  { name: "Python", icon: <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Python</title><path d="M12.083 1.025c-3.12.02-5.63 2.115-5.63 5.42h2.804c0-1.83 1.29-2.804 2.826-2.804s2.826.973 2.826 2.803c0 1.54-1.033 2.502-2.503 3.253-2.24 1.12-4.45 2.22-4.45 5.51h2.783c0-2.31 1.22-3.13 2.8-3.95 1.77-.9 3.5-1.8 3.5-4.52C17.06 3.145 15.223 1.005 12.083 1.025Zm-1.88 15.657c-1.31 0-2.04.75-2.04 1.74 0 .99.73 1.74 2.04 1.74s2.04-.75 2.04-1.74c0-.99-.73-1.74-2.04-1.74Z" fill="#3776AB"/><path d="M11.917 21.975c3.12-.02 5.63-2.115 5.63-5.42h-2.804c0 1.83-1.29 2.804-2.826 2.804s-2.826-.973-2.826-2.803c0-1.54 1.033-2.502 2.503-3.253 2.24-1.12 4.45-2.22 4.45-5.51h-2.783c0-2.31-1.22-3.13-2.8-3.95-1.77-.9-3.5-1.8-3.5-4.52C6.94 3.145 4.78 1.005 1.64 1.025c-3.12.02-5.63 2.115-5.63 5.42h2.804c0-1.83 1.29-2.804 2.826-2.804s2.826.973 2.826 2.803c0 1.54-1.033 2.502-2.503 3.253-2.24 1.12-4.45 2.22-4.45 5.51h2.783c0-2.31 1.22-3.13 2.8-3.95 1.77-.9 3.5-1.8 3.5-4.52C6.94 20.855 9.1 22.995 12.24 22.975c3.12-.02 5.63-2.115 5.63-5.42h-2.804c0 1.83-1.29 2.804-2.826 2.804s-2.826-.973-2.826-2.803c0-1.54 1.033-2.502 2.503-3.253 2.24-1.12 4.45-2.22 4.45-5.51h-2.783c0-2.31-1.22-3.13-2.8-3.95-1.77-.9-3.5-1.8-3.5-4.52C17.06 3.145 19.22 1.005 22.36 1.025c3.12.02 5.63 2.115 5.63 5.42h-2.804c0-1.83-1.29-2.804-2.826-2.804s-2.826.973-2.826-2.803c0-1.54 1.033-2.502 2.503-3.253 2.24-1.12 4.45-2.22 4.45-5.51h2.783c0 2.31 1.22 3.13 2.8 3.95 1.77.9 3.5 1.8 3.5 4.52C27.06 20.855 24.9 22.995 21.76 22.975c3.12.02 5.63-2.115 5.63-5.42h-2.804c0 1.83 1.29 2.804 2.826 2.804s2.826.973 2.826 2.803c0 1.54-1.033 2.502-2.503 3.253-2.24 1.12-4.45 2.22-4.45 5.51h-2.783c0 2.31 1.22 3.13 2.8 3.95 1.77.9 3.5 1.8 3.5 4.52Zm1.88-15.657c1.31 0 2.04.75 2.04 1.74 0 .99-.73 1.74-2.04 1.74s-2.04-.75-2.04-1.74c0-.99.73-1.74 2.04-1.74Z" fill="#FFD43B"/></svg> },
+  { name: "TypeScript", icon: <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>TypeScript</title><path d="M1.5 0 h 21 v 21 h -21 z" fill="#007acc" /><path d="M1.5,21V0h21V21h-2.25V2.25H3.75V21H1.5Z" fill="#007acc" /><path d="M8.2,16.5h2.1V9.3h3.2V7.2H8.2v9.3Z M16.3,9.3c-1.3,0-2.3.4-3.1,1.2s-1.2,1.8-1.2,3c0,1.2.4,2.2,1.2,3s1.8,1.2,3.1,1.2c1.3,0,2.3-.4,3.1-1.2s1.2-1.8,1.2-3c0-1.2-.4-2.2-1.2-3S17.6,9.3,16.3,9.3Zm0,8.3c-1,0-1.8-.3-2.4-1s-.9-1.5-.9-2.5c0-1,.3-1.8,1-2.5s1.4-1,2.3-1c1,0,1.8.3,2.4,1s.9,1.5.9,2.5c0,1-.3,1.8-.9,2.5s-1.4,1-2.4,1Z" fill="#fff" /></svg> },
+  { name: "Next.js", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-nextjs"><path d="M9 15V9l7.7 10.6A9 9 0 1 1 8.3 4.2"/></svg> },
+  { name: "Node.js", icon: <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Node.js</title><path d="M11.39 0H2.61L0 2.61v18.78L2.61 24h18.78L24 21.39V8.61L21.39 6H12.61zm.24 1.36h8.04l2 2V20l-1.36 1.36H3.36L2 21.35V3.36l1.36-1.36h8.27zM12 4.17a7.83 7.83 0 1 0 0 15.66 7.83 7.83 0 0 0 0-15.66zm0 1.44a6.39 6.39 0 1 1 0 12.78 6.39 6.39 0 0 1 0-12.78z" fill="#339933"/></svg> },
+  { name: "Google Cloud", icon: <Cloud /> },
+  { name: "Firebase", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-firebase"><path d="M4.62 16.22c-.12.48-.12.96.02 1.42.23.73.66 1.35 1.28 1.83.6.46 1.3.74 2.06.82a5.57 5.57 0 0 0 2.22-.44l.2-.08.14-.06.13-.05c.4-.2.8-.43 1.15-.71l.1-.08c.17-.15.33-.3.48-.47L19.5 8.5 14.5 3.5 4.62 16.22Z"/><path d="m19.5 8.5-1-1-3-3-1.42-1.42c-.2-.2-.45-.36-.72-.48a4.99 4.99 0 0 0-2.2-0l-.16.03-.18.04-.18.05s-.1.03-.14.05L3.5 8.5l6 12 5-5-1.5-1.5-3.5 3.5-3-3L12.5 10l7-1.5Z"/></svg> },
+  { name: "Docker", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-docker"><path d="M22 12.5c0-2.2-2-3.5-4-3.5-1.2 0-2.7.9-3.5 2.1-.8-1.2-2.3-2.1-3.5-2.1-2 0-4 1.3-4 3.5 0 .9.3 2.1 1.2 3.1-1.1.4-2.2 1.5-2.2 3.4 0 2.2 2 4 4 4h8c2 0 4-1.8 4-4 0-1.9-1.1-3-2.2-3.4.9-1 1.2-2.2 1.2-3.1Z" /><path d="M5 12.5H3" /><path d="M6 15.5H3" /><path d="M6 9.5H3" /><path d="M8 6.5H6" /><path d="M9 3.5H7" /></svg> },
+  { name: "Git", icon: <GitBranch /> },
+  { name: "GitHub/GitLab", icon: <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitLab</title><path d="m23.999 9.695-1.366-4.213A.838.838 0 0 0 21.82 4.87L18.18 2.05a.84.84 0 0 0-.965-.004l-2.03 1.559-2.73-8.41a.42.42 0 0 0-.792 0L8.934 3.606 6.903 2.046a.84.84 0 0 0-.964.004L2.298 4.87a.838.838 0 0 0-.813.612L.092 9.695a.42.42 0 0 0 .15.427l11.413 8.784a.42.42 0 0 0 .504 0l11.69-8.784a.42.42 0 0 0 .15-.427" fill="#FC6D26"/></svg> },
+  { name: "CI/CD", icon: <Terminal /> },
+  { name: "Linux", icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-linux"><path d="M13.8 17.5c-1.2 1.2-3 2-4.8 2s-3.6-.8-4.8-2c-1.2-1.2-2-3-2-4.8s.8-3.6 2-4.8c1.2-1.2 3-2 4.8-2l7.1 7.1c.3-.2.5-.3.7-.5 1.2-1.2 2-3 2-4.8s-.8-3.6-2-4.8c-1.2-1.2-3-2-4.8-2s-3.6.8-4.8 2-2 3-2 4.8c0 1.3.4 2.6 1 3.8"/><path d="M12.5 12.5a3.5 3.5 0 1 0-5 0 3.5 3.5 0 0 0 5 0Z"/><path d="M18.8 15.2c1.2 1.2 2 3 2 4.8s-.8 3.6-2 4.8-3 2-4.8 2-3.6-.8-4.8-2c-.3-.3-.6-.6-.8-1"/></svg> },
   { name: "Music Production", icon: <Music />, description: "Mi lado creativo. La producción musical me ha enseñado sobre ingeniería de sonido, mezcla y masterización, habilidades que aplico para crear experiencias de usuario inmersivas y de alta calidad." },
+  { name: "Vercel", icon: <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Vercel</title><path d="M24 22.525H0l12-21.05z" fill="#000000"/></svg> },
+  { name: "Kubernetes", icon: <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Kubernetes</title><path d="M12 .012a11.89 11.89 0 0 0-1.897.192l-8.465 2.82A1.986 1.986 0 0 0 .193 4.904L2.83 12 .192 19.096a1.986 1.986 0 0 0 1.445 1.88l8.465 2.82A11.89 11.89 0 0 0 12 23.988a11.89 11.89 0 0 0 1.897-.192l8.465-2.82a1.986 1.986 0 0 0 1.445-1.88L21.17 12l2.639-7.096a1.986 1.986 0 0 0-1.445-1.88l-8.465-2.82A11.89 11.89 0 0 0 12 .012zm-.948 4.23L4.415 6.09l-1.58 4.225h5.42zm1.896 0v15.51a9.904 9.904 0 0 1 0-15.51zm.948-1.74l6.637-2.212 1.58 4.225h-5.42zM4.415 17.91l6.637 1.848v-7.39H2.835zm8.483 1.848l6.637-1.848 1.58-4.225h-5.42z" fill="#326CE5"/></svg> },
+  { name: "OpenShift", icon: <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>OpenShift</title><path d="M12.022 2.001A9.993 9.993 0 002.022 12a9.993 9.993 0 0010.002 9.999A9.993 9.993 0 0022.021 12 9.993 9.993 0 0012.022 2.001zm0 2.856a7.137 7.137 0 017.137 7.142 7.137 7.137 0 01-7.137 7.142 7.137 7.137 0 01-7.14-7.142 7.137 7.137 0 017.14-7.142zm5.427 3.25L12.023 15.65 6.598 8.107l1.01-1.01 4.415 4.41 4.41-4.41z" fill="#EE0000"/></svg> }
 ];
 
 const projects = [
   {
     title: "App Web de Control de Acceso",
+    id: "access-control",
+    logo: (props: React.SVGProps<SVGSVGElement>) => (
+      <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M19.5 12a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" stroke="currentColor" strokeWidth="2"/>
+        <path d="M12 4.5V3M19.5 19.5l-1.06-1.06M4.5 19.5l1.06-1.06M12 19.5V21M4.5 4.5l1.06 1.06" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      </svg>
+    ),
     description: "Plataforma web desplegada en Vercel para la gestión de acceso de personal en tiempo real. Permite registrar entradas y salidas, generar reportes y administrar perfiles de empleados de forma segura.",
     technologies: ["Next.js", "TypeScript", "Firebase Auth", "Firestore", "Vercel"],
     problem: "Digitalizar y automatizar el control de asistencia de empleados, eliminando procesos manuales y mejorando la seguridad.",
     impact: "Reducción del tiempo administrativo en un 40% y generación de reportes de asistencia precisos al instante.",
-    image: projectImages.proj1,
     githubUrl: "#",
     liveUrl: "#",
   },
   {
     title: "Dashboard de Ventas en Tiempo Real",
+    id: "sales-dashboard",
+    logo: (props: React.SVGProps<SVGSVGElement>) => (
+      <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 3v18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="m19 9-5 5-4-4-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
     description: "Dashboard interactivo que visualiza métricas de ventas en tiempo real, conectándose directamente a la base de datos de producción. Permite a los gerentes tomar decisiones basadas en datos actualizados al segundo.",
     technologies: ["Next.js", "Recharts", "PostgreSQL", "Node.js", "Vercel"],
     problem: "La gerencia carecía de visibilidad inmediata sobre el rendimiento de las ventas, basándose en reportes diarios o semanales.",
     impact: "Mejora en la capacidad de reacción a tendencias del mercado y optimización de estrategias de venta con un ciclo de feedback inmediato.",
-    image: projectImages.proj2,
     liveUrl: "#",
   },
   {
     title: "Gestión de Planilla con Cálculos en Tiempo Real",
+    id: "payroll-management",
+    logo: (props: React.SVGProps<SVGSVGElement>) => (
+       <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M9 13h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M9 17h3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      </svg>
+    ),
     description: "Aplicación web para la administración de planillas que realiza cálculos de salarios, deducciones e impuestos en tiempo real a medida que se ingresan los datos. Simplifica un proceso complejo y propenso a errores.",
     technologies: ["React", "Node.js", "TypeScript", "Docker", "Google Cloud"],
     problem: "El cálculo manual de la planilla era lento, ineficiente y generaba errores costosos para la empresa.",
     impact: "Automatización completa del cálculo de planillas, garantizando precisión y cumplimiento, y liberando horas de trabajo del personal de RRHH.",
-    image: projectImages.proj3,
     githubUrl: "#",
   },
    {
     title: "Pipeline de Despliegue Automatizado (CI/CD)",
+    id: "ci-cd-pipeline",
+    logo: (props: React.SVGProps<SVGSVGElement>) => (
+       <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M21 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 18a6 6 0 0 1-6-6h12a6 6 0 0 1-6 6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 6a6 6 0 0 1 6 6H6a6 6 0 0 1 6-6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
     description: "Implementación de un pipeline de CI/CD para una aplicación de microservicios, automatizando las pruebas, construcción de imágenes Docker y despliegue en un clúster de Kubernetes.",
     technologies: ["GitHub Actions", "Docker", "Kubernetes", "Google Cloud Build"],
     problem: "Los despliegues manuales eran lentos, propensos a errores y requerían una ventana de mantenimiento significativa.",
     impact: "Reducción del tiempo de despliegue de horas a minutos. Aumento de la frecuencia de despliegues en un 500% con una tasa de error cercana a cero.",
-    image: projectImages.proj4,
     githubUrl: "#",
   },
   {
     title: "Chatbot de Servicio al Cliente con IA",
+    id: "ai-chatbot",
+    logo: (props: React.SVGProps<SVGSVGElement>) => (
+      <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 7v.01M9 11h.01M15 11h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
     description: "Desarrollo de un chatbot inteligente para automatizar la atención al cliente. Integrado con una base de conocimientos y opcionalmente con WhatsApp para resolver preguntas frecuentes y escalar casos complejos a agentes humanos.",
     technologies: ["Genkit", "Dialogflow", "Node.js", "Firebase", "WhatsApp API"],
     problem: "El equipo de soporte estaba sobrecargado con consultas repetitivas, resultando en altos tiempos de espera para los clientes.",
     impact: "Automatización del 70% de las consultas de primer nivel, reduciendo el tiempo de respuesta promedio en un 90% y mejorando la satisfacción del cliente.",
-    image: projectImages.proj5,
     liveUrl: "#",
   },
 ];
@@ -218,43 +250,68 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="grid gap-8 lg:grid-cols-1 py-12">
+            <div className="grid gap-8 lg:grid-cols-2 xl:grid-cols-3 py-12">
               {projects.map((project) => (
-                <Card key={project.title} className="group relative flex flex-col md:flex-row overflow-hidden transition-all duration-600 ease-geist w-full bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
-                  {project.image && (
-                    <div className="w-full md:w-1/3 aspect-video overflow-hidden">
-                      <Image
-                        src={project.image.imageUrl}
-                        alt={project.image.description}
-                        data-ai-hint={project.image.imageHint}
-                        width={450}
-                        height={250}
-                        className="w-full h-full object-cover transition-transform duration-600 ease-geist group-hover:scale-105"
-                      />
-                    </div>
-                  )}
-                  <div className="flex flex-col justify-between p-6 w-full md:w-2/3">
-                    <div>
-                      <CardTitle className="mb-2 transition-colors duration-300 ease-geist group-hover:text-primary">{project.title}</CardTitle>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.technologies.map((tech) => (
-                          <Badge key={tech} variant="secondary">{tech}</Badge>
-                        ))}
+                <Dialog key={project.id}>
+                  <DialogTrigger asChild>
+                    <Card className="group relative flex flex-col overflow-hidden transition-all duration-600 ease-geist w-full bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl cursor-pointer">
+                        <CardHeader className="flex-row items-center gap-4">
+                          {project.logo && (
+                            <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                               <project.logo className="w-6 h-6" />
+                            </div>
+                          )}
+                          <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary">{project.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <CardDescription className="line-clamp-3">{project.description}</CardDescription>
+                        </CardContent>
+                        <CardFooter className="mt-auto">
+                           <div className="flex flex-wrap gap-2">
+                              {project.technologies.slice(0, 3).map((tech) => (
+                                <Badge key={tech} variant="secondary">{tech}</Badge>
+                              ))}
+                              {project.technologies.length > 3 && <Badge variant="outline">+{project.technologies.length - 3}</Badge>}
+                          </div>
+                        </CardFooter>
+                    </Card>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[625px]">
+                    <DialogHeader>
+                      <div className="flex items-center gap-4 mb-4">
+                         {project.logo && (
+                            <div className="w-16 h-16 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                               <project.logo className="w-8 h-8" />
+                            </div>
+                          )}
+                          <DialogTitle className="text-2xl">{project.title}</DialogTitle>
                       </div>
-                      <CardDescription className="mb-4">{project.description}</CardDescription>
-                      <div>
-                        <h4 className="font-semibold text-sm">Problema Resuelto</h4>
-                        <p className="text-sm text-muted-foreground mb-2">{project.problem}</p>
-                        <h4 className="font-semibold text-sm">Impacto</h4>
-                        <p className="text-sm text-muted-foreground">{project.impact}</p>
-                      </div>
+                      <DialogDescription>{project.description}</DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-6 py-4">
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-2">Problema Resuelto</h4>
+                          <p className="text-sm text-muted-foreground">{project.problem}</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-2">Impacto Generado</h4>
+                          <p className="text-sm text-muted-foreground">{project.impact}</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-2">Tecnologías Utilizadas</h4>
+                           <div className="flex flex-wrap gap-2">
+                              {project.technologies.map((tech) => (
+                                <Badge key={tech} variant="secondary">{tech}</Badge>
+                              ))}
+                          </div>
+                        </div>
                     </div>
-                    <CardFooter className="flex justify-start p-0 pt-4 mt-auto">
-                      {project.liveUrl && <Button asChild size="sm"><Link href={project.liveUrl}>Ver Demo <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>}
-                      {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><Github className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
-                    </CardFooter>
-                  </div>
-                </Card>
+                     <div className="flex justify-end gap-2 mt-4">
+                        {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><Github className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
+                        {project.liveUrl && <Button asChild size="sm"><Link href={project.liveUrl}>Ver Demo <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>}
+                    </div>
+                  </DialogContent>
+                </Dialog>
               ))}
             </div>
           </div>
