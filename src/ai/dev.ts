@@ -3,3 +3,4 @@ config();
 
 import '@/ai/flows/generate-personalized-cover-letters.ts';
 import '@/ai/flows/analyze-job-compatibility.ts';
+import '@/ai/flows/generate-cv.ts';
