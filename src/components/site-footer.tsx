@@ -12,7 +12,7 @@ export function SiteFooter() {
         </div>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" asChild className="text-muted-foreground transition-colors hover:text-primary">
-            <Link href="https://github.com" target="_blank" rel="noreferrer">
+            <Link href="https://github.com/angelnereira" target="_blank" rel="noreferrer">
               <Github className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
             </Link>
