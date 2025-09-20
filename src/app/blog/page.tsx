@@ -3,6 +3,7 @@ import { getAllPosts } from '@/lib/blog';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { SpotlightCard } from '@/components/spotlight-card';
 
 export const metadata = {
   title: 'Blog | Ángel Nereira',
@@ -24,7 +25,7 @@ export default async function BlogPage() {
       <div className="grid gap-8 mt-12 max-w-4xl mx-auto">
         {posts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className="group block">
-            <Card className="relative transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
+            <SpotlightCard className="relative transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
               <CardHeader>
                 <div className="flex items-center gap-4 mb-4">
                   {post.tags.map(tag => <Badge key={tag} variant="secondary">{tag}</Badge>)}
@@ -46,7 +47,7 @@ export default async function BlogPage() {
                 <span>&middot;</span>
                 <span className="text-xs">{post.readingTime} min de lectura</span>
               </CardFooter>
-            </Card>
+            </SpotlightCard>
           </Link>
         ))}
       </div>

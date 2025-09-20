@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { services, Service } from "@/lib/services.tsx";
+import { SpotlightCard } from "@/components/spotlight-card";
 
 export default function ServicesPage() {
   return (
@@ -19,7 +20,7 @@ export default function ServicesPage() {
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service: Service) => (
-          <Card key={service.slug} className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
+          <SpotlightCard key={service.slug} className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
             <CardHeader className="flex flex-row items-start gap-4">
               <div className="bg-primary/10 text-primary p-3 rounded-full">
                 {React.cloneElement(service.icon, { className: "h-6 w-6" })}
@@ -43,7 +44,7 @@ export default function ServicesPage() {
                 <ul className="space-y-1">
                  {service.deliverables.slice(0, 2).map((item) => (
                     <li key={item} className="text-sm text-foreground flex items-start gap-2">
-                      <Check className="h-4 w-4 text-accent flex-shrink-0 mt-1" />
+                      <Check className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -59,7 +60,7 @@ export default function ServicesPage() {
                 <Link href={`/contact?service=${service.slug}`}>Solicitar cotización</Link>
               </Button>
             </CardFooter>
-          </Card>
+          </SpotlightCard>
         ))}
       </div>
         <div className="text-center mt-16">
