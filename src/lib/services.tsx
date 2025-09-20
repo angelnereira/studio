@@ -1,5 +1,6 @@
+
 import { ReactElement } from "react";
-import { Briefcase, Building, Puzzle, Code2, Bot, Database, KeyRound, ShoppingCart, Receipt, BrainCircuit, Rocket, Server, FileCog, MonitorCog } from "lucide-react";
+import { Briefcase, Building, Puzzle, Code2, Bot, Database, KeyRound, ShoppingCart, Receipt, BrainCircuit, Rocket, Server, FileCog, MonitorCog, Smartphone, LineChart, ShieldCheck, Wallet, GitPullRequest, Cloud, Construction, Gauge, Users } from "lucide-react";
 
 export type ServicePackage = {
   name: "Básico" | "Profesional" | "Enterprise";
@@ -30,6 +31,100 @@ export type Service = {
 };
 
 export const services: Service[] = [
+  // === CATEGORÍA: PRESENCIA ONLINE ===
+  {
+    title: "Página Web Sencilla / Landing Page",
+    slug: "pagina-web-sencilla",
+    icon: <Rocket />,
+    shortDescription: "Lanza tu presencia en línea con una página web rápida, moderna y optimizada para convertir visitantes.",
+    fullDescription: "Creamos páginas web de una sola sección o sitios pequeños (hasta 3 páginas) que capturan la esencia de tu marca y comunican tu valor de forma clara y directa. Ideal para validar ideas, promocionar eventos o establecer una presencia profesional.",
+    packages: [
+      { name: "Básico", price: 350, description: "Una landing page profesional para empezar.", features: ["Diseño de 1 página", "Formulario de contacto", "100% Responsivo", "Despliegue incluido"], cta: "Empezar Ahora" },
+      { name: "Profesional", price: 750, description: "Un sitio pequeño de hasta 3 páginas.", features: ["Todo en Básico", "Hasta 3 secciones (ej. Home, Sobre Nosotros, Contacto)", "Integración con CMS básico", "SEO Técnico inicial"], cta: "Solicitar Cotización" },
+      { name: "Enterprise", price: 1500, description: "Paquete completo con blog y optimización.", features: ["Todo en Profesional", "Blog auto-administrable", "Optimización de velocidad avanzada", "Analítica web"], cta: "Agendar Llamada" }
+    ],
+    addOns: [],
+    tags: ["Startups", "MVPs", "Marketing"],
+    published: true,
+  },
+  {
+    title: "Portafolio para Profesionales",
+    slug: "portafolio-profesional",
+    icon: <Briefcase />,
+    shortDescription: "Destaca tu trabajo y experiencia con un portafolio digital elegante que atraiga clientes y oportunidades.",
+    fullDescription: "Diseñamos y desarrollamos portafolios web a medida para profesionales como tú (arquitectos, abogados, doctores, freelancers). Mostramos tus proyectos, habilidades y testimonios de una forma que genera confianza y te diferencia de la competencia.",
+    packages: [
+      { name: "Básico", price: 450, description: "Un portafolio limpio y profesional para mostrar tus mejores trabajos.", features: ["Galería de hasta 10 proyectos", "Página de biografía/CV", "Formulario de contacto", "Diseño elegante y minimalista"], cta: "Crear mi Portafolio" },
+      { name: "Profesional", price: 900, description: "Portafolio dinámico con CMS para que puedas actualizar tus proyectos tú mismo.", features: ["Todo en Básico", "Gestor de Contenidos para proyectos", "Sección de blog o artículos", "Optimización SEO para tu nombre"], cta: "Solicitar Cotización" },
+      { name: "Enterprise", price: 1800, description: "La solución definitiva con casos de estudio detallados, video y más.", features: ["Todo en Profesional", "Páginas de caso de estudio a medida", "Integración de video y testimonios", "Sistema de agendamiento de citas"], cta: "Agendar Llamada" }
+    ],
+    addOns: [],
+    tags: ["Freelancers", "Creativos", "Consultores"],
+    published: false,
+  },
+  // === CATEGORÍA: E-COMMERCE Y PAGOS ===
+  {
+    title: "Tienda Online / E-commerce",
+    slug: "tienda-online-ecommerce",
+    icon: <ShoppingCart />,
+    shortDescription: "Vende tus productos en línea con una tienda virtual rápida, segura y fácil de gestionar para tus clientes y para ti.",
+    fullDescription: "Creamos soluciones de e-commerce completas, desde catálogos de productos y carritos de compra hasta la integración segura de pasarelas de pago. Nos enfocamos en una experiencia de compra fluida que maximice tus ventas.",
+    packages: [
+      { name: "Básico", price: 1500, description: "Lanza tu primera tienda online y empieza a vender.", features: ["Catálogo de hasta 50 productos", "Carrito de compras funcional", "Integración con 1 pasarela de pago (Stripe/PayPal)", "Panel para gestionar pedidos"], cta: "Empezar a Vender" },
+      { name: "Profesional", price: 4000, description: "Una tienda robusta con funcionalidades avanzadas para escalar tu negocio.", features: ["Todo en Básico", "Productos ilimitados y variantes", "Cuentas de cliente y historial de pedidos", "Cupones de descuento y promociones"], cta: "Solicitar Cotización" },
+      { name: "Enterprise", price: 9000, description: "Solución a medida para e-commerce de alto volumen con integraciones complejas.", features: ["Todo en Profesional", "Integración con sistemas de inventario (ERP)", "Búsqueda avanzada de productos", "Programa de lealtad y referidos"], cta: "Agendar Llamada" }
+    ],
+    addOns: [],
+    tags: ["Retail", "PYMEs", "Emprendedores"],
+    published: false,
+  },
+    {
+    title: "Integración de Pasarelas de Pago",
+    slug: "integracion-pasarelas-de-pago",
+    icon: <Wallet />,
+    shortDescription: "Acepta pagos en línea de forma segura y eficiente en tu sitio o aplicación actual.",
+    fullDescription: "Integramos las principales pasarelas de pago (Stripe, PayPal) en tu plataforma existente. Nos encargamos de todo el flujo técnico, desde el botón de pago hasta la confirmación de la transacción, garantizando la seguridad de los datos de tus clientes.",
+    packages: [
+        { name: "Básico", price: 500, description: "Integración de un método de pago simple.", features: ["Integración de Stripe o PayPal", "Botones de pago para productos/servicios", "Manejo de notificaciones (webhooks)"], cta: "Integrar Pagos" },
+        { name: "Profesional", price: 1200, description: "Suscripciones y pagos recurrentes.", features: ["Todo en Básico", "Modelo de suscripción (pagos mensuales/anuales)", "Portal de cliente para gestionar suscripción"], cta: "Solicitar Cotización" },
+        { name: "Enterprise", price: 2500, description: "Flujos de pago complejos y multi-pasarela.", features: ["Todo en Profesional", "Integración de múltiples pasarelas", "Marketplace (pagos divididos)", "Facturación automatizada"], cta: "Agendar Llamada" }
+    ],
+    addOns: [],
+    tags: ["SaaS", "E-commerce", "Servicios"],
+    published: false,
+  },
+  // === CATEGORÍA: OPERACIONES INTERNAS ===
+  {
+    title: "Sistemas de Inventarios",
+    slug: "sistemas-de-inventarios",
+    icon: <Building />,
+    shortDescription: "Digitaliza y automatiza el control de tu stock con un sistema a medida que evita pérdidas y optimiza compras.",
+    fullDescription: "Desarrollamos sistemas de gestión de inventario que te dan control total sobre tus existencias. Registra entradas, salidas, transferencias entre bodegas y recibe alertas automáticas de stock bajo para nunca perder una venta.",
+    packages: [
+      { name: "Básico", price: 2000, description: "Control de inventario esencial para pequeñas empresas.", features: ["Registro de productos y proveedores", "Entradas y salidas de stock manuales", "Reporte de existencias básico"], cta: "Optimizar mi Inventario" },
+      { name: "Profesional", price: 5000, description: "Sistema avanzado con alertas y reportes detallados.", features: ["Todo en Básico", "Alertas de stock mínimo", "Lector de código de barras (vía app)", "Reportes de rotación y valoración"], cta: "Solicitar Cotización" },
+      { name: "Enterprise", price: 10000, description: "Integración completa con tu ecosistema de ventas y contabilidad (ERP).", features: ["Todo en Profesional", "Múltiples bodegas y sucursales", "Integración con punto de venta (POS) y e-commerce", "Predicción de demanda básica"], cta: "Agendar Llamada" }
+    ],
+    addOns: [],
+    tags: ["PYMEs", "Retail", "Distribución"],
+    published: false,
+  },
+  {
+    title: "Control de Personal y Planilla",
+    slug: "control-de-personal-y-planilla",
+    icon: <Users />,
+    shortDescription: "Gestiona la asistencia, roles y cálculo de nómina de tu equipo con una plataforma centralizada y segura.",
+    fullDescription: "Simplificamos la gestión de recursos humanos con una aplicación a medida. Controla el acceso, registra la asistencia (check-in/check-out) y automatiza el cálculo de la planilla básica, reduciendo errores y ahorrando tiempo administrativo.",
+     packages: [
+      { name: "Básico", price: 1800, description: "Gestión de perfiles y roles de empleados.", features: ["Base de datos de empleados", "Perfiles y roles de acceso", "Directorio de personal"], cta: "Digitalizar mi Equipo" },
+      { name: "Profesional", price: 4500, description: "Sistema de control de asistencia y tiempo.", features: ["Todo en Básico", "Registro de entrada/salida (check-in/out)", "Reportes de horas trabajadas", "Gestión de ausencias y vacaciones"], cta: "Solicitar Cotización" },
+      { name: "Enterprise", price: 8000, description: "Solución integral con cálculo de nómina.", features: ["Todo en Profesional", "Cálculo de salario y deducciones básicas", "Generación de recibos de pago", "Dashboard de RRHH"], cta: "Agendar Llamada" }
+    ],
+    addOns: [],
+    tags: ["PYMEs", "Recursos Humanos", "Operaciones"],
+    published: false,
+  },
+  // === CATEGORÍA: APLICACIONES Y DATOS ===
   {
     title: "Creación de Aplicaciones Web",
     slug: "creacion-de-aplicaciones-web",
@@ -67,6 +162,52 @@ export const services: Service[] = [
     tags: ["web", "nextjs", "react", "seo", "pwa"],
     published: true
   },
+  {
+    title: "Aplicaciones Móviles",
+    slug: "aplicaciones-moviles",
+    icon: <Smartphone />,
+    shortDescription: "Llega a tus clientes dondequiera que estén con una aplicación móvil nativa (iOS/Android) o PWA.",
+    fullDescription: "Desarrollamos aplicaciones móviles que ofrecen una experiencia de usuario fluida y nativa. Ya sea una app para iOS y Android o una Progressive Web App (PWA) de instalación directa, creamos la solución perfecta para tu caso de uso.",
+    packages: [
+      { name: "Básico", price: 4000, description: "Una Progressive Web App (PWA) funcional.", features: ["App instalable desde el navegador", "Funcionalidad offline básica", "Notificaciones push", "Diseño adaptado a móvil"], cta: "Lanzar mi PWA" },
+      { name: "Profesional", price: 10000, description: "Aplicación híbrida para iOS y Android.", features: ["Todo en Básico", "Publicación en App Store y Play Store", "Acceso a funcionalidades nativas (cámara, GPS)", "Base de código única (React Native)"], cta: "Solicitar Cotización" },
+      { name: "Enterprise", price: 25000, description: "Desarrollo nativo para máximo rendimiento y experiencia de usuario.", features: ["Todo en Profesional", "Desarrollo nativo separado (Swift/Kotlin)", "Máximo rendimiento y fluidez", "Integraciones complejas con hardware"], cta: "Agendar Llamada" }
+    ],
+    addOns: [],
+    tags: ["Móvil", "iOS", "Android", "PWA"],
+    published: false,
+  },
+  {
+    title: "Dashboards de Monitoreo de Negocio",
+    slug: "dashboards-de-monitoreo",
+    icon: <LineChart />,
+    shortDescription: "Visualiza los KPIs más importantes de tu negocio en tiempo real para tomar decisiones basadas en datos.",
+    fullDescription: "Transformamos tus datos en conocimiento. Creamos dashboards interactivos que conectan tus diversas fuentes de información (ventas, marketing, operaciones) en un solo lugar, permitiéndote monitorear la salud de tu negocio de un vistazo.",
+    packages: [
+      { name: "Básico", price: 1200, description: "Un dashboard enfocado en una sola área de negocio.", features: ["Conexión a 1 fuente de datos (ej. Google Analytics)", "Hasta 5 métricas clave (KPIs)", "Visualizaciones de datos estándar", "Actualización diaria"], cta: "Visualizar mis Datos" },
+      { name: "Profesional", price: 3500, description: "Dashboard integral que cruza información de varias áreas.", features: ["Todo en Básico", "Conexión a 3 fuentes de datos", "Métricas y filtros personalizados", "Alertas por email basadas en umbrales"], cta: "Solicitar Cotización" },
+      { name: "Enterprise", price: 7000, description: "Plataforma de Business Intelligence (BI) a medida con análisis predictivo.", features: ["Todo en Profesional", "Conexión a múltiples fuentes de datos", "Datos en tiempo real (streaming)", "Modelos predictivos simples"], cta: "Agendar Llamada" }
+    ],
+    addOns: [],
+    tags: ["Datos", "BI", "Analytics", "KPIs"],
+    published: false,
+  },
+  {
+    title: "Diseño y Manejo de Bases de Datos",
+    slug: "diseno-bases-de-datos",
+    icon: <Database />,
+    shortDescription: "Una base de datos bien diseñada es la columna vertebral de tu aplicación. La construimos para que sea escalable y eficiente.",
+    fullDescription: "Diseñamos y optimizamos la arquitectura de tu base de datos (SQL o NoSQL) para garantizar que tu aplicación sea rápida, segura y capaz de crecer. Desde el diseño del esquema inicial hasta la optimización de consultas complejas.",
+    packages: [
+      { name: "Básico", price: 800, description: "Diseño de esquema para una nueva aplicación.", features: ["Modelado de datos (hasta 10 entidades)", "Elección de tecnología (SQL/NoSQL)", "Script de creación de la base de datos"], cta: "Diseñar mi BD" },
+      { name: "Profesional", price: 2000, description: "Optimización y migración de una base de datos existente.", features: ["Auditoría de rendimiento de consultas", "Optimización de índices", "Plan de migración de datos", "Estrategia de backups"], cta: "Optimizar mi BD" },
+      { name: "Enterprise", price: 4500, description: "Arquitecturas de datos de alta disponibilidad y para Big Data.", features: ["Todo en Profesional", "Configuración de clústeres y réplicas", "Diseño de Data Warehouse / Data Lake", "Estrategias de sharding"], cta: "Agendar Llamada" }
+    ],
+    addOns: [],
+    tags: ["SQL", "NoSQL", "Arquitectura", "Big Data"],
+    published: false,
+  },
+  // === CATEGORÍA: INTELIGENCIA ARTIFICIAL Y CONSULTORÍA ===
   {
     title: "Integración de IA",
     slug: "integracion-de-inteligencia-artificial",
@@ -141,6 +282,7 @@ export const services: Service[] = [
     tags: ["consultoria", "arquitectura", "devops", "estrategia"],
     published: true
   },
+  // === CATEGORÍA: SOPORTE Y OPTIMIZACIÓN ===
   {
     title: "Mantenimiento y Soporte",
     slug: "mantenimiento-y-soporte",
@@ -176,5 +318,20 @@ export const services: Service[] = [
     addOns: [],
     tags: ["soporte", "mantenimiento", "seguridad", "devops"],
     published: true
+  },
+  {
+    title: "Auditoría y Optimización de Performance",
+    slug: "auditoria-optimizacion-performance",
+    icon: <Gauge />,
+    shortDescription: "Acelera tu sitio o aplicación web para mejorar la experiencia de usuario, el SEO y la tasa de conversión.",
+    fullDescription: "Analizamos a fondo tu aplicación para identificar cuellos de botella en el rendimiento. Optimizamos el código, las imágenes, las consultas a la base de datos y la configuración del servidor para que tu sitio vuele.",
+    packages: [
+      { name: "Básico", price: 600, description: "Análisis y reporte de rendimiento.", features: ["Auditoría con Google PageSpeed/Lighthouse", "Reporte detallado de problemas", "Plan de acción priorizado"], cta: "Auditar mi Sitio" },
+      { name: "Profesional", price: 1800, description: "Implementación de las optimizaciones clave.", features: ["Todo en Básico", "Optimización de imágenes y assets", "Mejoras de caché (caching)", "Minificación de CSS/JS"], cta: "Optimizar mi Sitio" },
+      { name: "Enterprise", price: 4000, description: "Optimización profunda a nivel de código y base de datos.", features: ["Todo en Profesional", "Refactorización de código crítico", "Optimización de consultas a la base de datos", "Implementación de CDN"], cta: "Agendar Llamada" }
+    ],
+    addOns: [],
+    tags: ["Performance", "Web Vitals", "SEO", "Optimización"],
+    published: false,
   }
 ];
