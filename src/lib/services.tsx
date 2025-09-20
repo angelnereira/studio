@@ -247,7 +247,6 @@ export const services: Service[] = [
       {
         name: "Paquete de Pagos",
         price: 490,
-        originalPrice: 700,
         description: "Habilita pagos con tarjeta de crédito, Yappy y otros métodos en tu plataforma.",
         features: ["Integración de 1 a 2 pasarelas de pago", "Procesamiento seguro de transacciones", "Manejo de pagos únicos y suscripciones", "Confirmaciones de pago automáticas", "Panel para ver historial de transacciones"],
         cta: "Aceptar Pagos Online",
@@ -315,7 +314,6 @@ export const services: Service[] = [
       {
         name: "Paquete de Automatización",
         price: 490,
-        originalPrice: 700,
         description: "Automatiza una tarea manual para aumentar la eficiencia de tu equipo.",
         features: ["Análisis del proceso a automatizar", "Desarrollo del 'robot' de software", "Integración con tus aplicaciones actuales (Excel, email, etc.)", "Ejecución programada y monitoreo", "Reducción de errores humanos a cero"],
         cta: "Automatizar mi Empresa",
@@ -337,7 +335,6 @@ export const services: Service[] = [
       {
         name: "Paquete Chatbot IA",
         price: 490,
-        originalPrice: 700,
         description: "Un asistente virtual para atender a tus clientes de forma automática.",
         features: ["Entrenamiento con la información de tu negocio", "Implementación en tu sitio web o WhatsApp", "Capacidad para responder preguntas frecuentes", "Escalamiento a un agente humano si es necesario", "Panel para revisar conversaciones"],
         cta: "Implementar mi Chatbot",
@@ -494,7 +491,6 @@ export const services: Service[] = [
       {
         name: "Paquete de Ciberseguridad",
         price: 735,
-        originalPrice: 1050,
         description: "Auditoría y fortalecimiento de la seguridad de tus sistemas.",
         features: ["Análisis de vulnerabilidades (auditoría)", "Pruebas de penetración básicas (pentesting)", "Implementación de parches de seguridad", "Configuración de firewalls y monitoreo", "Reporte de hallazgos y recomendaciones"],
         cta: "Proteger mi Negocio",
