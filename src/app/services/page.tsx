@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { Check, Server, FileCog, MonitorCog, Rocket, Code2, Receipt, Briefcase, Building, ShoppingCart, Puzzle, BrainCircuit, Bot, Database, KeyRound } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { services, Service } from "@/lib/services.tsx";
+import { services, Service } from "@/lib/services";
 import { SpotlightCard } from "@/components/spotlight-card";
 
 export default function ServicesPage() {
@@ -12,25 +12,21 @@ export default function ServicesPage() {
     <div className="container py-12 md:py-24 lg:py-32">
       <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Servicios y Soluciones</h1>
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Soluciones a la Medida de tu Negocio</h1>
           <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Soluciones de software confiables y adaptadas a la era digital, desde sitios web para PYMES hasta sistemas enterprise integrados con IA en la nube.
+            Desde MVPs para startups hasta sistemas empresariales con IA. Transformamos tus ideas en software robusto y escalable que genera resultados.
           </p>
         </div>
       </div>
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((service: Service) => {
-          const discountedPrice = service.slug.includes('mantenimiento') 
-            ? service.pricing.startingPrice 
-            : service.pricing.startingPrice * 0.7;
-
-          const priceSuffix = service.slug.includes('mantenimiento') || service.slug === 'consultoria-de-software' ? '/mes' : ' USD';
-          const displayPrice = service.slug.includes('mantenimiento') ? service.pricing.startingPrice : discountedPrice;
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
+        {services.filter(s => s.published).map((service: Service) => {
+          const startingPrice = service.packages[0].price;
+          const priceSuffix = service.packages[0].priceSuffix || '';
 
           return (
             <SpotlightCard key={service.slug} className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
               <CardHeader className="flex flex-row items-start gap-4">
-                <div className="bg-primary/10 text-primary p-3 rounded-full">
+                <div className="bg-primary/10 text-primary p-3 rounded-full mt-1">
                   {React.cloneElement(service.icon, { className: "h-6 w-6" })}
                 </div>
                 <div className="flex-1">
@@ -40,50 +36,41 @@ export default function ServicesPage() {
               </CardHeader>
               <CardContent className="flex-1 space-y-4">
                 <div>
-                  <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Stack Principal</h4>
+                    <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Planes desde</h4>
+                    <p className="text-2xl font-bold text-primary">${startingPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">{priceSuffix}</span></p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Ideal para</h4>
                   <div className="flex flex-wrap gap-2">
-                    {service.architecture.recommendedStack.slice(0, 4).map((tech) => (
-                      <Badge key={tech} variant="secondary">{tech}</Badge>
+                    {service.tags.map((tag) => (
+                      <Badge key={tag} variant="outline">{tag}</Badge>
                     ))}
                   </div>
-                </div>
-                 <div>
-                  <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Entregables Clave</h4>
-                  <ul className="space-y-1">
-                   {service.deliverables.slice(0, 2).map((item) => (
-                      <li key={item} className="text-sm text-foreground flex items-start gap-2">
-                        <Check className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </CardContent>
-              <CardFooter className="flex-col items-start gap-4 pt-4">
-                <div className="w-full">
-                  <p className="text-xs text-muted-foreground">{service.slug.includes('mantenimiento') ? 'Desde' : 'Oferta desde'}</p>
-                  <div className="flex items-baseline gap-2">
-                    <p className="text-2xl font-bold text-primary">${displayPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">{priceSuffix}</span></p>
-                    {!service.slug.includes('mantenimiento') && service.slug !== 'consultoria-de-software' && (
-                       <p className="text-sm font-normal text-muted-foreground line-through">${service.pricing.startingPrice.toLocaleString()}</p>
-                    )}
-                  </div>
-                </div>
-                <Button asChild className="w-full">
-                  <Link href={`/contact?service=${service.slug}`}>Solicitar cotización</Link>
+              <CardFooter className="grid grid-cols-2 gap-4 pt-4">
+                <Button asChild variant="outline">
+                  <Link href={`/services/${service.slug}`}>
+                     Ver Detalles
+                  </Link>
+                </Button>
+                <Button asChild>
+                  <Link href={`/calculator?service=${service.slug}`}>
+                    Cotización Rápida <ArrowRight className="ml-2"/>
+                  </Link>
                 </Button>
               </CardFooter>
             </SpotlightCard>
           );
         })}
       </div>
-        <div className="text-center mt-16">
-            <h2 className="text-2xl font-bold tracking-tighter font-headline">¿No encuentras lo que buscas?</h2>
+        <div className="text-center mt-16 p-8 bg-secondary/50 rounded-lg">
+            <h2 className="text-2xl font-bold tracking-tighter font-headline">¿Tienes un Reto Único?</h2>
             <p className="max-w-[600px] mx-auto mt-2 text-muted-foreground">
-                Cada proyecto es único. Si tienes una idea o un problema que no encaja en estas categorías, contáctame. Me especializo en crear soluciones a medida.
+                Cada proyecto es un mundo. Si tu idea no encaja perfectamente en estas categorías, es una excelente señal. Me especializo en crear soluciones a medida para problemas complejos.
             </p>
             <Button asChild size="lg" className="mt-6">
-                <Link href="/contact">Hablemos de tu proyecto</Link>
+                <Link href="/contact?subject=Proyecto a Medida">Hablemos de tu Proyecto</Link>
             </Button>
         </div>
     </div>
