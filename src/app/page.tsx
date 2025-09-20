@@ -18,63 +18,202 @@ const testimonialImages = {
   test2: PlaceHolderImages.find(p => p.id === 'testimonial-2'),
 };
 
+// Nombre: python
+// Descripción: Icono estilizado de Python.
 const PythonIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}><title>Python</title><path d="M11.952 1.453c-2.438 0-4.321 1.59-4.321 4.23h2.16c0-1.428 1-2.16 2.16-2.16s2.16.732 2.16 2.16c0 1.2-.78 1.932-1.92 2.52-1.74.9-3.432 1.728-3.432 4.3h2.148c0-1.8 1-2.436 2.16-3.096 1.32-.768 2.688-1.404 2.688-3.528C16.273 3.043 14.4 1.453 11.952 1.453zm-1.452 12.21c-1.02 0-1.572.588-1.572 1.356s.552 1.356 1.572 1.356 1.572-.588 1.572-1.356-.552-1.356-1.572-1.356zM11.952 22.547c2.438 0 4.321-1.59 4.321-4.23h-2.16c0 1.428-1 2.16-2.16 2.16s-2.16-.732-2.16-2.16c0-1.2.78-1.932 1.92-2.52 1.74-.9 3.432-1.728 3.432-4.3h-2.148c0 1.8-1 2.436-2.16 3.096-1.32-.768-2.688-1.404-2.688 3.528C7.68 21.047 9.552 22.547 11.952 22.547zm1.452-12.21c1.02 0 1.572.588 1.572 1.356s-.552 1.356-1.572 1.356-1.572-.588-1.572-1.356.552-1.356 1.572-1.356z" fill="#3776AB"/><path d="M12.048 1.453c2.438 0 4.321 1.59 4.321 4.23h-2.16c0-1.428-1-2.16-2.16-2.16s-2.16.732-2.16 2.16c0 1.2-.78 1.932-1.92 2.52-1.74.9-3.432 1.728-3.432 4.3h2.148c0-1.8 1-2.436 2.16-3.096 1.32-.768 2.688-1.404 2.688-3.528C7.727 3.043 9.6 1.453 12.048 1.453zm1.452 12.21c1.02 0 1.572.588 1.572 1.356s-.552 1.356-1.572 1.356-1.572-.588-1.572-1.356.552-1.356 1.572-1.356zM12.048 22.547c-2.438 0-4.321-1.59-4.321-4.23h2.16c0 1.428 1 2.16 2.16 2.16s2.16-.732 2.16-2.16c0-1.2.78-1.932 1.92-2.52 1.74-.9 3.432-1.728 3.432-4.3h-2.148c0 1.8 1 2.436 2.16 3.096 1.32-.768 2.688-1.404 2.688 3.528C16.32 21.047 14.448 22.547 12.048 22.547zm-1.452-12.21c-1.02 0-1.572.588-1.572 1.356s.552 1.356 1.572 1.356 1.572-.588 1.572-1.356-.552-1.356-1.572-1.356z" fill="#FFD43B"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M11 13.021V11a4 4 0 1 0-4-4h2.5" />
+        <path d="M13 10.979V13a4 4 0 1 0 4 4h-2.5" />
+        <path d="M7 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
+        <path d="M17 13a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
+    </svg>
 );
+
+// Nombre: typescript
+// Descripción: Icono estilizado de TypeScript.
 const TypescriptIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>TypeScript</title><path d="M1.5 0h21v21h-21z" /><path d="M1.5,21V0h21V21h-2.25V2.25H3.75V21H1.5Z" /><path d="M8.2,16.5h2.1V9.3h3.2V7.2H8.2v9.3Z M16.3,9.3c-1.3,0-2.3.4-3.1,1.2s-1.2,1.8-1.2,3c0,1.2.4,2.2,1.2,3s1.8,1.2,3.1,1.2c1.3,0,2.3-.4,3.1-1.2s1.2-1.8,1.2-3c0-1.2-.4-2.2-1.2-3S17.6,9.3,16.3,9.3Zm0,8.3c-1,0-1.8-.3-2.4-1s-.9-1.5-.9-2.5c0-1,.3-1.8,1-2.5s1.4-1,2.3-1c1,0,1.8.3,2.4,1s.9,1.5.9,2.5c0,1-.3,1.8-.9,2.5s-1.4,1-2.4,1Z" fill="#fff" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M4 4h16v16H4z" />
+        <path d="M12 17V7" />
+        <path d="M9 10h6" />
+        <path d="M15.5 10a2.5 2.5 0 0 1 0 5h-3" />
+    </svg>
 );
+
+// Nombre: nextjs
+// Descripción: Icono estilizado de Next.js.
 const NextjsIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>Next.js</title><path d="M12 0A12 12 0 1 0 12 24A12 12 0 1 0 12 0zM8.22 19.34V6.66h2.14v10.6l6.8-10.6h2.26L11.52 17.34v2z" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M9 15V9l7.7 10.4A5 5 0 1 0 9 15z" />
+        <path d="M15 12V9" />
+    </svg>
 );
+
+// Nombre: nodejs
+// Descripción: Icono estilizado de Node.js.
 const NodejsIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>Node.js</title><path d="M11.39 0H2.61L0 2.61v18.78L2.61 24h18.78L24 21.39V8.61L21.39 6H12.61zm.24 1.36h8.04l2 2V20l-1.36 1.36H3.36L2 21.35V3.36l1.36-1.36h8.27zM12 4.17a7.83 7.83 0 1 0 0 15.66 7.83 7.83 0 0 0 0-15.66zm0 1.44a6.39 6.39 0 1 1 0 12.78 6.39 6.39 0 0 1 0-12.78z" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M20 15.27a4.32 4.32 0 0 1-2.2-3.81V9.45a4.32 4.32 0 0 1 2.4-3.9" />
+        <path d="M17.8 11.46a4.32 4.32 0 0 1-8.64 0" />
+        <path d="M15.6 5.55a4.32 4.32 0 0 1-2.4-3.9V.27a4.32 4.32 0 0 1-4.14 4.14" />
+        <path d="M4 8.73a4.32 4.32 0 0 1 2.2 3.81v3.06a4.32 4.32 0 0 1-2.4 3.9" />
+        <path d="M6.2 12.54a4.32 4.32 0 0 1 8.64 0" />
+        <path d="M8.4 18.45a4.32 4.32 0 0 1 2.4 3.9v1.38a4.32 4.32 0 0 1 4.14-4.14" />
+    </svg>
 );
+
+// Nombre: google-cloud
+// Descripción: Icono estilizado de Google Cloud.
+const GoogleCloudIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+    </svg>
+);
+
+// Nombre: firebase
+// Descripción: Icono estilizado de Firebase.
 const FirebaseIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>Firebase</title><path d="M3.684 19.45a.34.34 0 0 1-.168-.046.335.335 0 0 1-.164-.316L4.408 8.23 3.5 8.5v-2l10.832-6.5h.336l-3.328 17.528a.339.339 0 0 1-.32.28.328.328 0 0 1-.336-.312l.6-3.152-7.42 5.004a.332.332 0 0 1-.184.052zm15.808-11.3L9.16 2.096l-1.852 3.1L14.5 3.5l5 5zm-3.328-3.048L18 3.5l-3.5 3.5-1.5-1.5z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M4.62 16.51L12 2l7.38 14.51" />
+        <path d="M12 21.49L4.29 8.02" />
+        <path d="M12 21.49l7.71-13.47" />
+    </svg>
 );
+
+// Nombre: docker
+// Descripción: Icono estilizado de Docker.
 const DockerIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>Docker</title><path d="M22.46 12.35c0-1.66-1.24-3-3-3h-.5c-.88 0-1.7.4-2.26 1.13-.56-.73-1.38-1.13-2.26-1.13s-1.7.4-2.26 1.13C11.62 9.75 10.8 9.35 10 9.35h-.5c-1.76 0-3 1.34-3 3 0 .7.24 1.35.63 1.88-.5.4-1.13 1-1.13 2.12 0 1.33 1.1 2.5 2.5 2.5h10c1.4 0 2.5-1.17 2.5-2.5 0-1.12-.63-1.72-1.13-2.12.4-.53.63-1.18.63-1.88zM8.5 13.85H6v-1.5h2.5zm0-3H6v-1.5h2.5zm4 3H10v-1.5h2.5zm0-3H10v-1.5h2.5zm4 3h-2.5v-1.5H16.5zm0-3h-2.5v-1.5H16.5z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M21.3 12.77c.36-.6.36-1.94 0-2.54l-2-3.46a2 2 0 0 0-1.73-1H6.4a2 2 0 0 0-1.73 1l-2 3.46c-.36.6-.36 1.94 0 2.54l2 3.46a2 2 0 0 0 1.73 1h10.86a2 2 0 0 0 1.73-1Z" />
+        <path d="M8 12h8" />
+        <path d="M8 9h2" />
+        <path d="M14 9h2" />
+        <path d="M8 15h2" />
+    </svg>
 );
-const GithubGitlabIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+
+// Nombre: git
+// Descripción: Icono estilizado de Git.
+const GitIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <circle cx="18" cy="18" r="3" />
+        <circle cx="6" cy="6" r="3" />
+        <path d="M6 9v6" />
+        <path d="m15 6-6 6" />
+    </svg>
 );
+
+// Nombre: github
+// Descripción: Icono estilizado de GitHub.
+const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+        <path d="M9 18c-4.51 2-5-2-7-2" />
+    </svg>
+);
+
+// Nombre: ci-cd
+// Descripción: Icono estilizado de CI/CD.
+const CiCdIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12" />
+        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+        <path d="m22 6-3 3" />
+        <path d="m2 17 3-3" />
+    </svg>
+);
+
+// Nombre: linux
+// Descripción: Icono estilizado de Linux (Tux).
 const LinuxIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>Linux</title><path d="M5.62 13.11c-.37 0-.58.3-.58.82v1.73c0 .52.21.82.58.82.38 0 .59-.3.59-.82v-1.73c0-.52-.21-.82-.59-.82zm-3.3 0c-.38 0-.59.3-.59.82v1.73c0 .52.21.82.59.82.37 0 .58-.3.58-.82v-1.73c0-.52-.21-.82-.58-.82zm14.63.15c-.4 0-.6.2-.6.7v3.29c0 .5.2.7.6.7s.6-.2.6-.7v-3.29c0-.5-.2-.7-.6-.7zM12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.18 17.6c-.34.3-.78.47-1.32.47-.9 0-1.5-.4-1.92-1.12l-2.3 4.38c-.34.64-.8.97-1.4.97-.4 0-.7-.1-1-.32l8.3-8.3zm-10.36-1.5c.34-.3.78-.47 1.32-.47.9 0 1.5.4 1.92 1.12l2.3-4.38c.34-.64.8-.97 1.4-.97.4 0 .7.1 1 .32l-8.24 8.24c.02-.12.04-.23.04-.34v-3.52z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M13.84 11.33c-.1-1.04.1-2.12.53-3.15.44-1.04.53-2.24.23-3.3l.2.3c.3 1.03.03 2.2-.5 3.2-.54 1-.84 2.1-.73 3.15" />
+        <path d="M15.45 13.11c.88.94 1.45 2.1 1.45 3.39 0 2.7-2.2 4.9-5 4.9s-5-2.2-5-4.9c0-1.28.57-2.45 1.45-3.39" />
+        <path d="M10.16 11.33c.1-1.04-.1-2.12-.53-3.15-.44-1.04-.53-2.24-.23-3.3l-.2.3c-.3 1.03-.03 2.2.5 3.2.54 1 .84 2.1.73 3.15" />
+        <path d="M12 13.5a1.5 1.5 0 0 0-3 0" />
+        <path d="M12.01 2.01a.01.01 0 1 0 0 .02" />
+        <path d'M12.01 2.01a.01.01 0 1 0 0 .02' />
+        <path d="M12 18.5c.33.33.67.5 1 .5s.67-.17 1-.5" />
+    </svg>
 );
+
+// Nombre: vercel
+// Descripción: Icono estilizado de Vercel.
 const VercelIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>Vercel</title><path d="M12 24L24 4H0L12 24z" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <polygon points="12 2 2 12 12 22 22 12 12 2" />
+    </svg>
 );
+
+// Nombre: kubernetes
+// Descripción: Icono estilizado de Kubernetes.
 const KubernetesIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>Kubernetes</title><path d="M12 .012a11.89 11.89 0 0 0-1.897.192l-8.465 2.82A1.986 1.986 0 0 0 .193 4.904L2.83 12 .192 19.096a1.986 1.986 0 0 0 1.445 1.88l8.465 2.82A11.89 11.89 0 0 0 12 23.988a11.89 11.89 0 0 0 1.897-.192l8.465-2.82a1.986 1.986 0 0 0 1.445-1.88L21.17 12l2.639-7.096a1.986 1.986 0 0 0-1.445-1.88l-8.465-2.82A11.89 11.89 0 0 0 12 .012zm-.948 4.23L4.415 6.09l-1.58 4.225h5.42zm1.896 0v15.51a9.904 9.904 0 0 1 0-15.51zm.948-1.74l6.637-2.212 1.58 4.225h-5.42zM4.415 17.91l6.637 1.848v-7.39H2.835zm8.483 1.848l6.637-1.848 1.58-4.225h-5.42z" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M12 8.5v-5" />
+        <path d="m19 12-5-2.5" />
+        <path d="m5 12 5-2.5" />
+        <path d="m12 15.5-5 2.5" />
+        <path d="m19 19-5-2.5" />
+        <path d="m5 19 5-2.5" />
+        <path d="M12 22v-6.5" />
+        <circle cx="12" cy="12" r="10" />
+    </svg>
 );
+
+// Nombre: openshift
+// Descripción: Icono estilizado de OpenShift.
 const OpenShiftIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>OpenShift</title><path d="M12.022 2.001A9.993 9.993 0 002.022 12a9.993 9.993 0 0010.002 9.999A9.993 9.993 0 0022.021 12 9.993 9.993 0 0012.022 2.001zm0 2.856a7.137 7.137 0 017.137 7.142 7.137 7.137 0 01-7.137 7.142 7.137 7.137 0 01-7.14-7.142 7.137 7.137 0 017.14-7.142zm5.427 3.25L12.023 15.65 6.598 8.107l1.01-1.01 4.415 4.41 4.41-4.41z" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M12.38 2.01 6.23 4.41a2 2 0 0 0-1.23 1.83v9.52a2 2 0 0 0 1.23 1.83l6.15 2.4a2 2 0 0 0 1.54 0l6.15-2.4a2 2 0 0 0 1.23-1.83V6.24a2 2 0 0 0-1.23-1.83l-6.15-2.4a2 2 0 0 0-1.54 0z" />
+        <path d="m16.5 8-9 4.5" />
+        <path d="m12 12.25 4.5 2.25" />
+        <path d="M12 17v-4.75" />
+    </svg>
 );
+
+// Nombre: tailwindcss
+// Descripción: Icono estilizado de Tailwind CSS.
 const TailwindCssIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>Tailwind CSS</title><path d="M12 18a6 6 0 01-6-6h12a6 6 0 01-6 6zm0-12a6 6 0 016 6H6a6 6 0 016-6z" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M6 12c0-3.31 2.69-6 6-6 2.2 0 4.14 1.18 5.2 3" />
+        <path d="M18 12c0 3.31-2.69 6-6 6-2.2 0-4.14-1.18-5.2-3" />
+        <path d="M6 9c-2.48 0-4.5 2.02-4.5 4.5S3.52 18 6 18c.84 0 1.62-.23 2.3-.64" />
+        <path d="M18 15c2.48 0 4.5-2.02 4.5-4.5S20.48 6 18 6c-.84 0-1.62.23-2.3.64" />
+    </svg>
 );
+
+// Nombre: postgresql
+// Descripción: Icono estilizado de PostgreSQL.
 const PostgreSqlIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" {...props}><title>PostgreSQL</title><path d="M12 24c-1.844 0-3.52-.51-4.996-1.528l.001.002C5.51 21.49 4.312 20.1 3.52 18.5h9.96c.14 0 .27-.06.37-.16.1-.1.15-.23.15-.36v-6.96c0-.13-.05-.26-.15-.36-.1-.1-.23-.16-.37-.16H3.52c-.14 0-.27.06-.37-.16-.1.1-.15.23-.15.36V18.5c0 1.25-.33 2.5-.97 3.5-.64 1-1.54 1.5-2.5 1.5H0v-1.48h-.002c1.474-3.53 4.33-6.52 7.52-6.52v-2.98c-1.474-3.53-4.33-6.52-7.52-6.52V4.48h.002C1.036.95 3.892-.04 7.082-.04V10c1.475 3.53 4.33 6.52 7.52 6.52v2.98c-1.474-3.53-4.33-6.52-7.52-6.52v1.98c3.192 0 6.05-.99 7.522-2.972l-.002.002C18.49 23.49 19.688 22.1 20.48 20.5H10.52c-.14 0-.27-.06-.37-.16-.1-.1-.15-.23-.15-.36v-6.96c0-.13.05-.26.15-.36.1.1.23.16.37.16h9.96c.14 0 .27.06.37.16.1.1.15.23.15.36V20.5c0 1.25.33 2.5.97 3.5.64 1 1.54 1.5 2.5 1.5H24V22.52h.002c-1.474-3.53-4.33-6.52-7.52-6.52v-2.98c1.474-3.53 4.33-6.52 7.52-6.52V8.52h-.002c-1.036 3.53-3.892 6.52-7.082 6.52V5c-1.475-3.53-4.33-6.52-7.52-6.52V3.02C8.108 3.02 10.156 2 12 2s3.892 1.02 5.373 3.02l.002-.002c1.492 1.98 2.625 4.32 2.625 7.48 0 3.16-1.133 5.5-2.625 7.48l-.002-.002C15.892 21.98 13.844 23 12 23v1z" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M15 14c-1.5 1.5-3.5 2.5-6 2.5v-5c2.5 0 4.5-1 6-2.5" />
+        <path d="M6 16.5V21" />
+        <path d="M6 3v5.5" />
+        <path d="M15 5.5c-1.5-1.5-3.5-2.5-6-2.5v5c2.5 0 4.5 1 6 2.5" />
+        <path d="M9 11.5v-5" />
+        <path d="M9 21v-3.5" />
+        <path d="M18 21v-5" />
+        <path d="M18 3v5" />
+    </svg>
 );
 
 const skills = [
-  { name: "Python", icon: <PythonIcon className="text-transparent" />, description: "Mi lenguaje preferido para backend, ciencia de datos e IA por su versatilidad y ecosistema robusto." },
-  { name: "TypeScript", icon: <TypescriptIcon className="text-transparent" />, description: "Esencial para construir aplicaciones front-end y back-end a gran escala, garantizando código mantenible y libre de errores." },
-  { name: "Next.js", icon: <NextjsIcon className="text-white" />, description: "El framework de React para producción. Su rendimiento, SSR y ecosistema lo hacen mi elección para aplicaciones web modernas." },
-  { name: "Node.js", icon: <NodejsIcon className="text-[#339933]" />, description: "Ideal para construir APIs rápidas y escalables, permitiéndome usar JavaScript/TypeScript en todo el stack." },
-  { name: "Google Cloud", icon: <Cloud />, description: "Mi plataforma en la nube preferida para desplegar aplicaciones escalables, desde VMs hasta servicios serverless y de IA." },
-  { name: "Firebase", icon: <FirebaseIcon className="text-[#FFCA28]" />, description: "La solución BaaS para acelerar el desarrollo. La uso para autenticación, bases de datos en tiempo real y hosting." },
-  { name: "Docker", icon: <DockerIcon className="text-[#2496ED]" />, description: "Fundamental en mi flujo de trabajo para crear entornos de desarrollo consistentes y desplegar aplicaciones en contenedores." },
-  { name: "Git", icon: <GitBranch />, description: "El estándar para control de versiones. Indispensable para el trabajo en equipo, la integridad del código y las prácticas de CI/CD." },
-  { name: "GitHub/GitLab", icon: <GithubGitlabIcon className="text-white" />, description: "Plataformas clave para alojar repositorios, colaborar y automatizar flujos de trabajo con Actions y Pipelines." },
-  { name: "CI/CD", icon: <Terminal />, description: "Mi filosofía para entregar valor de forma rápida y segura, automatizando pruebas y despliegues." },
-  { name: "Linux", icon: <LinuxIcon className="text-white" />, description: "El sistema operativo de servidor por excelencia. Domino la línea de comandos para administrar sistemas y redes." },
-  { name: "Vercel", icon: <VercelIcon className="text-white" />, description: "La mejor plataforma para desplegar aplicaciones front-end. Su integración con Next.js, rendimiento y DX son inigualables." },
-  { name: "Kubernetes", icon: <KubernetesIcon className="text-[#326CE5]" />, description: "El estándar para la orquestación de contenedores. Lo uso para gestionar aplicaciones complejas y de alta disponibilidad." },
-  { name: "OpenShift", icon: <OpenShiftIcon className="text-[#EE0000]" />, description: "Mi elección para entornos empresariales que requieren una plataforma de Kubernetes gestionada y con herramientas de desarrollo integradas." },
-  { name: "Tailwind CSS", icon: <TailwindCssIcon className="text-[#38B2AC]" />, description: "Un framework CSS utility-first que me permite construir diseños complejos y personalizados de forma rápida y mantenible." },
-  { name: "PostgreSQL", icon: <PostgreSqlIcon className="text-[#336791]" />, description: "Mi base de datos relacional de código abierto preferida por su robustez, extensibilidad y rendimiento." }
+  { name: "Python", icon: <PythonIcon />, description: "Mi lenguaje preferido para backend, ciencia de datos e IA por su versatilidad y ecosistema robusto." },
+  { name: "TypeScript", icon: <TypescriptIcon />, description: "Esencial para construir aplicaciones front-end y back-end a gran escala, garantizando código mantenible y libre de errores." },
+  { name: "Next.js", icon: <NextjsIcon />, description: "El framework de React para producción. Su rendimiento, SSR y ecosistema lo hacen mi elección para aplicaciones web modernas." },
+  { name: "Node.js", icon: <NodejsIcon />, description: "Ideal para construir APIs rápidas y escalables, permitiéndome usar JavaScript/TypeScript en todo el stack." },
+  { name: "Google Cloud", icon: <GoogleCloudIcon />, description: "Mi plataforma en la nube preferida para desplegar aplicaciones escalables, desde VMs hasta servicios serverless y de IA." },
+  { name: "Firebase", icon: <FirebaseIcon />, description: "La solución BaaS para acelerar el desarrollo. La uso para autenticación, bases de datos en tiempo real y hosting." },
+  { name: "Docker", icon: <DockerIcon />, description: "Fundamental en mi flujo de trabajo para crear entornos de desarrollo consistentes y desplegar aplicaciones en contenedores." },
+  { name: "Git", icon: <GitIcon />, description: "El estándar para control de versiones. Indispensable para el trabajo en equipo, la integridad del código y las prácticas de CI/CD." },
+  { name: "GitHub/GitLab", icon: <GithubIcon />, description: "Plataformas clave para alojar repositorios, colaborar y automatizar flujos de trabajo con Actions y Pipelines." },
+  { name: "CI/CD", icon: <CiCdIcon />, description: "Mi filosofía para entregar valor de forma rápida y segura, automatizando pruebas y despliegues." },
+  { name: "Linux", icon: <LinuxIcon />, description: "El sistema operativo de servidor por excelencia. Domino la línea de comandos para administrar sistemas y redes." },
+  { name: "Vercel", icon: <VercelIcon />, description: "La mejor plataforma para desplegar aplicaciones front-end. Su integración con Next.js, rendimiento y DX son inigualables." },
+  { name: "Kubernetes", icon: <KubernetesIcon />, description: "El estándar para la orquestación de contenedores. Lo uso para gestionar aplicaciones complejas y de alta disponibilidad." },
+  { name: "OpenShift", icon: <OpenShiftIcon />, description: "Mi elección para entornos empresariales que requieren una plataforma de Kubernetes gestionada y con herramientas de desarrollo integradas." },
+  { name: "Tailwind CSS", icon: <TailwindCssIcon />, description: "Un framework CSS utility-first que me permite construir diseños complejos y personalizados de forma rápida y mantenible." },
+  { name: "PostgreSQL", icon: <PostgreSqlIcon />, description: "Mi base de datos relacional de código abierto preferida por su robustez, extensibilidad y rendimiento." }
 ];
 
 
