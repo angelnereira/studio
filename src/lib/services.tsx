@@ -5,6 +5,7 @@ import { Briefcase, Building, Puzzle, Code2, Bot, Database, KeyRound, ShoppingCa
 export type ServicePackage = {
   name: string; // Ej: "Sitio Web Básico / Landing Page"
   price: number;
+  originalPrice?: number;
   priceSuffix?: string; // Ej: "/mes"
   description: string;
   features: string[];
@@ -15,6 +16,7 @@ export type ServicePackage = {
 export type ServiceAddOn = {
   name:string;
   price: number;
+  originalPrice?: number;
   priceSuffix?: string;
   description: string;
 };
@@ -44,7 +46,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete Landing Page",
-        price: 560,
+        price: 392,
+        originalPrice: 560,
         description: "Una página web de una sola sección, optimizada para conversiones.",
         features: ["Diseño profesional y moderno", "100% adaptable a móviles y tabletas", "Formulario de contacto funcional", "Optimización SEO inicial para Google", "Despliegue incluido"],
         cta: "Lanzar mi Página",
@@ -65,7 +68,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete Corporativo",
-        price: 1750,
+        price: 1225,
+        originalPrice: 1750,
         description: "Un sitio web completo y dinámico para presentar tu empresa al mundo.",
         features: ["Diseño de hasta 10 páginas", "Sistema de gestión de contenido (CMS) para que actualices tu mismo", "Blog integrado", "Diseño a la medida de tu marca", "Analítica web"],
         cta: "Construir mi Sitio",
@@ -86,7 +90,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete Portafolio",
-        price: 700,
+        price: 490,
+        originalPrice: 700,
         description: "Un portafolio digital a medida para mostrar tu trayectoria profesional.",
         features: ["Galería de proyectos ilimitada", "Diseño enfocado en tu marca personal", "Sección de biografía, CV y testimonios", "Fácil de actualizar por ti mismo", "Optimizado para búsquedas con tu nombre"],
         cta: "Crear mi Portafolio",
@@ -107,7 +112,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete E-commerce",
-        price: 2800,
+        price: 1960,
+        originalPrice: 2800,
         description: "Una solución de comercio electrónico completa para digitalizar tus ventas.",
         features: ["Catálogo de productos auto-gestionable", "Integración de pasarela de pagos (tarjetas, Yappy, Nequi)", "Gestión de pedidos e inventario básico", "Cuentas de cliente", "Diseño optimizado para la conversión"],
         cta: "Empezar a Vender",
@@ -128,7 +134,8 @@ export const services: Service[] = [
     packages: [
        {
         name: "Paquete Aplicación a Medida",
-        price: 2450,
+        price: 1715,
+        originalPrice: 2450,
         description: "Una aplicación web robusta para resolver un problema de negocio específico.",
         features: ["Análisis y diseño de la solución", "Desarrollo de funcionalidades a medida", "Base de datos segura y escalable", "Panel de administración", "Autenticación y roles de usuario"],
         cta: "Digitalizar mi Proceso",
@@ -149,7 +156,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete App Móvil (MVP)",
-        price: 4200,
+        price: 2940,
+        originalPrice: 4200,
         description: "Lanza la primera versión de tu app en iOS y Android.",
         features: ["Diseño de interfaz y experiencia de usuario (UI/UX)", "Funcionalidades clave para el MVP", "Backend y base de datos en la nube", "Publicación en App Store y Google Play", "Panel de administración básico"],
         cta: "Lanzar mi App",
@@ -170,7 +178,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Modernización",
-        price: 1400,
+        price: 980,
+        originalPrice: 1400,
         description: "Transforma tu sistema legado en una solución moderna.",
         features: ["Auditoría del sistema actual", "Plan de migración de datos y funcionalidades", "Reconstrucción con tecnología moderna (Next.js, Firebase)", "Mejora de rendimiento y seguridad", "Capacitación en la nueva plataforma"],
         cta: "Modernizar mi Sistema",
@@ -193,7 +202,8 @@ export const services: Service[] = [
     packages: [
        {
         name: "Paquete de Facturación",
-        price: 1050,
+        price: 735,
+        originalPrice: 1050,
         description: "Integra la facturación electrónica en tus procesos de venta.",
         features: ["Conexión con PAC autorizado por la DGI", "Generación de facturas, notas de crédito y débito", "Envío automático de facturas al cliente", "Portal para consulta de documentos fiscales", "Reportes de ventas y impuestos"],
         cta: "Automatizar Facturación",
@@ -214,7 +224,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Inventario",
-        price: 1750,
+        price: 1225,
+        originalPrice: 1750,
         description: "Digitaliza el control de tu inventario para una gestión eficiente.",
         features: ["Catálogo de productos con variantes (tallas, colores)", "Control de entradas y salidas de stock", "Múltiples bodegas o sucursales", "Reportes de rotación y valoración", "Alertas de stock mínimo"],
         cta: "Controlar mi Stock",
@@ -235,7 +246,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Pagos",
-        price: 700,
+        price: 490,
+        originalPrice: 700,
         description: "Habilita pagos con tarjeta de crédito, Yappy y otros métodos en tu plataforma.",
         features: ["Integración de 1 a 2 pasarelas de pago", "Procesamiento seguro de transacciones", "Manejo de pagos únicos y suscripciones", "Confirmaciones de pago automáticas", "Panel para ver historial de transacciones"],
         cta: "Aceptar Pagos Online",
@@ -256,7 +268,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Dashboard",
-        price: 1050,
+        price: 735,
+        originalPrice: 1050,
         description: "Un panel de control para monitorear tus indicadores clave de rendimiento (KPIs).",
         features: ["Conexión a tus fuentes de datos (Excel, base de datos, etc.)", "Visualización de hasta 10 KPIs", "Gráficas interactivas y filtros dinámicos", "Acceso seguro desde cualquier dispositivo", "Actualización automática de datos"],
         cta: "Visualizar mis Datos",
@@ -277,7 +290,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Gestión PYME",
-        price: 2100,
+        price: 1470,
+        originalPrice: 2100,
         description: "Un sistema centralizado para organizar y hacer crecer tu negocio.",
         features: ["Módulo de Gestión de Clientes (CRM)", "Módulo de Gestión de Proyectos y Tareas", "Base de datos centralizada", "Roles y permisos para tu equipo", "Reportes operativos básicos"],
         cta: "Organizar mi Negocio",
@@ -300,7 +314,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Automatización",
-        price: 700,
+        price: 490,
+        originalPrice: 700,
         description: "Automatiza una tarea manual para aumentar la eficiencia de tu equipo.",
         features: ["Análisis del proceso a automatizar", "Desarrollo del 'robot' de software", "Integración con tus aplicaciones actuales (Excel, email, etc.)", "Ejecución programada y monitoreo", "Reducción de errores humanos a cero"],
         cta: "Automatizar mi Empresa",
@@ -321,7 +336,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete Chatbot IA",
-        price: 700,
+        price: 490,
+        originalPrice: 700,
         description: "Un asistente virtual para atender a tus clientes de forma automática.",
         features: ["Entrenamiento con la información de tu negocio", "Implementación en tu sitio web o WhatsApp", "Capacidad para responder preguntas frecuentes", "Escalamiento a un agente humano si es necesario", "Panel para revisar conversaciones"],
         cta: "Implementar mi Chatbot",
@@ -342,7 +358,8 @@ export const services: Service[] = [
     packages: [
        {
         name: "Paquete de Recomendación",
-        price: 1050,
+        price: 735,
+        originalPrice: 1050,
         description: "Personaliza la experiencia de compra de tus clientes.",
         features: ["Análisis del historial de compras y navegación", "Implementación de algoritmos de recomendación (ej. 'clientes que compraron esto también compraron...')", "Integración en tu e-commerce o plataforma", "Pruebas A/B para medir impacto en ventas", "Dashboard de rendimiento"],
         cta: "Aumentar mis Ventas",
@@ -363,7 +380,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Análisis IA",
-        price: 1750,
+        price: 1225,
+        originalPrice: 1750,
         description: "Extrae inteligencia de tus datos para guiar tu estrategia de negocio.",
         features: ["Definición del problema de negocio a resolver", "Recolección y limpieza de datos", "Entrenamiento de un modelo de Machine Learning", "Presentación de resultados y insights clave", "Implementación de un dashboard con los hallazgos"],
         cta: "Analizar mis Datos",
@@ -375,7 +393,7 @@ export const services: Service[] = [
     published: true,
   },
 
-  // === CATEGORÍA: INFRAESTRUCTURA Y MANTENIMIENTO ===
+  // === CATEGORía: INFRAESTRUCTURA Y MANTENIMIENTO ===
   {
     title: "Mantenimiento de Software",
     slug: "mantenimiento-software",
@@ -386,7 +404,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Plan de Mantenimiento Mensual",
-        price: 140,
+        price: 98,
+        originalPrice: 140,
         priceSuffix: "/mes",
         description: "Un plan para mantener tu software seguro y funcionando.",
         features: ["Monitoreo de rendimiento y disponibilidad 24/7", "Backups automáticos", "Actualizaciones de seguridad críticas", "Soporte técnico por email", "Reporte mensual de estado"],
@@ -408,7 +427,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Migración a la Nube",
-        price: 1400,
+        price: 980,
+        originalPrice: 1400,
         description: "Moderniza tu infraestructura y prepárala para el futuro.",
         features: ["Análisis de la infraestructura actual", "Diseño de la arquitectura en la nube", "Plan y ejecución de la migración", "Configuración de seguridad y redes", "Optimización de costos en la nube (FinOps)"],
         cta: "Migrar a la Nube",
@@ -429,7 +449,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Consultoría",
-        price: 560,
+        price: 392,
+        originalPrice: 560,
         description: "Guía técnica para asegurar el éxito de tu proyecto.",
         features: ["Sesiones de trabajo para definir requerimientos", "Diseño de la arquitectura del sistema", "Recomendación de stack tecnológico", "Plan de desarrollo y fases (roadmap)", "Documento de arquitectura"],
         cta: "Agendar Consultoría",
@@ -450,7 +471,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Integración",
-        price: 700,
+        price: 490,
+        originalPrice: 700,
         description: "Conecta dos o más sistemas para automatizar el flujo de datos.",
         features: ["Análisis de los sistemas a integrar", "Desarrollo de la API o conector", "Mapeo y transformación de datos", "Monitoreo del flujo de información", "Manejo de errores y reintentos"],
         cta: "Conectar mis Sistemas",
@@ -471,7 +493,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Paquete de Ciberseguridad",
-        price: 1050,
+        price: 735,
+        originalPrice: 1050,
         description: "Auditoría y fortalecimiento de la seguridad de tus sistemas.",
         features: ["Análisis de vulnerabilidades (auditoría)", "Pruebas de penetración básicas (pentesting)", "Implementación de parches de seguridad", "Configuración de firewalls y monitoreo", "Reporte de hallazgos y recomendaciones"],
         cta: "Proteger mi Negocio",

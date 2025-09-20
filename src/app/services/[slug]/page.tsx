@@ -37,9 +37,14 @@ const PackageCard = ({ pkg, serviceSlug }: { pkg: ServicePackage, serviceSlug: s
       <CardDescription>{pkg.description}</CardDescription>
     </CardHeader>
     <CardContent className="flex-1 space-y-6">
-      <div className="text-3xl font-bold">
-        ${pkg.price.toLocaleString()}
-        {pkg.priceSuffix && <span className="text-sm font-normal text-muted-foreground">{pkg.priceSuffix}</span>}
+      <div className="flex items-baseline gap-2">
+        <p className="text-3xl font-bold">
+          ${pkg.price.toLocaleString()}
+          {pkg.priceSuffix && <span className="text-sm font-normal text-muted-foreground">{pkg.priceSuffix}</span>}
+        </p>
+        {pkg.originalPrice && (
+            <p className="text-xl font-normal text-muted-foreground line-through">${pkg.originalPrice.toLocaleString()}</p>
+        )}
       </div>
       <ul className="space-y-3 text-sm">
         {pkg.features.map((feature) => (
@@ -108,11 +113,16 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                             <h3 className="font-semibold">{addOn.name}</h3>
                             <p className="text-sm text-muted-foreground">{addOn.description}</p>
                         </div>
-                        <div className="text-right">
+                        <div className="text-right flex items-baseline gap-2">
                            <p className="font-bold text-primary">
                              +${addOn.price.toLocaleString()}
                              {addOn.priceSuffix && <span className="text-sm font-normal text-muted-foreground">{addOn.priceSuffix}</span>}
                             </p>
+                            {addOn.originalPrice && (
+                                <p className="text-sm font-normal text-muted-foreground line-through">
+                                    +${addOn.originalPrice.toLocaleString()}
+                                </p>
+                            )}
                         </div>
                     </Card>
                 ))}

@@ -21,8 +21,10 @@ export default function ServicesPage() {
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
         {services.filter(s => s.published).map((service: Service) => {
-          const startingPrice = service.packages[0].price;
-          const priceSuffix = service.packages[0].priceSuffix || '';
+          const startingPackage = service.packages[0];
+          const startingPrice = startingPackage.price;
+          const originalPrice = startingPackage.originalPrice;
+          const priceSuffix = startingPackage.priceSuffix || '';
 
           return (
             <SpotlightCard key={service.slug} className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
@@ -38,7 +40,12 @@ export default function ServicesPage() {
               <CardContent className="flex-1 space-y-4">
                 <div>
                     <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Planes desde</h4>
-                    <p className="text-2xl font-bold text-primary">${startingPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">{priceSuffix}</span></p>
+                     <div className="flex items-baseline gap-2">
+                        <p className="text-2xl font-bold text-primary">${startingPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">{priceSuffix}</span></p>
+                        {originalPrice && (
+                          <p className="text-lg font-normal text-muted-foreground line-through">${originalPrice.toLocaleString()}</p>
+                        )}
+                    </div>
                 </div>
                 <div>
                   <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Ideal para</h4>
