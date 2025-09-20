@@ -13,54 +13,53 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug).catch(() => null);
+  try {
+    const post = await getPostWithHtml(params.slug);
+    
+    if (!post) {
+      return {
+        title: 'Post no encontrado',
+      };
+    }
 
-  if (!post) {
     return {
+      title: `${post.title} | Ángel Nereira`,
+      description: post.excerpt,
+      openGraph: {
+        title: post.title,
+        description: post.excerpt,
+        images: [
+          {
+            url: post.ogImage,
+            width: 1200,
+            height: 630,
+          },
+        ],
+        type: 'article',
+        publishedTime: post.date,
+        authors: [post.author],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: post.title,
+        description: post.excerpt,
+        images: [post.ogImage],
+      },
+    };
+  } catch (error) {
+     return {
       title: 'Post no encontrado',
     };
   }
-
-  return {
-    title: `${post.title} | Ángel Nereira`,
-    description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: [
-        {
-          url: post.ogImage,
-          width: 1200,
-          height: 630,
-        },
-      ],
-      type: 'article',
-      publishedTime: post.date,
-      authors: [post.author],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt,
-      images: [post.ogImage],
-    },
-  };
 }
-
-// Helper function to extract post data without causing a waterfall
-// This avoids calling getAllPosts multiple times
-async function getPostBySlug(slug: string) {
-    const posts = await getAllPosts();
-    const post = posts.find(p => p.slug === slug);
-    if (!post) throw new Error("Post not found");
-    return getPostWithHtml(slug);
-}
-
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug).catch(() => {
+  let post;
+  try {
+    post = await getPostWithHtml(params.slug);
+  } catch (error) {
     notFound();
-  });
+  }
 
   return (
     <article className="container max-w-4xl py-12 md:py-24">
