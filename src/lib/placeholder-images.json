@@ -25,6 +25,18 @@
       "imageHint": "mobile app"
     },
     {
+      "id": "project-4",
+      "description": "Screenshot of project four.",
+      "imageUrl": "https://picsum.photos/seed/proj4/600/400",
+      "imageHint": "devops pipeline"
+    },
+    {
+      "id": "project-5",
+      "description": "Screenshot of project five.",
+      "imageUrl": "https://picsum.photos/seed/proj5/600/400",
+      "imageHint": "chatbot interface"
+    },
+    {
       "id": "testimonial-1",
       "description": "Avatar for first testimonial.",
       "imageUrl": "https://picsum.photos/seed/test1/100/100",

@@ -13,6 +13,8 @@ const projectImages = {
   proj1: PlaceHolderImages.find(p => p.id === 'project-1'),
   proj2: PlaceHolderImages.find(p => p.id === 'project-2'),
   proj3: PlaceHolderImages.find(p => p.id === 'project-3'),
+  proj4: PlaceHolderImages.find(p => p.id === 'project-4'),
+  proj5: PlaceHolderImages.find(p => p.id === 'project-5'),
 };
 const testimonialImages = {
   test1: PlaceHolderImages.find(p => p.id === 'testimonial-1'),
@@ -62,6 +64,24 @@ const projects = [
     impact: "Automatización completa del cálculo de planillas, garantizando precisión y cumplimiento, y liberando horas de trabajo del personal de RRHH.",
     image: projectImages.proj3,
     githubUrl: "#",
+  },
+   {
+    title: "Pipeline de Despliegue Automatizado (CI/CD)",
+    description: "Implementación de un pipeline de CI/CD para una aplicación de microservicios, automatizando las pruebas, construcción de imágenes Docker y despliegue en un clúster de Kubernetes.",
+    technologies: ["GitHub Actions", "Docker", "Kubernetes", "Google Cloud Build"],
+    problem: "Los despliegues manuales eran lentos, propensos a errores y requerían una ventana de mantenimiento significativa.",
+    impact: "Reducción del tiempo de despliegue de horas a minutos. Aumento de la frecuencia de despliegues en un 500% con una tasa de error cercana a cero.",
+    image: projectImages.proj4,
+    githubUrl: "#",
+  },
+  {
+    title: "Chatbot de Servicio al Cliente con IA",
+    description: "Desarrollo de un chatbot inteligente para automatizar la atención al cliente. Integrado con una base de conocimientos y opcionalmente con WhatsApp para resolver preguntas frecuentes y escalar casos complejos a agentes humanos.",
+    technologies: ["Genkit", "Dialogflow", "Node.js", "Firebase", "WhatsApp API"],
+    problem: "El equipo de soporte estaba sobrecargado con consultas repetitivas, resultando en altos tiempos de espera para los clientes.",
+    impact: "Automatización del 70% de las consultas de primer nivel, reduciendo el tiempo de respuesta promedio en un 90% y mejorando la satisfacción del cliente.",
+    image: projectImages.proj5,
+    liveUrl: "#",
   },
 ];
 
