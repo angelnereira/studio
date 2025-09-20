@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { Check } from "lucide-react";
+import { Check, Server, FileCog, MonitorCog, Rocket, Code2, Receipt, Briefcase, Building, ShoppingCart, Puzzle, BrainCircuit, Bot, Database, KeyRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +20,13 @@ export default function ServicesPage() {
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service: Service) => {
-          const discountedPrice = service.pricing.startingPrice * 0.7;
+          const discountedPrice = service.slug.includes('mantenimiento') 
+            ? service.pricing.startingPrice 
+            : service.pricing.startingPrice * 0.7;
+
+          const priceSuffix = service.slug.includes('mantenimiento') || service.slug === 'consultoria-de-software' ? '/mes' : ' USD';
+          const displayPrice = service.slug.includes('mantenimiento') ? service.pricing.startingPrice : discountedPrice;
+
           return (
             <SpotlightCard key={service.slug} className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
               <CardHeader className="flex flex-row items-start gap-4">
@@ -55,10 +61,12 @@ export default function ServicesPage() {
               </CardContent>
               <CardFooter className="flex-col items-start gap-4 pt-4">
                 <div className="w-full">
-                  <p className="text-xs text-muted-foreground">Desde</p>
+                  <p className="text-xs text-muted-foreground">{service.slug.includes('mantenimiento') ? 'Desde' : 'Oferta desde'}</p>
                   <div className="flex items-baseline gap-2">
-                    <p className="text-2xl font-bold text-primary">${discountedPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground"> USD</span></p>
-                    <p className="text-sm font-normal text-muted-foreground line-through">${service.pricing.startingPrice.toLocaleString()}</p>
+                    <p className="text-2xl font-bold text-primary">${displayPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">{priceSuffix}</span></p>
+                    {!service.slug.includes('mantenimiento') && service.slug !== 'consultoria-de-software' && (
+                       <p className="text-sm font-normal text-muted-foreground line-through">${service.pricing.startingPrice.toLocaleString()}</p>
+                    )}
                   </div>
                 </div>
                 <Button asChild className="w-full">

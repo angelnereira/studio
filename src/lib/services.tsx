@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Briefcase, Building, Puzzle, Code2, Bot, Database, KeyRound, ShoppingCart, Receipt, BrainCircuit, Rocket } from "lucide-react";
+import { Briefcase, Building, Puzzle, Code2, Bot, Database, KeyRound, ShoppingCart, Receipt, BrainCircuit, Rocket, Server, FileCog, MonitorCog } from "lucide-react";
 
 export type Service = {
   title: string;
@@ -380,5 +380,98 @@ icon: <Database />
     tags: ["seguridad", "auth", "rbac", "sso", "jwt"],
     published: true,
     icon: <KeyRound />
+  },
+  {
+    title: "Mantenimiento de Servidores",
+    slug: "mantenimiento-de-servidores",
+    shortDescription: "Asegura la estabilidad y seguridad de tu infraestructura con monitoreo y actualizaciones proactivas.",
+    fullDescription: "...",
+    architecture: {
+      summary: "Plan de mantenimiento que incluye monitoreo de uptime, parches de seguridad, backups y optimización de rendimiento.",
+      diagramHint: "Ciclo de monitoreo, alerta, acción y reporte para el mantenimiento de un servidor.",
+      recommendedStack: ["Linux", "Docker", "Ansible", "Prometheus", "Grafana"],
+      details: "..."
+    },
+    deliverables: ["Monitoreo 24/7", "Reportes de rendimiento", "Gestión de backups", "Actualizaciones de seguridad"],
+    pricing: {
+      currency: "USD",
+      startingPrice: 250,
+      averagePrice: 500,
+      monthlyMaintenanceFrom: 250,
+      notes: "Precio mensual. El costo varía según el número y tipo de servidores."
+    },
+    timeEstimate: { minWeeks: 0, maxWeeks: 0 },
+    illustration: {
+      storagePath: "storage/services/mantenimiento-servidores/illustration.jpg",
+      alt: "Mantenimiento y monitoreo de servidores en la nube",
+      caption: "Tu infraestructura, siempre operativa.",
+      promptForGenerator: "Server maintenance illustration — server racks, monitoring dashboard with graphs, gears and tools, secure lock icon."
+    },
+    cta: { buttonText: "Solicitar Mantenimiento", contactFormRef: "forms/estimateRequest" },
+    tags: ["servidores", "devops", "seguridad", "linux", "mantenimiento"],
+    published: true,
+    icon: <Server />
+  },
+  {
+    title: "Mantenimiento de Aplicaciones",
+    slug: "mantenimiento-de-aplicaciones",
+    shortDescription: "Soporte continuo para tus aplicaciones, incluyendo corrección de errores y actualizaciones menores.",
+    fullDescription: "...",
+    architecture: {
+      summary: "Retainer mensual para asegurar el correcto funcionamiento de aplicaciones, actualización de dependencias y resolución de bugs.",
+      diagramHint: "Flujo de ticket de soporte: reporte de bug, diagnóstico, corrección, despliegue.",
+      recommendedStack: ["Git", "Jira", "Sentry", "Dependabot"],
+      details: "..."
+    },
+    deliverables: ["Corrección de errores", "Actualización de dependencias", "Soporte técnico", "Mejoras menores"],
+    pricing: {
+      currency: "USD",
+      startingPrice: 350,
+      averagePrice: 700,
+      monthlyMaintenanceFrom: 350,
+      notes: "Precio mensual. Incluye un banco de horas para soporte y desarrollo."
+    },
+    timeEstimate: { minWeeks: 0, maxWeeks: 0 },
+    illustration: {
+      storagePath: "storage/services/mantenimiento-aplicaciones/illustration.jpg",
+      alt: "Mantenimiento de aplicaciones web y móviles",
+      caption: "Tu aplicación, siempre al día.",
+      promptForGenerator: "Application maintenance illustration — mobile and web screens with tools, code being updated, checkmarks for resolved bugs."
+    },
+    cta: { buttonText: "Solicitar Mantenimiento", contactFormRef: "forms/estimateRequest" },
+    tags: ["soporte", "mantenimiento", "bug-fixing", "actualizaciones"],
+    published: true,
+    icon: <FileCog />
+  },
+  {
+    title: "Mantenimiento de Sitios Web",
+    slug: "mantenimiento-de-sitios-web",
+    shortDescription: "Mantén tu sitio web seguro, rápido y funcionando sin problemas con nuestro plan de mantenimiento.",
+    fullDescription: "...",
+    architecture: {
+      summary: "Servicio de mantenimiento para sitios CMS (WordPress, etc.) y estáticos, incluyendo actualizaciones de plugins/core, backups y scans de seguridad.",
+      diagramHint: "Calendario de tareas de mantenimiento: backups semanales, actualizaciones mensuales, scans diarios.",
+      recommendedStack: ["WordPress", "Next.js", "Google Analytics", "Sucuri"],
+      details: "..."
+    },
+    deliverables: ["Actualizaciones de CMS y plugins", "Backups periódicos", "Scans de malware", "Reportes de estado"],
+    pricing: {
+      currency: "USD",
+      startingPrice: 100,
+      averagePrice: 200,
+      monthlyMaintenanceFrom: 100,
+      notes: "Precio mensual. Planes varían según la complejidad del sitio (ej. e-commerce)."
+    },
+    timeEstimate: { minWeeks: 0, maxWeeks: 0 },
+    illustration: {
+      storagePath: "storage/services/mantenimiento-sitios-web/illustration.jpg",
+      alt: "Mantenimiento de sitios web y CMS",
+      caption: "Tu sitio web, siempre protegido.",
+      promptForGenerator: "Website maintenance illustration — website on a monitor with a shield, tools, backup clouds, and update icons."
+    },
+    cta: { buttonText: "Solicitar Mantenimiento", contactFormRef: "forms/estimateRequest" },
+    tags: ["mantenimiento-web", "wordpress", "seguridad", "backups"],
+    published: true,
+    icon: <MonitorCog />
   }
 ];
