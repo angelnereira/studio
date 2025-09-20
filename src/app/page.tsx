@@ -177,11 +177,11 @@ export default function Home() {
               {profileImage && (
                 <Image
                   src={profileImage.imageUrl}
-                  alt="Ángel Nereira"
-                  data-ai-hint="professional headshot"
+                  alt="Abstract technology background"
+                  data-ai-hint="abstract technology"
                   width={400}
                   height={400}
-                  className="mx-auto aspect-square overflow-hidden rounded-full object-cover sm:w-full lg:order-last border-4 border-secondary"
+                  className="mx-auto aspect-square overflow-hidden rounded-full object-cover sm:w-full lg:order-last border-4 border-primary/50"
                 />
               )}
             </div>

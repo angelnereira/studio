@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "profile-photo",
-      "description": "A professional headshot of the developer.",
-      "imageUrl": "https://picsum.photos/seed/profile/400/400",
-      "imageHint": "professional headshot"
+      "description": "An abstract, technology-themed illustration.",
+      "imageUrl": "https://picsum.photos/seed/tech-abstract/400/400",
+      "imageHint": "abstract technology"
     },
     {
       "id": "project-1",
