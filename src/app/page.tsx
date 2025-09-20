@@ -107,13 +107,14 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-secondary/50">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-background relative overflow-hidden">
+          <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:32px_32px]"></div>
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <Badge variant="outline" className="text-sm">Software Engineer | Panamá 🇵🇦</Badge>
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none font-headline">
+                  <Badge variant="outline" className="text-sm bg-transparent border-primary/50 text-primary">Software Engineer | Panamá 🇵🇦</Badge>
+                  <h1 className="text-4xl font-bold tracking-tighter sm:text-6xl xl:text-7xl/none font-headline bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
                     Ángel Nereira
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
@@ -145,7 +146,7 @@ export default function Home() {
                   data-ai-hint="professional headshot"
                   width={400}
                   height={400}
-                  className="mx-auto aspect-square overflow-hidden rounded-full object-cover sm:w-full lg:order-last"
+                  className="mx-auto aspect-square overflow-hidden rounded-full object-cover sm:w-full lg:order-last border-4 border-secondary"
                 />
               )}
             </div>
@@ -175,7 +176,7 @@ export default function Home() {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="w-full py-12 md:py-24 lg:py-32 bg-secondary/50">
+        <section id="skills" className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -190,12 +191,12 @@ export default function Home() {
               {skills.map((skill) => (
                 <Tooltip key={skill.name}>
                   <TooltipTrigger asChild>
-                    <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-card p-6 shadow-sm transition-all duration-300 ease-out hover:scale-105 hover:shadow-lg hover:bg-primary/10 hover:-translate-y-1">
+                    <div className="group relative flex flex-col items-center justify-center space-y-2 rounded-lg bg-secondary/70 p-6 shadow-sm transition-all duration-300 ease-geist backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
                       <div className="text-primary">{React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10' })}</div>
-                      <span className="font-medium text-center">{skill.name}</span>
+                      <span className="font-medium text-center text-foreground">{skill.name}</span>
                     </div>
                   </TooltipTrigger>
-                  <TooltipContent className="max-w-xs text-center">
+                  <TooltipContent className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
                     <p className="font-bold mb-2">{skill.name}</p>
                     <p>{skill.description}</p>
                   </TooltipContent>
@@ -219,7 +220,7 @@ export default function Home() {
             </div>
             <div className="grid gap-8 lg:grid-cols-1 py-12">
               {projects.map((project) => (
-                <Card key={project.title} className="flex flex-col md:flex-row overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 w-full">
+                <Card key={project.title} className="group relative flex flex-col md:flex-row overflow-hidden transition-all duration-600 ease-geist w-full bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
                   {project.image && (
                     <div className="w-full md:w-1/3 aspect-video overflow-hidden">
                       <Image
@@ -228,13 +229,13 @@ export default function Home() {
                         data-ai-hint={project.image.imageHint}
                         width={450}
                         height={250}
-                        className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-600 ease-geist group-hover:scale-105"
                       />
                     </div>
                   )}
                   <div className="flex flex-col justify-between p-6 w-full md:w-2/3">
                     <div>
-                      <CardTitle className="mb-2">{project.title}</CardTitle>
+                      <CardTitle className="mb-2 transition-colors duration-300 ease-geist group-hover:text-primary">{project.title}</CardTitle>
                       <div className="flex flex-wrap gap-2 mb-4">
                         {project.technologies.map((tech) => (
                           <Badge key={tech} variant="secondary">{tech}</Badge>
@@ -260,12 +261,12 @@ export default function Home() {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32 bg-secondary/50">
+        <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl font-headline">Lo que dicen otros</h2>
             <div className="grid gap-8 mt-12 sm:grid-cols-1 md:grid-cols-2">
               {testimonials.map((testimonial) => (
-                <Card key={testimonial.name} className="transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1">
+                <Card key={testimonial.name} className="relative transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
                   <CardContent className="pt-6">
                     <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
                   </CardContent>
