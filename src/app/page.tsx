@@ -365,7 +365,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:pt-32 xl:pt-48 bg-background relative overflow-hidden">
+        <section className="w-full py-20 md:py-32 lg:py-40 xl:py-48 bg-background relative overflow-hidden">
           <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:32px_32px]"></div>
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
