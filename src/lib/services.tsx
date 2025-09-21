@@ -36,7 +36,7 @@ export type Service = {
 
 
 export const services: Service[] = [
-  // === NEW WEB DEVELOPMENT PACKAGES ===
+  // === WEB DEVELOPMENT SERVICES ===
   {
     title: "Desarrollo Web",
     slug: "web-development",
@@ -103,7 +103,7 @@ export const services: Service[] = [
     published: true,
   },
 
-  // === NEW AI SOLUTIONS PACKAGES ===
+  // === AI SOLUTIONS SERVICES ===
   {
     title: "Soluciones con IA",
     slug: "ai-solutions",
@@ -161,7 +161,7 @@ export const services: Service[] = [
     published: true,
   },
   
-  // MIGRATED/ADAPTED SERVICES
+  // === SUPPORT & GROWTH SERVICES ===
   {
     title: "Planes de Soporte y Crecimiento",
     slug: "planes-soporte-crecimiento",
