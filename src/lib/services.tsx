@@ -390,7 +390,7 @@ export const services: Service[] = [
     published: true,
   },
 
-  // === CATEGORía: INFRAESTRUCTURA Y MANTENIMIENTO ===
+  // === CATEGORÍA: INFRAESTRUCTURA Y MANTENIMIENTO ===
   {
     title: "Mantenimiento de Software",
     slug: "mantenimiento-software",
@@ -412,6 +412,49 @@ export const services: Service[] = [
     ],
     addOns: [],
     tags: ["Soporte", "Seguridad", "DevOps"],
+    published: false,
+  },
+   {
+    title: "Planes de Soporte y Crecimiento",
+    slug: "planes-soporte-crecimiento",
+    icon: <ShieldCheck />,
+    category: "Infraestructura y Mantenimiento",
+    shortDescription: "Asegura la salud y evolución de tu proyecto con nuestros planes de suscripción.",
+    fullDescription: "Ofrecemos planes de suscripción para el mantenimiento continuo, soporte técnico y desarrollo de nuevas funcionalidades. Garantiza que tu inversión tecnológica siga generando valor a largo plazo, con la tranquilidad de tener un equipo técnico a tu disposición.",
+    packages: [
+      {
+        name: "Soporte Esencial",
+        price: 98,
+        priceSuffix: "/mes",
+        originalPrice: 140,
+        description: "Para mantener tu sitio web o aplicación segura y funcionando de manera óptima.",
+        features: ["Monitoreo de disponibilidad 24/7", "Backups diarios", "Actualizaciones de seguridad críticas", "Soporte técnico por email (respuesta en 24h)", "Reporte mensual de estado"],
+        cta: "Obtener Soporte",
+        time: "Suscripción mensual"
+      },
+      {
+        name: "Crecimiento Plus",
+        price: 245,
+        priceSuffix: "/mes",
+        originalPrice: 350,
+        description: "Ideal para negocios que buscan mejorar y añadir funcionalidades continuamente.",
+        features: ["Todos los beneficios del plan Esencial", "Soporte prioritario por chat", "4 horas de desarrollo para mejoras o nuevas funciones", "Consultoría proactiva de mejoras", "Optimización de rendimiento trimestral"],
+        cta: "Empezar a Crecer",
+        time: "Suscripción mensual"
+      },
+      {
+        name: "Socio Estratégico",
+        price: 686,
+        priceSuffix: "/trimestre",
+        originalPrice: 980,
+        description: "Una alianza para empresas que ven la tecnología como un pilar de su estrategia.",
+        features: ["Todos los beneficios del plan Crecimiento Plus", "15 horas de desarrollo por trimestre", "Llamada de estrategia mensual", "Soporte prioritario 24/7 para emergencias", "Acceso a betas de nuevas tecnologías"],
+        cta: "Formar Alianza",
+        time: "Suscripción trimestral"
+      }
+    ],
+    addOns: [],
+    tags: ["Soporte", "Suscripción", "Corporativo", "Plus"],
     published: true,
   },
    {
