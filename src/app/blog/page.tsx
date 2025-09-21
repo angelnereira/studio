@@ -14,7 +14,7 @@ export default async function BlogPage() {
   const posts = await getAllPosts();
 
   return (
-    <div className="container py-12 md:py-24 lg:py-32">
+    <div className="container max-w-4xl mx-auto px-4 py-12 md:py-24 lg:py-32">
       <div className="mx-auto max-w-2xl text-center">
         <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Tech & Thoughts</h1>
         <p className="mt-4 text-muted-foreground md:text-xl">
@@ -22,7 +22,7 @@ export default async function BlogPage() {
         </p>
       </div>
 
-      <div className="grid gap-8 mt-12 max-w-4xl mx-auto">
+      <div className="grid gap-8 mt-12">
         {posts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className="group block">
             <SpotlightCard className="relative transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">

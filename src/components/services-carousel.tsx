@@ -46,7 +46,7 @@ export const ServicesCarousel: React.FC = () => {
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex -ml-4">
           {publishedServices.map((service) => (
-            <div className="flex-shrink-0 flex-grow-0 basis-full md:basis-1/2 lg:basis-1/3 pl-4" key={service.slug}>
+            <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.33%] pl-4" key={service.slug}>
               <Link href={`/services/${service.slug}`} className="block h-full">
                 <SpotlightCard className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-xl">
                   <CardHeader className="flex-row items-center gap-4">

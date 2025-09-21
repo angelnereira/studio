@@ -10,16 +10,16 @@ import { SpotlightCard } from "@/components/spotlight-card";
 
 export default function ServicesPage() {
   return (
-    <div className="container py-12 md:py-24 lg:py-32">
+    <div className="container max-w-5xl mx-auto px-4 py-12 md:py-24 lg:py-32">
       <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Soluciones a la Medida de tu Negocio</h1>
-          <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
             Desde MVPs para startups hasta sistemas empresariales con IA. Transformamos tus ideas en software robusto y escalable que genera resultados.
           </p>
         </div>
       </div>
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-2">
         {services.filter(s => s.published).map((service: Service) => {
           const startingPackage = service.packages[0];
           const startingPrice = startingPackage.price;
