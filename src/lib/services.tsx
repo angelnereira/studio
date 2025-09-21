@@ -4,7 +4,7 @@ import { Briefcase, Building, Puzzle, Code2, Bot, Database, KeyRound, ShoppingCa
 
 export type ServicePackage = {
   name: string;
-  price: number | string; // Updated to allow string for ranges
+  price: number | string;
   originalPrice?: number;
   priceSuffix?: string;
   description: string;
@@ -15,10 +15,10 @@ export type ServicePackage = {
 
 export type ServiceAddOn = {
   name:string;
-  price: number | string;
+  price: string;
   originalPrice?: number;
   priceSuffix?: string;
-  description: string;
+  description?: string;
 };
 
 export type Service = {
@@ -95,6 +95,7 @@ export const services: Service[] = [
     addOns: [
         { name: "Blog integrado", price: "+$300", description: "Para el paquete Lanzamiento Digital." },
         { name: "Chat en vivo", price: "+$200", description: "Para cualquier paquete." },
+        { name: "Multiidioma (ES/EN)", price: "+$400", description: "Para cualquier paquete." },
         { name: "E-commerce básico (hasta 50 productos)", price: "+$1,200", description: "Para el paquete Presencia Corporativa." },
         { name: "Sistema de citas online", price: "+$800", description: "Para el paquete Presencia Corporativa." },
         { name: "Aplicación móvil complementaria", price: "+$3,000", description: "Para el paquete Solución Empresarial." },
