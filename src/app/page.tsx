@@ -394,7 +394,7 @@ export default function Home() {
               </div>
               <div className="relative w-full max-w-md mx-auto lg:max-w-2xl h-auto">
                  <Image
-                    src="https://i.postimg.cc/D0VSxfDB/Chat-GPT-Image-Sep-20-2025-10-11-35-PM.png"
+                    src="https://i.postimg.cc/VJCCNJp0/Chat-GPT-Image-Sep-20-2025-10-11-35-PM.png"
                     alt="Software Engineer Avatar"
                     width={500}
                     height={500}
@@ -496,7 +496,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="grid gap-8 lg:grid-cols-2 xl:grid-cols-3 py-12">
+            <div className="mx-auto grid max-w-5xl justify-center gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
               {projects.map((project) => (
                 <Dialog key={project.id}>
                   <DialogTrigger asChild>
