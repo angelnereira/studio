@@ -218,11 +218,18 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-br from-background to-secondary/50">
+        <section className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-br from-background to-secondary/50 overflow-hidden">
           <div className="container px-4 md:px-6 text-center">
              <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
                 <span className="block mb-2">Angel Nereira</span>
-                <span className="block text-primary">Ingeniero de Software y DevOps</span>
+                <div className="relative w-full overflow-hidden">
+                  <div className="flex animate-marquee whitespace-nowrap">
+                    <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
+                    <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
+                    <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
+                    <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
+                  </div>
+                </div>
             </h1>
             <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-6">
                 De la Idea a la Solución Tecnológica
