@@ -1,14 +1,17 @@
+
 import { skills } from '@/lib/skills';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import * as React from 'react';
 import Link from 'next/link';
 import { SpotlightCard } from '@/components/spotlight-card';
-import { Card } from '@/components/ui/card';
+import {
+  CardHeader,
+  CardContent,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 export default function SkillsPage() {
   return (
@@ -24,33 +27,40 @@ export default function SkillsPage() {
         </p>
       </div>
 
-      <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 py-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-        <TooltipProvider>
-          {skills.map(skill => (
-            <Tooltip key={skill.name}>
-              <TooltipTrigger asChild>
-                <Link href={`/skills/${skill.slug}`} className="group block h-full">
-                   <SpotlightCard className="flex flex-col items-center justify-center space-y-3 rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:-translate-y-1.5 hover:shadow-primary/10 h-full">
-                      <div className="text-primary transition-transform duration-300 group-hover:scale-110">
-                        {React.cloneElement(skill.icon as React.ReactElement, {
-                          className: 'h-12 w-12',
-                        })}
-                      </div>
-                      <span className="font-semibold text-center text-sm">
-                        {skill.name}
-                      </span>
-                   </SpotlightCard>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
-                <p className="font-bold mb-2">{skill.name}</p>
-                <p className="text-xs text-muted-foreground">
+      <div className="grid gap-8 mt-12 md:grid-cols-2 lg:grid-cols-3">
+        {skills.map(skill => (
+          <Link
+            key={skill.slug}
+            href={`/skills/${skill.slug}`}
+            className="group block h-full"
+          >
+            <SpotlightCard className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-xl">
+              <CardHeader className="flex-row items-center gap-4">
+                <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+                  {React.cloneElement(skill.icon as React.ReactElement, {
+                    className: 'w-6 h-6',
+                  })}
+                </div>
+                <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary text-lg">
+                  {skill.name}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1">
+                <CardDescription className="line-clamp-4">
                   {skill.description}
-                </p>
-              </TooltipContent>
-            </Tooltip>
-          ))}
-        </TooltipProvider>
+                </CardDescription>
+              </CardContent>
+              <CardFooter>
+                <Button
+                  variant="link"
+                  className="p-0 text-primary transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  Ver detalles <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </CardFooter>
+            </SpotlightCard>
+          </Link>
+        ))}
       </div>
     </div>
   );
