@@ -394,11 +394,12 @@ export default function Home() {
               </div>
               <div className="relative w-full max-w-md mx-auto lg:max-w-2xl h-auto">
                  <Image
-                    src="https://picsum.photos/seed/dev-avatar/500/500"
+                    src="/images/avatar.png"
                     alt="Software Engineer Avatar"
                     width={500}
                     height={500}
-                    className="rounded-lg shadow-2xl"
+                    className="drop-shadow-[0_8px_40px_rgba(255,255,255,0.15)]"
+                    priority
                     data-ai-hint="software developer avatar"
                   />
               </div>
