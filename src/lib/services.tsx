@@ -31,7 +31,7 @@ export type Service = {
   addOns: ServiceAddOn[];
   tags: string[];
   published: boolean;
-  category: "Web Development" | "AI Solutions" | "Infrastructure & Maintenance" | "Business Management";
+  category: "Web Development" | "AI Solutions" | "Infrastructure & Maintenance" | "Business Management" | "Mentorías y Capacitación";
 };
 
 
@@ -312,7 +312,47 @@ export const services: Service[] = [
     tags: ["RPA", "Automatización", "Eficiencia", "Operaciones"],
     published: true,
   },
-  // === SUPPORT & GROWTH SERVICES ===
+  // === MENTORSHIP AND SUPPORT ===
+  {
+    title: "Mentoría y Capacitación Técnica",
+    slug: "mentoria-capacitacion",
+    icon: <Users />,
+    category: "Mentorías y Capacitación",
+    shortDescription: "Eleva las habilidades de tu equipo con mentorías personalizadas y capacitación en tecnologías de vanguardia.",
+    fullDescription: "Potencia el talento interno de tu organización. Ofrezco programas de mentoría y capacitación diseñados para acelerar el desarrollo profesional de individuos y equipos, enfocados en las tecnologías y prácticas más demandadas del mercado.",
+    packages: [
+      {
+        name: "Impulso Profesional",
+        price: 450,
+        originalPrice: 600,
+        priceSuffix: "/ 4 sesiones",
+        description: "Mentoría 1-a-1 para desarrolladores que buscan acelerar su carrera, resolver bloqueos y mejorar sus habilidades.",
+        features: ["4 sesiones individuales de 1 hora", "Revisión de código y portafolio", "Plan de carrera personalizado", "Acceso a red de contactos", "Soporte por chat entre sesiones"],
+        cta: "Iniciar Mentoría",
+        time: "1 mes"
+      },
+      {
+        name: "Acelerador de Equipos",
+        price: 1200,
+        priceSuffix: "/mes",
+        description: "Acompañamiento continuo para equipos de desarrollo que buscan mejorar sus prácticas y velocidad de entrega.",
+        features: ["8 horas de mentoría grupal/mes", "Revisión de arquitectura de proyectos", "Implementación de mejores prácticas (CI/CD, Testing)", "Talleres de resolución de problemas", "Soporte prioritario para el equipo"],
+        cta: "Acelerar Equipo",
+        time: "Suscripción mensual"
+      },
+      {
+        name: "Workshop Corporativo",
+        price: "2,500+",
+        description: "Capacitación intensiva y a medida para empresas que necesitan formar a sus colaboradores en tecnologías específicas.",
+        features: ["Temario 100% personalizado (React, IA, Cloud, etc.)", "Workshop práctico de 8-16 horas", "Material de estudio y recursos", "Certificado de participación", "Sesión de seguimiento post-workshop"],
+        cta: "Cotizar Workshop",
+        time: "A coordinar"
+      }
+    ],
+    addOns: [],
+    tags: ["Mentoría", "Capacitación", "Equipos", "Corporativo"],
+    published: true,
+  },
   {
     title: "Planes de Soporte y Crecimiento",
     slug: "planes-soporte-crecimiento",
