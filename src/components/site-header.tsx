@@ -32,7 +32,10 @@ export function SiteHeader() {
             <div className="w-8 h-8 flex-shrink-0 bg-primary/10 rounded-full flex items-center justify-center text-primary border border-primary/20 group-hover:border-primary/50 transition-colors duration-300">
               <BrainCircuit className="h-5 w-5" />
             </div>
-            <span className="font-bold sm:inline-block">Ángel Nereira</span>
+            <div className="flex flex-col">
+              <span className="font-bold sm:inline-block">Ángel Nereira</span>
+              <span className="text-xs text-muted-foreground hidden sm:inline-block -mt-1">Ingeniero de Software</span>
+            </div>
           </Link>
         </div>
 
