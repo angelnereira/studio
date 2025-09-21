@@ -13,6 +13,7 @@ import * as React from "react";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Servicios" },
+  { href: "/skills", label: "Skills" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contacto" },
 ];
