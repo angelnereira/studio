@@ -129,20 +129,20 @@ export const PostgreSqlIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export const skills = [
-  { name: "Python", icon: <PythonIcon />, description: "Mi lenguaje preferido para backend, ciencia de datos e IA por su versatilidad y ecosistema robusto." },
-  { name: "TypeScript", icon: <TypescriptIcon />, description: "Esencial para construir aplicaciones front-end y back-end a gran escala, garantizando código mantenible y libre de errores." },
-  { name: "Next.js", icon: <NextjsIcon />, description: "El framework de React para producción. Su rendimiento, SSR y ecosistema lo hacen mi elección para aplicaciones web modernas." },
-  { name: "Node.js", icon: <NodejsIcon />, description: "Ideal para construir APIs rápidas y escalables, permitiéndome usar JavaScript/TypeScript en todo el stack." },
-  { name: "Google Cloud", icon: <GoogleCloudIcon />, description: "Mi plataforma en la nube preferida para desplegar aplicaciones escalables, desde VMs hasta servicios serverless y de IA." },
-  { name: "Firebase", icon: <FirebaseIcon />, description: "La solución BaaS para acelerar el desarrollo. La uso para autenticación, bases de datos en tiempo real y hosting." },
-  { name: "Docker", icon: <DockerIcon />, description: "Fundamental en mi flujo de trabajo para crear entornos de desarrollo consistentes y desplegar aplicaciones en contenedores." },
-  { name: "Git", icon: <GitIcon />, description: "El estándar para control de versiones. Indispensable para el trabajo en equipo, la integridad del código y las prácticas de CI/CD." },
-  { name: "GitHub/GitLab", icon: <GithubIcon />, description: "Plataformas clave para alojar repositorios, colaborar y automatizar flujos de trabajo con Actions y Pipelines." },
-  { name: "CI/CD", icon: <CiCdIcon />, description: "Mi filosofía para entregar valor de forma rápida y segura, automatizando pruebas y despliegues." },
-  { name: "Linux", icon: <LinuxIcon />, description: "El sistema operativo de servidor por excelencia. Domino la línea de comandos para administrar sistemas y redes." },
-  { name: "Vercel", icon: <VercelIcon />, description: "La mejor plataforma para desplegar aplicaciones front-end. Su integración con Next.js, rendimiento y DX son inigualables." },
-  { name: "Kubernetes", icon: <KubernetesIcon />, description: "El estándar para la orquestación de contenedores. Lo uso para gestionar aplicaciones complejas y de alta disponibilidad." },
-  { name: "OpenShift", icon: <OpenShiftIcon />, description: "Mi elección para entornos empresariales que requieren una plataforma de Kubernetes gestionada y con herramientas de desarrollo integradas." },
-  { name: "Tailwind CSS", icon: <TailwindCssIcon />, description: "Un framework CSS utility-first que me permite construir diseños complejos y personalizados de forma rápida y mantenible." },
-  { name: "PostgreSQL", icon: <PostgreSqlIcon />, description: "Mi base de datos relacional de código abierto preferida por su robustez, extensibilidad y rendimiento." }
+  { name: "Python", icon: <PythonIcon />, description: "Lo utilizo para construir el backend de aplicaciones, desarrollar soluciones de IA, y automatizar procesos complejos, siendo la base de mis servicios de 'Soluciones con IA' y 'Automatización'." },
+  { name: "TypeScript", icon: <TypescriptIcon />, description: "Fundamental para crear aplicaciones robustas y escalables. Lo uso en todo el stack (front-end y back-end) para garantizar código de alta calidad y fácil mantenimiento en proyectos empresariales." },
+  { name: "Next.js", icon: <NextjsIcon />, description: "Mi framework de elección para construir aplicaciones web y sitios de alto rendimiento. Su arquitectura me permite entregar proyectos optimizados para SEO y experiencia de usuario, como los ofrecidos en 'Desarrollo Web'." },
+  { name: "Node.js", icon: <NodejsIcon />, description: "El motor para mis APIs y microservicios. Me permite crear backends rápidos, eficientes y escalables que soportan desde 'Tiendas Online' hasta 'Aplicaciones Móviles' complejas." },
+  { name: "Google Cloud", icon: <GoogleCloudIcon />, description: "Mi plataforma en la nube predilecta para desplegar y escalar aplicaciones. Diseño arquitecturas resilientes y costo-eficientes, un pilar en mis 'Planes de Soporte y Crecimiento'." },
+  { name: "Firebase", icon: <FirebaseIcon />, description: "La uso para acelerar el desarrollo de 'Aplicaciones Móviles' y 'Pruebas de Concepto' (MVPs), gestionando autenticación, bases de datos en tiempo real y hosting con agilidad." },
+  { name: "Docker", icon: <DockerIcon />, description: "Esencial en mi flujo para empaquetar y desplegar aplicaciones de forma consistente. Garantiza que los sistemas de 'Gestión de Negocios' funcionen igual en desarrollo y producción." },
+  { name: "Git", icon: <GitIcon />, description: "La base de toda colaboración y desarrollo de software profesional. Es indispensable para la integridad del código y la gestión de proyectos de cualquier tamaño." },
+  { name: "GitHub/GitLab", icon: <GithubIcon />, description: "Mis plataformas centrales para la colaboración en equipo, revisión de código y, crucialmente, la implementación de pipelines de 'CI/CD' para automatizar despliegues." },
+  { name: "CI/CD", icon: <CiCdIcon />, description: "Una filosofía que aplico en todos mis proyectos empresariales para asegurar entregas rápidas y fiables, minimizando riesgos y acelerando la llegada de nuevas funcionalidades al mercado." },
+  { name: "Linux", icon: <LinuxIcon />, description: "Mi entorno de servidor por defecto. Mi dominio de la línea de comandos me permite administrar, asegurar y optimizar la infraestructura que soporta todas mis soluciones de software." },
+  { name: "Vercel", icon: <VercelIcon />, description: "La plataforma ideal para el despliegue de front-ends modernos construidos con Next.js. Garantiza un rendimiento global y una experiencia de desarrollo inigualable para mis proyectos web." },
+  { name: "Kubernetes", icon: <KubernetesIcon />, description: "Para proyectos de 'Solución Empresarial', utilizo Kubernetes para orquestar contenedores, asegurando alta disponibilidad, escalabilidad automática y una gestión de infraestructura robusta." },
+  { name: "OpenShift", icon: <OpenShiftIcon />, description: "En entornos corporativos que requieren una capa extra de seguridad y herramientas de desarrollo, implemento OpenShift como plataforma de Kubernetes gestionada y lista para la empresa." },
+  { name: "Tailwind CSS", icon: <TailwindCssIcon />, description: "Mi framework CSS preferido para diseñar interfaces de usuario personalizadas y responsivas rápidamente. Me permite construir los diseños únicos de mis 'Desarrollos Web' y 'Aplicaciones'." },
+  { name: "PostgreSQL", icon: <PostgreSqlIcon />, description: "La base de datos relacional que elijo para sistemas que requieren integridad de datos y transacciones complejas, como en los 'Sistemas de Gestión de Negocios' y 'E-commerce'." }
 ];
