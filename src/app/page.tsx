@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -219,13 +220,14 @@ export default function Home() {
         {/* Hero Section */}
         <section className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-br from-background to-secondary/50">
           <div className="container px-4 md:px-6 text-center">
-            <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
-              De la Idea a la Solución Tecnológica
+             <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
+                <span className="block mb-2">Angel Nereira</span>
+                <span className="block text-primary">Ingeniero de Software y DevOps</span>
             </h1>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-4">
-              Ingeniero de Software panameño especializado en transformar ideas en soluciones tecnológicas robustas y escalables.
+            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-6">
+                De la Idea a la Solución Tecnológica
             </p>
-            <p className="mt-4 font-semibold text-lg text-primary">"Solucionar problemas para disfrutar la vida."</p>
+            <p className="mt-4 font-semibold text-lg text-primary/80">"Solucionar problemas para disfrutar la vida."</p>
             <div className="mt-8 flex justify-center gap-4">
               <Button asChild size="lg">
                 <Link href="/services">Explorar Servicios</Link>
@@ -445,6 +447,8 @@ export default function Home() {
     </div>
   );
 }
+
+    
 
     
 
