@@ -364,49 +364,6 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="w-full py-20 md:py-32 lg:py-40 bg-background relative overflow-hidden">
-          <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:32px_32px]"></div>
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-              <div className="flex flex-col justify-center space-y-4 text-center lg:text-left">
-                <div className="space-y-2">
-                  <Badge variant="outline" className="text-sm bg-transparent border-primary/50 text-primary">Software Engineer | Panamá 🇵🇦</Badge>
-                  <h1 className="text-4xl font-bold tracking-tighter sm:text-6xl xl:text-7xl/none font-headline bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
-                    Ángel Nereira
-                  </h1>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto lg:mx-0">
-                    Construyendo soluciones escalables que transforman datos en impacto global.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center lg:justify-start">
-                  <Button asChild size="lg">
-                    <Link href="/contact">¿Hablamos?</Link>
-                  </Button>
-                  <CvGeneratorButton />
-                </div>
-                 <div className="flex items-center gap-4 text-sm text-muted-foreground pt-4 justify-center lg:justify-start">
-                  <Languages className="h-5 w-5" />
-                  <span>Español (Nativo)</span>
-                  <span>|</span>
-                  <span>English (Advanced)</span>
-                </div>
-              </div>
-              <div className="relative w-full max-w-md mx-auto lg:max-w-2xl h-auto">
-                 <Image
-                    src="https://i.postimg.cc/VJCCNJp0/Chat-GPT-Image-Sep-20-2025-10-11-35-PM.png"
-                    alt="Software Engineer Avatar"
-                    width={500}
-                    height={500}
-                    className="drop-shadow-[0_8px_40px_rgba(255,255,255,0.15)]"
-                    priority
-                    data-ai-hint="software developer avatar"
-                  />
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Services Carousel Section */}
         <section id="services" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
