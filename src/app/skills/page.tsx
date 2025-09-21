@@ -1,22 +1,4 @@
-import {
-  PythonIcon,
-  TypescriptIcon,
-  NextjsIcon,
-  NodejsIcon,
-  GoogleCloudIcon,
-  FirebaseIcon,
-  DockerIcon,
-  GitIcon,
-  GithubIcon,
-  CiCdIcon,
-  LinuxIcon,
-  VercelIcon,
-  KubernetesIcon,
-  OpenShiftIcon,
-  TailwindCssIcon,
-  PostgreSqlIcon,
-  skills,
-} from '@/lib/skills';
+import { skills } from '@/lib/skills';
 import {
   Tooltip,
   TooltipContent,
@@ -24,6 +6,9 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import * as React from 'react';
+import Link from 'next/link';
+import { SpotlightCard } from '@/components/spotlight-card';
+import { Card } from '@/components/ui/card';
 
 export default function SkillsPage() {
   return (
@@ -44,16 +29,18 @@ export default function SkillsPage() {
           {skills.map(skill => (
             <Tooltip key={skill.name}>
               <TooltipTrigger asChild>
-                <div className="flex flex-col items-center justify-center space-y-3 rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:-translate-y-1.5 hover:shadow-primary/10">
-                  <div className="text-primary">
-                    {React.cloneElement(skill.icon as React.ReactElement, {
-                      className: 'h-12 w-12',
-                    })}
-                  </div>
-                  <span className="font-semibold text-center text-sm">
-                    {skill.name}
-                  </span>
-                </div>
+                <Link href={`/skills/${skill.slug}`} className="group block h-full">
+                   <SpotlightCard className="flex flex-col items-center justify-center space-y-3 rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:-translate-y-1.5 hover:shadow-primary/10 h-full">
+                      <div className="text-primary transition-transform duration-300 group-hover:scale-110">
+                        {React.cloneElement(skill.icon as React.ReactElement, {
+                          className: 'h-12 w-12',
+                        })}
+                      </div>
+                      <span className="font-semibold text-center text-sm">
+                        {skill.name}
+                      </span>
+                   </SpotlightCard>
+                </Link>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
                 <p className="font-bold mb-2">{skill.name}</p>

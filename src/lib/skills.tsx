@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Briefcase, Code, Database, GitBranch, Layers, Server, Shield, Zap } from "lucide-react";
 
 // Nombre: python
 // Descripción: Icono estilizado de Python.
@@ -128,21 +129,196 @@ export const PostgreSqlIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
-export const skills = [
-  { name: "Python", icon: <PythonIcon />, description: "Lo utilizo para construir el backend de aplicaciones, desarrollar soluciones de IA, y automatizar procesos complejos, siendo la base de mis servicios de 'Soluciones con IA' y 'Automatización'." },
-  { name: "TypeScript", icon: <TypescriptIcon />, description: "Fundamental para crear aplicaciones robustas y escalables. Lo uso en todo el stack (front-end y back-end) para garantizar código de alta calidad y fácil mantenimiento en proyectos empresariales." },
-  { name: "Next.js", icon: <NextjsIcon />, description: "Mi framework de elección para construir aplicaciones web y sitios de alto rendimiento. Su arquitectura me permite entregar proyectos optimizados para SEO y experiencia de usuario, como los ofrecidos en 'Desarrollo Web'." },
-  { name: "Node.js", icon: <NodejsIcon />, description: "El motor para mis APIs y microservicios. Me permite crear backends rápidos, eficientes y escalables que soportan desde 'Tiendas Online' hasta 'Aplicaciones Móviles' complejas." },
-  { name: "Google Cloud", icon: <GoogleCloudIcon />, description: "Mi plataforma en la nube predilecta para desplegar y escalar aplicaciones. Diseño arquitecturas resilientes y costo-eficientes, un pilar en mis 'Planes de Soporte y Crecimiento'." },
-  { name: "Firebase", icon: <FirebaseIcon />, description: "La uso para acelerar el desarrollo de 'Aplicaciones Móviles' y 'Pruebas de Concepto' (MVPs), gestionando autenticación, bases de datos en tiempo real y hosting con agilidad." },
-  { name: "Docker", icon: <DockerIcon />, description: "Esencial en mi flujo para empaquetar y desplegar aplicaciones de forma consistente. Garantiza que los sistemas de 'Gestión de Negocios' funcionen igual en desarrollo y producción." },
-  { name: "Git", icon: <GitIcon />, description: "La base de toda colaboración y desarrollo de software profesional. Es indispensable para la integridad del código y la gestión de proyectos de cualquier tamaño." },
-  { name: "GitHub/GitLab", icon: <GithubIcon />, description: "Mis plataformas centrales para la colaboración en equipo, revisión de código y, crucialmente, la implementación de pipelines de 'CI/CD' para automatizar despliegues." },
-  { name: "CI/CD", icon: <CiCdIcon />, description: "Una filosofía que aplico en todos mis proyectos empresariales para asegurar entregas rápidas y fiables, minimizando riesgos y acelerando la llegada de nuevas funcionalidades al mercado." },
-  { name: "Linux", icon: <LinuxIcon />, description: "Mi entorno de servidor por defecto. Mi dominio de la línea de comandos me permite administrar, asegurar y optimizar la infraestructura que soporta todas mis soluciones de software." },
-  { name: "Vercel", icon: <VercelIcon />, description: "La plataforma ideal para el despliegue de front-ends modernos construidos con Next.js. Garantiza un rendimiento global y una experiencia de desarrollo inigualable para mis proyectos web." },
-  { name: "Kubernetes", icon: <KubernetesIcon />, description: "Para proyectos de 'Solución Empresarial', utilizo Kubernetes para orquestar contenedores, asegurando alta disponibilidad, escalabilidad automática y una gestión de infraestructura robusta." },
-  { name: "OpenShift", icon: <OpenShiftIcon />, description: "En entornos corporativos que requieren una capa extra de seguridad y herramientas de desarrollo, implemento OpenShift como plataforma de Kubernetes gestionada y lista para la empresa." },
-  { name: "Tailwind CSS", icon: <TailwindCssIcon />, description: "Mi framework CSS preferido para diseñar interfaces de usuario personalizadas y responsivas rápidamente. Me permite construir los diseños únicos de mis 'Desarrollos Web' y 'Aplicaciones'." },
-  { name: "PostgreSQL", icon: <PostgreSqlIcon />, description: "La base de datos relacional que elijo para sistemas que requieren integridad de datos y transacciones complejas, como en los 'Sistemas de Gestión de Negocios' y 'E-commerce'." }
+export type PracticalAbility = {
+  title: string;
+  description: string;
+  icon: React.ReactElement;
+};
+
+export type Skill = {
+  name: string;
+  slug: string;
+  icon: React.ReactElement;
+  description: string;
+  practicalAbilities: PracticalAbility[];
+};
+
+
+export const skills: Skill[] = [
+  { 
+    name: "Python", 
+    slug: "python",
+    icon: <PythonIcon />, 
+    description: "Lo utilizo para construir el backend de aplicaciones, desarrollar soluciones de IA, y automatizar procesos complejos, siendo la base de mis servicios de 'Soluciones con IA' y 'Automatización'.",
+    practicalAbilities: [
+        { title: "Desarrollo de APIs RESTful", description: "Construcción de APIs robustas y escalables con frameworks como FastAPI y Flask.", icon: <Server /> },
+        { title: "Automatización y Scripting", description: "Creación de scripts para automatizar tareas repetitivas, desde web scraping hasta la generación de reportes.", icon: <Zap /> },
+        { title: "Machine Learning", description: "Implementación de modelos de IA con bibliotecas como TensorFlow y Scikit-learn para análisis predictivo.", icon: <Briefcase /> },
+    ]
+  },
+  { 
+    name: "TypeScript", 
+    slug: "typescript",
+    icon: <TypescriptIcon />, 
+    description: "Fundamental para crear aplicaciones robustas y escalables. Lo uso en todo el stack (front-end y back-end) para garantizar código de alta calidad y fácil mantenimiento en proyectos empresariales.",
+    practicalAbilities: [
+        { title: "Tipado Estricto en Proyectos Complejos", description: "Garantizo la robustez y escalabilidad del código en aplicaciones grandes.", icon: <Shield /> },
+        { title: "Desarrollo Full-Stack", description: "Uso TypeScript tanto en el frontend con React/Next.js como en el backend con Node.js.", icon: <Layers /> },
+        { title: "Interfaces y Tipos Reutilizables", description: "Creo sistemas de tipos que mejoran la colaboración y reducen errores en equipos de desarrollo.", icon: <GitBranch /> },
+    ]
+  },
+  { 
+    name: "Next.js", 
+    slug: "nextjs",
+    icon: <NextjsIcon />, 
+    description: "Mi framework de elección para construir aplicaciones web y sitios de alto rendimiento. Su arquitectura me permite entregar proyectos optimizados para SEO y experiencia de usuario, como los ofrecidos en 'Desarrollo Web'.",
+    practicalAbilities: [
+      { title: "Server-Side Rendering (SSR) y Static Site Generation (SSG)", description: "Optimizo el rendimiento y el SEO de las aplicaciones web eligiendo la estrategia de renderizado adecuada.", icon: <Zap /> },
+      { title: "Desarrollo de APIs con Route Handlers", description: "Construyo APIs eficientes y seguras directamente dentro de la aplicación Next.js.", icon: <Server /> },
+      { title: "Aplicaciones Full-Stack", description: "Creo aplicaciones completas, desde la interfaz de usuario hasta la lógica del servidor, en un único proyecto monolítico.", icon: <Code /> },
+    ]
+  },
+  { 
+    name: "Node.js", 
+    slug: "nodejs",
+    icon: <NodejsIcon />, 
+    description: "El motor para mis APIs y microservicios. Me permite crear backends rápidos, eficientes y escalables que soportan desde 'Tiendas Online' hasta 'Aplicaciones Móviles' complejas.",
+    practicalAbilities: [
+      { title: "APIs REST y GraphQL", description: "Desarrollo de APIs performantes y bien estructuradas para aplicaciones web y móviles.", icon: <Server /> },
+      { title: "Sistemas de Autenticación", description: "Implementación de sistemas de seguridad con JWT, OAuth y gestión de sesiones.", icon: <Shield /> },
+      { title: "Microservicios", description: "Diseño de arquitecturas de microservicios para aplicaciones escalables y resilientes.", icon: <Layers /> },
+    ]
+  },
+  { 
+    name: "Google Cloud", 
+    slug: "google-cloud",
+    icon: <GoogleCloudIcon />, 
+    description: "Mi plataforma en la nube predilecta para desplegar y escalar aplicaciones. Diseño arquitecturas resilientes y costo-eficientes, un pilar en mis 'Planes de Soporte y Crecimiento'.",
+    practicalAbilities: [
+      { title: "Despliegue en Cloud Run", description: "Empaqueto y despliego aplicaciones en contenedores serverless para una escalabilidad infinita.", icon: <Zap /> },
+      { title: "Gestión de Bases de Datos", description: "Utilizo Firestore y Cloud SQL para gestionar bases de datos NoSQL y SQL de manera eficiente.", icon: <Database /> },
+      { title: "Arquitecturas Serverless", description: "Diseño y construyo aplicaciones basadas en Cloud Functions para optimizar costos y rendimiento.", icon: <Code /> },
+    ]
+  },
+  { 
+    name: "Firebase", 
+    slug: "firebase",
+    icon: <FirebaseIcon />, 
+    description: "La uso para acelerar el desarrollo de 'Aplicaciones Móviles' y 'Pruebas de Concepto' (MVPs), gestionando autenticación, bases de datos en tiempo real y hosting con agilidad.",
+    practicalAbilities: [
+      { title: "Autenticación de Usuarios", description: "Implemento sistemas de login social y por correo/contraseña de forma rápida y segura.", icon: <Shield /> },
+      { title: "Bases de Datos en Tiempo Real", description: "Utilizo Firestore para sincronizar datos entre clientes en tiempo real, ideal para chats y dashboards.", icon: <Database /> },
+      { title: "Desarrollo Rápido de MVPs", description: "Acelero la creación de prototipos y productos mínimos viables utilizando el ecosistema de Firebase.", icon: <Briefcase /> },
+    ]
+  },
+  { 
+    name: "Docker", 
+    slug: "docker",
+    icon: <DockerIcon />, 
+    description: "Esencial en mi flujo para empaquetar y desplegar aplicaciones de forma consistente. Garantiza que los sistemas de 'Gestión de Negocios' funcionen igual en desarrollo y producción.",
+    practicalAbilities: [
+        { title: "Contenerización de Aplicaciones", description: "Empaqueto aplicaciones y sus dependencias para un despliegue consistente en cualquier entorno.", icon: <Briefcase /> },
+        { title: "Orquestación con Docker Compose", description: "Defino y gestiono aplicaciones multi-contenedor para entornos de desarrollo y producción.", icon: <Layers /> },
+        { title: "Optimización de Imágenes", description: "Construyo imágenes de Docker ligeras y seguras para un mejor rendimiento y seguridad.", icon: <Shield /> },
+    ]
+  },
+  { 
+    name: "Git", 
+    slug: "git",
+    icon: <GitIcon />, 
+    description: "La base de toda colaboración y desarrollo de software profesional. Es indispensable para la integridad del código y la gestión de proyectos de cualquier tamaño.",
+    practicalAbilities: [
+        { title: "Control de Versiones Avanzado", description: "Manejo de ramas, fusiones, y rebases para mantener un historial de código limpio y colaborativo.", icon: <GitBranch /> },
+        { title: "Estrategias de Branching", description: "Implemento flujos de trabajo como GitFlow para gestionar el desarrollo de nuevas funcionalidades y releases.", icon: <Layers /> },
+        { title: "Resolución de Conflictos", description: "Soluciono conflictos de fusión de manera eficiente para mantener la integridad del código.", icon: <Code /> },
+    ]
+  },
+  { 
+    name: "GitHub/GitLab", 
+    slug: "github",
+    icon: <GithubIcon />, 
+    description: "Mis plataformas centrales para la colaboración en equipo, revisión de código y, crucialmente, la implementación de pipelines de 'CI/CD' para automatizar despliegues.",
+    practicalAbilities: [
+        { title: "Automatización con GitHub Actions", description: "Configuro flujos de trabajo para pruebas, construcción y despliegue automático de aplicaciones.", icon: <Zap /> },
+        { title: "Revisión de Código (Pull Requests)", description: "Facilito la colaboración y aseguro la calidad del código a través de un proceso de revisión estructurado.", icon: <GitBranch /> },
+        { title: "Gestión de Proyectos", description: "Utilizo las herramientas de gestión de proyectos para organizar tareas y seguir el progreso del desarrollo.", icon: <Briefcase /> },
+    ]
+  },
+  { 
+    name: "CI/CD", 
+    slug: "cicd",
+    icon: <CiCdIcon />, 
+    description: "Una filosofía que aplico en todos mis proyectos empresariales para asegurar entregas rápidas y fiables, minimizando riesgos y acelerando la llegada de nuevas funcionalidades al mercado.",
+    practicalAbilities: [
+        { title: "Pipelines de Despliegue Automatizado", description: "Diseño y construyo pipelines que automatizan el proceso desde el commit hasta el despliegue en producción.", icon: <Zap /> },
+        { title: "Integración Continua", description: "Implemento pruebas automáticas que se ejecutan en cada cambio para detectar errores tempranamente.", icon: <Shield /> },
+        { title: "Entrega Continua", description: "Configuro despliegues automáticos a entornos de staging y producción con un solo clic.", icon: <Briefcase /> },
+    ]
+  },
+  { 
+    name: "Linux", 
+    slug: "linux",
+    icon: <LinuxIcon />, 
+    description: "Mi entorno de servidor por defecto. Mi dominio de la línea de comandos me permite administrar, asegurar y optimizar la infraestructura que soporta todas mis soluciones de software.",
+    practicalAbilities: [
+        { title: "Administración de Servidores", description: "Configuro, aseguro y mantengo servidores Linux para alojar aplicaciones web de alto rendimiento.", icon: <Server /> },
+        { title: "Scripting en Bash", description: "Automatizo tareas de administración de sistemas y despliegue con scripts de Bash.", icon: <Zap /> },
+        { title: "Gestión de Redes y Seguridad", description: "Configuro firewalls y gestiono la red para proteger las aplicaciones de amenazas.", icon: <Shield /> },
+    ]
+  },
+  { 
+    name: "Vercel", 
+    slug: "vercel",
+    icon: <VercelIcon />, 
+    description: "La plataforma ideal para el despliegue de front-ends modernos construidos con Next.js. Garantiza un rendimiento global y una experiencia de desarrollo inigualable para mis proyectos web.",
+    practicalAbilities: [
+        { title: "Despliegue Continuo", description: "Integro repositorios de GitHub para un despliegue automático en cada push a la rama principal.", icon: <Zap /> },
+        { title: "Gestión de Dominios y DNS", description: "Configuro dominios personalizados y gestiono los registros DNS directamente desde la plataforma.", icon: <Server /> },
+        { title: "Serverless Functions", description: "Despliego funciones serverless para procesar lógica de backend sin necesidad de un servidor dedicado.", icon: <Code /> },
+    ]
+  },
+  { 
+    name: "Kubernetes", 
+    slug: "kubernetes",
+    icon: <KubernetesIcon />,
+    description: "Para proyectos de 'Solución Empresarial', utilizo Kubernetes para orquestar contenedores, asegurando alta disponibilidad, escalabilidad automática y una gestión de infraestructura robusta.",
+    practicalAbilities: [
+        { title: "Orquestación de Contenedores", description: "Gestiono el ciclo de vida de aplicaciones en contenedores para alta disponibilidad y escalabilidad.", icon: <Layers /> },
+        { title: "Despliegues sin Downtime", description: "Realizo actualizaciones de aplicaciones utilizando estrategias de rolling update para no afectar a los usuarios.", icon: <Zap /> },
+        { title: "Auto-escalado", description: "Configuro el escalado automático de aplicaciones basado en el uso de CPU y memoria.", icon: <Briefcase /> },
+    ]
+  },
+  { 
+    name: "OpenShift", 
+    slug: "openshift",
+    icon: <OpenShiftIcon />, 
+    description: "En entornos corporativos que requieren una capa extra de seguridad y herramientas de desarrollo, implemento OpenShift como plataforma de Kubernetes gestionada y lista para la empresa.",
+    practicalAbilities: [
+        { title: "Desarrollo y Despliegue Empresarial", description: "Utilizo las herramientas integradas para un ciclo de vida de desarrollo de software seguro y eficiente.", icon: <Briefcase /> },
+        { title: "Seguridad y Cumplimiento", description: "Aplico políticas de seguridad y cumplo con los estándares corporativos utilizando las capacidades de OpenShift.", icon: <Shield /> },
+        { title: "Pipelines de CI/CD Integrados", description: "Construyo y gestiono pipelines de CI/CD nativos en la plataforma para una automatización completa.", icon: <Zap /> },
+    ]
+  },
+  { 
+    name: "Tailwind CSS", 
+    slug: "tailwindcss",
+    icon: <TailwindCssIcon />, 
+    description: "Mi framework CSS preferido para diseñar interfaces de usuario personalizadas y responsivas rápidamente. Me permite construir los diseños únicos de mis 'Desarrollos Web' y 'Aplicaciones'.",
+    practicalAbilities: [
+        { title: "Diseño de Interfaces a Medida", description: "Creo diseños únicos y consistentes sin salir de mi HTML, gracias a su enfoque utility-first.", icon: <Code /> },
+        { title: "Sistemas de Diseño Personalizados", description: "Adapto y extiendo el tema de Tailwind para crear sistemas de diseño que se alinean con la identidad de marca del cliente.", icon: <Layers /> },
+        { title: "Desarrollo Rápido de UI", description: "Acelero significativamente el proceso de maquetación de interfaces complejas y responsivas.", icon: <Zap /> },
+    ]
+  },
+  { 
+    name: "PostgreSQL", 
+    slug: "postgresql",
+    icon: <PostgreSqlIcon />, 
+    description: "La base de datos relacional que elijo para sistemas que requieren integridad de datos y transacciones complejas, como en los 'Sistemas de Gestión de Negocios' y 'E-commerce'.",
+    practicalAbilities: [
+        { title: "Diseño de Esquemas de Base de Datos", description: "Modelo estructuras de datos eficientes y normalizadas para garantizar la integridad de la información.", icon: <Database /> },
+        { title: "Consultas SQL Complejas", description: "Escribo consultas optimizadas para obtener y manipular datos de manera eficiente en aplicaciones de alto rendimiento.", icon: <Code /> },
+        { title: "Gestión de Transacciones", description: "Aseguro la consistencia de los datos en operaciones críticas utilizando el sistema transaccional de PostgreSQL.", icon: <Shield /> },
+    ]
+  }
 ];
