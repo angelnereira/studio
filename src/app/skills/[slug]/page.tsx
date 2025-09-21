@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { SpotlightCard } from "@/components/spotlight-card";
+import { AnimatedDiv } from "@/components/animated-div";
 
 export async function generateStaticParams() {
   return skills.map((skill) => ({
@@ -56,34 +57,40 @@ export default function SkillDetailPage({ params }: { params: { slug: string } }
   return (
     <div className="container py-12 md:py-24 lg:py-32">
       {/* Header */}
-      <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
-        <div className="bg-primary/10 text-primary p-4 rounded-full">
-            {React.cloneElement(skill.icon, { className: "h-10 w-10" })}
+      <AnimatedDiv>
+        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
+          <div className="bg-primary/10 text-primary p-4 rounded-full">
+              {React.cloneElement(skill.icon, { className: "h-10 w-10" })}
+          </div>
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Dominio en {skill.name}</h1>
+          <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            {skill.description}
+          </p>
         </div>
-        <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Dominio en {skill.name}</h1>
-        <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-          {skill.description}
-        </p>
-      </div>
+      </AnimatedDiv>
 
       {/* Practical Abilities */}
-      <div className="mb-12">
-        <h2 className="text-2xl font-bold tracking-tighter text-center sm:text-3xl font-headline mb-8">Capacidades Prácticas</h2>
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {skill.practicalAbilities.map((ability) => (
-                <AbilityCard key={ability.title} ability={ability} />
-            ))}
+      <AnimatedDiv delay={0.2}>
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold tracking-tighter text-center sm:text-3xl font-headline mb-8">Capacidades Prácticas</h2>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {skill.practicalAbilities.map((ability, index) => (
+                  <AnimatedDiv key={ability.title} delay={0.1 * (index + 1)}>
+                    <AbilityCard ability={ability} />
+                  </AnimatedDiv>
+              ))}
+          </div>
         </div>
-      </div>
+      </AnimatedDiv>
       
-       <div className="text-center mt-16">
+       <AnimatedDiv delay={0.4} className="text-center mt-16">
             <Button asChild variant="outline">
                 <Link href="/skills">
                     <ArrowLeft className="mr-2" />
                     Volver a todas las Habilidades
                 </Link>
             </Button>
-        </div>
+        </AnimatedDiv>
 
     </div>
   );

@@ -8,6 +8,7 @@ import { Check, ArrowRight, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { AnimatedDiv } from "@/components/animated-div";
 
 export async function generateStaticParams() {
   return services.filter(s => s.published).map((service) => ({
@@ -75,62 +76,68 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
   return (
     <div className="container py-12 md:py-24 lg:py-32">
       {/* Header */}
-      <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
-        <div className="bg-primary/10 text-primary p-4 rounded-full">
-            {React.cloneElement(service.icon, { className: "h-8 w-8" })}
-        </div>
-        <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">{service.title}</h1>
-        <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-          {service.fullDescription}
-        </p>
-         <div className="flex flex-wrap gap-2 justify-center">
-            {service.tags.map((tag) => (
-              <Badge key={tag} variant="secondary">{tag}</Badge>
-            ))}
+      <AnimatedDiv>
+        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
+          <div className="bg-primary/10 text-primary p-4 rounded-full">
+              {React.cloneElement(service.icon, { className: "h-8 w-8" })}
           </div>
-      </div>
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">{service.title}</h1>
+          <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            {service.fullDescription}
+          </p>
+           <div className="flex flex-wrap gap-2 justify-center">
+              {service.tags.map((tag) => (
+                <Badge key={tag} variant="secondary">{tag}</Badge>
+              ))}
+            </div>
+        </div>
+      </AnimatedDiv>
 
       {/* Packages */}
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {service.packages.map((pkg) => (
-          <PackageCard key={pkg.name} pkg={pkg} serviceSlug={service.slug} />
+        {service.packages.map((pkg, index) => (
+          <AnimatedDiv key={pkg.name} delay={0.1 * (index + 1)}>
+            <PackageCard pkg={pkg} serviceSlug={service.slug} />
+          </AnimatedDiv>
         ))}
       </div>
       
       {/* Add-ons */}
       {service.addOns && service.addOns.length > 0 && (
-         <div className="mt-16">
-            <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold tracking-tighter font-headline">Complementos Opcionales</h2>
-                <p className="max-w-[600px] mx-auto mt-2 text-muted-foreground">
-                    Añade funcionalidades extra a tu proyecto para un mayor impacto.
-                </p>
-            </div>
-            <div className="max-w-2xl mx-auto space-y-4">
-                {service.addOns.map((addOn) => (
-                    <Card key={addOn.name} className="p-4 flex justify-between items-center bg-secondary/50">
-                        <div>
-                            <h3 className="font-semibold">{addOn.name}</h3>
-                            <p className="text-sm text-muted-foreground">{addOn.description}</p>
-                        </div>
-                        <div className="text-right flex items-baseline gap-2">
-                           <p className="font-bold text-primary">
-                             +${addOn.price.toLocaleString()}
-                             {addOn.priceSuffix && <span className="text-sm font-normal text-muted-foreground">{addOn.priceSuffix}</span>}
-                            </p>
-                            {addOn.originalPrice && (
-                                <p className="text-sm font-normal text-muted-foreground line-through">
-                                    +${addOn.originalPrice.toLocaleString()}
-                                </p>
-                            )}
-                        </div>
-                    </Card>
-                ))}
-            </div>
-         </div>
+         <AnimatedDiv delay={0.3}>
+           <div className="mt-16">
+              <div className="text-center mb-8">
+                  <h2 className="text-2xl font-bold tracking-tighter font-headline">Complementos Opcionales</h2>
+                  <p className="max-w-[600px] mx-auto mt-2 text-muted-foreground">
+                      Añade funcionalidades extra a tu proyecto para un mayor impacto.
+                  </p>
+              </div>
+              <div className="max-w-2xl mx-auto space-y-4">
+                  {service.addOns.map((addOn) => (
+                      <Card key={addOn.name} className="p-4 flex justify-between items-center bg-secondary/50">
+                          <div>
+                              <h3 className="font-semibold">{addOn.name}</h3>
+                              <p className="text-sm text-muted-foreground">{addOn.description}</p>
+                          </div>
+                          <div className="text-right flex items-baseline gap-2">
+                             <p className="font-bold text-primary">
+                               +${addOn.price.toLocaleString()}
+                               {addOn.priceSuffix && <span className="text-sm font-normal text-muted-foreground">{addOn.priceSuffix}</span>}
+                              </p>
+                              {addOn.originalPrice && (
+                                  <p className="text-sm font-normal text-muted-foreground line-through">
+                                      +${addOn.originalPrice.toLocaleString()}
+                                  </p>
+                              )}
+                          </div>
+                      </Card>
+                  ))}
+              </div>
+           </div>
+         </AnimatedDiv>
       )}
 
-       <div className="text-center mt-16 p-8 bg-secondary/50 rounded-lg">
+       <AnimatedDiv delay={0.5} className="text-center mt-16 p-8 bg-secondary/50 rounded-lg">
             <h2 className="text-2xl font-bold tracking-tighter font-headline">¿No encuentras lo que buscas?</h2>
             <p className="max-w-[600px] mx-auto mt-2 text-muted-foreground">
                 Estos paquetes son puntos de partida. Cada proyecto es único. Contáctame para crear una solución 100% a tu medida.
@@ -138,7 +145,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             <Button asChild size="lg" className="mt-6">
                 <Link href="/contact?subject=Proyecto a Medida">Crear Plan Personalizado</Link>
             </Button>
-        </div>
+        </AnimatedDiv>
 
     </div>
   );

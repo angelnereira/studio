@@ -18,6 +18,7 @@ import { generateCv, GenerateCvInput } from "@/ai/flows/generate-cv";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { skills } from "@/lib/skills";
+import { AnimatedDiv } from "@/components/animated-div";
 
 const testimonialImages = {
   test1: PlaceHolderImages.find(p => p.id === 'testimonial-1'),
@@ -223,104 +224,116 @@ export default function Home() {
           style={{ backgroundImage: "url('/grid-bg.svg')" }}
         >
           <div className="container px-4 md:px-6 text-center">
-             <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
-                <span className="block mb-2">Angel Nereira</span>
-                <div className="relative w-full overflow-hidden">
-                  <div className="flex animate-marquee whitespace-nowrap">
-                    <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
-                    <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
-                    <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
-                    <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
+             <AnimatedDiv>
+               <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
+                  <span className="block mb-2">Angel Nereira</span>
+                  <div className="relative w-full overflow-hidden">
+                    <div className="flex animate-marquee whitespace-nowrap">
+                      <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
+                      <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
+                      <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
+                      <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
+                    </div>
                   </div>
-                </div>
-            </h1>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-6">
-                De la Idea a la Solución Tecnológica
-            </p>
-            <p className="mt-4 font-semibold text-lg text-primary/80">"Solucionar problemas para disfrutar la vida."</p>
-            <div className="mt-8 flex justify-center gap-4">
-              <Button asChild size="lg">
-                <Link href="/services">Explorar Servicios</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/projects">Ver Proyectos</Link>
-              </Button>
-            </div>
+              </h1>
+              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-6">
+                  De la Idea a la Solución Tecnológica
+              </p>
+              <p className="mt-4 font-semibold text-lg text-primary/80">"Solucionar problemas para disfrutar la vida."</p>
+              <div className="mt-8 flex justify-center gap-4">
+                <Button asChild size="lg">
+                  <Link href="/services">Explorar Servicios</Link>
+                </Button>
+                <Button asChild size="lg" variant="outline">
+                  <Link href="/projects">Ver Proyectos</Link>
+                </Button>
+              </div>
+            </AnimatedDiv>
           </div>
         </section>
 
         {/* Services Carousel Section */}
         <section id="services" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Mis Servicios</h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Soluciones de software a la medida para potenciar tu negocio. Desde aplicaciones web hasta inteligencia artificial.
-                </p>
+            <AnimatedDiv>
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Mis Servicios</h2>
+                  <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                    Soluciones de software a la medida para potenciar tu negocio. Desde aplicaciones web hasta inteligencia artificial.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="py-12">
-               <ServicesCarousel />
-            </div>
-             <div className="text-center">
+            </AnimatedDiv>
+            <AnimatedDiv delay={0.2}>
+              <div className="py-12">
+                 <ServicesCarousel />
+              </div>
+            </AnimatedDiv>
+             <AnimatedDiv delay={0.4} className="text-center">
                 <Button asChild variant="outline">
                     <Link href="/services">
                         Ver todos los servicios <ArrowRight className="ml-2" />
                     </Link>
                 </Button>
-            </div>
+            </AnimatedDiv>
           </div>
         </section>
 
         {/* About Section */}
         <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Sobre Mí</h2>
-                 <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Soy un ingeniero de software panameño con una visión clara: impulsar la transformación tecnológica en Panamá y más allá, creando soluciones innovadoras, eficientes y de alto impacto.
-                </p>
+           <AnimatedDiv>
+              <div className="container px-4 md:px-6">
+                <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                  <div className="space-y-2">
+                    <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Sobre Mí</h2>
+                     <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                        Soy un ingeniero de software panameño con una visión clara: impulsar la transformación tecnológica en Panamá y más allá, creando soluciones innovadoras, eficientes y de alto impacto.
+                    </p>
+                  </div>
+                </div>
+                <div className="mx-auto max-w-3xl pt-8 text-lg text-center text-foreground/80 space-y-4">
+                    <p>
+                        Mi trayectoria es una fusión poco común entre la ingeniería de sonido y la ingeniería de software. Esta dualidad me ha enseñado a abordar los problemas con la precisión técnica de un ingeniero y la creatividad de un artista. Mi filosofía es simple: "Solucionar problemas para disfrutar la vida". Aplico esta mentalidad para desarrollar software robusto, escalable y seguro que genera valor real.
+                    </p>
+                    <p>
+                        Mi objetivo es ser un pionero en la innovación tecnológica de Panamá, con un enfoque en software, ciencia de datos e inteligencia artificial, siempre con una proyección global. Apuesto por la inclusión y el empoderamiento de las personas a través de la tecnología.
+                    </p>
+                </div>
               </div>
-            </div>
-            <div className="mx-auto max-w-3xl pt-8 text-lg text-center text-foreground/80 space-y-4">
-                <p>
-                    Mi trayectoria es una fusión poco común entre la ingeniería de sonido y la ingeniería de software. Esta dualidad me ha enseñado a abordar los problemas con la precisión técnica de un ingeniero y la creatividad de un artista. Mi filosofía es simple: "Solucionar problemas para disfrutar la vida". Aplico esta mentalidad para desarrollar software robusto, escalable y seguro que genera valor real.
-                </p>
-                <p>
-                    Mi objetivo es ser un pionero en la innovación tecnológica de Panamá, con un enfoque en software, ciencia de datos e inteligencia artificial, siempre con una proyección global. Apuesto por la inclusión y el empoderamiento de las personas a través de la tecnología.
-                </p>
-            </div>
-          </div>
+          </AnimatedDiv>
         </section>
 
         {/* Skills Section */}
         <section id="skills" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Stack Tecnológico</h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Un conjunto de herramientas versátil para resolver problemas reales, desde el desarrollo web hasta la infraestructura en la nube.
-                </p>
+            <AnimatedDiv>
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Stack Tecnológico</h2>
+                  <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                    Un conjunto de herramientas versátil para resolver problemas reales, desde el desarrollo web hasta la infraestructura en la nube.
+                  </p>
+                </div>
               </div>
-            </div>
+            </AnimatedDiv>
             <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 py-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             <TooltipProvider>
-              {skills.map((skill) => (
-                <Tooltip key={skill.name}>
-                  <TooltipTrigger asChild>
-                    <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:-translate-y-1">
-                      <div className="text-primary">{React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10' })}</div>
-                      <span className="font-medium text-center">{skill.name}</span>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
-                    <p className="font-bold mb-2">{skill.name}</p>
-                    <p className="text-xs text-muted-foreground">{skill.description}</p>
-                  </TooltipContent>
-                </Tooltip>
+              {skills.map((skill, index) => (
+                <AnimatedDiv key={skill.name} delay={0.1 * index}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:-translate-y-1">
+                        <div className="text-primary">{React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10' })}</div>
+                        <span className="font-medium text-center">{skill.name}</span>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
+                      <p className="font-bold mb-2">{skill.name}</p>
+                      <p className="text-xs text-muted-foreground">{skill.description}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </AnimatedDiv>
               ))}
             </TooltipProvider>
             </div>
@@ -330,76 +343,80 @@ export default function Home() {
         {/* Projects Section */}
         <section id="projects" className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Proyectos Destacados</h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Una selección de proyectos que demuestran mi enfoque en la resolución de problemas y la aplicación de tecnología.
-                </p>
+            <AnimatedDiv>
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Proyectos Destacados</h2>
+                  <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                    Una selección de proyectos que demuestran mi enfoque en la resolución de problemas y la aplicación de tecnología.
+                  </p>
+                </div>
               </div>
-            </div>
+            </AnimatedDiv>
             <div className="mx-auto grid max-w-5xl justify-center gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project) => (
-                <Dialog key={project.id}>
-                  <DialogTrigger asChild>
-                    <SpotlightCard className="group relative flex flex-col overflow-hidden transition-all duration-600 ease-geist w-full bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl cursor-pointer">
-                        <CardHeader className="flex-row items-center gap-4">
-                          {project.logo && (
-                            <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                               <project.logo className="w-6 h-6" />
+              {projects.map((project, index) => (
+                <AnimatedDiv key={project.id} delay={0.1 * index}>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <SpotlightCard className="group relative flex flex-col overflow-hidden transition-all duration-600 ease-geist w-full bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl cursor-pointer">
+                          <CardHeader className="flex-row items-center gap-4">
+                            {project.logo && (
+                              <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                                 <project.logo className="w-6 h-6" />
+                              </div>
+                            )}
+                            <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary">{project.title}</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <CardDescription className="line-clamp-3">{project.description}</CardDescription>
+                          </CardContent>
+                          <CardFooter className="mt-auto">
+                             <div className="flex flex-wrap gap-2">
+                                {project.technologies.slice(0, 3).map((tech) => (
+                                  <Badge key={tech} variant="secondary">{tech}</Badge>
+                                ))}
+                                {project.technologies.length > 3 && <Badge variant="outline">+{project.technologies.length - 3}</Badge>}
                             </div>
-                          )}
-                          <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary">{project.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <CardDescription className="line-clamp-3">{project.description}</CardDescription>
-                        </CardContent>
-                        <CardFooter className="mt-auto">
-                           <div className="flex flex-wrap gap-2">
-                              {project.technologies.slice(0, 3).map((tech) => (
-                                <Badge key={tech} variant="secondary">{tech}</Badge>
-                              ))}
-                              {project.technologies.length > 3 && <Badge variant="outline">+{project.technologies.length - 3}</Badge>}
+                          </CardFooter>
+                      </SpotlightCard>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[625px]">
+                      <DialogHeader>
+                        <div className="flex items-center gap-4 mb-4">
+                           {project.logo && (
+                              <div className="w-16 h-16 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                                 <project.logo className="w-8 h-8" />
+                              </div>
+                            )}
+                            <DialogTitle className="text-2xl">{project.title}</DialogTitle>
+                        </div>
+                        <DialogDescription>{project.description}</DialogDescription>
+                      </DialogHeader>
+                      <div className="grid gap-6 py-4">
+                          <div>
+                            <h4 className="font-semibold text-foreground mb-2">Problema Resuelto</h4>
+                            <p className="text-sm text-muted-foreground">{project.problem}</p>
                           </div>
-                        </CardFooter>
-                    </SpotlightCard>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[625px]">
-                    <DialogHeader>
-                      <div className="flex items-center gap-4 mb-4">
-                         {project.logo && (
-                            <div className="w-16 h-16 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                               <project.logo className="w-8 h-8" />
+                          <div>
+                            <h4 className="font-semibold text-foreground mb-2">Impacto Generado</h4>
+                            <p className="text-sm text-muted-foreground">{project.impact}</p>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-foreground mb-2">Tecnologías Utilizadas</h4>
+                             <div className="flex flex-wrap gap-2">
+                                {project.technologies.map((tech) => (
+                                  <Badge key={tech} variant="secondary">{tech}</Badge>
+                                ))}
                             </div>
-                          )}
-                          <DialogTitle className="text-2xl">{project.title}</DialogTitle>
+                          </div>
                       </div>
-                      <DialogDescription>{project.description}</DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-6 py-4">
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-2">Problema Resuelto</h4>
-                          <p className="text-sm text-muted-foreground">{project.problem}</p>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-2">Impacto Generado</h4>
-                          <p className="text-sm text-muted-foreground">{project.impact}</p>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-2">Tecnologías Utilizadas</h4>
-                           <div className="flex flex-wrap gap-2">
-                              {project.technologies.map((tech) => (
-                                <Badge key={tech} variant="secondary">{tech}</Badge>
-                              ))}
-                          </div>
-                        </div>
-                    </div>
-                     <div className="flex justify-end gap-2 mt-4">
-                        {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><Github className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
-                        {project.liveUrl && <Button asChild size="sm"><Link href={project.liveUrl}>Ver Demo <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>}
-                    </div>
-                  </DialogContent>
-                </Dialog>
+                       <div className="flex justify-end gap-2 mt-4">
+                          {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><Github className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
+                          {project.liveUrl && <Button asChild size="sm"><Link href={project.liveUrl}>Ver Demo <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>}
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </AnimatedDiv>
               ))}
             </div>
           </div>
@@ -408,26 +425,30 @@ export default function Home() {
         {/* Testimonials Section */}
         <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl font-headline">Lo que dicen otros</h2>
+            <AnimatedDiv>
+              <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl font-headline">Lo que dicen otros</h2>
+            </AnimatedDiv>
             <div className="grid gap-8 mt-12 sm:grid-cols-1 md:grid-cols-2">
-              {testimonials.map((testimonial) => (
-                <SpotlightCard key={testimonial.name} className="relative transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
-                  <CardContent className="pt-6">
-                    <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
-                  </CardContent>
-                  <CardFooter className="flex items-center gap-4">
-                    {testimonial.avatar && (
-                      <Avatar>
-                        <AvatarImage src={testimonial.avatar.imageUrl} alt={testimonial.name} data-ai-hint={testimonial.avatar.imageHint} />
-                        <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                      </Avatar>
-                    )}
-                    <div>
-                      <p className="font-semibold">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                    </div>
-                  </CardFooter>
-                </SpotlightCard>
+              {testimonials.map((testimonial, index) => (
+                <AnimatedDiv key={testimonial.name} delay={0.1 * index}>
+                  <SpotlightCard className="relative transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
+                    <CardContent className="pt-6">
+                      <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
+                    </CardContent>
+                    <CardFooter className="flex items-center gap-4">
+                      {testimonial.avatar && (
+                        <Avatar>
+                          <AvatarImage src={testimonial.avatar.imageUrl} alt={testimonial.name} data-ai-hint={testimonial.avatar.imageHint} />
+                          <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                      )}
+                      <div>
+                        <p className="font-semibold">{testimonial.name}</p>
+                        <p className="text-sm text-muted-foreground">{testimonial.title}</p>
+                      </div>
+                    </CardFooter>
+                  </SpotlightCard>
+                </AnimatedDiv>
               ))}
             </div>
           </div>
@@ -435,31 +456,27 @@ export default function Home() {
 
         {/* CTA Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
-          <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
-            <div className="space-y-3">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight font-headline">
-                ¿Buscas un desarrollador panameño para tu equipo global?
-              </h2>
-              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Colaboremos en soluciones que escalen globalmente. Estoy disponible para nuevos desafíos y oportunidades.
-              </p>
+          <AnimatedDiv>
+            <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
+              <div className="space-y-3">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight font-headline">
+                  ¿Buscas un desarrollador panameño para tu equipo global?
+                </h2>
+                <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Colaboremos en soluciones que escalen globalmente. Estoy disponible para nuevos desafíos y oportunidades.
+                </p>
+              </div>
+              <div className="mx-auto w-full max-w-sm space-y-2">
+                 <SpotlightCard className="group relative rounded-md p-0 overflow-hidden bg-transparent border-none shadow-none">
+                    <Button asChild size="lg" className="w-full">
+                      <Link href="/contact">Conversemos sobre tu proyecto</Link>
+                    </Button>
+                 </SpotlightCard>
+              </div>
             </div>
-            <div className="mx-auto w-full max-w-sm space-y-2">
-               <SpotlightCard className="group relative rounded-md p-0 overflow-hidden bg-transparent border-none shadow-none">
-                  <Button asChild size="lg" className="w-full">
-                    <Link href="/contact">Conversemos sobre tu proyecto</Link>
-                  </Button>
-               </SpotlightCard>
-            </div>
-          </div>
+          </AnimatedDiv>
         </section>
       </main>
     </div>
   );
 }
-
-    
-
-    
-
-    
