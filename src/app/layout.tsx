@@ -1,6 +1,6 @@
 import type {Metadata} from 'next';
 import './globals.css';
-import {ThemeProvider} from '@/components/theme-provider';
+import {Providers} from '@/components/providers';
 import {SiteHeader} from '@/components/site-header';
 import {SiteFooter} from '@/components/site-footer';
 import {Toaster} from '@/components/ui/toaster';
@@ -31,17 +31,12 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased min-h-screen flex flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />
           <Toaster />
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
