@@ -394,7 +394,7 @@ export default function Home() {
               </div>
               <div className="relative w-full max-w-md mx-auto lg:max-w-2xl h-auto">
                  <Image
-                    src="https://picsum.photos/seed/avatar/500/500"
+                    src="https://i.postimg.cc/D0VSxfDB/Chat-GPT-Image-Sep-20-2025-10-11-35-PM.png"
                     alt="Software Engineer Avatar"
                     width={500}
                     height={500}
