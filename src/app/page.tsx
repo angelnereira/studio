@@ -406,8 +406,32 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Services Carousel Section */}
+        <section id="services" className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Mis Servicios</h2>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Soluciones de software a la medida para potenciar tu negocio. Desde aplicaciones web hasta inteligencia artificial.
+                </p>
+              </div>
+            </div>
+            <div className="py-12">
+               <ServicesCarousel />
+            </div>
+             <div className="text-center">
+                <Button asChild variant="outline">
+                    <Link href="/services">
+                        Ver todos los servicios <ArrowRight className="ml-2" />
+                    </Link>
+                </Button>
+            </div>
+          </div>
+        </section>
+
         {/* About Section */}
-        <section id="about" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -429,7 +453,7 @@ export default function Home() {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
+        <section id="skills" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -461,7 +485,7 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="projects" className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -539,7 +563,7 @@ export default function Home() {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
+        <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl font-headline">Lo que dicen otros</h2>
             <div className="grid gap-8 mt-12 sm:grid-cols-1 md:grid-cols-2">
@@ -567,7 +591,7 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
           <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight font-headline">

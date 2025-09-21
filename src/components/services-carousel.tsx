@@ -5,7 +5,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import useEmblaCarousel, { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { services, Service } from '@/lib/services';
+import { services } from '@/lib/services';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -14,7 +14,7 @@ import { SpotlightCard } from './spotlight-card';
 
 const carouselOptions: EmblaOptionsType = {
   loop: true,
-  align: 'start',
+  align: 'center', // Changed from 'start' to 'center'
 };
 
 export const ServicesCarousel: React.FC = () => {
@@ -42,11 +42,11 @@ export const ServicesCarousel: React.FC = () => {
   const publishedServices = services.filter(s => s.published);
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
+    <div className="relative w-full max-w-6xl mx-auto">
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex -ml-4">
           {publishedServices.map((service) => (
-            <div className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.33%] pl-4" key={service.slug}>
+            <div className="flex-[0_0_90%] sm:flex-[0_0_50%] md:flex-[0_0_33.33%] pl-4" key={service.slug}>
               <Link href={`/services/${service.slug}`} className="block h-full">
                 <SpotlightCard className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-xl">
                   <CardHeader className="flex-row items-center gap-4">
