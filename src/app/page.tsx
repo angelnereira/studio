@@ -216,6 +216,27 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
+        {/* Hero Section */}
+        <section className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-br from-background to-secondary/50">
+          <div className="container px-4 md:px-6 text-center">
+            <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
+              De la Idea a la Solución Tecnológica
+            </h1>
+            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-4">
+              Ingeniero de Software panameño especializado en transformar ideas en soluciones tecnológicas robustas y escalables.
+            </p>
+            <p className="mt-4 font-semibold text-lg text-primary">"Solucionar problemas para disfrutar la vida."</p>
+            <div className="mt-8 flex justify-center gap-4">
+              <Button asChild size="lg">
+                <Link href="/services">Explorar Servicios</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link href="/projects">Ver Proyectos</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* Services Carousel Section */}
         <section id="services" className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
@@ -424,5 +445,7 @@ export default function Home() {
     </div>
   );
 }
+
+    
 
     
