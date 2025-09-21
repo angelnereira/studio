@@ -394,7 +394,7 @@ export default function Home() {
               </div>
               <div className="relative w-full max-w-md mx-auto lg:max-w-2xl h-auto">
                  <Image
-                    src="/images/avatar.png"
+                    src="https://picsum.photos/seed/avatar/500/500"
                     alt="Software Engineer Avatar"
                     width={500}
                     height={500}
@@ -615,3 +615,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
