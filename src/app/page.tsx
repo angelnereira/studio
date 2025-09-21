@@ -218,7 +218,10 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-br from-background to-secondary/50 overflow-hidden">
+        <section 
+          className="w-full py-20 md:py-32 lg:py-40 bg-cover bg-center bg-no-repeat bg-fixed"
+          style={{ backgroundImage: "url('/grid-bg.svg')" }}
+        >
           <div className="container px-4 md:px-6 text-center">
              <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
                 <span className="block mb-2">Angel Nereira</span>
