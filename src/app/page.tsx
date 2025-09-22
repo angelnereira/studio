@@ -143,7 +143,7 @@ export default function Home() {
               <p className="mt-4 font-semibold text-lg text-primary/80">"Solucionar problemas para disfrutar la vida."</p>
               <div className="mt-8 flex justify-center gap-4">
                 <Button asChild size="lg">
-                  <Link href="/services">Explorar Servicios</Link>
+                  <Link href="/contact">Hablemos</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
                   <Link href="/projects">Ver Proyectos</Link>
