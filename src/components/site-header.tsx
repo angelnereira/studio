@@ -33,7 +33,7 @@ export function SiteHeader() {
               <BrainCircuit className="h-5 w-5" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold sm:inline-block">Ángel Nereira Ingeniero de Software</span>
+              <span className="font-bold sm:inline-block">Ángel Nereira</span>
               <span className="text-xs text-muted-foreground hidden sm:inline-block -mt-1">Ingeniero de Software</span>
             </div>
           </Link>
