@@ -29,6 +29,8 @@ const clientFormSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
   email: z.string().email("Por favor, introduce una dirección de correo válida."),
   company: z.string().optional(),
+  country: z.string().optional(),
+  industry: z.string().optional(),
   service: z.string({ required_error: "Por favor, selecciona un servicio."}),
   budget: z.string({ required_error: "Por favor, selecciona un presupuesto."}),
   message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres."),
@@ -44,6 +46,8 @@ export function ClientForm() {
       name: "",
       email: "",
       company: "",
+      country: "",
+      industry: "",
       message: "",
     },
   });
@@ -88,19 +92,34 @@ export function ClientForm() {
             )}
           />
         </div>
-         <FormField
-            control={form.control}
-            name="company"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Empresa (Opcional)</FormLabel>
-                <FormControl>
-                  <Input placeholder="Nombre de tu empresa" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+           <FormField
+              control={form.control}
+              name="company"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Empresa (Opcional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Nombre de tu empresa" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>País (Opcional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="País de residencia" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+        </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
            <FormField
             control={form.control}
@@ -135,7 +154,7 @@ export function ClientForm() {
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Selecciona un rango" />
-                    </SelectTrigger>
+                    </Trigger>
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="<1k">Menos de $1,000</SelectItem>
@@ -149,6 +168,33 @@ export function ClientForm() {
             )}
           />
         </div>
+        <FormField
+            control={form.control}
+            name="industry"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Rubro de la Empresa (Opcional)</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona el rubro" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="technology">Tecnología y Software</SelectItem>
+                    <SelectItem value="ecommerce">E-commerce y Retail</SelectItem>
+                    <SelectItem value="finance">Finanzas y Banca</SelectItem>
+                    <SelectItem value="health">Salud y Bienestar</SelectItem>
+                    <SelectItem value="education">Educación</SelectItem>
+                    <SelectItem value="professional-services">Servicios Profesionales</SelectItem>
+                    <SelectItem value="real-estate">Bienes Raíces</SelectItem>
+                    <SelectItem value="other">Otro</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         <FormField
           control={form.control}
           name="message"

@@ -5,10 +5,11 @@ import { Briefcase, Handshake, User } from 'lucide-react';
 import { ClientForm } from './client-form';
 import { EmployerForm } from './employer-form';
 import { CollaboratorForm } from './collaborator-form';
+import { SpotlightCard } from '@/components/spotlight-card';
 
 function ContactCard({ icon, title, description, children }: { icon: React.ReactNode, title: string, description: string, children: React.ReactNode }) {
   return (
-    <Card className="border-0 md:border shadow-none md:shadow-sm">
+    <SpotlightCard className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:shadow-primary/20 hover:shadow-xl">
       <CardHeader className="text-center">
         <div className="mx-auto bg-primary/10 text-primary p-3 rounded-full w-fit mb-2">
             {icon}
@@ -19,7 +20,7 @@ function ContactCard({ icon, title, description, children }: { icon: React.React
       <CardContent>
         {children}
       </CardContent>
-    </Card>
+    </SpotlightCard>
   )
 }
 
@@ -67,7 +68,7 @@ export default function ContactPage() {
                 description="¿Interesado en colaborar en un proyecto, charla o evento? Contáctame."
               >
                 <CollaboratorForm />
-              </ContactCard>
+              </CardContact>
             </TabsContent>
           </Tabs>
         </div>
