@@ -316,23 +316,23 @@ export default function Home() {
               </div>
             </AnimatedDiv>
             <div className="group relative mt-12 w-full overflow-hidden">
-              <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
+              <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
                 {[...skills, ...skills].map((skill, index) => (
-                  <div key={`${skill.slug}-item-${index}`} className="mx-4 flex w-28 flex-col items-center justify-center text-center transition-all duration-300">
-                    <div className="flex h-24 w-24 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 group-hover:scale-110">
+                  <div key={`${skill.slug}-item-${index}`} className="mx-4 flex w-28 flex-col items-center justify-center text-center transition-all duration-500 ease-geist h-24 group-hover:h-48">
+                    <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 group-hover:scale-110">
                          {React.cloneElement(skill.icon, { className: 'h-10 w-10 text-primary' })}
                     </div>
-                    <div className="relative w-full overflow-hidden transition-all duration-500 ease-in-out h-10 group-hover:h-24">
+                    <div className="relative w-full overflow-hidden opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                         <p className="text-sm font-bold text-primary truncate pt-2">{skill.name}</p>
-                        <p className="text-xs text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p className="text-xs text-muted-foreground mt-1">
                             {skill.description}
                         </p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background to-transparent"></div>
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-transparent"></div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background to-transparent" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-transparent" />
             </div>
              <AnimatedDiv delay={0.4} className="text-center mt-20">
                 <Button asChild variant="outline">
