@@ -4,7 +4,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BrainCircuit, BotMessageSquare, Languages, Mic, Music, FunctionSquare, Download, Code2, Clipboard, ClipboardCheck, FileText, Github } from "lucide-react";
+import { ArrowRight, BrainCircuit, BotMessageSquare, Languages, Mic, Music, FunctionSquare, Download, Code2, Clipboard, ClipboardCheck, FileText } from "lucide-react";
+import { GithubIcon } from "@/lib/icons";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -319,28 +320,28 @@ export default function Home() {
             </AnimatedDiv>
             <div className="group relative mt-12 w-full overflow-hidden">
               <div className="absolute inset-y-0 left-0 z-10 w-1/4 bg-gradient-to-r from-background to-transparent" />
-              <div className="flex h-56 w-max animate-marquee items-center hover:[animation-play-state:paused]">
-                {[...skills, ...skills].map((skill, index) => (
-                  <div
-                    key={`${skill.slug}-item-${index}`}
-                    className="group/item relative mx-4 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-28 hover:h-48 hover:scale-125"
-                  >
-                    <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300">
-                      {React.createElement(skill.icon, {
-                        className: 'h-10 w-10 text-primary',
-                      })}
+                <div className="flex h-56 w-max animate-marquee items-center hover:[animation-play-state:paused]">
+                  {[...skills, ...skills].map((skill, index) => (
+                    <div
+                      key={`${skill.slug}-item-${index}`}
+                      className="group/item relative mx-4 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-28 hover:h-48 hover:scale-125"
+                    >
+                      <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300">
+                        {React.createElement(skill.icon, {
+                          className: 'h-10 w-10 text-primary',
+                        })}
+                      </div>
+                      <div className="absolute bottom-0 w-full overflow-hidden opacity-0 transition-opacity duration-300 group-hover/item:opacity-100 pt-2 h-0 group-hover/item:h-auto group-hover/item:relative p-2">
+                        <p className="font-bold text-primary">
+                          {skill.name}
+                        </p>
+                        <p className="text-xs text-foreground/90 dark:text-foreground/80 mt-1">
+                          {skill.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="absolute bottom-0 w-full overflow-hidden opacity-0 transition-opacity duration-300 group-hover/item:opacity-100 pt-2 h-0 group-hover/item:h-auto group-hover/item:relative p-2">
-                      <p className="text-sm font-bold text-primary">
-                        {skill.name}
-                      </p>
-                      <p className="text-sm text-foreground/90 dark:text-foreground/80 mt-1">
-                        {skill.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
               <div className="absolute inset-y-0 right-0 z-10 w-1/4 bg-gradient-to-l from-background to-transparent" />
             </div>
             <AnimatedDiv delay={0.4} className="text-center mt-20">
@@ -425,7 +426,7 @@ export default function Home() {
                           </div>
                       </div>
                        <div className="flex justify-end gap-2 mt-4">
-                          {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><Github className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
+                          {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><GithubIcon className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
                           {project.liveUrl && <Button asChild size="sm"><Link href={project.liveUrl}>Ver Demo <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>}
                       </div>
                     </DialogContent>

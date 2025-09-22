@@ -49,7 +49,7 @@ export const skills: Skill[] = [
     name: "Python", 
     slug: "python",
     icon: FaPython, 
-    description: "Su versatilidad me permite construir desde APIs robustas hasta complejos modelos de IA, siendo la navaja suiza para resolver problemas de backend.",
+    description: "Construyo desde APIs robustas hasta complejos modelos de IA, siendo la navaja suiza para resolver problemas de backend.",
     practicalAbilities: [
         { title: "Desarrollo de APIs RESTful", description: "Construcción de APIs robustas y escalables con frameworks como FastAPI y Flask para dar soporte a aplicaciones web y móviles.", icon: Server },
         { title: "Automatización y Scripting", description: "Creación de scripts para automatizar tareas repetitivas (web scraping, generación de reportes), optimizando la eficiencia operativa de los negocios.", icon: Zap },
@@ -60,7 +60,7 @@ export const skills: Skill[] = [
     name: "TypeScript", 
     slug: "typescript",
     icon: SiTypescript, 
-    description: "La seguridad de tipos en proyectos grandes no es negociable. Reduce errores, mejora la colaboración y hace el código auto-documentado.",
+    description: "Aporta seguridad y robustez al código. Reduce errores, mejora la colaboración en equipo y hace el código auto-documentado.",
     practicalAbilities: [
         { title: "Tipado Estricto en Proyectos Complejos", description: "Garantizo la robustez y escalabilidad del código en aplicaciones grandes, reduciendo errores antes de que lleguen a producción.", icon: Shield },
         { title: "Desarrollo Full-Stack", description: "Uso TypeScript tanto en el frontend con React/Next.js como en el backend con Node.js, creando un ecosistema de desarrollo cohesivo.", icon: Layers },
@@ -71,7 +71,7 @@ export const skills: Skill[] = [
     name: "Next.js", 
     slug: "nextjs",
     icon: TbBrandNextjs, 
-    description: "Es el estándar de oro para crear aplicaciones React de producción: rápidas, optimizadas para SEO y con una experiencia de desarrollo superior.",
+    description: "Es el estándar para crear aplicaciones React de producción: rápidas, optimizadas para SEO y con una experiencia de desarrollo superior.",
     practicalAbilities: [
       { title: "Renderizado Híbrido (SSR y SSG)", description: "Optimizo el rendimiento y el SEO de las aplicaciones web eligiendo la estrategia de renderizado adecuada para cada caso de uso (dinámico vs. estático).", icon: Zap },
       { title: "APIs con Route Handlers", description: "Construyo APIs eficientes y seguras directamente dentro de la aplicación Next.js, ideal para soluciones todo-en-uno como 'Suites PYME'.", icon: Server },
@@ -82,7 +82,7 @@ export const skills: Skill[] = [
     name: "Node.js", 
     slug: "nodejs",
     icon: FaNodeJs, 
-    description: "Su naturaleza asíncrona es perfecta para construir APIs y microservicios rápidos y eficientes que manejan miles de conexiones sin esfuerzo.",
+    description: "Perfecto para construir APIs y microservicios rápidos y eficientes, capaces de manejar miles de conexiones simultáneas sin esfuerzo.",
     practicalAbilities: [
       { title: "APIs REST y GraphQL", description: "Desarrollo APIs performantes y bien estructuradas que sirven como el cerebro para aplicaciones web y móviles complejas.", icon: Server },
       { title: "Sistemas de Autenticación Seguros", description: "Implemento sistemas de seguridad con JWT, OAuth y gestión de sesiones para proteger los datos de los usuarios en todas mis aplicaciones.", icon: Shield },
@@ -93,7 +93,7 @@ export const skills: Skill[] = [
     name: "Google Cloud", 
     slug: "google-cloud",
     icon: SiGooglecloud, 
-    description: "Ofrece una infraestructura de nivel mundial, escalable y segura, permitiéndome construir y desplegar soluciones robustas sin preocuparme por el hardware.",
+    description: "Permite construir y desplegar soluciones de clase mundial, escalables y seguras, sin tener que gestionar infraestructura física.",
     practicalAbilities: [
       { title: "Despliegue en Cloud Run y GKE", description: "Empaqueto y despliego aplicaciones en contenedores serverless (Cloud Run) o en clústeres de Kubernetes (GKE) para máxima escalabilidad.", icon: Zap },
       { title: "Bases de Datos Gestionadas", description: "Utilizo Firestore y Cloud SQL para gestionar bases de datos NoSQL y SQL de manera segura y sin preocuparme por la infraestructura.", icon: Database },
@@ -104,7 +104,7 @@ export const skills: Skill[] = [
     name: "Firebase", 
     slug: "firebase",
     icon: SiFirebase, 
-    description: "Es mi herramienta preferida para acelerar el desarrollo. Me permite lanzar MVPs y aplicaciones completas en tiempo récord sin sacrificar escalabilidad.",
+    description: "Acelera el desarrollo de MVPs y aplicaciones completas. Permite lanzar productos en tiempo récord sin sacrificar escalabilidad.",
     practicalAbilities: [
       { title: "Autenticación de Usuarios Simplificada", description: "Implemento sistemas de login social (Google, etc.) y por correo/contraseña de forma rápida y segura para cualquier app.", icon: Shield },
       { title: "Bases de Datos en Tiempo Real (Firestore)", description: "Utilizo Firestore para sincronizar datos entre clientes al instante, ideal para chats, dashboards y apps colaborativas.", icon: Database },
@@ -115,7 +115,7 @@ export const skills: Skill[] = [
     name: "Docker", 
     slug: "docker",
     icon: FaDocker, 
-    description: "Garantiza consistencia absoluta. Una aplicación en un contenedor funciona igual en desarrollo, pruebas y producción, eliminando sorpresas.",
+    description: "Garantiza que el software funcione de manera idéntica en cualquier entorno, eliminando el clásico 'en mi máquina sí funciona'.",
     practicalAbilities: [
         { title: "Contenerización de Aplicaciones", description: "Empaqueto aplicaciones y sus dependencias en contenedores, asegurando que funcionen de manera idéntica en cualquier entorno.", icon: Briefcase },
         { title: "Orquestación con Docker Compose", description: "Defino y gestiono aplicaciones multi-contenedor, simplificando la configuración de entornos de desarrollo complejos.", icon: Layers },
@@ -137,7 +137,7 @@ export const skills: Skill[] = [
     name: "GitHub/GitLab", 
     slug: "github",
     icon: GithubIcon, 
-    description: "Centralizan el código, automatizan los flujos de trabajo y potencian la colaboración, convirtiéndose en el centro de operaciones de cualquier proyecto.",
+    description: "Centralizan el código, automatizan los flujos de trabajo y potencian la colaboración, siendo el centro de operaciones de cualquier proyecto moderno.",
     practicalAbilities: [
         { title: "Automatización con GitHub Actions", description: "Configuro flujos de trabajo (CI/CD) para automatizar pruebas y despliegues, acelerando la entrega de valor a los usuarios.", icon: Zap },
         { title: "Revisión de Código (Pull Requests)", description: "Facilito la colaboración y aseguro la calidad del código a través de un proceso de revisión estructurado, esencial en mentorías de equipo.", icon: GitBranch },
@@ -148,7 +148,7 @@ export const skills: Skill[] = [
     name: "CI/CD", 
     slug: "cicd",
     icon: SiGithubactions, 
-    description: "La automatización es la clave para entregar software de alta calidad de forma rápida y fiable, minimizando el riesgo de errores humanos.",
+    description: "La automatización es clave para entregar software de alta calidad de forma rápida y fiable, minimizando el riesgo de errores humanos.",
     practicalAbilities: [
         { title: "Pipelines de Despliegue Automatizado", description: "Diseño pipelines que automatizan el proceso desde el `git push` hasta la producción, asegurando despliegues rápidos y consistentes.", icon: Zap },
         { title: "Pruebas Automatizadas", description: "Integro pruebas unitarias, de integración y end-to-end en el pipeline para detectar errores tempranamente y garantizar la calidad.", icon: Shield },
@@ -170,7 +170,7 @@ export const skills: Skill[] = [
     name: "Vercel", 
     slug: "vercel",
     icon: SiVercel, 
-    description: "Es la plataforma definitiva para desplegar aplicaciones Next.js, ofreciendo un rendimiento global inigualable y una experiencia de desarrollo sin fricciones.",
+    description: "La plataforma definitiva para desplegar aplicaciones Next.js. Ofrece rendimiento global, escalabilidad y una experiencia de desarrollo sin fricciones.",
     practicalAbilities: [
         { title: "Despliegue Continuo (GitOps)", description: "Integro repositorios de GitHub para un despliegue automático en cada `push`, permitiendo una entrega de funcionalidades extremadamente rápida.", icon: Zap },
         { title: "Gestión de Dominios y DNS", description: "Configuro dominios personalizados y gestiono los registros DNS para que los sitios de mis clientes estén en línea de forma profesional y rápida.", icon: Server },
@@ -181,7 +181,7 @@ export const skills: Skill[] = [
     name: "Kubernetes", 
     slug: "kubernetes",
     icon: SiKubernetes,
-    description: "Es el estándar para orquestar aplicaciones en contenedores a gran escala, garantizando alta disponibilidad, resiliencia y escalabilidad automática.",
+    description: "El estándar para orquestar aplicaciones en contenedores a gran escala, garantizando alta disponibilidad, resiliencia y escalabilidad automática.",
     practicalAbilities: [
         { title: "Orquestación de Contenedores", description: "Gestiono el ciclo de vida de aplicaciones en contenedores para alta disponibilidad y escalabilidad, fundamental para sistemas críticos.", icon: Layers },
         { title: "Despliegues sin Downtime", description: "Realizo actualizaciones de aplicaciones utilizando estrategias como 'rolling updates' para no afectar a los usuarios durante el mantenimiento.", icon: Zap },
@@ -192,7 +192,7 @@ export const skills: Skill[] = [
     name: "OpenShift", 
     slug: "openshift",
     icon: OpenShiftIcon, 
-    description: "Es la solución Kubernetes preferida por el mundo empresarial, ofreciendo un ecosistema de desarrollo seguro y robusto para entornos corporativos.",
+    description: "La solución Kubernetes para el mundo empresarial, que ofrece un ecosistema de desarrollo seguro y robusto para entornos corporativos.",
     practicalAbilities: [
         { title: "Desarrollo y Despliegue Empresarial", description: "Utilizo las herramientas integradas para un ciclo de vida de desarrollo de software seguro y eficiente en grandes organizaciones.", icon: Briefcase },
         { title: "Seguridad y Cumplimiento Normativo", description: "Aplico políticas de seguridad y cumplo con los estándares corporativos, una necesidad en sectores regulados como finanzas o salud.", icon: Shield },
@@ -203,7 +203,7 @@ export const skills: Skill[] = [
     name: "Tailwind CSS", 
     slug: "tailwindcss",
     icon: SiTailwindcss, 
-    description: "Me permite construir interfaces de usuario complejas y personalizadas a una velocidad increíble, sin sacrificar la consistencia del diseño.",
+    description: "Permite construir interfaces de usuario complejas y personalizadas a una velocidad increíble, sin sacrificar la consistencia del diseño.",
     practicalAbilities: [
         { title: "Diseño de Interfaces a Medida", description: "Creo diseños únicos y consistentes sin salir del HTML, aplicando la filosofía 'utility-first' para una máxima personalización.", icon: Code2 },
         { title: "Sistemas de Diseño Escalables", description: "Adapto y extiendo el tema de Tailwind para crear sistemas de diseño que se alinean con la identidad de marca del cliente y son fáciles de mantener.", icon: Layers },
@@ -214,7 +214,7 @@ export const skills: Skill[] = [
     name: "PostgreSQL", 
     slug: "postgresql",
     icon: SiPostgresql, 
-    description: "Es una base de datos relacional extremadamente robusta, fiable y extensible, ideal para aplicaciones que demandan integridad y consistencia de datos.",
+    description: "Base de datos relacional robusta, fiable y extensible, ideal para aplicaciones que demandan integridad y consistencia de datos.",
     practicalAbilities: [
         { title: "Diseño de Esquemas Relacionales", description: "Modelo estructuras de datos eficientes y normalizadas para garantizar la integridad y el rendimiento de la información crítica del negocio.", icon: Database },
         { title: "Consultas SQL Optimizadas", description: "Escribo consultas complejas y optimizadas (con JOINs, subqueries, etc.) para obtener datos de manera eficiente en aplicaciones de alto rendimiento.", icon: Code2 },
