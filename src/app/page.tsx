@@ -216,7 +216,6 @@ function CvGeneratorButton() {
 
 
 export default function Home() {
-  const [isHovered, setIsHovered] = React.useState(false);
 
   return (
     <div className="flex flex-col gap-12 md:gap-24 lg:gap-32">
@@ -319,7 +318,7 @@ export default function Home() {
             <div className="group relative mt-12 w-full overflow-hidden">
                 <div className="absolute inset-y-0 left-0 z-10 w-1/4 bg-gradient-to-r from-background to-transparent" />
                 <div
-                    className="flex w-max animate-marquee hover:[animation-play-state:paused]"
+                    className="flex w-max animate-marquee hover:animate-marquee-slow"
                 >
                     {[...skills, ...skills].map((skill, index) => (
                     <div 
@@ -330,8 +329,8 @@ export default function Home() {
                             {React.cloneElement(skill.icon, { className: 'h-10 w-10 text-primary' })}
                         </div>
                         <div className="relative w-full overflow-hidden opacity-0 transition-opacity duration-300 group-hover/item:opacity-100 pt-2">
-                            <p className="text-sm font-bold text-primary whitespace-normal">{skill.name}</p>
-                            <p className="text-sm text-foreground/90 dark:text-foreground/80 mt-1 whitespace-normal">
+                            <p className="text-sm font-bold text-primary">{skill.name}</p>
+                            <p className="text-sm text-foreground/90 dark:text-foreground/80 mt-1">
                                 {skill.description}
                             </p>
                         </div>
