@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BrainCircuit, Menu, Moon, Sun, Home, Briefcase, Code2, FileText, Mail, Languages } from "lucide-react";
+import { BrainCircuit, Menu, Moon, Sun, Home, Briefcase, Code2, FileText, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -55,14 +55,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex flex-1 items-center justify-end space-x-2">
-           <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Change language"
-          >
-            <Languages className="h-5 w-5" />
-          </Button>
-
           <Button
             variant="ghost"
             size="icon"
