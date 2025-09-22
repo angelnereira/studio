@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -212,7 +213,7 @@ export function EmployerForm() {
                 <Textarea
                   placeholder="Pega aquí la descripción del puesto o un enlace a la publicación de la vacante."
                   className="min-h-[150px]"
-                  {...props}
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
