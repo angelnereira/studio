@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import Image from "next/image";
@@ -17,112 +18,15 @@ import { ServicesCarousel } from "@/components/services-carousel";
 import { generateCv, GenerateCvInput } from "@/ai/flows/generate-cv";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { skills } from "@/lib/skills";
 import { AnimatedDiv } from "@/components/animated-div";
+import dynamic from "next/dynamic";
+import { projects, testimonials } from "@/lib/projects-and-testimonials";
+import { skills } from "@/lib/skills";
 
-const testimonialImages = {
-  test1: PlaceHolderImages.find(p => p.id === 'testimonial-1'),
-  test2: PlaceHolderImages.find(p => p.id === 'testimonial-2'),
-};
+const DynamicSkillsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.SkillsSection), { ssr: false });
+const DynamicProjectsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ProjectsSection), { ssr: false });
+const DynamicTestimonialsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.TestimonialsSection), { ssr: false });
 
-const projects = [
-  {
-    title: "App Web de Control de Acceso",
-    id: "access-control",
-    logo: (props: React.SVGProps<SVGSVGElement>) => (
-      <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M19.5 12a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" stroke="currentColor" strokeWidth="2"/>
-        <path d="M12 4.5V3M19.5 19.5l-1.06-1.06M4.5 19.5l1.06-1.06M12 19.5V21M4.5 4.5l1.06 1.06" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-      </svg>
-    ),
-    description: "Plataforma web desplegada en Vercel para la gestión de acceso de personal en tiempo real. Permite registrar entradas y salidas, generar reportes y administrar perfiles de empleados de forma segura.",
-    technologies: ["Next.js", "TypeScript", "Firebase Auth", "Firestore", "Vercel"],
-    problem: "Digitalizar y automatizar el control de asistencia de empleados, eliminando procesos manuales y mejorando la seguridad.",
-    impact: "Reducción del tiempo administrativo en un 40% y generación de reportes de asistencia precisos al instante.",
-    githubUrl: "#",
-    liveUrl: "#",
-  },
-  {
-    title: "Dashboard de Ventas en Tiempo Real",
-    id: "sales-dashboard",
-    logo: (props: React.SVGProps<SVGSVGElement>) => (
-      <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 3v18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="m19 9-5 5-4-4-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-    description: "Dashboard interactivo que visualiza métricas de ventas en tiempo real, conectándose directamente a la base de datos de producción. Permite a los gerentes tomar decisiones basadas en datos actualizados al segundo.",
-    technologies: ["Next.js", "Recharts", "PostgreSQL", "Node.js", "Vercel"],
-    problem: "La gerencia carecía de visibilidad inmediata sobre el rendimiento de las ventas, basándose en reportes diarios o semanales.",
-    impact: "Mejora en la capacidad de reacción a tendencias del mercado y optimización de estrategias de venta con un ciclo de feedback inmediato.",
-    liveUrl: "#",
-  },
-  {
-    title: "Gestión de Planilla con Cálculos en Tiempo Real",
-    id: "payroll-management",
-    logo: (props: React.SVGProps<SVGSVGElement>) => (
-       <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M9 13h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M9 17h3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-      </svg>
-    ),
-    description: "Aplicación web para la administración de planillas que realiza cálculos de salarios, deducciones e impuestos en tiempo real a medida que se ingresan los datos. Simplifica un proceso complejo y propenso a errores.",
-    technologies: ["React", "Node.js", "TypeScript", "Docker", "Google Cloud"],
-    problem: "El cálculo manual de la planilla era lento, ineficiente y generaba errores costosos para la empresa.",
-    impact: "Automatización completa del cálculo de planillas, garantizando precisión y cumplimiento, y liberando horas de trabajo del personal de RRHH.",
-    githubUrl: "#",
-  },
-   {
-    title: "Pipeline de Despliegue Automatizado (CI/CD)",
-    id: "ci-cd-pipeline",
-    logo: (props: React.SVGProps<SVGSVGElement>) => (
-       <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M21 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M12 18a6 6 0 0 1-6-6h12a6 6 0 0 1-6 6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M12 6a6 6 0 0 1 6 6H6a6 6 0 0 1 6-6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-    description: "Implementación de un pipeline de CI/CD para una aplicación de microservicios, automatizando las pruebas, construcción de imágenes Docker y despliegue en un clúster de Kubernetes.",
-    technologies: ["GitHub Actions", "Docker", "Kubernetes", "Google Cloud Build"],
-    problem: "Los despliegues manuales eran lentos, propensos a errores y requerían una ventana de mantenimiento significativa.",
-    impact: "Reducción del tiempo de despliegue de horas a minutos. Aumento de la frecuencia de despliegues en un 500% con una tasa de error cercana a cero.",
-    githubUrl: "#",
-  },
-  {
-    title: "Chatbot de Servicio al Cliente con IA",
-    id: "ai-chatbot",
-    logo: (props: React.SVGProps<SVGSVGElement>) => (
-      <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M12 7v.01M9 11h.01M15 11h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    ),
-    description: "Desarrollo de un chatbot inteligente para automatizar la atención al cliente. Integrado con una base de conocimientos y opcionalmente con WhatsApp para resolver preguntas frecuentes y escalar casos complejos a agentes humanos.",
-    technologies: ["Genkit", "Dialogflow", "Node.js", "Firebase", "WhatsApp API"],
-    problem: "El equipo de soporte estaba sobrecargado con consultas repetitivas, resultando en altos tiempos de espera para los clientes.",
-    impact: "Automatización del 70% de las consultas de primer nivel, reduciendo el tiempo de respuesta promedio en un 90% y mejorando la satisfacción del cliente.",
-    liveUrl: "#",
-  },
-];
-
-const testimonials = [
-  {
-    name: "Líder Técnico",
-    title: "Global Tech Company",
-    quote: "Ángel tiene una capacidad única para entender arquitecturas complejas y proponer soluciones eficientes. Su curiosidad y empuje son un gran activo para cualquier equipo.",
-    avatar: testimonialImages.test1,
-  },
-  {
-    name: "Gerente de Producto",
-    title: "Startup Innovadora",
-    quote: "La mentalidad de Ángel orientada al producto y su enfoque en las mejores prácticas de desarrollo fueron clave para entregar una solución robusta a tiempo. Su profesionalismo es excepcional.",
-    avatar: testimonialImages.test2,
-  },
-];
 
 const aboutMe = `Soy un ingeniero de software panameño con una visión clara: impulsar la transformación tecnológica en Panamá y más allá, creando soluciones innovadoras, eficientes y de alto impacto. Mi trayectoria es una fusión poco común entre la ingeniería de sonido y la ingeniería de software. Esta dualidad me ha enseñado a abordar los problemas con la precisión técnica de un ingeniero y la creatividad de un artista. Mi filosofía es simple: "Solucionar problemas para disfrutar la vida". Aplico esta mentalidad para desarrollar software robusto, escalable y seguro que genera valor real. Mi objetivo es ser un pionero en la innovación tecnológica de Panamá, con un enfoque en software, ciencia de datos e inteligencia artificial, siempre con una proyección global. Apuesto por la inclusión y el empoderamiento de las personas a través de la tecnología.`;
 
@@ -302,170 +206,14 @@ export default function Home() {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="w-full">
-          <div className="container px-4 md:px-6">
-            <AnimatedDiv>
-              <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
-                    Habilidades y Stack Tecnológico
-                  </h2>
-                  <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Más que una lista de tecnologías, esta es mi caja de herramientas para resolver problemas complejos. Cada habilidad y herramienta se aplica con un propósito: construir soluciones eficientes, escalables y centradas en el usuario que generan un impacto real.
-                  </p>
-                </div>
-              </div>
-            </AnimatedDiv>
-             <div className="group/container relative mt-12 w-full overflow-hidden px-4">
-                <div className="absolute inset-y-0 left-0 z-10 w-[7.5%] bg-gradient-to-r from-background to-transparent" />
-                <div className="flex h-56 w-max animate-marquee items-center p-4 transition-all duration-500 ease-geist group-hover/container:h-64 hover:[animation-play-state:paused]">
-                  {[...skills, ...skills].map((skill, index) => (
-                    <div
-                      key={`${skill.slug}-item-${index}`}
-                      className="group/item relative mx-2 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-28 hover:h-48 hover:scale-125 rounded-lg group-hover/container:opacity-50 hover:!opacity-100 hover:shadow-primary/20 hover:shadow-2xl"
-                    >
-                      <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300">
-                        {React.createElement(skill.icon, {
-                          className: 'h-10 w-10 text-primary',
-                        })}
-                      </div>
-                      <div className="absolute bottom-0 w-full overflow-hidden opacity-0 transition-opacity duration-300 group-hover/item:opacity-100 pt-2 h-0 group-hover/item:h-auto group-hover/item:relative p-2">
-                        <p className="font-bold text-primary">
-                          {skill.name}
-                        </p>
-                        <p className="text-xs text-foreground/90 dark:text-foreground/80 mt-1">
-                          {skill.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              <div className="absolute inset-y-0 right-0 z-10 w-[7.5%] bg-gradient-to-l from-background to-transparent" />
-            </div>
-            <AnimatedDiv delay={0.4} className="text-center mt-20">
-              <Button asChild variant="outline">
-                <Link href="/skills">
-                  Ver todas las Habilidades <ArrowRight className="ml-2" />
-                </Link>
-              </Button>
-            </AnimatedDiv>
-          </div>
-        </section>
-
+        <DynamicSkillsSection />
 
         {/* Projects Section */}
-        <section id="projects" className="w-full bg-background/50">
-          <div className="container px-4 md:px-6">
-            <AnimatedDiv>
-              <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Proyectos Destacados</h2>
-                  <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Una selección de proyectos que demuestran mi enfoque en la resolución de problemas y la aplicación de tecnología.
-                  </p>
-                </div>
-              </div>
-            </AnimatedDiv>
-            <div className="mx-auto grid max-w-5xl justify-center gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project, index) => (
-                <AnimatedDiv key={project.id} delay={0.1 * index}>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <SpotlightCard className="group relative flex flex-col overflow-hidden transition-all duration-600 ease-geist w-full bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl cursor-pointer">
-                          <CardHeader className="flex-row items-center gap-4">
-                            {project.logo && (
-                              <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                                 <project.logo className="w-6 h-6" />
-                              </div>
-                            )}
-                            <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary">{project.title}</CardTitle>
-                          </CardHeader>
-                          <CardContent>
-                            <CardDescription className="line-clamp-3">{project.description}</CardDescription>
-                          </CardContent>
-                          <CardFooter className="mt-auto">
-                             <div className="flex flex-wrap gap-2">
-                                {project.technologies.slice(0, 3).map((tech) => (
-                                  <Badge key={tech} variant="secondary">{tech}</Badge>
-                                ))}
-                                {project.technologies.length > 3 && <Badge variant="outline">+{project.technologies.length - 3}</Badge>}
-                            </div>
-                          </CardFooter>
-                      </SpotlightCard>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[625px]">
-                      <DialogHeader>
-                        <div className="flex items-center gap-4 mb-4">
-                           {project.logo && (
-                              <div className="w-16 h-16 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                                 <project.logo className="w-8 h-8" />
-                              </div>
-                            )}
-                            <DialogTitle className="text-2xl">{project.title}</DialogTitle>
-                        </div>
-                        <DialogDescription>{project.description}</DialogDescription>
-                      </DialogHeader>
-                      <div className="grid gap-6 py-4">
-                          <div>
-                            <h4 className="font-semibold text-foreground mb-2">Problema Resuelto</h4>
-                            <p className="text-sm text-muted-foreground">{project.problem}</p>
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-foreground mb-2">Impacto Generado</h4>
-                            <p className="text-sm text-muted-foreground">{project.impact}</p>
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-foreground mb-2">Tecnologías Utilizadas</h4>
-                             <div className="flex flex-wrap gap-2">
-                                {project.technologies.map((tech) => (
-                                  <Badge key={tech} variant="secondary">{tech}</Badge>
-                                ))}
-                            </div>
-                          </div>
-                      </div>
-                       <div className="flex justify-end gap-2 mt-4">
-                          {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><Github className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
-                          {project.liveUrl && <Button asChild size="sm"><Link href={project.liveUrl}>Ver Demo <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>}
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </AnimatedDiv>
-              ))}
-            </div>
-          </div>
-        </section>
+        <DynamicProjectsSection />
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="w-full">
-          <div className="container px-4 md:px-6">
-            <AnimatedDiv>
-              <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl font-headline">Lo que dicen otros</h2>
-            </AnimatedDiv>
-            <div className="grid gap-8 mt-12 sm:grid-cols-1 md:grid-cols-2">
-              {testimonials.map((testimonial, index) => (
-                <AnimatedDiv key={testimonial.name} delay={0.1 * index}>
-                  <SpotlightCard className="relative transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
-                    <CardContent className="pt-6">
-                      <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
-                    </CardContent>
-                    <CardFooter className="flex items-center gap-4">
-                      {testimonial.avatar && (
-                        <Avatar>
-                          <AvatarImage src={testimonial.avatar.imageUrl} alt={testimonial.name} data-ai-hint={testimonial.avatar.imageHint} />
-                          <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                      )}
-                      <div>
-                        <p className="font-semibold">{testimonial.name}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                      </div>
-                    </CardFooter>
-                  </SpotlightCard>
-                </AnimatedDiv>
-              ))}
-            </div>
-          </div>
-        </section>
+        <DynamicTestimonialsSection />
+
 
         {/* CTA Section */}
         <section className="w-full bg-background/50">
