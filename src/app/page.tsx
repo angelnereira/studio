@@ -316,11 +316,11 @@ export default function Home() {
                 </div>
               </div>
             </AnimatedDiv>
-            <div className="relative mt-12 w-full overflow-hidden">
-              <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
-                {[...skills, ...skills].map((skill, index) => (
-                  <TooltipProvider key={`${skill.slug}-${index}`} delayDuration={0}>
-                    <Tooltip>
+            <TooltipProvider delayDuration={0}>
+              <div className="relative mt-12 w-full overflow-hidden">
+                <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+                  {[...skills, ...skills].map((skill, index) => (
+                    <Tooltip key={`${skill.slug}-${index}`}>
                       <TooltipTrigger asChild>
                         <div className="mx-4 flex h-24 w-24 items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:scale-110">
                            {React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10 text-primary' })}
@@ -331,12 +331,12 @@ export default function Home() {
                         <p className="text-xs text-muted-foreground">{skill.description}</p>
                       </TooltipContent>
                     </Tooltip>
-                  </TooltipProvider>
-                ))}
+                  ))}
+                </div>
+                <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background to-transparent"></div>
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-transparent"></div>
               </div>
-               <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background to-transparent"></div>
-               <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-transparent"></div>
-            </div>
+            </TooltipProvider>
              <AnimatedDiv delay={0.4} className="text-center mt-12">
                 <Button asChild variant="outline">
                     <Link href="/skills">
