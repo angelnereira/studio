@@ -316,7 +316,7 @@ export default function Home() {
                 </div>
               </div>
             </AnimatedDiv>
-            <TooltipProvider delayDuration={0}>
+            <TooltipProvider>
               <div className="relative mt-12 w-full overflow-hidden">
                 <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
                   {[...skills, ...skills].map((skill, index) => (
@@ -326,9 +326,8 @@ export default function Home() {
                            {React.cloneElement(skill.icon, { className: 'h-10 w-10 text-primary' })}
                         </div>
                       </TooltipTrigger>
-                      <TooltipContent side="bottom" className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
-                        <p className="font-bold mb-2">{skill.name}</p>
-                        <p className="text-xs text-muted-foreground">{skill.description}</p>
+                      <TooltipContent side="bottom">
+                        <p>{skill.name}</p>
                       </TooltipContent>
                     </Tooltip>
                   ))}
