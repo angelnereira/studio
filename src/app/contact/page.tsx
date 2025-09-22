@@ -42,7 +42,7 @@ export default function ContactPage() {
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="client"><User className='mr-2' />Cliente</TabsTrigger>
               <TabsTrigger value="employer"><Briefcase className='mr-2'/>Empleador</TabsTrigger>
-              <TabsTrigger value="collaborator"><Handshake className='mr-2'/>Colaborador</TabsTrigger>
+              <TabsTrigger value="collaboration"><Handshake className='mr-2'/>Colaboración</TabsTrigger>
             </TabsList>
             <TabsContent value="client" className="mt-6">
               <ContactCard
@@ -62,7 +62,7 @@ export default function ContactPage() {
                 <EmployerForm />
               </ContactCard>
             </TabsContent>
-            <TabsContent value="collaborator" className="mt-6">
+            <TabsContent value="collaboration" className="mt-6">
                <ContactCard
                 icon={<Handshake />}
                 title="Propuesta de Colaboración"
