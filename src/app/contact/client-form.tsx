@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-
+import { useFormState, useFormStatus } from "react-dom";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,6 +25,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { services } from "@/lib/services";
+import { onContactSubmit, FormState } from "./actions";
 
 const clientFormSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
@@ -38,8 +40,23 @@ const clientFormSchema = z.object({
 
 type ClientFormValues = z.infer<typeof clientFormSchema>;
 
+const initialState: FormState = {
+  message: "",
+  status: "idle",
+};
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" size="lg" className="w-full" disabled={pending}>
+      {pending ? "Enviando..." : "Enviar Propuesta"}
+    </Button>
+  );
+}
+
 export function ClientForm() {
   const { toast } = useToast();
+  const [state, formAction] = useFormState(onContactSubmit, initialState);
   const form = useForm<ClientFormValues>({
     resolver: zodResolver(clientFormSchema),
     defaultValues: {
@@ -52,18 +69,32 @@ export function ClientForm() {
     },
   });
 
-  function onSubmit(data: ClientFormValues) {
-    console.log(data);
-    toast({
-      title: "¡Mensaje Enviado!",
-      description: "Gracias por contactarme. Te responderé lo antes posible.",
-    });
-    form.reset();
-  }
+  useEffect(() => {
+    if (state.status === 'success' && state.message) {
+      toast({
+        title: "¡Mensaje Enviado!",
+        description: state.message,
+      });
+      form.reset();
+    } else if (state.status === 'error' && state.message) {
+       toast({
+        variant: "destructive",
+        title: "Error al enviar",
+        description: state.message + (state.issues ? `: ${state.issues.join(", ")}` : ''),
+      });
+    }
+  }, [state, form, toast]);
+
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+       <form
+          action={(formData) => {
+            formData.append('formType', 'client');
+            form.handleSubmit(() => formAction(formData))();
+          }}
+          className="space-y-6"
+        >
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
             control={form.control}
@@ -157,10 +188,10 @@ export function ClientForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="&lt;1k">Menos de $1,000</SelectItem>
+                    <SelectItem value="<1k">Menos de $1,000</SelectItem>
                     <SelectItem value="1k-5k">$1,000 - $5,000</SelectItem>
                     <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
-                    <SelectItem value="&gt;10k">Más de $10,000</SelectItem>
+                    <SelectItem value=">10k">Más de $10,000</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -213,9 +244,7 @@ export function ClientForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="lg" className="w-full" disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting ? "Enviando..." : "Enviar Propuesta"}
-        </Button>
+        <SubmitButton />
       </form>
     </Form>
   );

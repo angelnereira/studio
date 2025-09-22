@@ -3,6 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useFormState, useFormStatus } from "react-dom";
+import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { onContactSubmit, FormState } from "./actions";
 
 
 const collaboratorFormSchema = z.object({
@@ -31,8 +34,24 @@ const collaboratorFormSchema = z.object({
 
 type CollaboratorFormValues = z.infer<typeof collaboratorFormSchema>;
 
+const initialState: FormState = {
+  message: "",
+  status: "idle",
+};
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" size="lg" className="w-full" disabled={pending}>
+      {pending ? "Enviando..." : "Enviar Mensaje"}
+    </Button>
+  );
+}
+
+
 export function CollaboratorForm() {
   const { toast } = useToast();
+  const [state, formAction] = useFormState(onContactSubmit, initialState);
   const form = useForm<CollaboratorFormValues>({
     resolver: zodResolver(collaboratorFormSchema),
     defaultValues: {
@@ -46,18 +65,32 @@ export function CollaboratorForm() {
     },
   });
 
-  function onSubmit(data: CollaboratorFormValues) {
-    console.log(data);
-    toast({
-      title: "¡Mensaje Recibido!",
-      description: "Gracias por tu interés en colaborar. Te contactaré pronto para conversar.",
-    });
-    form.reset();
-  }
+  useEffect(() => {
+    if (state.status === 'success' && state.message) {
+      toast({
+        title: "¡Mensaje Recibido!",
+        description: "Gracias por tu interés en colaborar. He guardado tu propuesta.",
+      });
+      form.reset();
+    } else if (state.status === 'error' && state.message) {
+       toast({
+        variant: "destructive",
+        title: "Error al enviar",
+        description: state.message + (state.issues ? `: ${state.issues.join(", ")}` : ''),
+      });
+    }
+  }, [state, form, toast]);
+
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        action={(formData) => {
+          formData.append('formType', 'collaborator');
+          form.handleSubmit(() => formAction(formData))();
+        }}
+        className="space-y-6"
+      >
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
             control={form.control}
@@ -172,9 +205,7 @@ export function CollaboratorForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="lg" className="w-full" disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting ? "Enviando..." : "Enviar Mensaje"}
-        </Button>
+        <SubmitButton />
       </form>
     </Form>
   );

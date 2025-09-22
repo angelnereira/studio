@@ -1,9 +1,10 @@
-
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useFormState, useFormStatus } from "react-dom";
+import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { onContactSubmit, FormState } from "./actions";
 
 const employerFormSchema = z.object({
   recruiterName: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
@@ -39,8 +41,23 @@ const employerFormSchema = z.object({
 
 type EmployerFormValues = z.infer<typeof employerFormSchema>;
 
+const initialState: FormState = {
+  message: "",
+  status: "idle",
+};
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" size="lg" className="w-full" disabled={pending}>
+      {pending ? "Enviando..." : "Enviar Oportunidad"}
+    </Button>
+  );
+}
+
 export function EmployerForm() {
   const { toast } = useToast();
+  const [state, formAction] = useFormState(onContactSubmit, initialState);
   const form = useForm<EmployerFormValues>({
     resolver: zodResolver(employerFormSchema),
     defaultValues: {
@@ -56,18 +73,32 @@ export function EmployerForm() {
     },
   });
 
-  function onSubmit(data: EmployerFormValues) {
-    console.log(data);
-    toast({
-      title: "¡Información Recibida!",
-      description: "Gracias por considerarme. Revisaré la oportunidad y te contactaré pronto.",
-    });
-    form.reset();
-  }
+  useEffect(() => {
+    if (state.status === 'success' && state.message) {
+      toast({
+        title: "¡Información Recibida!",
+        description: "Gracias por considerarme. Revisaré la oportunidad y te contactaré pronto.",
+      });
+      form.reset();
+    } else if (state.status === 'error' && state.message) {
+       toast({
+        variant: "destructive",
+        title: "Error al enviar",
+        description: state.message + (state.issues ? `: ${state.issues.join(", ")}` : ''),
+      });
+    }
+  }, [state, form, toast]);
+
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        action={(formData) => {
+          formData.append('formType', 'employer');
+          form.handleSubmit(() => formAction(formData))();
+        }}
+        className="space-y-6"
+      >
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
             control={form.control}
@@ -220,9 +251,7 @@ export function EmployerForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="lg" className="w-full" disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting ? "Enviando..." : "Enviar Oportunidad"}
-        </Button>
+        <SubmitButton />
       </form>
     </Form>
   );
