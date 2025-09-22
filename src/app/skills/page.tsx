@@ -20,7 +20,7 @@ export default function SkillsPage() {
       <AnimatedDiv>
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
-            Stack Tecnológico
+            Habilidades y Stack Tecnológico
           </h1>
           <p className="mt-4 text-muted-foreground md:text-xl">
             Un conjunto de herramientas versátil y moderno para construir
