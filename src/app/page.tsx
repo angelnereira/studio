@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import Image from "next/image";
@@ -309,35 +310,44 @@ export default function Home() {
             <AnimatedDiv>
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
                 <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Stack Tecnológico</h2>
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Habilidades y Stack Tecnológico</h2>
                   <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Un conjunto de herramientas versátil para resolver problemas reales, desde el desarrollo web hasta la infraestructura en la nube.
+                    Más que una lista de tecnologías, esta es mi caja de herramientas para resolver problemas complejos. Cada habilidad y herramienta se aplica con un propósito: construir soluciones eficientes, escalables y centradas en el usuario que generan un impacto real.
                   </p>
                 </div>
               </div>
             </AnimatedDiv>
-            <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 py-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-            <TooltipProvider>
-              {skills.map((skill, index) => (
-                <AnimatedDiv key={skill.name} delay={0.1 * index}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:-translate-y-1">
-                        <div className="text-primary">{React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10' })}</div>
-                        <span className="font-medium text-center">{skill.name}</span>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
-                      <p className="font-bold mb-2">{skill.name}</p>
-                      <p className="text-xs text-muted-foreground">{skill.description}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </AnimatedDiv>
-              ))}
-            </TooltipProvider>
+            <div className="relative mt-12 w-full overflow-hidden">
+              <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+                {[...skills, ...skills].map((skill, index) => (
+                  <TooltipProvider key={`${skill.slug}-${index}`}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="mx-4 flex h-24 w-24 items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:-translate-y-1">
+                           {React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10 text-primary' })}
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
+                        <p className="font-bold mb-2">{skill.name}</p>
+                        <p className="text-xs text-muted-foreground">{skill.description}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                ))}
+              </div>
+               <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background to-transparent"></div>
+               <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-transparent"></div>
             </div>
+             <AnimatedDiv delay={0.4} className="text-center mt-12">
+                <Button asChild variant="outline">
+                    <Link href="/skills">
+                        Ver todas las Habilidades <ArrowRight className="ml-2" />
+                    </Link>
+                </Button>
+            </AnimatedDiv>
           </div>
         </section>
+
 
         {/* Projects Section */}
         <section id="projects" className="w-full bg-background/50">
