@@ -50,8 +50,8 @@ export function SkillsSection() {
                           </div>
                         </Link>
                       </TooltipTrigger>
-                      <TooltipContent sideOffset={0}>
-                        <p>{skill.name}</p>
+                      <TooltipContent sideOffset={0} className="bg-transparent border-none shadow-none text-primary font-bold">
+                        {skill.name}
                       </TooltipContent>
                     </Tooltip>
                   ))}
