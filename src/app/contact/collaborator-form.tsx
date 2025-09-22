@@ -20,6 +20,9 @@ import { useToast } from "@/hooks/use-toast";
 const collaboratorFormSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
   email: z.string().email("Por favor, introduce una dirección de correo válida."),
+  linkedin: z.string().url("Por favor, introduce una URL válida.").optional().or(z.literal('')),
+  portfolio: z.string().url("Por favor, introduce una URL válida.").optional().or(z.literal('')),
+  expertise: z.string().optional(),
   subject: z.string().min(5, "El asunto debe tener al menos 5 caracteres."),
   message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres."),
 });
@@ -33,6 +36,9 @@ export function CollaboratorForm() {
     defaultValues: {
       name: "",
       email: "",
+      linkedin: "",
+      portfolio: "",
+      expertise: "",
       subject: "",
       message: "",
     },
@@ -58,7 +64,7 @@ export function CollaboratorForm() {
               <FormItem>
                 <FormLabel>Tu Nombre</FormLabel>
                 <FormControl>
-                  <Input placeholder="Nombre" {...field} />
+                  <Input placeholder="Nombre y Apellido" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -78,14 +84,55 @@ export function CollaboratorForm() {
             )}
           />
         </div>
+         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="linkedin"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Perfil de LinkedIn (Opcional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://linkedin.com/in/..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="portfolio"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Portfolio o GitHub (Opcional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://github.com/..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+        </div>
+         <FormField
+            control={form.control}
+            name="expertise"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Área de Expertise (Opcional)</FormLabel>
+                <FormControl>
+                  <Input placeholder="Ej: Frontend, Backend, UX/UI, Data Science" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         <FormField
           control={form.control}
           name="subject"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Asunto</FormLabel>
+              <FormLabel>¿De qué trata la colaboración?</FormLabel>
               <FormControl>
-                <Input placeholder="¿De qué trata la colaboración?" {...field} />
+                <Input placeholder="Asunto principal de tu propuesta" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
