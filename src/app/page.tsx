@@ -318,9 +318,9 @@ export default function Home() {
                 </div>
               </div>
             </AnimatedDiv>
-            <div className="group/container relative mt-12 w-full overflow-hidden px-4">
+             <div className="group/container relative mt-12 w-full overflow-hidden px-4">
                 <div className="absolute inset-y-0 left-0 z-10 w-1/4 bg-gradient-to-r from-background to-transparent" />
-                <div className="flex h-56 w-max animate-marquee items-center p-4 hover:[animation-play-state:paused]">
+                <div className="flex h-56 w-max animate-marquee items-center p-4 transition-all duration-500 ease-geist group-hover/container:h-64 hover:[animation-play-state:paused]">
                   {[...skills, ...skills].map((skill, index) => (
                     <div
                       key={`${skill.slug}-item-${index}`}
@@ -426,7 +426,7 @@ export default function Home() {
                           </div>
                       </div>
                        <div className="flex justify-end gap-2 mt-4">
-                          {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><GithubIcon className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
+                          {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><Github className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
                           {project.liveUrl && <Button asChild size="sm"><Link href={project.liveUrl}>Ver Demo <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>}
                       </div>
                     </DialogContent>
