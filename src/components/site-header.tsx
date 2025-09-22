@@ -33,7 +33,7 @@ export function SiteHeader() {
               <BrainCircuit className="h-5 w-5" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold sm:inline-block">Ángel Nereira</span>
+              <span className="font-bold sm:inline-block">Ángel Nereira Ingeniero de Software</span>
               <span className="text-xs text-muted-foreground hidden sm:inline-block -mt-1">Ingeniero de Software</span>
             </div>
           </Link>
@@ -55,13 +55,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex flex-1 items-center justify-end space-x-2">
-          <Button variant="ghost" asChild>
-              <a href="/Angel_Nereira_CV.pdf" download>
-                <Download className="h-4 w-4 mr-2" />
-                <span className="hidden sm:inline">CV</span>
-              </a>
-          </Button>
-
+          
           <Button
             variant="ghost"
             size="icon"
@@ -103,15 +97,7 @@ export function SiteHeader() {
                       {item.label}
                     </Link>
                   ))}
-                  <a
-                    href="/Angel_Nereira_CV.pdf"
-                    download
-                    className="text-lg font-medium text-foreground/60 transition-colors hover:text-foreground/80 flex items-center"
-                    onClick={() => setSheetOpen(false)}
-                  >
-                    <Download className="h-5 w-5 mr-2" />
-                    Descargar CV
-                  </a>
+                  
                 </div>
               </div>
             </SheetContent>
