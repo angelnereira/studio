@@ -36,13 +36,13 @@ export function SkillsSection() {
             </AnimatedDiv>
              <div className="group/container relative mt-12 w-full overflow-hidden px-4">
                 <div className="absolute inset-y-0 left-0 z-10 w-[7.5%] bg-gradient-to-r from-background to-transparent" />
-                <div className="flex h-40 w-max animate-marquee items-center p-4 transition-all duration-500 ease-geist hover:[animation-play-state:paused]">
+                <div className="flex h-40 w-max animate-marquee items-center p-4 transition-all duration-500 ease-geist py-4 group-hover/container:[animation-play-state:paused]">
                   {[...skills, ...skills].map((skill, index) => (
                     <Tooltip key={`${skill.slug}-tooltip-${index}`}>
                       <TooltipTrigger asChild>
                         <Link href={`/skills/${skill.slug}`} className="block">
                           <div
-                            className="group/item relative mx-2 flex w-36 flex-col items-center justify-center text-center transition-all duration-500 ease-geist h-28 group-hover/container:opacity-75 hover:!opacity-100"
+                            className="group/item relative mx-2 flex w-36 flex-col items-center justify-center text-center transition-all duration-500 ease-geist h-28 group-hover/container:opacity-75 hover:!opacity-100 hover:[animation-play-state:paused]"
                           >
                             <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 transition-all duration-300">
                               <skill.icon className='h-10 w-10 text-primary' />
