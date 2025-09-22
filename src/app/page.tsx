@@ -318,13 +318,13 @@ export default function Home() {
                 </div>
               </div>
             </AnimatedDiv>
-            <div className="group relative mt-12 w-full overflow-hidden">
-              <div className="absolute inset-y-0 left-0 z-10 w-1/4 bg-gradient-to-r from-background to-transparent" />
-                <div className="flex h-56 w-max animate-marquee items-center hover:[animation-play-state:paused]">
+            <div className="group/container relative mt-12 w-full overflow-hidden">
+                <div className="absolute inset-y-0 left-0 z-10 w-1/4 bg-gradient-to-r from-background to-transparent" />
+                <div className="flex h-56 w-max animate-marquee items-center p-4 hover:[animation-play-state:paused]">
                   {[...skills, ...skills].map((skill, index) => (
                     <div
                       key={`${skill.slug}-item-${index}`}
-                      className="group/item relative mx-4 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-28 hover:h-48 hover:scale-125"
+                      className="group/item relative mx-4 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-28 hover:h-48 hover:scale-125 hover:opacity-100 group-hover/container:opacity-50"
                     >
                       <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300">
                         {React.createElement(skill.icon, {
