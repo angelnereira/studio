@@ -17,12 +17,6 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-const testimonialImages = {
-  test1: PlaceHolderImages.find(p => p.id === 'testimonial-1'),
-  test2: PlaceHolderImages.find(p => p.id === 'testimonial-2'),
-};
-
-
 export function SkillsSection() {
     return (
       <TooltipProvider>
@@ -42,17 +36,19 @@ export function SkillsSection() {
             </AnimatedDiv>
              <div className="group/container relative mt-12 w-full overflow-hidden px-4">
                 <div className="absolute inset-y-0 left-0 z-10 w-[7.5%] bg-gradient-to-r from-background to-transparent" />
-                <div className="flex h-40 w-max animate-marquee items-center p-4 transition-all duration-500 ease-geist group-hover/container:h-48 hover:[animation-play-state:paused]">
+                <div className="flex h-40 w-max animate-marquee items-center p-4 transition-all duration-500 ease-geist hover:[animation-play-state:paused]">
                   {[...skills, ...skills].map((skill, index) => (
                     <Tooltip key={`${skill.slug}-tooltip-${index}`}>
                       <TooltipTrigger asChild>
-                        <div
-                          className="group/item relative mx-2 flex w-36 flex-col items-center justify-center text-center transition-all duration-500 ease-geist h-28 group-hover/container:opacity-75 hover:!opacity-100"
-                        >
-                          <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 transition-all duration-300 hover:shadow-primary/20 hover:shadow-2xl">
-                            <skill.icon className='h-10 w-10 text-primary' />
+                        <Link href={`/skills/${skill.slug}`} className="block">
+                          <div
+                            className="group/item relative mx-2 flex w-36 flex-col items-center justify-center text-center transition-all duration-500 ease-geist h-28 group-hover/container:opacity-75 hover:!opacity-100"
+                          >
+                            <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 transition-all duration-300 hover:shadow-primary/20 hover:shadow-2xl">
+                              <skill.icon className='h-10 w-10 text-primary' />
+                            </div>
                           </div>
-                        </div>
+                        </Link>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>{skill.name}</p>
@@ -62,7 +58,7 @@ export function SkillsSection() {
                 </div>
               <div className="absolute inset-y-0 right-0 z-10 w-[7.5%] bg-gradient-to-l from-background to-transparent" />
             </div>
-            <AnimatedDiv delay={0.4} className="text-center mt-20">
+            <AnimatedDiv delay={0.4} className="text-center mt-8">
               <Button asChild variant="outline">
                 <Link href="/skills">
                   Ver todas las Habilidades <ArrowRight className="ml-2" />
@@ -196,9 +192,3 @@ export function TestimonialsSection() {
         </section>
     );
 }
-
-    
-
-    
-
-    
