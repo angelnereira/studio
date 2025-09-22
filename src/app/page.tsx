@@ -216,14 +216,13 @@ function CvGeneratorButton() {
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex-1">
+    <div className="flex flex-col gap-12 md:gap-24 lg:gap-32">
         {/* Hero Section */}
         <section 
-          className="w-full py-20 md:py-32 lg:py-40 bg-cover bg-center bg-no-repeat bg-fixed"
+          className="w-full bg-cover bg-center bg-no-repeat bg-fixed -mt-12 md:-mt-24 lg:-mt-32 pt-12 md:pt-24 lg:pt-32"
           style={{ backgroundImage: "url('/grid-bg.svg')" }}
         >
-          <div className="container px-4 md:px-6 text-center">
+          <div className="container px-4 md:px-6 text-center py-20 md:py-32 lg:py-40">
              <AnimatedDiv>
                <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
                   <span className="block mb-2">Angel Nereira</span>
@@ -253,7 +252,7 @@ export default function Home() {
         </section>
 
         {/* Services Carousel Section */}
-        <section id="services" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="services" className="w-full">
           <div className="container px-4 md:px-6">
             <AnimatedDiv>
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -281,7 +280,7 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
+        <section id="about" className="w-full bg-background/50">
            <AnimatedDiv>
               <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -305,7 +304,7 @@ export default function Home() {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="skills" className="w-full">
           <div className="container px-4 md:px-6">
             <AnimatedDiv>
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -341,7 +340,7 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
+        <section id="projects" className="w-full bg-background/50">
           <div className="container px-4 md:px-6">
             <AnimatedDiv>
               <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -423,7 +422,7 @@ export default function Home() {
         </section>
 
         {/* Testimonials Section */}
-        <section id="testimonials" className="w-full py-12 md:py-24 lg:py-32">
+        <section id="testimonials" className="w-full">
           <div className="container px-4 md:px-6">
             <AnimatedDiv>
               <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl font-headline">Lo que dicen otros</h2>
@@ -455,7 +454,7 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-background/50">
+        <section className="w-full bg-background/50">
           <AnimatedDiv>
             <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
               <div className="space-y-3">
@@ -476,7 +475,6 @@ export default function Home() {
             </div>
           </AnimatedDiv>
         </section>
-      </main>
     </div>
   );
 }

@@ -11,7 +11,7 @@ import { AnimatedDiv } from "@/components/animated-div";
 
 export default function ServicesPage() {
   return (
-    <div className="container max-w-5xl mx-auto px-4 py-12 md:py-24 lg:py-32">
+    <>
       <AnimatedDiv>
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
           <div className="space-y-2">
@@ -86,6 +86,6 @@ export default function ServicesPage() {
                 <Link href="/contact?subject=Proyecto a Medida">Hablemos de tu Proyecto</Link>
             </Button>
         </AnimatedDiv>
-    </div>
+    </>
   );
 }

@@ -16,7 +16,7 @@ import { AnimatedDiv } from '@/components/animated-div';
 
 export default function SkillsPage() {
   return (
-    <div className="container max-w-6xl mx-auto px-4 py-12 md:py-24 lg:py-32">
+    <>
       <AnimatedDiv>
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
@@ -66,6 +66,6 @@ export default function SkillsPage() {
           </AnimatedDiv>
         ))}
       </div>
-    </div>
+    </>
   );
 }

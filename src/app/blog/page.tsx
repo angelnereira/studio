@@ -15,7 +15,7 @@ export default async function BlogPage() {
   const posts = await getAllPosts();
 
   return (
-    <div className="container max-w-4xl mx-auto px-4 py-12 md:py-24 lg:py-32">
+    <>
       <AnimatedDiv>
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Tech & Thoughts</h1>
@@ -56,6 +56,6 @@ export default async function BlogPage() {
           </AnimatedDiv>
         ))}
       </div>
-    </div>
+    </>
   );
 }

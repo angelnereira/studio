@@ -74,7 +74,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
   }
 
   return (
-    <div className="container py-12 md:py-24 lg:py-32">
+    <>
       {/* Header */}
       <AnimatedDiv>
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
@@ -147,6 +147,6 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
             </Button>
         </AnimatedDiv>
 
-    </div>
+    </>
   );
 }
