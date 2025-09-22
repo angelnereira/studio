@@ -153,6 +153,33 @@ export default function Home() {
           </div>
         </section>
 
+        {/* About Section */}
+        <section id="about" className="w-full bg-background/50">
+           <AnimatedDiv>
+              <div className="container px-4 md:px-6">
+                <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                  <div className="space-y-2">
+                    <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Sobre Mí</h2>
+                     <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                        Soy un ingeniero de software panameño con una visión clara: impulsar la transformación tecnológica en Panamá y más allá, creando soluciones innovadoras, eficientes y de alto impacto.
+                    </p>
+                  </div>
+                </div>
+                <div className="mx-auto max-w-3xl pt-8 text-lg text-center text-foreground/80 space-y-4">
+                    <p>
+                        Mi trayectoria es una fusión poco común entre la ingeniería de sonido y la ingeniería de software. Esta dualidad me ha enseñado a abordar los problemas con la precisión técnica de un ingeniero y la creatividad de un artista. Mi filosofía es simple: "Solucionar problemas para disfrutar la vida". Aplico esta mentalidad para desarrollar software robusto, escalable y seguro que genera valor real.
+                    </p>
+                    <p>
+                        Mi objetivo es ser un pionero en la innovación tecnológica de Panamá, con un enfoque en software, ciencia de datos e inteligencia artificial, siempre con una proyección global. Apuesto por la inclusión y el empoderamiento de las personas a través de la tecnología.
+                    </p>
+                </div>
+              </div>
+          </AnimatedDiv>
+        </section>
+
+        {/* Skills Section */}
+        <DynamicSkillsSection />
+        
         {/* Services Carousel Section */}
         <section id="services" className="w-full">
           <div className="container px-4 md:px-6">
@@ -180,33 +207,6 @@ export default function Home() {
             </AnimatedDiv>
           </div>
         </section>
-
-        {/* About Section */}
-        <section id="about" className="w-full bg-background/50">
-           <AnimatedDiv>
-              <div className="container px-4 md:px-6">
-                <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                  <div className="space-y-2">
-                    <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Sobre Mí</h2>
-                     <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                        Soy un ingeniero de software panameño con una visión clara: impulsar la transformación tecnológica en Panamá y más allá, creando soluciones innovadoras, eficientes y de alto impacto.
-                    </p>
-                  </div>
-                </div>
-                <div className="mx-auto max-w-3xl pt-8 text-lg text-center text-foreground/80 space-y-4">
-                    <p>
-                        Mi trayectoria es una fusión poco común entre la ingeniería de sonido y la ingeniería de software. Esta dualidad me ha enseñado a abordar los problemas con la precisión técnica de un ingeniero y la creatividad de un artista. Mi filosofía es simple: "Solucionar problemas para disfrutar la vida". Aplico esta mentalidad para desarrollar software robusto, escalable y seguro que genera valor real.
-                    </p>
-                    <p>
-                        Mi objetivo es ser un pionero en la innovación tecnológica de Panamá, con un enfoque en software, ciencia de datos e inteligencia artificial, siempre con una proyección global. Apuesto por la inclusión y el empoderamiento de las personas a través de la tecnología.
-                    </p>
-                </div>
-              </div>
-          </AnimatedDiv>
-        </section>
-
-        {/* Skills Section */}
-        <DynamicSkillsSection />
 
         {/* Projects Section */}
         <DynamicProjectsSection />
