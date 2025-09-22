@@ -42,23 +42,15 @@ export function SkillsSection() {
             </AnimatedDiv>
              <div className="group/container relative mt-12 w-full overflow-hidden px-4">
                 <div className="absolute inset-y-0 left-0 z-10 w-[7.5%] bg-gradient-to-r from-background to-transparent" />
-                <div className="flex h-56 w-max animate-marquee items-center p-4 transition-all duration-500 ease-geist group-hover/container:h-64 hover:[animation-play-state:paused]">
+                <div className="flex h-40 w-max animate-marquee items-center p-4 transition-all duration-500 ease-geist group-hover/container:h-48 hover:[animation-play-state:paused]">
                   {[...skills, ...skills].map((skill, index) => (
                     <Tooltip key={`${skill.slug}-tooltip-${index}`}>
                       <TooltipTrigger asChild>
                         <div
-                          className="group/item relative mx-2 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-28 group-hover/container:opacity-75 hover:!opacity-100"
+                          className="group/item relative mx-2 flex w-36 flex-col items-center justify-center text-center transition-all duration-500 ease-geist h-28 group-hover/container:opacity-75 hover:!opacity-100"
                         >
                           <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 transition-all duration-300 hover:shadow-primary/20 hover:shadow-2xl">
                             <skill.icon className='h-10 w-10 text-primary' />
-                          </div>
-                          <div className="absolute bottom-0 w-full overflow-hidden opacity-0 transition-opacity duration-300 group-hover/item:opacity-100 pt-2 h-0 group-hover/item:h-auto group-hover/item:relative p-2">
-                            <p className="font-bold text-primary">
-                              {skill.name}
-                            </p>
-                            <p className="text-xs text-foreground/90 dark:text-foreground/80 mt-1">
-                              {skill.description}
-                            </p>
                           </div>
                         </div>
                       </TooltipTrigger>
@@ -204,6 +196,8 @@ export function TestimonialsSection() {
         </section>
     );
 }
+
+    
 
     
 
