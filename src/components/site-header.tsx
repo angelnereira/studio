@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BrainCircuit, Menu, Moon, Sun, Download } from "lucide-react";
+import { BrainCircuit, Menu, Moon, Sun, Home, Briefcase, Code2, FileText, Mail } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -11,11 +11,11 @@ import { cn } from "@/lib/utils";
 import * as React from "react";
 
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Servicios" },
-  { href: "/skills", label: "Skills" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contacto" },
+  { href: "/", label: "Home", icon: <Home className="h-4 w-4" /> },
+  { href: "/services", label: "Servicios", icon: <Briefcase className="h-4 w-4" /> },
+  { href: "/skills", label: "Skills", icon: <Code2 className="h-4 w-4" /> },
+  { href: "/blog", label: "Blog", icon: <FileText className="h-4 w-4" /> },
+  { href: "/contact", label: "Contacto", icon: <Mail className="h-4 w-4" /> },
 ];
 
 export function SiteHeader() {
@@ -39,16 +39,17 @@ export function SiteHeader() {
           </Link>
         </div>
 
-        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+        <nav className="hidden md:flex items-center space-x-2 text-sm font-medium">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
-                "transition-colors hover:text-foreground/80",
-                pathname === item.href ? "text-foreground" : "text-foreground/60"
+                "flex items-center gap-2 rounded-md px-3 py-2 transition-all duration-300 ease-geist hover:bg-accent hover:text-accent-foreground hover:-translate-y-0.5",
+                pathname === item.href ? "bg-secondary text-secondary-foreground" : "text-foreground/70"
               )}
             >
+              {item.icon}
               {item.label}
             </Link>
           ))}
@@ -83,17 +84,18 @@ export function SiteHeader() {
                    <BrainCircuit className="h-6 w-6 text-primary" />
                   <span className="font-bold">Ángel Nereira</span>
                 </div>
-                <div className="flex flex-col space-y-4">
+                <div className="flex flex-col space-y-2">
                   {navItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
                       onClick={() => setSheetOpen(false)}
                       className={cn(
-                        "text-lg font-medium transition-colors hover:text-foreground/80",
-                        pathname === item.href ? "text-foreground" : "text-foreground/60"
+                        "flex items-center gap-3 rounded-md p-3 text-lg font-medium transition-colors hover:bg-accent",
+                        pathname === item.href ? "bg-secondary text-secondary-foreground" : "text-foreground/70"
                       )}
                     >
+                      {item.icon}
                       {item.label}
                     </Link>
                   ))}
