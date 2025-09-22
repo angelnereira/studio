@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { Briefcase, Code, Database, GitBranch, Layers, Server, Shield, Zap, Repeat, FileCog, Users, Code2, BrainCircuit, Search, Route } from "lucide-react";
 
@@ -146,6 +147,28 @@ export type Skill = {
 
 
 export const skills: Skill[] = [
+  {
+    name: "Ingeniería de Software",
+    slug: "ingenieria-de-software",
+    icon: <FileCog />,
+    description: "Aplico principios de ingeniería para diseñar, construir y mantener software de alta calidad. Mi filosofía es crear soluciones que no solo funcionen hoy, sino que sean robustas, escalables y fáciles de mantener mañana, solucionando problemas de negocio de raíz.",
+    practicalAbilities: [
+        { title: "Diseño de Arquitecturas Escalables", description: "Diseño sistemas (Monolitos, Microservicios, Serverless) que pueden crecer junto con el negocio del cliente, evitando futuros cuellos de botella.", icon: <Layers /> },
+        { title: "Patrones de Diseño de Software", description: "Aplico patrones de diseño probados para resolver problemas comunes, lo que resulta en un código más limpio, reutilizable y comprensible para el equipo.", icon: <Code2 /> },
+        { title: "Calidad y Pruebas de Código", description: "Implemento una cultura de calidad a través de pruebas unitarias, de integración y E2E, garantizando que el software entregado sea fiable y cumpla con los requisitos.", icon: <Shield /> },
+    ]
+  },
+  {
+    name: "Metodologías Ágiles",
+    slug: "metodologias-agiles",
+    icon: <Users />,
+    description: "Gestiono proyectos utilizando marcos ágiles como Scrum y Kanban. Este enfoque me permite entregar valor de forma incremental, adaptarme a los cambios del mercado y mantener una comunicación transparente con el cliente, asegurando que el producto final resuelva el problema real.",
+    practicalAbilities: [
+        { title: "Gestión de Proyectos con Scrum/Kanban", description: "Organizo proyectos en sprints o flujos continuos, gestiono backlogs y facilito ceremonias ágiles para una entrega de valor predecible.", icon: <Briefcase /> },
+        { title: "Planificación Iterativa y Adaptativa", description: "Descompongo problemas complejos en entregas pequeñas, permitiendo la adaptación a cambios y la incorporación constante del feedback del cliente.", icon: <Repeat /> },
+        { title: "Enfoque en el Cliente (User Stories)", description: "Traduzco los requisitos del negocio en historias de usuario claras y accionables, asegurando que el desarrollo esté siempre alineado con las necesidades del usuario final.", icon: <Search /> },
+    ]
+  },
   { 
     name: "Python", 
     slug: "python",
@@ -320,28 +343,6 @@ export const skills: Skill[] = [
         { title: "Diseño de Esquemas Relacionales", description: "Modelo estructuras de datos eficientes y normalizadas para garantizar la integridad y el rendimiento de la información crítica del negocio.", icon: <Database /> },
         { title: "Consultas SQL Optimizadas", description: "Escribo consultas complejas y optimizadas (con JOINs, subqueries, etc.) para obtener datos de manera eficiente en aplicaciones de alto rendimiento.", icon: <Code2 /> },
         { title: "Gestión de Transacciones ACID", description: "Aseguro la consistencia de los datos en operaciones críticas (como pagos o movimientos de inventario) utilizando el sistema transaccional de PostgreSQL.", icon: <Shield /> },
-    ]
-  },
-  {
-    name: "Ingeniería de Software",
-    slug: "ingenieria-de-software",
-    icon: <FileCog />,
-    description: "Aplico principios de ingeniería para diseñar, construir y mantener software de alta calidad. Mi filosofía es crear soluciones que no solo funcionen hoy, sino que sean robustas, escalables y fáciles de mantener mañana, solucionando problemas de negocio de raíz.",
-    practicalAbilities: [
-        { title: "Diseño de Arquitecturas Escalables", description: "Diseño sistemas (Monolitos, Microservicios, Serverless) que pueden crecer junto con el negocio del cliente, evitando futuros cuellos de botella.", icon: <Layers /> },
-        { title: "Patrones de Diseño de Software", description: "Aplico patrones de diseño probados para resolver problemas comunes, lo que resulta en un código más limpio, reutilizable y comprensible para el equipo.", icon: <Code2 /> },
-        { title: "Calidad y Pruebas de Código", description: "Implemento una cultura de calidad a través de pruebas unitarias, de integración y E2E, garantizando que el software entregado sea fiable y cumpla con los requisitos.", icon: <Shield /> },
-    ]
-  },
-  {
-    name: "Metodologías Ágiles",
-    slug: "metodologias-agiles",
-    icon: <Users />,
-    description: "Gestiono proyectos utilizando marcos ágiles como Scrum y Kanban. Este enfoque me permite entregar valor de forma incremental, adaptarme a los cambios del mercado y mantener una comunicación transparente con el cliente, asegurando que el producto final resuelva el problema real.",
-    practicalAbilities: [
-        { title: "Gestión de Proyectos con Scrum/Kanban", description: "Organizo proyectos en sprints o flujos continuos, gestiono backlogs y facilito ceremonias ágiles para una entrega de valor predecible.", icon: <Briefcase /> },
-        { title: "Planificación Iterativa y Adaptativa", description: "Descompongo problemas complejos en entregas pequeñas, permitiendo la adaptación a cambios y la incorporación constante del feedback del cliente.", icon: <Repeat /> },
-        { title: "Enfoque en el Cliente (User Stories)", description: "Traduzco los requisitos del negocio en historias de usuario claras y accionables, asegurando que el desarrollo esté siempre alineado con las necesidades del usuario final.", icon: <Search /> },
     ]
   }
 ];
