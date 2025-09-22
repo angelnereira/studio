@@ -319,14 +319,14 @@ export default function Home() {
             <div className="relative mt-12 w-full overflow-hidden">
               <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
                 {[...skills, ...skills].map((skill, index) => (
-                  <TooltipProvider key={`${skill.slug}-${index}`}>
+                  <TooltipProvider key={`${skill.slug}-${index}`} delayDuration={0}>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <div className="mx-4 flex h-24 w-24 items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:-translate-y-1">
+                        <div className="mx-4 flex h-24 w-24 items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:scale-110">
                            {React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10 text-primary' })}
                         </div>
                       </TooltipTrigger>
-                      <TooltipContent className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
+                      <TooltipContent side="bottom" className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
                         <p className="font-bold mb-2">{skill.name}</p>
                         <p className="text-xs text-muted-foreground">{skill.description}</p>
                       </TooltipContent>
