@@ -188,6 +188,7 @@ export function ClientForm() {
                     <SelectItem value="education">Educación</SelectItem>
                     <SelectItem value="professional-services">Servicios Profesionales</SelectItem>
                     <SelectItem value="real-estate">Bienes Raíces</SelectItem>
+                    <SelectItem value="transport-logistics">Transporte y Logística</SelectItem>
                     <SelectItem value="other">Otro</SelectItem>
                   </SelectContent>
                 </Select>
