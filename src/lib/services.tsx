@@ -47,8 +47,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Lanzamiento Digital",
-        price: 900,
-        originalPrice: 1200,
+        price: 720,
+        originalPrice: 960,
         description: "Ideal para startups y pequeños negocios que necesitan una presencia online rápida y efectiva.",
         features: [
           "Landing page responsiva",
@@ -62,8 +62,8 @@ export const services: Service[] = [
       },
       {
         name: "Presencia Corporativa",
-        price: 2625,
-        originalPrice: 3500,
+        price: 2100,
+        originalPrice: 2800,
         description: "Un sitio web completo para empresas medianas y profesionales establecidos que buscan consolidar su marca.",
         features: [
           "Sitio web multi-página",
@@ -79,7 +79,7 @@ export const services: Service[] = [
       },
       {
         name: "Solución Empresarial",
-        price: "7,500+",
+        price: "6,000+",
         description: "Aplicaciones web personalizadas y de alta complejidad para grandes empresas y corporaciones.",
         features: [
           "Aplicación web a medida",
@@ -95,10 +95,10 @@ export const services: Service[] = [
       }
     ],
     addOns: [
-        { name: "Blog integrado", price: 300, description: "Para el paquete Lanzamiento Digital." },
-        { name: "Chat en vivo", price: 200, description: "Para cualquier paquete." },
-        { name: "Multiidioma (ES/EN)", price: 400, description: "Para cualquier paquete." },
-        { name: "Sistema de citas online", price: 800, description: "Para el paquete Presencia Corporativa." },
+        { name: "Blog integrado", price: 240, description: "Para el paquete Lanzamiento Digital." },
+        { name: "Chat en vivo", price: 160, description: "Para cualquier paquete." },
+        { name: "Multiidioma (ES/EN)", price: 320, description: "Para cualquier paquete." },
+        { name: "Sistema de citas online", price: 640, description: "Para el paquete Presencia Corporativa." },
     ],
     tags: ["Web", "Startups", "PYMEs", "Corporativo"],
     published: true,
@@ -113,8 +113,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Catálogo Digital",
-        price: 1125,
-        originalPrice: 1500,
+        price: 900,
+        originalPrice: 1200,
         description: "Muestra tus productos en un catálogo online profesional con opción de contacto directo para ventas.",
         features: ["Catálogo de hasta 100 productos", "Diseño responsivo", "Galería de imágenes por producto", "Botón de WhatsApp para pedidos", "Capacitación de gestión"],
         cta: "Crear Catálogo",
@@ -122,8 +122,8 @@ export const services: Service[] = [
       },
       {
         name: "E-commerce Esencial",
-        price: 2400,
-        originalPrice: 3200,
+        price: 1920,
+        originalPrice: 2560,
         description: "Una tienda online completa con carrito de compras y pagos en línea para empezar a vender ya.",
         features: ["Todo lo de Catálogo Digital", "Carrito de compras", "Integración con pasarelas de pago (Stripe/PayPal)", "Gestión de inventario básica", "Sistema de cupones de descuento"],
         cta: "Lanzar Tienda",
@@ -131,7 +131,7 @@ export const services: Service[] = [
       },
       {
         name: "E-commerce Avanzado",
-        price: "6,000+",
+        price: "4,800+",
         description: "Soluciones de e-commerce a medida para grandes volúmenes de venta y funcionalidades complejas.",
         features: ["Todo lo de E-commerce Esencial", "Cuentas de clientes y perfiles", "Sistema de reseñas de productos", "Integración con sistemas de envío", "Facturación automática", "Optimización para la conversión"],
         cta: "Escalar Ventas",
@@ -152,8 +152,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Módulo Individual",
-        price: 1875,
-        originalPrice: 2500,
+        price: 1500,
+        originalPrice: 2000,
         description: "Elige un módulo (Inventario, Planilla o Facturación) y digitaliza un área clave de tu empresa.",
         features: ["Un módulo a elección", "Carga inicial de datos (hasta 500 registros)", "Dashboard de reportes básicos", "Capacitación para 2 usuarios", "Soporte de implementación"],
         cta: "Digitalizar Módulo",
@@ -161,8 +161,8 @@ export const services: Service[] = [
       },
       {
         name: "Suite PYME",
-        price: 4500,
-        originalPrice: 6000,
+        price: 3600,
+        originalPrice: 4800,
         description: "Una solución integrada con dos módulos a tu elección para una gestión más completa.",
         features: ["Dos módulos a elección", "Integración entre módulos seleccionados", "Dashboard de reportes unificado", "Capacitación para 5 usuarios", "Roles y permisos de usuario"],
         cta: "Integrar Suite",
@@ -170,7 +170,7 @@ export const services: Service[] = [
       },
       {
         name: "ERP a Medida",
-        price: "9,000+",
+        price: "7,200+",
         description: "Un sistema de planificación de recursos empresariales (ERP) completo y personalizado para tu compañía.",
         features: ["Módulos de Inventario, Planilla y Facturación", "Módulos adicionales (CRM, Compras, etc.)", "Integración con hardware (scanners, impresoras fiscales)", "Migración de datos completa", "Soporte y mantenimiento premium"],
         cta: "Construir ERP",
@@ -191,7 +191,7 @@ export const services: Service[] = [
      packages: [
       {
         name: "MVP App",
-        price: "4,000 - 8,000",
+        price: "3,200 - 6,400",
         description: "Lanza una primera versión de tu aplicación para validar tu idea en el mercado con funcionalidades clave.",
         features: ["App para iOS o Android (multiplataforma)", "Hasta 5 pantallas clave", "Diseño de interfaz estándar", "Integración con backend básico (Firebase)", "Publicación en tiendas de apps"],
         cta: "Lanzar MVP",
@@ -199,7 +199,7 @@ export const services: Service[] = [
       },
       {
         name: "App Profesional",
-        price: "8,000 - 15,000",
+        price: "6,400 - 12,000",
         description: "Una aplicación completa con diseño personalizado y funcionalidades avanzadas para un negocio establecido.",
         features: ["App para iOS y Android", "Diseño de interfaz 100% personalizado", "Notificaciones push", "Cuentas de usuario y perfiles", "Integración con APIs de terceros"],
         cta: "Desarrollar App",
@@ -207,7 +207,7 @@ export const services: Service[] = [
       },
       {
         name: "App Empresarial",
-        price: "15,000+",
+        price: "12,000+",
         description: "Soluciones móviles complejas con integraciones a nivel de sistema, seguridad avanzada y escalabilidad.",
         features: ["Todo lo del plan Profesional", "Pagos dentro de la app", "Funcionalidades offline", "Dashboard de administración web", "Analíticas avanzadas de uso"],
         cta: "Crear Solución Móvil",
@@ -229,7 +229,7 @@ export const services: Service[] = [
     packages: [
       {
         name: "IA Básica",
-        price: "1,200 - 2,500",
+        price: "960 - 2,000",
         description: "Implementa un asistente virtual inteligente para automatizar la atención al cliente.",
         features: [
           "Chatbot básico con FAQ",
@@ -243,7 +243,7 @@ export const services: Service[] = [
       },
       {
         name: "IA Avanzada",
-        price: "3,500 - 7,000",
+        price: "2,800 - 5,600",
         description: "Desarrolla sistemas de recomendación y análisis para una personalización profunda.",
         features: [
           "Chatbot con procesamiento de lenguaje natural (NLP)",
@@ -257,7 +257,7 @@ export const services: Service[] = [
       },
       {
         name: "IA Empresarial",
-        price: "8,000+",
+        price: "6,400+",
         description: "Soluciones de IA a medida con modelos de Machine Learning propios y análisis de big data.",
         features: [
           "Solución de IA 100% personalizada",
@@ -285,7 +285,7 @@ export const services: Service[] = [
     packages: [
       {
         name: "Tarea Específica",
-        price: "500 - 1,500",
+        price: "400 - 1,200",
         description: "Automatiza una tarea repetitiva específica, como la generación de un reporte diario o la extracción de datos.",
         features: ["Análisis de la tarea a automatizar", "Desarrollo de script de automatización", "Ejecución programada (diaria, semanal)", "Documentación y entrega del script"],
         cta: "Automatizar Tarea",
@@ -293,7 +293,7 @@ export const services: Service[] = [
       },
       {
         name: "Flujo de Trabajo",
-        price: "2,000 - 5,000",
+        price: "1,600 - 4,000",
         description: "Conecta varias aplicaciones y automatiza un flujo de trabajo completo, como el onboarding de un nuevo cliente.",
         features: ["Análisis del flujo de trabajo completo", "Integración de hasta 3 aplicaciones (vía API)", "Sistema de notificaciones por email/Slack", "Dashboard de monitoreo del flujo"],
         cta: "Automatizar Flujo",
@@ -301,7 +301,7 @@ export const services: Service[] = [
       },
       {
         name: "RPA Empresarial",
-        price: "7,000+",
+        price: "5,600+",
         description: "Implementación de Robotic Process Automation (RPA) para automatizar procesos complejos a gran escala.",
         features: ["Consultoría y estrategia de RPA", "Desarrollo de múltiples 'bots' de software", "Integración con sistemas legados", "Panel de control y orquestación de bots", "Capacitación y soporte continuo"],
         cta: "Implementar RPA",
@@ -323,8 +323,8 @@ export const services: Service[] = [
     packages: [
       {
         name: "Impulso Profesional",
-        price: 450,
-        originalPrice: 600,
+        price: 360,
+        originalPrice: 480,
         priceSuffix: "/ 4 sesiones",
         description: "Mentoría 1-a-1 para desarrolladores que buscan acelerar su carrera, resolver bloqueos y mejorar sus habilidades.",
         features: ["4 sesiones individuales de 1 hora", "Revisión de código y portafolio", "Plan de carrera personalizado", "Acceso a red de contactos", "Soporte por chat entre sesiones"],
@@ -333,7 +333,7 @@ export const services: Service[] = [
       },
       {
         name: "Acelerador de Equipos",
-        price: 1200,
+        price: 960,
         priceSuffix: "/mes",
         description: "Acompañamiento continuo para equipos de desarrollo que buscan mejorar sus prácticas y velocidad de entrega.",
         features: ["8 horas de mentoría grupal/mes", "Revisión de arquitectura de proyectos", "Implementación de mejores prácticas (CI/CD, Testing)", "Talleres de resolución de problemas", "Soporte prioritario para el equipo"],
@@ -342,7 +342,7 @@ export const services: Service[] = [
       },
       {
         name: "Workshop Corporativo",
-        price: "2,500+",
+        price: "2,000+",
         description: "Capacitación intensiva y a medida para empresas que necesitan formar a sus colaboradores en tecnologías específicas.",
         features: ["Temario 100% personalizado (React, IA, Cloud, etc.)", "Workshop práctico de 8-16 horas", "Material de estudio y recursos", "Certificado de participación", "Sesión de seguimiento post-workshop"],
         cta: "Cotizar Workshop",
@@ -363,7 +363,7 @@ export const services: Service[] = [
     packages: [
       {
         name: "Soporte Esencial",
-        price: 140,
+        price: 112,
         priceSuffix: "/mes",
         description: "Para mantener tu sitio o app segura y funcionando óptimamente.",
         features: ["Monitoreo de disponibilidad 24/7", "Backups diarios", "Actualizaciones de seguridad críticas", "Soporte técnico por email (respuesta en 24h)"],
@@ -372,7 +372,7 @@ export const services: Service[] = [
       },
       {
         name: "Crecimiento Plus",
-        price: 350,
+        price: 280,
         priceSuffix: "/mes",
         description: "Ideal para negocios que buscan mejorar y añadir funcionalidades continuamente.",
         features: ["Todo lo del plan Esencial", "Soporte prioritario por chat", "4 horas de desarrollo para mejoras", "Consultoría proactiva de mejoras"],
@@ -381,7 +381,7 @@ export const services: Service[] = [
       },
       {
         name: "Socio Estratégico",
-        price: 980,
+        price: 784,
         priceSuffix: "/trimestre",
         description: "Una alianza para empresas que ven la tecnología como pilar de su estrategia.",
         features: ["Todo lo del plan Crecimiento Plus", "15 horas de desarrollo por trimestre", "Llamada de estrategia mensual", "Soporte prioritario 24/7 para emergencias"],
