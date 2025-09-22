@@ -154,13 +154,13 @@ export function ClientForm() {
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Selecciona un rango" />
-                    </Trigger>
+                    </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="<1k">Menos de $1,000</SelectItem>
+                    <SelectItem value="&lt;1k">Menos de $1,000</SelectItem>
                     <SelectItem value="1k-5k">$1,000 - $5,000</SelectItem>
                     <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
-                    <SelectItem value=">10k">Más de $10,000</SelectItem>
+                    <SelectItem value="&gt;10k">Más de $10,000</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
