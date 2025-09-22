@@ -323,7 +323,7 @@ export default function Home() {
                     <Tooltip key={`${skill.slug}-${index}`}>
                       <TooltipTrigger asChild>
                         <div className="mx-4 flex h-24 w-24 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:scale-110">
-                           {React.cloneElement(skill.icon as React.ReactElement, { className: 'h-10 w-10 text-primary' })}
+                           {React.cloneElement(skill.icon, { className: 'h-10 w-10 text-primary' })}
                         </div>
                       </TooltipTrigger>
                       <TooltipContent side="bottom" className="max-w-xs text-center bg-secondary border-primary/30 text-foreground">
