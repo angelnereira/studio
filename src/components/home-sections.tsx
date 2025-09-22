@@ -44,9 +44,9 @@ export function SkillsSection() {
                   {[...skills, ...skills].map((skill, index) => (
                     <div
                       key={`${skill.slug}-item-${index}`}
-                      className="group/item relative mx-2 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-28 hover:h-48 hover:scale-125 rounded-lg group-hover/container:opacity-50 hover:!opacity-100 hover:shadow-primary/20 hover:shadow-2xl"
+                      className="group/item relative mx-2 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-28 hover:h-48 hover:scale-125 rounded-lg group-hover/container:opacity-75 hover:!opacity-100"
                     >
-                      <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300">
+                      <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 transition-all duration-300 hover:shadow-primary/20 hover:shadow-2xl">
                         {React.createElement(skill.icon, {
                           className: 'h-10 w-10 text-primary',
                         })}
