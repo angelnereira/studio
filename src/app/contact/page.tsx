@@ -31,7 +31,7 @@ export default function ContactPage() {
     <>
       <AnimatedDiv>
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Hablemos</h1>
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Contáctame</h1>
           <p className="mt-4 text-muted-foreground md:text-xl">
             Construyamos algo increíble juntos. Elige la opción que mejor se adapte a tu necesidad.
           </p>
