@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BrainCircuit, Menu, Moon, Sun, Home, Briefcase, Code2, FileText, Mail } from "lucide-react";
+import { BrainCircuit, Menu, Moon, Sun, Home, Briefcase, Code2, FileText, Mail, Languages } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -34,7 +34,6 @@ export function SiteHeader() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold sm:inline-block">Ángel Nereira</span>
-              <span className="text-xs text-muted-foreground hidden sm:inline-block -mt-1">Ingeniero de Software</span>
             </div>
           </Link>
         </div>
@@ -56,7 +55,14 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex flex-1 items-center justify-end space-x-2">
-          
+           <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Change language"
+          >
+            <Languages className="h-5 w-5" />
+          </Button>
+
           <Button
             variant="ghost"
             size="icon"
