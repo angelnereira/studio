@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 
 const collaboratorFormSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
@@ -118,9 +120,24 @@ export function CollaboratorForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Área de Expertise (Opcional)</FormLabel>
-                <FormControl>
-                  <Input placeholder="Ej: Frontend, Backend, UX/UI, Data Science" {...field} />
-                </FormControl>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona tu área principal" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="frontend">Frontend Development</SelectItem>
+                    <SelectItem value="backend">Backend Development</SelectItem>
+                    <SelectItem value="fullstack">Full-Stack Development</SelectItem>
+                    <SelectItem value="devops">DevOps / SRE</SelectItem>
+                    <SelectItem value="mobile">Mobile Development (iOS/Android)</SelectItem>
+                    <SelectItem value="ux-ui">UX/UI Design</SelectItem>
+                    <SelectItem value="data-science-ai">Data Science / AI / ML</SelectItem>
+                    <SelectItem value="project-management">Project Management</SelectItem>
+                    <SelectItem value="other">Otro</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
