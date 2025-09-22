@@ -2,11 +2,12 @@
 import { AnimatedDiv } from '@/components/animated-div';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Briefcase, Handshake, User } from 'lucide-react';
+import { Briefcase, Handshake, User, Calendar } from 'lucide-react';
 import { ClientForm } from './client-form';
 import { EmployerForm } from './employer-form';
 import { CollaboratorForm } from './collaborator-form';
 import { SpotlightCard } from '@/components/spotlight-card';
+import { InvitationForm } from './invitation-form';
 
 function ContactCard({ icon, title, description, children }: { icon: React.ReactNode, title: string, description: string, children: React.ReactNode }) {
   return (
@@ -39,10 +40,11 @@ export default function ContactPage() {
       <AnimatedDiv delay={0.2}>
         <div className="mx-auto mt-12 max-w-4xl">
            <Tabs defaultValue="client" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="client"><User className='mr-2' />Cliente</TabsTrigger>
               <TabsTrigger value="employer"><Briefcase className='mr-2'/>Empleador</TabsTrigger>
               <TabsTrigger value="collaboration"><Handshake className='mr-2'/>Colaboración</TabsTrigger>
+              <TabsTrigger value="invitation"><Calendar className='mr-2'/>Invitación</TabsTrigger>
             </TabsList>
             <TabsContent value="client" className="mt-6">
               <ContactCard
@@ -69,6 +71,15 @@ export default function ContactPage() {
                 description="¿Interesado en colaborar en un proyecto, charla o evento? Contáctame."
               >
                 <CollaboratorForm />
+              </ContactCard>
+            </TabsContent>
+             <TabsContent value="invitation" className="mt-6">
+               <ContactCard
+                icon={<Calendar />}
+                title="Invitación a Evento"
+                description="Para invitaciones a conferencias, talleres, reuniones o cualquier otro evento profesional."
+              >
+                <InvitationForm />
               </ContactCard>
             </TabsContent>
           </Tabs>
