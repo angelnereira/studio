@@ -1,63 +1,8 @@
-
 import * as React from "react";
 import { Briefcase, Code, Database, GitBranch, Layers, Server, Shield, Zap, Repeat, FileCog, Users, Code2, BrainCircuit, Search, Route } from "lucide-react";
-
-
-// Nombre: python
-// Descripción: Icono estilizado de Python.
-export const PythonIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M11.5 8.5v-5" /><path d="M11.5 15.5v5" /><path d="M8.5 11.5h-5" /><path d="M15.5 11.5h5" /><path d="M15 15a4 4 0 0 1-4 4H8.5" /><path d="M9 9a4 4 0 0 1 4-4h2.5" /><circle cx="8" cy="8" r="2" /><circle cx="16" cy="16" r="2" />
-    </svg>
-);
-
-// Nombre: typescript
-// Descripción: Icono estilizado de TypeScript.
-export const TypescriptIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M4 4h16v16H4z" /><path d="M12 17V7" /><path d="M9 10h6" /><path d="M15.5 10a2.5 2.5 0 0 1 0 5h-3" />
-    </svg>
-);
-
-// Nombre: nextjs
-// Descripción: Icono estilizado de Next.js.
-export const NextjsIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M9 15V9l7.7 10.4A5 5 0 1 0 9 15z" /><path d="M15 12V9" />
-    </svg>
-);
-
-// Nombre: nodejs
-// Descripción: Icono estilizado de Node.js.
-export const NodejsIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M20.34 15.66a4.5 4.5 0 0 1-8.68 0" /><path d="M18.14 8.34a4.5 4.5 0 0 1-8.68 0" /><path d="M12.48 2.5a4.5 4.5 0 0 1-5.32 7.9" /><path d="M11.52 21.5a4.5 4.5 0 0 1 5.32-7.9" /><path d="M5.86 8.34a4.5 4.5 0 0 1 8.68 0" /><path d="M3.66 15.66a4.5 4.5 0 0 1 8.68 0" />
-    </svg>
-);
-
-// Nombre: google-cloud
-// Descripción: Icono estilizado de Google Cloud.
-export const GoogleCloudIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
-    </svg>
-);
-
-// Nombre: firebase
-// Descripción: Icono estilizado de Firebase.
-export const FirebaseIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="m18.7 6.1-6-4.2a.5.5 0 0 0-.5 0l-6 4.2a.5.5 0 0 0-.2.4v11a.5.5 0 0 0 .7.4l6-4.2a.5.5 0 0 1 .5 0l6 4.2a.5.5 0 0 0 .7-.4v-11a.5.5 0 0 0-.2-.4Z" /><path d="M6.2 17.6 12 14" /><path d="M6.2 6.1 12 10" />
-    </svg>
-);
-
-// Nombre: docker
-// Descripción: Icono estilizado de Docker.
-export const DockerIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M21.3 12.77c.36-.6.36-1.94 0-2.54l-2-3.46a2 2 0 0 0-1.73-1H6.4a2 2 0 0 0-1.73 1l-2 3.46c-.36.6-.36 1.94 0 2.54l2 3.46a2 2 0 0 0 1.73 1h10.86a2 2 0 0 0 1.73-1Z" /><path d="M8 12h8" /><path d="M8 9h2" /><path d="M14 9h2" /><path d="M8 15h2" />
-    </svg>
-);
+import { FaPython, FaNodeJs, FaDocker, FaGitAlt } from "react-icons/fa";
+import { SiTypescript, SiPostgresql, SiFirebase, SiGooglecloud, SiVercel, SiKubernetes, SiTailwindcss, SiGithubactions } from "react-icons/si";
+import { TbBrandNextjs } from "react-icons/tb";
 
 // Nombre: git
 // Descripción: Icono estilizado de Git.
@@ -91,22 +36,6 @@ export const LinuxIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
-// Nombre: vercel
-// Descripción: Icono estilizado de Vercel.
-export const VercelIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <polygon points="12 2 2 12 12 22 22 12 12 2" />
-    </svg>
-);
-
-// Nombre: kubernetes
-// Descripción: Icono estilizado de Kubernetes.
-export const KubernetesIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <circle cx="12" cy="12" r="10" /><path d="M12 3v2.5" /><path d="m18.36 5.64 1.77-1.77" /><path d="M21 12h-2.5" /><path d="m18.36 18.36-1.77-1.77" /><path d="M12 21v-2.5" /><path d="m5.64 18.36-1.77 1.77M3 12h2.5" /><path d="m5.64 5.64 1.77 1.77" /><path d="M12 8.5v7" /><path d="m15.5 12-7 3.5" /><path d="m8.5 12 7 3.5" />
-    </svg>
-);
-
 // Nombre: openshift
 // Descripción: Icono estilizado de OpenShift.
 export const OpenShiftIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -115,21 +44,6 @@ export const OpenShiftIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
-// Nombre: tailwindcss
-// Descripción: Icono estilizado de Tailwind CSS.
-export const TailwindCssIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M6 12c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6z" /><path d="M10 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2" /><path d="M2 12c0 5.52 4.48 10 10 10s10-4.48 10-10S17.52 2 12 2" />
-    </svg>
-);
-
-// Nombre: postgresql
-// Descripción: Icono estilizado de PostgreSQL.
-export const PostgreSqlIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M15 14c-1.5 1.5-3.5 2.5-6 2.5v-5c2.5 0 4.5-1 6-2.5" /><path d="M6 16.5V21" /><path d="M6 3v5.5" /><path d="M15 5.5c-1.5-1.5-3.5-2.5-6-2.5v5c2.5 0 4.5 1 6 2.5" /><path d="M9 11.5v-5" /><path d="M9 21v-3.5" /><path d="M18 21v-5" /><path d="M18 3v5" />
-    </svg>
-);
 
 export type PracticalAbility = {
   title: string;
@@ -172,7 +86,7 @@ export const skills: Skill[] = [
   { 
     name: "Python", 
     slug: "python",
-    icon: <PythonIcon />, 
+    icon: <FaPython />, 
     description: "Lo utilizo para construir el backend de aplicaciones, desarrollar soluciones de IA, y automatizar procesos complejos, siendo la base de mis servicios de 'Soluciones con IA' y 'Automatización'.",
     practicalAbilities: [
         { title: "Desarrollo de APIs RESTful", description: "Construcción de APIs robustas y escalables con frameworks como FastAPI y Flask para dar soporte a aplicaciones web y móviles.", icon: <Server /> },
@@ -183,7 +97,7 @@ export const skills: Skill[] = [
   { 
     name: "TypeScript", 
     slug: "typescript",
-    icon: <TypescriptIcon />, 
+    icon: <SiTypescript />, 
     description: "Fundamental para crear aplicaciones robustas y escalables. Lo uso en todo el stack (front-end y back-end) para garantizar código de alta calidad y fácil mantenimiento en proyectos empresariales.",
     practicalAbilities: [
         { title: "Tipado Estricto en Proyectos Complejos", description: "Garantizo la robustez y escalabilidad del código en aplicaciones grandes, reduciendo errores antes de que lleguen a producción.", icon: <Shield /> },
@@ -194,7 +108,7 @@ export const skills: Skill[] = [
   { 
     name: "Next.js", 
     slug: "nextjs",
-    icon: <NextjsIcon />, 
+    icon: <TbBrandNextjs />, 
     description: "Mi framework de elección para construir aplicaciones web y sitios de alto rendimiento. Su arquitectura me permite entregar proyectos optimizados para SEO y experiencia de usuario, como los ofrecidos en 'Desarrollo Web'.",
     practicalAbilities: [
       { title: "Renderizado Híbrido (SSR y SSG)", description: "Optimizo el rendimiento y el SEO de las aplicaciones web eligiendo la estrategia de renderizado adecuada para cada caso de uso (dinámico vs. estático).", icon: <Zap /> },
@@ -205,7 +119,7 @@ export const skills: Skill[] = [
   { 
     name: "Node.js", 
     slug: "nodejs",
-    icon: <NodejsIcon />, 
+    icon: <FaNodeJs />, 
     description: "El motor para mis APIs y microservicios. Me permite crear backends rápidos, eficientes y escalables que soportan desde 'Tiendas Online' hasta 'Aplicaciones Móviles' complejas.",
     practicalAbilities: [
       { title: "APIs REST y GraphQL", description: "Desarrollo APIs performantes y bien estructuradas que sirven como el cerebro para aplicaciones web y móviles complejas.", icon: <Server /> },
@@ -216,7 +130,7 @@ export const skills: Skill[] = [
   { 
     name: "Google Cloud", 
     slug: "google-cloud",
-    icon: <GoogleCloudIcon />, 
+    icon: <SiGooglecloud />, 
     description: "Mi plataforma en la nube predilecta para desplegar y escalar aplicaciones. Diseño arquitecturas resilientes y costo-eficientes, un pilar en mis 'Planes de Soporte y Crecimiento'.",
     practicalAbilities: [
       { title: "Despliegue en Cloud Run y GKE", description: "Empaqueto y despliego aplicaciones en contenedores serverless (Cloud Run) o en clústeres de Kubernetes (GKE) para máxima escalabilidad.", icon: <Zap /> },
@@ -227,7 +141,7 @@ export const skills: Skill[] = [
   { 
     name: "Firebase", 
     slug: "firebase",
-    icon: <FirebaseIcon />, 
+    icon: <SiFirebase />, 
     description: "La uso para acelerar el desarrollo de 'Aplicaciones Móviles' y 'Pruebas de Concepto' (MVPs), gestionando autenticación, bases de datos en tiempo real y hosting con agilidad.",
     practicalAbilities: [
       { title: "Autenticación de Usuarios Simplificada", description: "Implemento sistemas de login social (Google, etc.) y por correo/contraseña de forma rápida y segura para cualquier app.", icon: <Shield /> },
@@ -238,7 +152,7 @@ export const skills: Skill[] = [
   { 
     name: "Docker", 
     slug: "docker",
-    icon: <DockerIcon />, 
+    icon: <FaDocker />, 
     description: "Esencial en mi flujo para empaquetar y desplegar aplicaciones de forma consistente. Garantiza que los sistemas de 'Gestión de Negocios' funcionen igual en desarrollo y producción.",
     practicalAbilities: [
         { title: "Contenerización de Aplicaciones", description: "Empaqueto aplicaciones y sus dependencias en contenedores, asegurando que funcionen de manera idéntica en cualquier entorno.", icon: <Briefcase /> },
@@ -249,7 +163,7 @@ export const skills: Skill[] = [
   { 
     name: "Git", 
     slug: "git",
-    icon: <GitIcon />, 
+    icon: <FaGitAlt />, 
     description: "La base de toda colaboración y desarrollo de software profesional. Es indispensable para la integridad del código y la gestión de proyectos de cualquier tamaño.",
     practicalAbilities: [
         { title: "Control de Versiones Avanzado", description: "Manejo ramas, fusiones y rebases para mantener un historial de código limpio, permitiendo la colaboración en equipos grandes y pequeños.", icon: <GitBranch /> },
@@ -271,7 +185,7 @@ export const skills: Skill[] = [
   { 
     name: "CI/CD", 
     slug: "cicd",
-    icon: <CiCdIcon />, 
+    icon: <SiGithubactions />, 
     description: "Una filosofía que aplico en todos mis proyectos empresariales para asegurar entregas rápidas y fiables, minimizando riesgos y acelerando la llegada de nuevas funcionalidades al mercado.",
     practicalAbilities: [
         { title: "Pipelines de Despliegue Automatizado", description: "Diseño pipelines que automatizan el proceso desde el `git push` hasta la producción, asegurando despliegues rápidos y consistentes.", icon: <Zap /> },
@@ -293,7 +207,7 @@ export const skills: Skill[] = [
   { 
     name: "Vercel", 
     slug: "vercel",
-    icon: <VercelIcon />, 
+    icon: <SiVercel />, 
     description: "La plataforma ideal para el despliegue de front-ends modernos construidos con Next.js. Garantiza un rendimiento global y una experiencia de desarrollo inigualable para mis proyectos web.",
     practicalAbilities: [
         { title: "Despliegue Continuo (GitOps)", description: "Integro repositorios de GitHub para un despliegue automático en cada `push`, permitiendo una entrega de funcionalidades extremadamente rápida.", icon: <Zap /> },
@@ -304,7 +218,7 @@ export const skills: Skill[] = [
   { 
     name: "Kubernetes", 
     slug: "kubernetes",
-    icon: <KubernetesIcon />,
+    icon: <SiKubernetes />,
     description: "Para proyectos de 'Solución Empresarial', utilizo Kubernetes para orquestar contenedores, asegurando alta disponibilidad, escalabilidad automática y una gestión de infraestructura robusta.",
     practicalAbilities: [
         { title: "Orquestación de Contenedores", description: "Gestiono el ciclo de vida de aplicaciones en contenedores para alta disponibilidad y escalabilidad, fundamental para sistemas críticos.", icon: <Layers /> },
@@ -326,7 +240,7 @@ export const skills: Skill[] = [
   { 
     name: "Tailwind CSS", 
     slug: "tailwindcss",
-    icon: <TailwindCssIcon />, 
+    icon: <SiTailwindcss />, 
     description: "Mi framework CSS preferido para diseñar interfaces de usuario personalizadas y responsivas rápidamente. Me permite construir los diseños únicos de mis 'Desarrollos Web' y 'Aplicaciones'.",
     practicalAbilities: [
         { title: "Diseño de Interfaces a Medida", description: "Creo diseños únicos y consistentes sin salir del HTML, aplicando la filosofía 'utility-first' para una máxima personalización.", icon: <Code2 /> },
@@ -337,7 +251,7 @@ export const skills: Skill[] = [
   { 
     name: "PostgreSQL", 
     slug: "postgresql",
-    icon: <PostgreSqlIcon />, 
+    icon: <SiPostgresql />, 
     description: "La base de datos relacional que elijo para sistemas que requieren integridad de datos y transacciones complejas, como en los 'Sistemas de Gestión de Negocios' y 'E-commerce'.",
     practicalAbilities: [
         { title: "Diseño de Esquemas Relacionales", description: "Modelo estructuras de datos eficientes y normalizadas para garantizar la integridad y el rendimiento de la información crítica del negocio.", icon: <Database /> },
