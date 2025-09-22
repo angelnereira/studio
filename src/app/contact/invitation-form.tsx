@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useFormState, useFormStatus } from "react-dom";
-import { useEffect } from "react";
+import { useFormStatus } from "react-dom";
+import { useEffect, useActionState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -58,7 +58,7 @@ function SubmitButton() {
 
 export function InvitationForm() {
   const { toast } = useToast();
-  const [state, formAction] = useFormState(onContactSubmit, initialState);
+  const [state, formAction] = useActionState(onContactSubmit, initialState);
   const form = useForm<InvitationFormValues>({
     resolver: zodResolver(invitationFormSchema),
   });

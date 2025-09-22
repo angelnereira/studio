@@ -3,8 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useFormState, useFormStatus } from "react-dom";
-import { useEffect } from "react";
+import { useFormStatus } from "react-dom";
+import { useEffect, useActionState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -51,7 +51,7 @@ function SubmitButton() {
 
 export function CollaboratorForm() {
   const { toast } = useToast();
-  const [state, formAction] = useFormState(onContactSubmit, initialState);
+  const [state, formAction] = useActionState(onContactSubmit, initialState);
   const form = useForm<CollaboratorFormValues>({
     resolver: zodResolver(collaboratorFormSchema),
     defaultValues: {
