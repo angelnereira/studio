@@ -1,20 +1,21 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
+    --background: 210 20% 96.5%; /* Light gray background */
     --foreground: 222.2 84% 4.9%;
-    --card: 210 40% 98%;
+    --card: 210 20% 98.5%; /* Slightly lighter card background */
     --card-foreground: 222.2 84% 4.9%;
-    --popover: 210 40% 98%;
+    --popover: 210 20% 98.5%;
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 196 82% 57%; /* vibrant blue #29ABE2 */
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
+    --secondary: 210 30% 93%; /* Adjusted secondary color */
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
+    --muted: 210 30% 93%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 180 100% 25%; /* teal #008080 */
     --accent-foreground: 210 40% 98%;
@@ -26,11 +27,11 @@
     --radius: 0.5rem;
     --chart-1: 196 82% 57%;
     --chart-2: 145 75% 39%;
-    --sidebar-background: 210 40% 98%;
+    --sidebar-background: 210 20% 97.5%;
     --sidebar-foreground: 222.2 84% 4.9%;
     --sidebar-primary: 196 82% 57%;
     --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 210 40% 96.1%;
+    --sidebar-accent: 210 30% 93%;
     --sidebar-accent-foreground: 222.2 47.4% 11.2%;
     --sidebar-border: 214.3 31.8% 91.4%;
     --sidebar-ring: 196 82% 57%;
