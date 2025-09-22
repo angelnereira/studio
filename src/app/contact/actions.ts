@@ -1,4 +1,4 @@
-_SVG["use server";
+"use server";
 
 import { z } from "zod";
 import { Firestore, FieldValue } from 'firebase-admin/firestore';
