@@ -51,7 +51,7 @@ export const ServicesCarousel: React.FC = () => {
                 <SpotlightCard className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-xl">
                   <CardHeader className="flex-row items-center gap-4">
                     <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                      {React.cloneElement(service.icon, { className: 'w-6 h-6' })}
+                      <service.icon className="w-6 h-6" />
                     </div>
                   </CardHeader>
                   <CardContent className="flex-1">

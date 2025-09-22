@@ -1,4 +1,5 @@
 
+
 import { ReactElement } from "react";
 import { Briefcase, Building, Puzzle, Code2, Bot, Database, KeyRound, ShoppingCart, Receipt, BrainCircuit, Rocket, Server, FileCog, MonitorCog, Smartphone, LineChart, ShieldCheck, Wallet, GitPullRequest, Cloud, Construction, Gauge, Users, Repeat, FileInput, Shield, GitMerge, CloudCog, Mail, Calendar, BarChart } from "lucide-react";
 
@@ -24,7 +25,7 @@ export type ServiceAddOn = {
 export type Service = {
   title: string;
   slug: string;
-  icon: ReactElement;
+  icon: React.ElementType;
   shortDescription: string;
   fullDescription: string;
   packages: ServicePackage[];
@@ -40,7 +41,7 @@ export const services: Service[] = [
   {
     title: "Desarrollo Web",
     slug: "web-development",
-    icon: <Rocket />,
+    icon: Rocket,
     category: "Web Development",
     shortDescription: "Soluciones web a medida, desde landing pages hasta aplicaciones empresariales complejas.",
     fullDescription: "Creamos experiencias web robustas, escalables y centradas en el usuario. Ya sea que necesites una simple página de aterrizaje para validar una idea o una aplicación web empresarial completa, tenemos la solución.",
@@ -106,7 +107,7 @@ export const services: Service[] = [
    {
     title: "Tienda Online (E-commerce)",
     slug: "tienda-online-ecommerce",
-    icon: <ShoppingCart />,
+    icon: ShoppingCart,
     category: "Web Development",
     shortDescription: "Vende tus productos 24/7 con una tienda online potente, segura y fácil de gestionar.",
     fullDescription: "Llevamos tu negocio al mundo digital con una plataforma de e-commerce completa. Desde la configuración inicial hasta la integración de pasarelas de pago, te damos las herramientas para vender en línea exitosamente.",
@@ -145,7 +146,7 @@ export const services: Service[] = [
   {
     title: "Gestión de Negocios",
     slug: "gestion-de-negocios",
-    icon: <Briefcase />,
+    icon: Briefcase,
     category: "Business Management",
     shortDescription: "Sistemas a medida para inventario, planilla y facturación. Optimiza tus operaciones.",
     fullDescription: "Digitaliza y automatiza los procesos clave de tu empresa con software a medida. Desarrollamos sistemas de gestión de inventario, manejo de planilla y facturación electrónica para reducir errores, ahorrar tiempo y darte control total sobre tu negocio.",
@@ -184,7 +185,7 @@ export const services: Service[] = [
   {
     title: "Aplicaciones Móviles",
     slug: "aplicaciones-moviles",
-    icon: <Smartphone />,
+    icon: Smartphone,
     category: "Web Development",
     shortDescription: "Apps para iOS y Android que conectan con tus usuarios y fortalecen tu marca.",
     fullDescription: "Lleva tu servicio o producto al bolsillo de tus clientes con aplicaciones móviles nativas o multiplataforma. Creamos apps intuitivas, de alto rendimiento y listas para publicar en la App Store y Google Play.",
@@ -221,7 +222,7 @@ export const services: Service[] = [
     {
     title: "Portafolio Profesional y Marca Personal",
     slug: "portafolio-profesional",
-    icon: <Puzzle />,
+    icon: Puzzle,
     category: "Web Development",
     shortDescription: "Destaca en tu sector con un portafolio web que refleje tu talento y construya tu marca personal.",
     fullDescription: "Creamos una plataforma digital para profesionales (abogados, arquitectos, médicos, etc.) y freelancers que buscan consolidar su marca personal. Un portafolio autogestionable para mostrar tus proyectos, experiencia y atraer nuevas oportunidades.",
@@ -285,7 +286,7 @@ export const services: Service[] = [
   {
     title: "Soluciones con IA",
     slug: "ai-solutions",
-    icon: <BrainCircuit />,
+    icon: BrainCircuit,
     category: "AI Solutions",
     shortDescription: "Desde chatbots inteligentes hasta sistemas de recomendación y análisis predictivo.",
     fullDescription: "Integramos el poder de la inteligencia artificial en tus operaciones para automatizar procesos, personalizar la experiencia del cliente y extraer insights valiosos de tus datos.",
@@ -341,7 +342,7 @@ export const services: Service[] = [
    {
     title: "Automatización de Procesos",
     slug: "automatizacion-de-procesos",
-    icon: <Repeat />,
+    icon: Repeat,
     category: "AI Solutions",
     shortDescription: "Ahorra tiempo y reduce errores automatizando tareas manuales y repetitivas (RPA).",
     fullDescription: "Identificamos cuellos de botella en tus flujos de trabajo y desarrollamos scripts y sistemas automatizados para eliminarlos. Desde la generación de reportes hasta la sincronización de datos entre plataformas, liberamos a tu equipo para que se enfoque en tareas de alto valor.",
@@ -379,7 +380,7 @@ export const services: Service[] = [
   {
     title: "Mentoría y Capacitación Técnica",
     slug: "mentoria-capacitacion",
-    icon: <Users />,
+    icon: Users,
     category: "Mentorías y Capacitación",
     shortDescription: "Eleva las habilidades de tu equipo con mentorías personalizadas y capacitación en tecnologías de vanguardia.",
     fullDescription: "Potencia el talento interno de tu organización. Ofrezco programas de mentoría y capacitación diseñados para acelerar el desarrollo profesional de individuos y equipos, enfocados en las tecnologías y prácticas más demandadas del mercado.",
@@ -419,7 +420,7 @@ export const services: Service[] = [
   {
     title: "Planes de Soporte y Crecimiento",
     slug: "planes-soporte-crecimiento",
-    icon: <ShieldCheck />,
+    icon: ShieldCheck,
     category: "Infrastructure & Maintenance",
     shortDescription: "Asegura la salud y evolución de tu proyecto con nuestros planes de suscripción.",
     fullDescription: "Ofrecemos planes de suscripción para el mantenimiento continuo, soporte técnico y desarrollo de nuevas funcionalidades. Garantiza que tu inversión tecnológica siga generando valor a largo plazo.",

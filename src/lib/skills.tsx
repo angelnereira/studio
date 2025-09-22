@@ -1,4 +1,5 @@
 
+
 import * as React from "react";
 import { Briefcase, Code, Database, GitBranch, Layers, Server, Shield, Zap, Repeat, FileCog, Users, Code2, BrainCircuit, Search, Route } from "lucide-react";
 import { FaPython, FaNodeJs, FaDocker, FaGitAlt } from "react-icons/fa";
@@ -48,7 +49,7 @@ export const skills: Skill[] = [
   { 
     name: "Python", 
     slug: "python",
-    icon: FaPython, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <FaPython {...props} />,
     description: "Construyo desde APIs robustas hasta complejos modelos de IA, siendo la navaja suiza para resolver problemas de backend.",
     practicalAbilities: [
         { title: "Desarrollo de APIs RESTful", description: "Construcción de APIs robustas y escalables con frameworks como FastAPI y Flask para dar soporte a aplicaciones web y móviles.", icon: Server },
@@ -59,7 +60,7 @@ export const skills: Skill[] = [
   { 
     name: "TypeScript", 
     slug: "typescript",
-    icon: SiTypescript, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiTypescript {...props} />,
     description: "Aporta seguridad y robustez al código. Reduce errores, mejora la colaboración en equipo y hace el código auto-documentado.",
     practicalAbilities: [
         { title: "Tipado Estricto en Proyectos Complejos", description: "Garantizo la robustez y escalabilidad del código en aplicaciones grandes, reduciendo errores antes de que lleguen a producción.", icon: Shield },
@@ -70,7 +71,7 @@ export const skills: Skill[] = [
   { 
     name: "Next.js", 
     slug: "nextjs",
-    icon: TbBrandNextjs, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <TbBrandNextjs {...props} />,
     description: "Es el estándar para crear aplicaciones React de producción: rápidas, optimizadas para SEO y con una experiencia de desarrollo superior.",
     practicalAbilities: [
       { title: "Renderizado Híbrido (SSR y SSG)", description: "Optimizo el rendimiento y el SEO de las aplicaciones web eligiendo la estrategia de renderizado adecuada para cada caso de uso (dinámico vs. estático).", icon: Zap },
@@ -81,7 +82,7 @@ export const skills: Skill[] = [
   { 
     name: "Node.js", 
     slug: "nodejs",
-    icon: FaNodeJs, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <FaNodeJs {...props} />,
     description: "Perfecto para construir APIs y microservicios rápidos y eficientes, capaces de manejar miles de conexiones simultáneas sin esfuerzo.",
     practicalAbilities: [
       { title: "APIs REST y GraphQL", description: "Desarrollo APIs performantes y bien estructuradas que sirven como el cerebro para aplicaciones web y móviles complejas.", icon: Server },
@@ -92,7 +93,7 @@ export const skills: Skill[] = [
   { 
     name: "Google Cloud", 
     slug: "google-cloud",
-    icon: SiGooglecloud, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiGooglecloud {...props} />,
     description: "Permite construir y desplegar soluciones de clase mundial, escalables y seguras, sin tener que gestionar infraestructura física.",
     practicalAbilities: [
       { title: "Despliegue en Cloud Run y GKE", description: "Empaqueto y despliego aplicaciones en contenedores serverless (Cloud Run) o en clústeres de Kubernetes (GKE) para máxima escalabilidad.", icon: Zap },
@@ -103,7 +104,7 @@ export const skills: Skill[] = [
   { 
     name: "Firebase", 
     slug: "firebase",
-    icon: SiFirebase, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiFirebase {...props} />,
     description: "Acelera el desarrollo de MVPs y aplicaciones completas. Permite lanzar productos en tiempo récord sin sacrificar escalabilidad.",
     practicalAbilities: [
       { title: "Autenticación de Usuarios Simplificada", description: "Implemento sistemas de login social (Google, etc.) y por correo/contraseña de forma rápida y segura para cualquier app.", icon: Shield },
@@ -114,7 +115,7 @@ export const skills: Skill[] = [
   { 
     name: "Docker", 
     slug: "docker",
-    icon: FaDocker, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <FaDocker {...props} />,
     description: "Garantiza que el software funcione de manera idéntica en cualquier entorno, eliminando el clásico 'en mi máquina sí funciona'.",
     practicalAbilities: [
         { title: "Contenerización de Aplicaciones", description: "Empaqueto aplicaciones y sus dependencias en contenedores, asegurando que funcionen de manera idéntica en cualquier entorno.", icon: Briefcase },
@@ -125,7 +126,7 @@ export const skills: Skill[] = [
   { 
     name: "Git", 
     slug: "git",
-    icon: FaGitAlt, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <FaGitAlt {...props} />,
     description: "Es el pilar de la colaboración en equipo. Permite un desarrollo paralelo, seguro y un historial de cambios impecable en cualquier proyecto.",
     practicalAbilities: [
         { title: "Control de Versiones Avanzado", description: "Manejo ramas, fusiones y rebases para mantener un historial de código limpio, permitiendo la colaboración en equipos grandes y pequeños.", icon: GitBranch },
@@ -147,7 +148,7 @@ export const skills: Skill[] = [
   { 
     name: "CI/CD", 
     slug: "cicd",
-    icon: SiGithubactions, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiGithubactions {...props} />,
     description: "La automatización es clave para entregar software de alta calidad de forma rápida y fiable, minimizando el riesgo de errores humanos.",
     practicalAbilities: [
         { title: "Pipelines de Despliegue Automatizado", description: "Diseño pipelines que automatizan el proceso desde el `git push` hasta la producción, asegurando despliegues rápidos y consistentes.", icon: Zap },
@@ -169,7 +170,7 @@ export const skills: Skill[] = [
   { 
     name: "Vercel", 
     slug: "vercel",
-    icon: SiVercel, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiVercel {...props} />,
     description: "La plataforma definitiva para desplegar aplicaciones Next.js. Ofrece rendimiento global, escalabilidad y una experiencia de desarrollo sin fricciones.",
     practicalAbilities: [
         { title: "Despliegue Continuo (GitOps)", description: "Integro repositorios de GitHub para un despliegue automático en cada `push`, permitiendo una entrega de funcionalidades extremadamente rápida.", icon: Zap },
@@ -180,7 +181,7 @@ export const skills: Skill[] = [
   { 
     name: "Kubernetes", 
     slug: "kubernetes",
-    icon: SiKubernetes,
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiKubernetes {...props} />,
     description: "El estándar para orquestar aplicaciones en contenedores a gran escala, garantizando alta disponibilidad, resiliencia y escalabilidad automática.",
     practicalAbilities: [
         { title: "Orquestación de Contenedores", description: "Gestiono el ciclo de vida de aplicaciones en contenedores para alta disponibilidad y escalabilidad, fundamental para sistemas críticos.", icon: Layers },
@@ -202,7 +203,7 @@ export const skills: Skill[] = [
   { 
     name: "Tailwind CSS", 
     slug: "tailwindcss",
-    icon: SiTailwindcss, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiTailwindcss {...props} />,
     description: "Permite construir interfaces de usuario complejas y personalizadas a una velocidad increíble, sin sacrificar la consistencia del diseño.",
     practicalAbilities: [
         { title: "Diseño de Interfaces a Medida", description: "Creo diseños únicos y consistentes sin salir del HTML, aplicando la filosofía 'utility-first' para una máxima personalización.", icon: Code2 },
@@ -213,7 +214,7 @@ export const skills: Skill[] = [
   { 
     name: "PostgreSQL", 
     slug: "postgresql",
-    icon: SiPostgresql, 
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiPostgresql {...props} />,
     description: "Base de datos relacional robusta, fiable y extensible, ideal para aplicaciones que demandan integridad y consistencia de datos.",
     practicalAbilities: [
         { title: "Diseño de Esquemas Relacionales", description: "Modelo estructuras de datos eficientes y normalizadas para garantizar la integridad y el rendimiento de la información crítica del negocio.", icon: Database },

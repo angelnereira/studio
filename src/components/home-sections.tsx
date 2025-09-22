@@ -44,12 +44,10 @@ export function SkillsSection() {
                   {[...skills, ...skills].map((skill, index) => (
                     <div
                       key={`${skill.slug}-item-${index}`}
-                      className="group/item relative mx-2 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-28 hover:h-48 hover:scale-125 rounded-lg group-hover/container:opacity-75 hover:!opacity-100"
+                      className="group/item relative mx-2 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-28 group-hover/container:opacity-75 hover:!opacity-100"
                     >
                       <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 transition-all duration-300 hover:shadow-primary/20 hover:shadow-2xl">
-                        {React.createElement(skill.icon, {
-                          className: 'h-10 w-10 text-primary',
-                        })}
+                        <skill.icon className='h-10 w-10 text-primary' />
                       </div>
                       <div className="absolute bottom-0 w-full overflow-hidden opacity-0 transition-opacity duration-300 group-hover/item:opacity-100 pt-2 h-0 group-hover/item:h-auto group-hover/item:relative p-2">
                         <p className="font-bold text-primary">
@@ -91,15 +89,17 @@ export function ProjectsSection() {
               </div>
             </AnimatedDiv>
             <div className="mx-auto grid max-w-5xl justify-center gap-8 py-12 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project, index) => (
+              {projects.map((project, index) => {
+                const ProjectLogo = project.logo;
+                return (
                 <AnimatedDiv key={project.id} delay={0.1 * index}>
                   <Dialog>
                     <DialogTrigger asChild>
                       <SpotlightCard className="group relative flex flex-col overflow-hidden transition-all duration-600 ease-geist w-full bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl cursor-pointer">
                           <CardHeader className="flex-row items-center gap-4">
-                            {project.logo && (
+                            {ProjectLogo && (
                               <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                                 <project.logo className="w-6 h-6" />
+                                 <ProjectLogo className="w-6 h-6" />
                               </div>
                             )}
                             <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary">{project.title}</CardTitle>
@@ -120,9 +120,9 @@ export function ProjectsSection() {
                     <DialogContent className="sm:max-w-[625px]">
                       <DialogHeader>
                         <div className="flex items-center gap-4 mb-4">
-                           {project.logo && (
+                           {ProjectLogo && (
                               <div className="w-16 h-16 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                                 <project.logo className="w-8 h-8" />
+                                 <ProjectLogo className="w-8 h-8" />
                               </div>
                             )}
                             <DialogTitle className="text-2xl">{project.title}</DialogTitle>
@@ -154,7 +154,7 @@ export function ProjectsSection() {
                     </DialogContent>
                   </Dialog>
                 </AnimatedDiv>
-              ))}
+              )})}
             </div>
           </div>
         </section>
@@ -195,3 +195,5 @@ export function TestimonialsSection() {
         </section>
     );
 }
+
+    

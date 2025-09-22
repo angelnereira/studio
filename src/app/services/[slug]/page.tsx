@@ -80,7 +80,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
       <AnimatedDiv>
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
           <div className="bg-primary/10 text-primary p-4 rounded-full">
-              {React.cloneElement(service.icon, { className: "h-8 w-8" })}
+              <service.icon className="h-8 w-8" />
           </div>
           <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">{service.title}</h1>
           <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
