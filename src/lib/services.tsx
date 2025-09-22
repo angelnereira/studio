@@ -1,6 +1,6 @@
 
 import { ReactElement } from "react";
-import { Briefcase, Building, Puzzle, Code2, Bot, Database, KeyRound, ShoppingCart, Receipt, BrainCircuit, Rocket, Server, FileCog, MonitorCog, Smartphone, LineChart, ShieldCheck, Wallet, GitPullRequest, Cloud, Construction, Gauge, Users, Repeat, FileInput, Shield, GitMerge, CloudCog } from "lucide-react";
+import { Briefcase, Building, Puzzle, Code2, Bot, Database, KeyRound, ShoppingCart, Receipt, BrainCircuit, Rocket, Server, FileCog, MonitorCog, Smartphone, LineChart, ShieldCheck, Wallet, GitPullRequest, Cloud, Construction, Gauge, Users, Repeat, FileInput, Shield, GitMerge, CloudCog, Mail, Calendar, BarChart } from "lucide-react";
 
 export type ServicePackage = {
   name: string;
@@ -216,6 +216,68 @@ export const services: Service[] = [
     ],
     addOns: [],
     tags: ["Móvil", "iOS", "Android", "Startups"],
+    published: true,
+  },
+    {
+    title: "Portafolio Profesional y Marca Personal",
+    slug: "portafolio-profesional",
+    icon: <Puzzle />,
+    category: "Web Development",
+    shortDescription: "Destaca en tu sector con un portafolio web que refleje tu talento y construya tu marca personal.",
+    fullDescription: "Creamos una plataforma digital para profesionales (abogados, arquitectos, médicos, etc.) y freelancers que buscan consolidar su marca personal. Un portafolio autogestionable para mostrar tus proyectos, experiencia y atraer nuevas oportunidades.",
+    packages: [
+      {
+        name: "Portafolio Esencial",
+        price: 600,
+        originalPrice: 800,
+        description: "Tu tarjeta de presentación digital. Un sitio de una página, elegante y directo al grano.",
+        features: [
+          "Diseño de página única (one-page)",
+          "Secciones: Sobre mí, Servicios, Proyectos, Contacto",
+          "Diseño 100% responsivo",
+          "Formulario de contacto funcional",
+          "Hosting y dominio por 1 año",
+        ],
+        cta: "Crear Portafolio",
+        time: "1-2 semanas",
+      },
+      {
+        name: "Marca Profesional",
+        price: 1440,
+        originalPrice: 1920,
+        description: "Un sitio completo para establecer tu autoridad en el mercado, con blog y gestión de citas.",
+        features: [
+          "Todo lo de Portafolio Esencial",
+          "Sitio web multi-página",
+          "Sección de blog autogestionable",
+          "Sistema de gestión de citas online",
+          "Galería de proyectos avanzada",
+        ],
+        cta: "Construir Marca",
+        time: "3-4 semanas",
+      },
+      {
+        name: "Solución Integral",
+        price: "2880+",
+        description: "La plataforma definitiva para profesionales que quieren gestionar todo su negocio desde un solo lugar.",
+        features: [
+          "Todo lo de Marca Profesional",
+          "Área de clientes privada",
+          "Sistema de facturación integrado",
+          "Panel de control para autogestión total",
+          "Integraciones a medida",
+        ],
+        cta: "Diseñar Solución",
+        time: "6-8+ semanas",
+      },
+    ],
+    addOns: [
+      { name: "Sistema de Facturación", price: 480, description: "Añade un sistema para generar y enviar facturas." },
+      { name: "Gestión de Citas Avanzada", price: 320, description: "Calendario y reservas online." },
+      { name: "Gestión de Correos y Campañas", price: 400, priceSuffix: "/mes", description: "Manejo de newsletter y campañas de marketing." },
+      { name: "Posicionamiento SEO Avanzado", price: 600, priceSuffix: "/mes", description: "Estrategia continua de SEO para mejorar tu ranking." },
+    ],
+    tags: ["Marca Personal", "Freelancers", "Profesionales", "Web"],
     published: true,
   },
   // === AI SOLUTIONS SERVICES ===
