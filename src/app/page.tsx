@@ -4,7 +4,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BrainCircuit, BotMessageSquare, Languages, Mic, Music, FunctionSquare, Gitlab, Download, Code2, Clipboard, ClipboardCheck, FileText, Github } from "lucide-react";
+import { ArrowRight, BrainCircuit, BotMessageSquare, Languages, Mic, Music, FunctionSquare, Download, Code2, Clipboard, ClipboardCheck, FileText, Github } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -324,7 +324,7 @@ export default function Home() {
                             className="group/item relative mx-4 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-24 hover:h-48"
                         >
                             <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 group-hover/item:scale-110">
-                                {React.cloneElement(skill.icon, { className: 'h-10 w-10 text-primary' })}
+                                {React.createElement(skill.icon, { className: 'h-10 w-10 text-primary' })}
                             </div>
                             <div className="absolute bottom-0 w-full overflow-hidden opacity-0 transition-opacity duration-300 group-hover/item:opacity-100 pt-2 h-0 group-hover/item:h-auto group-hover/item:relative p-2">
                                 <p className="text-sm font-bold text-primary">{skill.name}</p>
