@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { AnimatedDiv } from "@/components/animated-div";
+import { SpotlightCard } from "@/components/spotlight-card";
 
 export async function generateStaticParams() {
   return services.filter(s => s.published).map((service) => ({
@@ -32,38 +33,38 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 const PackageCard = ({ pkg, serviceSlug }: { pkg: ServicePackage, serviceSlug: string }) => (
-  <Card className={`flex flex-col ${pkg.name === 'Profesional' ? 'border-primary shadow-primary/20 shadow-lg' : ''}`}>
-    <CardHeader>
-      <CardTitle className={pkg.name === 'Profesional' ? 'text-primary' : ''}>{pkg.name}</CardTitle>
-      <CardDescription>{pkg.description}</CardDescription>
-    </CardHeader>
-    <CardContent className="flex-1 space-y-6">
-      <div className="flex items-baseline gap-2">
-        <p className="text-3xl font-bold">
-          ${pkg.price.toLocaleString()}
-          {pkg.priceSuffix && <span className="text-sm font-normal text-muted-foreground">{pkg.priceSuffix}</span>}
-        </p>
-        {pkg.originalPrice && (
-            <p className="text-xl font-normal text-muted-foreground line-through">${pkg.originalPrice.toLocaleString()}</p>
-        )}
-      </div>
-      <ul className="space-y-3 text-sm">
-        {pkg.features.map((feature) => (
-          <li key={feature} className="flex items-start">
-            <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
-    </CardContent>
-    <CardFooter>
-      <Button asChild className="w-full" variant={pkg.name === 'Profesional' ? 'default' : 'outline'}>
-        <Link href={`/calculator?service=${serviceSlug}&plan=${pkg.name.toLowerCase()}`}>
-            {pkg.cta} <ArrowRight className="ml-2" />
-        </Link>
-      </Button>
-    </CardFooter>
-  </Card>
+    <SpotlightCard className={`group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-xl ${pkg.name === 'Profesional' ? 'border-primary shadow-primary/20 shadow-lg' : ''}`}>
+        <CardHeader>
+        <CardTitle className={pkg.name === 'Profesional' ? 'text-primary' : ''}>{pkg.name}</CardTitle>
+        <CardDescription>{pkg.description}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex-1 space-y-6">
+        <div className="flex items-baseline gap-2">
+            <p className="text-3xl font-bold">
+            ${pkg.price.toLocaleString()}
+            {pkg.priceSuffix && <span className="text-sm font-normal text-muted-foreground">{pkg.priceSuffix}</span>}
+            </p>
+            {pkg.originalPrice && (
+                <p className="text-xl font-normal text-muted-foreground line-through">${pkg.originalPrice.toLocaleString()}</p>
+            )}
+        </div>
+        <ul className="space-y-3 text-sm">
+            {pkg.features.map((feature) => (
+            <li key={feature} className="flex items-start">
+                <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
+                <span>{feature}</span>
+            </li>
+            ))}
+        </ul>
+        </CardContent>
+        <CardFooter>
+        <Button asChild className="w-full" variant={pkg.name === 'Profesional' ? 'default' : 'outline'}>
+            <Link href={`/calculator?service=${serviceSlug}&plan=${pkg.name.toLowerCase()}`}>
+                {pkg.cta} <ArrowRight className="ml-2" />
+            </Link>
+        </Button>
+        </CardFooter>
+  </SpotlightCard>
 );
 
 export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
@@ -114,7 +115,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               </div>
               <div className="max-w-2xl mx-auto space-y-4">
                   {service.addOns.map((addOn) => (
-                      <Card key={addOn.name} className="p-4 flex justify-between items-center bg-secondary/50">
+                      <SpotlightCard key={addOn.name} className="p-4 flex justify-between items-center bg-secondary/50 border border-white/10 hover:border-primary/50">
                           <div>
                               <h3 className="font-semibold">{addOn.name}</h3>
                               <p className="text-sm text-muted-foreground">{addOn.description}</p>
@@ -130,7 +131,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                                   </p>
                               )}
                           </div>
-                      </Card>
+                      </SpotlightCard>
                   ))}
               </div>
            </div>
