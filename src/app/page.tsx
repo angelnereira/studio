@@ -317,7 +317,7 @@ export default function Home() {
               </div>
             </AnimatedDiv>
              <div className="group/container relative mt-12 w-full overflow-hidden px-4">
-                <div className="absolute inset-y-0 left-0 z-10 w-[15%] bg-gradient-to-r from-background to-transparent" />
+                <div className="absolute inset-y-0 left-0 z-10 w-[7.5%] bg-gradient-to-r from-background to-transparent" />
                 <div className="flex h-56 w-max animate-marquee items-center p-4 transition-all duration-500 ease-geist group-hover/container:h-64 hover:[animation-play-state:paused]">
                   {[...skills, ...skills].map((skill, index) => (
                     <div
@@ -340,7 +340,7 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-              <div className="absolute inset-y-0 right-0 z-10 w-[15%] bg-gradient-to-l from-background to-transparent" />
+              <div className="absolute inset-y-0 right-0 z-10 w-[7.5%] bg-gradient-to-l from-background to-transparent" />
             </div>
             <AnimatedDiv delay={0.4} className="text-center mt-20">
               <Button asChild variant="outline">
