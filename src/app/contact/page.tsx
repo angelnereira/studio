@@ -1,4 +1,5 @@
 
+
 import { AnimatedDiv } from '@/components/animated-div';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -80,7 +81,7 @@ export default function ContactPage() {
                 description="Para invitaciones a conferencias, talleres, reuniones o cualquier otro evento profesional."
               >
                 <InvitationForm />
-              </CardContact>
+              </ContactCard>
             </TabsContent>
           </Tabs>
         </div>
