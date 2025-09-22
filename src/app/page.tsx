@@ -1,17 +1,15 @@
 
-
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BrainCircuit, BotMessageSquare, Languages, Mic, Music, FunctionSquare, Download, Code2, Clipboard, ClipboardCheck, FileText, Github } from "lucide-react";
-import { GithubIcon } from "@/lib/icons";
+import * as React from "react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import * as React from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { SpotlightCard } from "@/components/spotlight-card";
@@ -319,7 +317,7 @@ export default function Home() {
               </div>
             </AnimatedDiv>
              <div className="group/container relative mt-12 w-full overflow-hidden px-4">
-                <div className="absolute inset-y-0 left-0 z-10 w-1/4 bg-gradient-to-r from-background to-transparent" />
+                <div className="absolute inset-y-0 left-0 z-10 w-[15%] bg-gradient-to-r from-background to-transparent" />
                 <div className="flex h-56 w-max animate-marquee items-center p-4 transition-all duration-500 ease-geist group-hover/container:h-64 hover:[animation-play-state:paused]">
                   {[...skills, ...skills].map((skill, index) => (
                     <div
@@ -342,7 +340,7 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-              <div className="absolute inset-y-0 right-0 z-10 w-1/4 bg-gradient-to-l from-background to-transparent" />
+              <div className="absolute inset-y-0 right-0 z-10 w-[15%] bg-gradient-to-l from-background to-transparent" />
             </div>
             <AnimatedDiv delay={0.4} className="text-center mt-20">
               <Button asChild variant="outline">
@@ -494,3 +492,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
