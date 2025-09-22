@@ -14,6 +14,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
@@ -23,6 +30,10 @@ const employerFormSchema = z.object({
   companyName: z.string().min(2, "El nombre de la empresa es requerido."),
   jobTitle: z.string().min(3, "El título del puesto es requerido."),
   jobDescription: z.string().min(10, "La descripción debe tener al menos 10 caracteres."),
+  country: z.string().optional(),
+  industry: z.string().optional(),
+  salaryOffer: z.string().optional(),
+  contractType: z.string().optional(),
 });
 
 type EmployerFormValues = z.infer<typeof employerFormSchema>;
@@ -37,6 +48,10 @@ export function EmployerForm() {
       companyName: "",
       jobTitle: "",
       jobDescription: "",
+      country: "",
+      industry: "",
+      salaryOffer: "",
+      contractType: "",
     },
   });
 
@@ -108,6 +123,85 @@ export function EmployerForm() {
             )}
           />
         </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>País (Opcional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="País de la empresa" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+            control={form.control}
+            name="salaryOffer"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Oferta Salarial (Opcional)</FormLabel>
+                <FormControl>
+                  <Input placeholder="Ej: $50k - $70k USD" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+         <FormField
+            control={form.control}
+            name="industry"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Rubro de la Empresa (Opcional)</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona el rubro" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="technology">Tecnología y Software</SelectItem>
+                    <SelectItem value="ecommerce">E-commerce y Retail</SelectItem>
+                    <SelectItem value="finance">Finanzas y Banca</SelectItem>
+                    <SelectItem value="health">Salud y Bienestar</SelectItem>
+                    <SelectItem value="education">Educación</SelectItem>
+                    <SelectItem value="professional-services">Servicios Profesionales</SelectItem>
+                    <SelectItem value="real-estate">Bienes Raíces</SelectItem>
+                    <SelectItem value="transport-logistics">Transporte y Logística</SelectItem>
+                    <SelectItem value="other">Otro</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+           <FormField
+            control={form.control}
+            name="contractType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tipo de Contrato (Opcional)</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona el tipo de contrato" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="full-time">Tiempo Completo</SelectItem>
+                    <SelectItem value="part-time">Tiempo Parcial</SelectItem>
+                    <SelectItem value="contract">Contrato / Freelance</SelectItem>
+                    <SelectItem value="internship">Pasantía</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         <FormField
           control={form.control}
           name="jobDescription"
@@ -118,7 +212,7 @@ export function EmployerForm() {
                 <Textarea
                   placeholder="Pega aquí la descripción del puesto o un enlace a la publicación de la vacante."
                   className="min-h-[150px]"
-                  {...field}
+                  {...props}
                 />
               </FormControl>
               <FormMessage />
