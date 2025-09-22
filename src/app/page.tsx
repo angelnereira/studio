@@ -304,49 +304,47 @@ export default function Home() {
 
         {/* Skills Section */}
         <section id="skills" className="w-full">
-          <div className="container px-4 md:px-6">
-            <AnimatedDiv>
-              <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Habilidades y Stack Tecnológico</h2>
-                  <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Más que una lista de tecnologías, esta es mi caja de herramientas para resolver problemas complejos. Cada habilidad y herramienta se aplica con un propósito: construir soluciones eficientes, escalables y centradas en el usuario que generan un impacto real.
-                  </p>
-                </div>
-              </div>
-            </AnimatedDiv>
-            <div className="group relative mt-12 w-full overflow-hidden">
-                <div className="absolute inset-y-0 left-0 z-10 w-1/4 bg-gradient-to-r from-background to-transparent" />
-                <div
-                    className="flex w-max animate-marquee hover:animate-marquee-slow"
-                >
-                    {[...skills, ...skills].map((skill, index) => (
-                    <div 
-                        key={`${skill.slug}-item-${index}`} 
-                        className="group/item mx-4 flex w-32 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-24 hover:h-48"
-                    >
-                        <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 group-hover/item:scale-110">
-                            {React.cloneElement(skill.icon, { className: 'h-10 w-10 text-primary' })}
-                        </div>
-                        <div className="relative w-full overflow-hidden opacity-0 transition-opacity duration-300 group-hover/item:opacity-100 pt-2">
-                            <p className="text-sm font-bold text-primary">{skill.name}</p>
-                            <p className="text-sm text-foreground/90 dark:text-foreground/80 mt-1">
-                                {skill.description}
-                            </p>
-                        </div>
+            <div className="container px-4 md:px-6">
+                <AnimatedDiv>
+                <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                    <div className="space-y-2">
+                    <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Habilidades y Stack Tecnológico</h2>
+                    <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                        Más que una lista de tecnologías, esta es mi caja de herramientas para resolver problemas complejos. Cada habilidad y herramienta se aplica con un propósito: construir soluciones eficientes, escalables y centradas en el usuario que generan un impacto real.
+                    </p>
                     </div>
-                    ))}
                 </div>
-                <div className="absolute inset-y-0 right-0 z-10 w-1/4 bg-gradient-to-l from-background to-transparent" />
+                </AnimatedDiv>
+                <div className="group relative mt-12 w-full overflow-hidden">
+                    <div className="absolute inset-y-0 left-0 z-10 w-1/4 bg-gradient-to-r from-background to-transparent" />
+                    <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+                        {[...skills, ...skills].map((skill, index) => (
+                        <div 
+                            key={`${skill.slug}-item-${index}`} 
+                            className="group/item relative mx-4 flex w-36 flex-col items-center justify-start text-center transition-all duration-500 ease-geist h-24 hover:h-48"
+                        >
+                            <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 group-hover/item:scale-110">
+                                {React.cloneElement(skill.icon, { className: 'h-10 w-10 text-primary' })}
+                            </div>
+                            <div className="absolute bottom-0 w-full overflow-hidden opacity-0 transition-opacity duration-300 group-hover/item:opacity-100 pt-2 h-0 group-hover/item:h-auto group-hover/item:relative p-2">
+                                <p className="text-sm font-bold text-primary">{skill.name}</p>
+                                <p className="text-sm text-foreground/90 dark:text-foreground/80 mt-1">
+                                    {skill.description}
+                                </p>
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+                    <div className="absolute inset-y-0 right-0 z-10 w-1/4 bg-gradient-to-l from-background to-transparent" />
+                </div>
+                <AnimatedDiv delay={0.4} className="text-center mt-20">
+                    <Button asChild variant="outline">
+                        <Link href="/skills">
+                            Ver todas las Habilidades <ArrowRight className="ml-2" />
+                        </Link>
+                    </Button>
+                </AnimatedDiv>
             </div>
-             <AnimatedDiv delay={0.4} className="text-center mt-20">
-                <Button asChild variant="outline">
-                    <Link href="/skills">
-                        Ver todas las Habilidades <ArrowRight className="ml-2" />
-                    </Link>
-                </Button>
-            </AnimatedDiv>
-          </div>
         </section>
 
 
