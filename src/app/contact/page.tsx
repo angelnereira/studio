@@ -33,7 +33,7 @@ export default function ContactPage() {
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Contáctame</h1>
           <p className="mt-4 text-muted-foreground md:text-xl">
-            Construyamos algo increíble juntos. Elige la opción que mejor se adapte a tu necesidad.
+            Ya sea para un nuevo proyecto, una oportunidad laboral, una colaboración o una invitación, estoy aquí para escucharte. Selecciona la pestaña que mejor describa tu motivo de contacto.
           </p>
         </div>
       </AnimatedDiv>
@@ -80,7 +80,7 @@ export default function ContactPage() {
                 description="Para invitaciones a conferencias, talleres, reuniones o cualquier otro evento profesional."
               >
                 <InvitationForm />
-              </ContactCard>
+              </CardContact>
             </TabsContent>
           </Tabs>
         </div>
