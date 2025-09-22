@@ -216,12 +216,12 @@ function CvGeneratorButton() {
 
 
 export default function Home() {
+  const [isHovered, setIsHovered] = React.useState(false);
+
   return (
     <div className="flex flex-col gap-12 md:gap-24 lg:gap-32">
         {/* Hero Section */}
-        <section 
-          className="w-full bg-cover bg-center bg-no-repeat bg-fixed -mt-12 md:-mt-24 lg:-mt-32 pt-12 md:pt-24 lg:pt-32"
-        >
+        <section>
           <div className="container px-4 md:px-6 text-center py-20 md:py-32 lg:py-40">
              <AnimatedDiv>
                <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
@@ -316,27 +316,39 @@ export default function Home() {
                 </div>
               </div>
             </AnimatedDiv>
-            <TooltipProvider>
-              <div className="relative mt-12 w-full overflow-hidden">
-                <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+            <div 
+              className="relative mt-12 w-full overflow-hidden"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {/* Icon Carousel */}
+              <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+                {[...skills, ...skills].map((skill, index) => (
+                  <div key={`${skill.slug}-icon-${index}`} className="mx-4 flex h-24 w-24 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:scale-110">
+                    {React.cloneElement(skill.icon, { className: 'h-10 w-10 text-primary' })}
+                  </div>
+                ))}
+              </div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background to-transparent"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-transparent"></div>
+
+              {/* Text Carousel */}
+              <div 
+                className={`relative w-full overflow-hidden mt-4 transition-all duration-500 ease-in-out ${isHovered ? 'h-24' : 'h-8'}`}
+              >
+                <div className="absolute top-0 flex w-max animate-marquee-text hover:[animation-play-state:paused]">
                   {[...skills, ...skills].map((skill, index) => (
-                    <Tooltip key={`${skill.slug}-${index}`}>
-                      <TooltipTrigger asChild>
-                        <div className="mx-4 flex h-24 w-24 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 shadow-sm transition-all duration-300 hover:bg-secondary/80 hover:scale-110">
-                           {React.cloneElement(skill.icon, { className: 'h-10 w-10 text-primary' })}
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom">
-                        <p>{skill.name}</p>
-                      </TooltipContent>
-                    </Tooltip>
+                    <div key={`${skill.slug}-text-${index}`} className="mx-4 flex h-full w-24 flex-col justify-center text-center">
+                      <p className="text-sm font-bold text-primary truncate">{skill.name}</p>
+                      <p className={`text-xs text-muted-foreground transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                        {skill.description}
+                      </p>
+                    </div>
                   ))}
                 </div>
-                <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background to-transparent"></div>
-                <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-transparent"></div>
               </div>
-            </TooltipProvider>
-             <AnimatedDiv delay={0.4} className="text-center mt-12">
+            </div>
+             <AnimatedDiv delay={0.4} className="text-center mt-20">
                 <Button asChild variant="outline">
                     <Link href="/skills">
                         Ver todas las Habilidades <ArrowRight className="ml-2" />
