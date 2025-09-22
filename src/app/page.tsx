@@ -221,7 +221,6 @@ export default function Home() {
         {/* Hero Section */}
         <section 
           className="w-full bg-cover bg-center bg-no-repeat bg-fixed -mt-12 md:-mt-24 lg:-mt-32 pt-12 md:pt-24 lg:pt-32"
-          style={{ backgroundImage: "url('/grid-bg.svg')" }}
         >
           <div className="container px-4 md:px-6 text-center py-20 md:py-32 lg:py-40">
              <AnimatedDiv>
