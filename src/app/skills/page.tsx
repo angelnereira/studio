@@ -23,9 +23,7 @@ export default function SkillsPage() {
             Habilidades y Stack Tecnológico
           </h1>
           <p className="mt-4 text-muted-foreground md:text-xl">
-            Un conjunto de herramientas versátil y moderno para construir
-            soluciones de software robustas, escalables y de alto rendimiento,
-            desde el desarrollo web hasta la infraestructura en la nube y la IA.
+            Más que una lista de tecnologías, esta es mi caja de herramientas para resolver problemas complejos. Cada habilidad y herramienta se aplica con un propósito: construir soluciones eficientes, escalables y centradas en el usuario que generan un impacto real.
           </p>
         </div>
       </AnimatedDiv>
