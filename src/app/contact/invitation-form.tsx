@@ -6,7 +6,7 @@ import * as z from "zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useFormStatus } from "react-dom";
-import { useEffect, useActionState } from "react";
+import { useEffect, useActionState, startTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -78,15 +78,30 @@ export function InvitationForm() {
       });
     }
   }, [state, form, toast]);
+  
+  const onSubmit = (data: InvitationFormValues) => {
+    const formData = new FormData();
+    formData.append('formType', 'invitation');
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) {
+        if (value instanceof Date) {
+          formData.append(key, value.toISOString());
+        } else {
+          formData.append(key, value as string);
+        }
+      }
+    });
+    
+    startTransition(() => {
+      formAction(formData);
+    });
+  };
 
 
   return (
     <Form {...form}>
        <form
-        action={(formData) => {
-          formData.append('formType', 'invitation');
-          form.handleSubmit(() => formAction(formData))();
-        }}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-6"
       >
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

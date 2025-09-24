@@ -1,21 +1,8 @@
 "use server";
 
 import { z } from "zod";
-import { Firestore, FieldValue } from 'firebase-admin/firestore';
-import { getFirestore } from 'firebase-admin/firestore';
-import { initializeApp, getApps, App, cert } from 'firebase-admin/app';
-
-const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY
-  ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY)
-  : undefined;
-
-const adminApp = getApps().length > 0
-  ? getApps()[0]
-  : initializeApp({
-      credential: cert(serviceAccount!),
-    });
-
-const db = getFirestore(adminApp as App);
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export type FormState = {
   message: string;
@@ -47,12 +34,18 @@ export async function onContactSubmit(
   const { formType, ...rest } = parsed.data;
 
   try {
-    const docRef = db.collection('contacts').doc();
-    await docRef.set({
+    const docData = {
       formType,
       ...rest,
-      createdAt: FieldValue.serverTimestamp(),
-    });
+      createdAt: serverTimestamp(),
+    };
+    
+    // Convert Date objects to strings
+    if (docData.eventDate instanceof Date) {
+      docData.eventDate = docData.eventDate.toISOString();
+    }
+
+    await addDoc(collection(db, 'contacts'), docData);
 
     return {
       status: "success",
