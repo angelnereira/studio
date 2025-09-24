@@ -16,6 +16,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { ServicesCarousel } from './services-carousel';
 
 export function SkillsSection() {
     return (
@@ -41,13 +42,13 @@ export function SkillsSection() {
                     <Tooltip key={`${skill.slug}-tooltip-${index}`}>
                       <TooltipTrigger asChild>
                         <Link href={`/skills/${skill.slug}`} className="block">
-                          <div
-                            className="group/item relative mx-2 flex w-36 flex-col items-center justify-center text-center transition-all duration-500 ease-geist h-28 hover:translate-y-2"
-                          >
-                            <div className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary p-6 transition-all duration-300">
+                           <SpotlightCard as="div" className="relative mx-2 flex w-36 h-28 flex-col items-center justify-center text-center transition-all duration-500 ease-geist rounded-lg hover:translate-y-2">
+                            <div
+                              className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary/50 p-6 transition-all duration-300"
+                            >
                               <skill.icon className='h-10 w-10 text-primary' />
                             </div>
-                          </div>
+                          </SpotlightCard>
                         </Link>
                       </TooltipTrigger>
                       <TooltipContent sideOffset={0} className="bg-transparent border-none shadow-none text-primary font-bold">
@@ -189,4 +190,35 @@ export function TestimonialsSection() {
           </div>
         </section>
     );
+}
+
+export function ServicesSection() {
+  return (
+    <section id="services" className="w-full">
+      <div className="container px-4 md:px-6">
+        <AnimatedDiv>
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Mis Servicios</h2>
+              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Soluciones de software a la medida para potenciar tu negocio. Desde aplicaciones web hasta inteligencia artificial.
+              </p>
+            </div>
+          </div>
+        </AnimatedDiv>
+        <AnimatedDiv delay={0.2}>
+          <div className="py-12">
+             <ServicesCarousel />
+          </div>
+        </AnimatedDiv>
+         <AnimatedDiv delay={0.4} className="text-center">
+            <Button asChild variant="outline">
+                <Link href="/services">
+                    Ver todos los servicios <ArrowRight className="ml-2" />
+                </Link>
+            </Button>
+        </AnimatedDiv>
+      </div>
+    </section>
+  );
 }

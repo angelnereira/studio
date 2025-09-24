@@ -26,6 +26,7 @@ import { skills } from "@/lib/skills";
 const DynamicSkillsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.SkillsSection), { ssr: false });
 const DynamicProjectsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ProjectsSection), { ssr: false });
 const DynamicTestimonialsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.TestimonialsSection), { ssr: false });
+const DynamicServicesSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ServicesSection), { ssr: false });
 
 
 const aboutMe = `Soy un ingeniero de software panameño con una visión clara: impulsar la transformación tecnológica en Panamá y más allá, creando soluciones innovadoras, eficientes y de alto impacto. Mi trayectoria es una fusión poco común entre la ingeniería de sonido y la ingeniería de software. Esta dualidad me ha enseñado a abordar los problemas con la precisión técnica de un ingeniero y la creatividad de un artista. Mi filosofía es simple: "Solucionar problemas para disfrutar la vida". Aplico esta mentalidad para desarrollar software robusto, escalable y seguro que genera valor real. Mi objetivo es ser un pionero en la innovación tecnológica de Panamá, con un enfoque en software, ciencia de datos e inteligencia artificial, siempre con una proyección global. Apuesto por la inclusión y el empoderamiento de las personas a través de la tecnología.`;
@@ -180,33 +181,8 @@ export default function Home() {
         {/* Skills Section */}
         <DynamicSkillsSection />
         
-        {/* Services Carousel Section */}
-        <section id="services" className="w-full">
-          <div className="container px-4 md:px-6">
-            <AnimatedDiv>
-              <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Mis Servicios</h2>
-                  <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Soluciones de software a la medida para potenciar tu negocio. Desde aplicaciones web hasta inteligencia artificial.
-                  </p>
-                </div>
-              </div>
-            </AnimatedDiv>
-            <AnimatedDiv delay={0.2}>
-              <div className="py-12">
-                 <ServicesCarousel />
-              </div>
-            </AnimatedDiv>
-             <AnimatedDiv delay={0.4} className="text-center">
-                <Button asChild variant="outline">
-                    <Link href="/services">
-                        Ver todos los servicios <ArrowRight className="ml-2" />
-                    </Link>
-                </Button>
-            </AnimatedDiv>
-          </div>
-        </section>
+        {/* Services Section */}
+        <DynamicServicesSection />
 
         {/* Projects Section */}
         <DynamicProjectsSection />
@@ -240,9 +216,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
-
-    
-
-    
