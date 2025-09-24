@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useFormStatus } from "react-dom";
-import { useEffect, useActionState } from "react";
+import { useEffect, useActionState, startTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -81,14 +81,25 @@ export function CollaboratorForm() {
     }
   }, [state, form, toast]);
 
+  const onSubmit = (data: CollaboratorFormValues) => {
+    const formData = new FormData();
+    formData.append('formType', 'collaborator');
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) {
+        formData.append(key, value as string);
+      }
+    });
+
+    startTransition(() => {
+      formAction(formData);
+    });
+  };
+
 
   return (
     <Form {...form}>
       <form
-        action={(formData) => {
-          formData.append('formType', 'collaborator');
-          form.handleSubmit(() => formAction(formData))();
-        }}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-6"
       >
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
