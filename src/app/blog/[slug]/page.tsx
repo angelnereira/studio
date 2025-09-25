@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { AnimatedDiv } from '@/components/animated-div';
+import PanamaDeepMusicAnalysis from '../panama-deep-music-analysis';
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -55,11 +56,22 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const isInteractivePost = params.slug === 'analisis-musical-panama';
+  
   let post;
-  try {
-    post = await getPostWithHtml(params.slug);
-  } catch (error) {
-    notFound();
+  if (!isInteractivePost) {
+    try {
+      post = await getPostWithHtml(params.slug);
+    } catch (error) {
+      notFound();
+    }
+  } else {
+    // For the interactive post, we get metadata but don't need the markdown content
+    try {
+       post = await getPostWithHtml(params.slug);
+    } catch(e) {
+      notFound();
+    }
   }
 
   return (
@@ -86,27 +98,36 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             <time dateTime={post.date}>
               {new Date(post.date).toLocaleDateString('es-PA', { year: 'numeric', month: 'long', day: 'numeric' })}
             </time>
-            <Separator orientation="vertical" className="h-4" />
-            <span>{post.readingTime} min de lectura</span>
+             {!isInteractivePost && (
+              <>
+                <Separator orientation="vertical" className="h-4" />
+                <span>{post.readingTime} min de lectura</span>
+              </>
+            )}
           </div>
         </header>
 
-        <div className="relative w-full aspect-[1200/630] mb-8 rounded-lg overflow-hidden">
-          <Image
-            src={post.coverImage}
-            alt={post.title}
-            fill
-            className="object-cover"
-            priority
-            data-ai-hint="blog post cover"
-          />
-        </div>
+       {isInteractivePost ? (
+          <PanamaDeepMusicAnalysis />
+        ) : (
+          <>
+            <div className="relative w-full aspect-[1200/630] mb-8 rounded-lg overflow-hidden">
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                fill
+                className="object-cover"
+                priority
+                data-ai-hint="blog post cover"
+              />
+            </div>
 
-        <div 
-          className="prose prose-lg dark:prose-invert max-w-none mx-auto prose-headings:font-headline prose-a:text-primary hover:prose-a:text-primary/80"
-          dangerouslySetInnerHTML={{ __html: post.htmlContent }} 
-        />
-
+            <div 
+              className="prose prose-lg dark:prose-invert max-w-none mx-auto prose-headings:font-headline prose-a:text-primary hover:prose-a:text-primary/80"
+              dangerouslySetInnerHTML={{ __html: post.htmlContent }} 
+            />
+          </>
+        )}
       </article>
     </AnimatedDiv>
   );
