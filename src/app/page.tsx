@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { AnimatedDiv } from "@/components/animated-div";
 import { generateCv, GenerateCvInput } from "@/ai/flows/generate-cv";
 import { useToast } from "@/hooks/use-toast";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Clipboard, ClipboardCheck, FileText, BrainCircuit } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { projectsData, testimonialsData } from "@/lib/projects-and-testimonials";
