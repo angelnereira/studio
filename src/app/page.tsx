@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button";
 import { AnimatedDiv } from "@/components/animated-div";
 import { generateCv, GenerateCvInput } from "@/ai/flows/generate-cv";
 import { useToast } from "@/hooks/use-toast";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Clipboard, ClipboardCheck, FileText, BrainCircuit } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { projects, testimonials } from "@/lib/projects-and-testimonials";
+import { projectsData, testimonialsData } from "@/lib/projects-and-testimonials";
 import { skills } from "@/lib/skills";
 import { SpotlightCard } from "@/components/spotlight-card";
 import dynamic from 'next/dynamic';
@@ -45,8 +45,8 @@ function CvGeneratorButton() {
       const cvInput: GenerateCvInput = {
         about: aboutMe,
         skills: skills.map(({ name, description }) => ({ name, description })),
-        projects: projects.map(({ title, description, technologies, impact }) => ({ title, description, technologies, impact })),
-        testimonials: testimonials.map(({ name, title, quote }) => ({ name, title, quote })),
+        projects: projectsData.map(({ title, description, technologies, impact }) => ({ title, description, technologies, impact })),
+        testimonials: testimonialsData.map(({ name, title, quote }) => ({ name, title, quote })),
       };
       const result = await generateCv(cvInput);
       setCvContent(result.cvContent);
