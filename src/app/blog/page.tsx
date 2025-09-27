@@ -25,7 +25,7 @@ export default async function BlogPage() {
         </div>
       </AnimatedDiv>
 
-      <div className="grid gap-8 mt-12">
+      <div className="grid gap-8 mt-12 md:grid-cols-2">
         {posts.map((post, index) => (
           <AnimatedDiv key={post.slug} delay={0.1 * (index + 1)}>
             <Link href={`/blog/${post.slug}`} className="group block">
