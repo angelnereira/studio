@@ -1,6 +1,24 @@
 
 
-export const projectsData = [
+export type Project = {
+  title: string;
+  id: string;
+  description: string;
+  technologies: string[];
+  problem: string;
+  impact: string;
+  githubUrl?: string;
+  liveUrl?: string;
+};
+
+export type Testimonial = {
+    name: string;
+    title: string;
+    quote: string;
+    avatarId: string;
+};
+
+export const projectsData: Project[] = [
   {
     title: "App Web de Control de Acceso",
     id: "access-control",
@@ -49,7 +67,7 @@ export const projectsData = [
   },
 ];
 
-export const testimonialsData = [
+export const testimonialsData: Testimonial[] = [
   {
     name: "Líder Técnico",
     title: "Global Tech Company",

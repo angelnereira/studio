@@ -178,8 +178,8 @@ export default function HomePageClient() {
         {/* Dynamic Sections */}
         <DynamicSkillsSection />
         <DynamicServicesSection />
-        <DynamicProjectsSection />
-        <DynamicTestimonialsSection />
+        <DynamicProjectsSection projects={projectsData} />
+        <DynamicTestimonialsSection testimonials={testimonialsData} />
 
 
         {/* CTA Section */}

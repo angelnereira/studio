@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { ArrowRight, Github } from 'lucide-react';
 import { AnimatedDiv } from '@/components/animated-div';
 import { skills } from '@/lib/skills';
-import { projectsData, testimonialsData } from '@/lib/projects-and-testimonials';
+import type { Project, Testimonial } from '@/lib/projects-and-testimonials';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { SpotlightCard } from '@/components/spotlight-card';
@@ -120,12 +120,16 @@ export function SkillsSection() {
     )
 }
 
-export function ProjectsSection() {
+export function ProjectsSection({ projects: projectsData }: { projects: Project[] }) {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
     }, []);
+
+    if (!projectsData) {
+      return null;
+    }
 
     const projects = projectsData.map(p => ({...p, logo: projectIcons[p.id]}));
 
@@ -238,7 +242,12 @@ export function ProjectsSection() {
     );
 }
 
-export function TestimonialsSection() {
+export function TestimonialsSection({ testimonials: testimonialsData }: { testimonials: Testimonial[] }) {
+    
+    if (!testimonialsData) {
+      return null;
+    }
+
     const testimonials = testimonialsData.map(t => {
         const avatar = PlaceHolderImages.find(p => p.id === t.avatarId);
         return {...t, avatar };
