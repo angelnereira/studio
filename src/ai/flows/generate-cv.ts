@@ -50,17 +50,15 @@ const prompt = ai.definePrompt({
   name: 'generateCvPrompt',
   input: {schema: GenerateCvInputSchema},
   output: {schema: GenerateCvOutputSchema},
-  prompt: `You are an expert career coach and resume writer. Based on the provided professional information, generate a comprehensive and well-formatted CV in Markdown.
+  prompt: `You are an expert career coach and resume writer. Generate a comprehensive and well-formatted CV in Markdown for "Ángel Nereira" using the provided information.
 
-The CV should be for "Ángel Nereira" and must include the following sections:
-1.  **Contact Information**: Include a placeholder for email, phone, and LinkedIn.
+Include the following sections:
+1.  **Contact Information**: Add placeholders for email, phone, and LinkedIn.
 2.  **Summary**: A compelling professional summary based on the 'about' section.
-3.  **Skills**: A bulleted list of key skills, using the provided skills data.
-4.  **Professional Experience / Projects**: Detail the most relevant projects. For each project, describe the impact and technologies used.
-5.  **Testimonials / Recommendations**: Include a section with the provided testimonials.
+3.  **Skills**: A bulleted list of key skills.
+4.  **Professional Experience / Projects**: Detail the most relevant projects, including their impact and technologies.
+5.  **Testimonials / Recommendations**: Include the provided testimonials.
 6.  **Languages**: Mention "Español (Nativo)" and "English (Advanced)".
-
-Here is the information to use:
 
 ## About Me
 {{{about}}}
@@ -81,8 +79,6 @@ Here is the information to use:
 {{#each testimonials}}
 - "{{quote}}" - **{{name}}**, {{title}}
 {{/each}}
-
-Generate the CV now in Markdown format.
 `,
 });
 
