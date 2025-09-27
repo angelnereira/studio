@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import { useEffect, useActionState, startTransition, useRef } from "react";
+import { useEffect, useActionState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -37,14 +37,14 @@ export function ClientForm() {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (state.status === 'success' && state.message) {
+    if (state.status === 'success' && state.formType === 'client') {
       toast({
         title: "¡Mensaje Enviado!",
         description: state.message,
         "data-testid": "success-toast",
       });
       formRef.current?.reset();
-    } else if (state.status === 'error' && state.message && !state.issues) {
+    } else if (state.status === 'error' && state.formType === 'client' && state.message && !state.issues) {
        toast({
         variant: "destructive",
         title: "Error al enviar",
@@ -53,16 +53,10 @@ export function ClientForm() {
     }
   }, [state, toast]);
 
-  const handleSubmit = (formData: FormData) => {
-    startTransition(() => {
-      formAction(formData);
-    });
-  };
-
   return (
     <form
       ref={formRef}
-      action={handleSubmit}
+      action={formAction}
       className="space-y-6"
     >
       <input type="hidden" name="formType" value="client" />

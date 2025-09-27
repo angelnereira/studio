@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import { useEffect, useActionState, startTransition, useRef, useState } from "react";
+import { useEffect, useActionState, useRef, useState } from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
@@ -37,14 +37,14 @@ export function InvitationForm() {
   const [date, setDate] = useState<Date | undefined>();
 
   useEffect(() => {
-    if (state.status === 'success' && state.message) {
+    if (state.status === 'success' && state.formType === 'invitation') {
       toast({
         title: "¡Invitación Recibida!",
         description: "Gracias por la invitación. Revisaré los detalles y te contactaré pronto.",
       });
       formRef.current?.reset();
       setDate(undefined);
-    } else if (state.status === 'error' && state.message && !state.issues) {
+    } else if (state.status === 'error' && state.formType === 'invitation' && state.message && !state.issues) {
        toast({
         variant: "destructive",
         title: "Error al enviar",
@@ -57,9 +57,7 @@ export function InvitationForm() {
     if (date) {
       formData.set('eventDate', date.toISOString());
     }
-    startTransition(() => {
-      formAction(formData);
-    });
+    formAction(formData);
   };
 
   return (

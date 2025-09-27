@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import { useEffect, useActionState, startTransition, useRef } from "react";
+import { useEffect, useActionState, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,13 +31,13 @@ export function CollaboratorForm() {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (state.status === 'success' && state.message) {
+    if (state.status === 'success' && state.formType === 'collaborator') {
       toast({
         title: "¡Mensaje Recibido!",
         description: "Gracias por tu interés en colaborar. He guardado tu propuesta.",
       });
       formRef.current?.reset();
-    } else if (state.status === 'error' && state.message && !state.issues) {
+    } else if (state.status === 'error' && state.formType === 'collaborator' && state.message && !state.issues) {
        toast({
         variant: "destructive",
         title: "Error al enviar",
@@ -46,16 +46,10 @@ export function CollaboratorForm() {
     }
   }, [state, toast]);
 
-  const handleSubmit = (formData: FormData) => {
-    startTransition(() => {
-      formAction(formData);
-    });
-  };
-
   return (
     <form
       ref={formRef}
-      action={handleSubmit}
+      action={formAction}
       className="space-y-6"
     >
       <input type="hidden" name="formType" value="collaborator" />
