@@ -1,22 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { Download, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { AnimatedDiv } from "@/components/animated-div";
-import { generateCv, GenerateCvInput } from "@/ai/flows/generate-cv";
-import { useToast } from "@/hooks/use-toast";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Clipboard, ClipboardCheck, FileText, BrainCircuit } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { projectsData, testimonialsData } from "@/lib/projects-and-testimonials";
-import { skills } from "@/lib/skills";
-import { SpotlightCard } from "@/components/spotlight-card";
 import dynamic from 'next/dynamic';
 import { Skeleton } from "@/components/ui/skeleton";
-
-const aboutMe = `Soy un ingeniero de software panameño con una visión clara: impulsar la transformación tecnológica en Panamá y más allá, creando soluciones innovadoras, eficientes y de alto impacto. Mi trayectoria es una fusión poco común entre la ingeniería de sonido y la ingeniería de software. Esta dualidad me ha enseñado a abordar los problemas con la precisión técnica de un ingeniero y la creatividad de un artista. Mi filosofía es simple: "Solucionar problemas para disfrutar la vida". Aplico esta mentalidad para desarrollar software robusto, escalable y seguro que genera valor real. Mi objetivo es ser un pionero en la innovación tecnológica de Panamá, con un enfoque en software, ciencia de datos e inteligencia artificial, siempre con una proyección global. Apuesto por la inclusión y el empoderamiento de las personas a través de la tecnología.`;
+import { SpotlightCard } from "./spotlight-card";
 
 const DynamicSkillsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.SkillsSection), {
   loading: () => <Skeleton className="h-64 w-full" />,
@@ -30,93 +22,6 @@ const DynamicProjectsSection = dynamic(() => import('@/components/home-sections'
 const DynamicTestimonialsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.TestimonialsSection), {
   loading: () => <Skeleton className="h-64 w-full" />,
 });
-
-function CvGeneratorButton() {
-  const { toast } = useToast();
-  const [open, setOpen] = React.useState(false);
-  const [isGenerating, setIsGenerating] = React.useState(false);
-  const [cvContent, setCvContent] = React.useState("");
-  const [copied, setCopied] = React.useState(false);
-
-  const handleGenerate = async () => {
-    setIsGenerating(true);
-    setCvContent("");
-    try {
-      const cvInput: GenerateCvInput = {
-        about: aboutMe,
-        skills: skills.map(({ name, description }) => ({ name, description })),
-        projects: projectsData.map(({ title, description, technologies, impact }) => ({ title, description, technologies, impact })),
-        testimonials: testimonialsData.map(({ name, title, quote }) => ({ name, title, quote })),
-      };
-      const result = await generateCv(cvInput);
-      setCvContent(result.cvContent);
-    } catch (error) {
-      console.error(error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "No se pudo generar el CV. Por favor, inténtalo de nuevo.",
-      });
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-  
-  const handleCopy = () => {
-    if (cvContent) {
-      navigator.clipboard.writeText(cvContent);
-      setCopied(true);
-      toast({ title: "Copiado al portapapeles!" });
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="secondary" size="lg" onClick={handleGenerate}>
-          <Download className="mr-2" />
-          Generar CV
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-3xl h-5/6 flex flex-col">
-        <DialogHeader className="flex-row items-center justify-between">
-          <DialogTitle>CV Generado por IA</DialogTitle>
-          {cvContent && (
-             <Button variant="ghost" size="icon" onClick={handleCopy}>
-              {copied ? <ClipboardCheck className="h-4 w-4" /> : <Clipboard className="h-4 w-4" />}
-              <span className="sr-only">Copiar</span>
-            </Button>
-          )}
-        </DialogHeader>
-        <div className="flex-1 overflow-y-auto pr-4 -mr-4">
-          {isGenerating && !cvContent && (
-            <div className="flex items-center justify-center h-full">
-              <div className="flex flex-col items-center gap-2">
-                <BrainCircuit className="h-8 w-8 animate-pulse text-primary" />
-                <p className="text-muted-foreground">Generando CV dinámico...</p>
-              </div>
-            </div>
-          )}
-          {cvContent ? (
-             <div className="prose prose-sm dark:prose-invert max-w-none">
-               <p style={{ whiteSpace: 'pre-wrap' }}>{cvContent}</p>
-             </div>
-          ) : !isGenerating && (
-             <Alert>
-              <FileText className="h-4 w-4" />
-              <AlertTitle>Listo para generar</AlertTitle>
-              <AlertDescription>
-                El CV se generará aquí.
-              </AlertDescription>
-            </Alert>
-          )}
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
 
 export default function HomePageClient() {
 
@@ -145,7 +50,9 @@ export default function HomePageClient() {
                 <Button asChild size="lg">
                   <Link href="/contact">Hablemos</Link>
                 </Button>
-                <CvGeneratorButton />
+                <Button asChild variant="secondary" size="lg">
+                  <Link href="/skills">Ver Habilidades</Link>
+                </Button>
               </div>
             </AnimatedDiv>
           </div>
