@@ -18,12 +18,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   try {
     const post = await getPostWithHtml(params.slug);
     
-    if (!post) {
-      return {
-        title: 'Post no encontrado',
-      };
-    }
-
     return {
       title: `${post.title} | Ángel Nereira`,
       description: post.excerpt,
@@ -59,19 +53,10 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   const isInteractivePost = params.slug === 'analisis-musical-panama';
   
   let post;
-  if (!isInteractivePost) {
-    try {
-      post = await getPostWithHtml(params.slug);
-    } catch (error) {
-      notFound();
-    }
-  } else {
-    // For the interactive post, we get metadata but don't need the markdown content
-    try {
-       post = await getPostWithHtml(params.slug);
-    } catch(e) {
-      notFound();
-    }
+  try {
+    post = await getPostWithHtml(params.slug);
+  } catch (error) {
+    notFound();
   }
 
   return (
