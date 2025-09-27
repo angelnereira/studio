@@ -1,30 +1,35 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BrainCircuit, BotMessageSquare, Languages, Mic, Music, FunctionSquare, Download, Code2, Clipboard, ClipboardCheck, FileText, Github } from "lucide-react";
+import { Download, ArrowRight } from "lucide-react";
 import * as React from "react";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { SpotlightCard } from "@/components/spotlight-card";
-import { ServicesCarousel } from "@/components/services-carousel";
+import { AnimatedDiv } from "@/components/animated-div";
 import { generateCv, GenerateCvInput } from "@/ai/flows/generate-cv";
 import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Clipboard, ClipboardCheck, FileText, BrainCircuit } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AnimatedDiv } from "@/components/animated-div";
-import dynamic from "next/dynamic";
 import { projects, testimonials } from "@/lib/projects-and-testimonials";
 import { skills } from "@/lib/skills";
-import { SkillsSection, ProjectsSection, ServicesSection, TestimonialsSection } from "@/components/home-sections";
-
+import { SpotlightCard } from "@/components/spotlight-card";
+import dynamic from 'next/dynamic';
+import { Skeleton } from "@/components/ui/skeleton";
 
 const aboutMe = `Soy un ingeniero de software panameño con una visión clara: impulsar la transformación tecnológica en Panamá y más allá, creando soluciones innovadoras, eficientes y de alto impacto. Mi trayectoria es una fusión poco común entre la ingeniería de sonido y la ingeniería de software. Esta dualidad me ha enseñado a abordar los problemas con la precisión técnica de un ingeniero y la creatividad de un artista. Mi filosofía es simple: "Solucionar problemas para disfrutar la vida". Aplico esta mentalidad para desarrollar software robusto, escalable y seguro que genera valor real. Mi objetivo es ser un pionero en la innovación tecnológica de Panamá, con un enfoque en software, ciencia de datos e inteligencia artificial, siempre con una proyección global. Apuesto por la inclusión y el empoderamiento de las personas a través de la tecnología.`;
 
+const DynamicSkillsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.SkillsSection), {
+  loading: () => <Skeleton className="h-64 w-full" />,
+});
+const DynamicServicesSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ServicesSection), {
+  loading: () => <Skeleton className="h-96 w-full" />,
+});
+const DynamicProjectsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ProjectsSection), {
+  loading: () => <Skeleton className="h-96 w-full" />,
+});
+const DynamicTestimonialsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.TestimonialsSection), {
+  loading: () => <Skeleton className="h-64 w-full" />,
+});
 
 function CvGeneratorButton() {
   const { toast } = useToast();
@@ -140,9 +145,7 @@ export default function HomePageClient() {
                 <Button asChild size="lg">
                   <Link href="/contact">Hablemos</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline">
-                  <Link href="/projects">Ver Proyectos</Link>
-                </Button>
+                <CvGeneratorButton />
               </div>
             </AnimatedDiv>
           </div>
@@ -172,17 +175,11 @@ export default function HomePageClient() {
           </AnimatedDiv>
         </section>
 
-        {/* Skills Section */}
-        <SkillsSection />
-        
-        {/* Services Section */}
-        <ServicesSection />
-
-        {/* Projects Section */}
-        <ProjectsSection />
-
-        {/* Testimonials Section */}
-        <TestimonialsSection />
+        {/* Dynamic Sections */}
+        <DynamicSkillsSection />
+        <DynamicServicesSection />
+        <DynamicProjectsSection />
+        <DynamicTestimonialsSection />
 
 
         {/* CTA Section */}
