@@ -57,7 +57,7 @@ export const services: Service[] = [
           "Formulario de contacto",
           "Integración Google Analytics",
           "Hosting por 1 año",
-          "Mantenimiento post-entrega (desde $112/mes)"
+          "Mantenimiento post-entrega (desde $56/mes)"
         ],
         cta: "Empezar Lanzamiento",
         time: "2-3 semanas"
@@ -118,7 +118,7 @@ export const services: Service[] = [
         price: 720,
         originalPrice: 1200,
         description: "Muestra tus productos en un catálogo online profesional con opción de contacto directo para ventas.",
-        features: ["Catálogo de hasta 100 productos", "Diseño responsivo", "Galería de imágenes por producto", "Botón de WhatsApp para pedidos", "Capacitación de gestión", "Mantenimiento post-entrega (desde $112/mes)"],
+        features: ["Catálogo de hasta 100 productos", "Diseño responsivo", "Galería de imágenes por producto", "Botón de WhatsApp para pedidos", "Capacitación de gestión", "Mantenimiento post-entrega (desde $56/mes)"],
         cta: "Crear Catálogo",
         time: "3-4 semanas"
       },
@@ -239,7 +239,7 @@ export const services: Service[] = [
           "Sistema de gestión de citas básico",
           "Formulario de contacto funcional",
           "Hosting y dominio por 1 año",
-          "Mantenimiento post-entrega (desde $112/mes)"
+          "Mantenimiento post-entrega (desde $56/mes)"
         ],
         cta: "Crear Portafolio",
         time: "1-2 semanas",
@@ -351,7 +351,7 @@ export const services: Service[] = [
         name: "Tarea Específica",
         price: "400 - 1,200",
         description: "Automatiza una tarea repetitiva específica, como la generación de un reporte diario o la extracción de datos.",
-        features: ["Análisis de la tarea a automatizar", "Desarrollo de script de automatización", "Ejecución programada (diaria, semanal)", "Documentación y entrega del script", "Mantenimiento post-entrega (desde $112/mes)"],
+        features: ["Análisis de la tarea a automatizar", "Desarrollo de script de automatización", "Ejecución programada (diaria, semanal)", "Documentación y entrega del script", "Mantenimiento post-entrega (desde $56/mes)"],
         cta: "Automatizar Tarea",
         time: "1-2 semanas"
       },
@@ -426,7 +426,16 @@ export const services: Service[] = [
     fullDescription: "Ofrecemos planes de suscripción para el mantenimiento continuo, soporte técnico y desarrollo de nuevas funcionalidades. Garantiza que tu inversión tecnológica siga generando valor a largo plazo.",
     packages: [
       {
-        name: "Soporte Esencial",
+        name: "Soporte Inicial",
+        price: 56,
+        priceSuffix: "/mes",
+        description: "Para mantener tu proyecto pequeño seguro y actualizado.",
+        features: ["Monitoreo de disponibilidad", "Backups semanales", "Actualizaciones de seguridad", "Soporte técnico por email (respuesta en 48h)"],
+        cta: "Obtener Soporte",
+        time: "Suscripción mensual"
+      },
+      {
+        name: "Soporte Básico",
         price: 112,
         priceSuffix: "/mes",
         description: "Para mantener tu sitio o app segura y funcionando óptimamente.",
@@ -439,7 +448,7 @@ export const services: Service[] = [
         price: 280,
         priceSuffix: "/mes",
         description: "Ideal para negocios que buscan mejorar y añadir funcionalidades continuamente.",
-        features: ["Todo lo del plan Esencial", "Soporte prioritario por chat", "4 horas de desarrollo para mejoras", "Consultoría proactiva de mejoras"],
+        features: ["Todo lo del plan Básico", "Soporte prioritario por chat", "4 horas de desarrollo para mejoras", "Consultoría proactiva de mejoras"],
         cta: "Empezar a Crecer",
         time: "Suscripción mensual"
       },
