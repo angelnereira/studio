@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { getAllPosts } from '@/lib/blog';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -34,7 +35,7 @@ export default async function BlogPage() {
                   <div className="flex items-center gap-4 mb-4">
                     {post.tags.map(tag => <Badge key={tag} variant="secondary">{tag}</Badge>)}
                   </div>
-                  <CardTitle className="text-2xl font-bold transition-colors duration-300 ease-geist group-hover:text-primary">
+                  <CardTitle className="text-2xl font-bold transition-colors duration-300 ease-geist group-hover:text-primary break-words">
                     {post.title}
                   </CardTitle>
                   <CardDescription>{post.excerpt}</CardDescription>
