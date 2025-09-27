@@ -1,21 +1,22 @@
+"use client";
+
 import type {Metadata} from 'next';
 import './globals.css';
 import {Providers} from '@/components/providers';
 import {SiteHeader} from '@/components/site-header';
 import {SiteFooter} from '@/components/site-footer';
 import {Toaster} from '@/components/ui/toaster';
-
-export const metadata: Metadata = {
-  title: 'Ángel Nereira - Ingeniero de Software',
-  description:
-    'Portafolio de Ángel Nereira, un desarrollador de Panamá construyendo soluciones de software modernas.',
-};
+import { useReportWebVitals } from 'next/web-vitals';
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useReportWebVitals((metric) => {
+    console.log(metric);
+  });
+
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
