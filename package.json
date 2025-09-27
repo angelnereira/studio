@@ -13,7 +13,8 @@
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -83,12 +84,15 @@
     "@storybook/addon-essentials": "^8.2.6",
     "@storybook/addon-interactions": "^8.2.6",
     "@storybook/addon-links": "^8.2.6",
+    "@storybook/addon-styling-webpack": "^1.0.0",
+    "@storybook/addon-themes": "^8.2.6",
     "@storybook/blocks": "^8.2.6",
     "@storybook/nextjs": "^8.2.6",
     "@storybook/react": "^8.2.6",
     "@storybook/test": "^8.2.6",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20",
     "@types/react": "18.3.0",
     "@types/react-dom": "18.3.0",
