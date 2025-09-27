@@ -1,7 +1,7 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
-import { useEffect, useState } from "react";
+import { useFormStatus } from "react-dom";
+import { useEffect, useState, useActionState, startTransition } from "react";
 import { onGenerate, FormState } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,7 +25,7 @@ function SubmitButton() {
 }
 
 export function CoverLetterForm() {
-  const [state, formAction] = useFormState(onGenerate, initialState);
+  const [state, formAction] = useActionState(onGenerate, initialState);
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
 
@@ -47,6 +47,15 @@ export function CoverLetterForm() {
       setTimeout(() => setCopied(false), 2000);
     }
   };
+  
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    startTransition(() => {
+      formAction(formData);
+    });
+  };
+
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
@@ -58,7 +67,7 @@ export function CoverLetterForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={formAction} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="jobDescription">Job Description</Label>
               <Textarea

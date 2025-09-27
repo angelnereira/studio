@@ -1,6 +1,7 @@
 "use server";
 
-import { generatePersonalizedCoverLetter, GeneratePersonalizedCoverLetterInput, GeneratePersonalizedCoverLetterOutput } from "@/ai/flows/generate-personalized-cover-letters";
+import { generatePersonalizedCoverLetter as originalGeneratePersonalizedCoverLetter, GeneratePersonalizedCoverLetterInput, GeneratePersonalizedCoverLetterOutput } from "@/ai/flows/generate-personalized-cover-letters";
+import { cache } from "react";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -14,6 +15,8 @@ export type FormState = {
   issues?: string[];
   data?: GeneratePersonalizedCoverLetterOutput;
 };
+
+const generatePersonalizedCoverLetter = cache(originalGeneratePersonalizedCoverLetter);
 
 export async function onGenerate(
   prevState: FormState,

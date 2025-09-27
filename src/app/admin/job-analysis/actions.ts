@@ -1,6 +1,7 @@
 "use server";
 
-import { analyzeJobCompatibility, AnalyzeJobCompatibilityInput, AnalyzeJobCompatibilityOutput } from "@/ai/flows/analyze-job-compatibility";
+import { analyzeJobCompatibility as originalAnalyzeJobCompatibility, AnalyzeJobCompatibilityInput, AnalyzeJobCompatibilityOutput } from "@/ai/flows/analyze-job-compatibility";
+import { cache } from "react";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -14,6 +15,8 @@ export type FormState = {
   issues?: string[];
   data?: AnalyzeJobCompatibilityOutput;
 };
+
+const analyzeJobCompatibility = cache(originalAnalyzeJobCompatibility);
 
 export async function onAnalyze(
   prevState: FormState,

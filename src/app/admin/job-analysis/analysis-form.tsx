@@ -1,7 +1,7 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
-import { useEffect } from "react";
+import { useFormStatus } from "react-dom";
+import { useEffect, useActionState, startTransition } from "react";
 import { onAnalyze, FormState } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,7 +26,7 @@ function SubmitButton() {
 }
 
 export function AnalysisForm() {
-  const [state, formAction] = useFormState(onAnalyze, initialState);
+  const [state, formAction] = useActionState(onAnalyze, initialState);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -38,6 +38,14 @@ export function AnalysisForm() {
       });
     }
   }, [state, toast]);
+  
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    startTransition(() => {
+      formAction(formData);
+    });
+  };
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
@@ -49,7 +57,7 @@ export function AnalysisForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={formAction} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="jobDescription">Job Description</Label>
               <Textarea
