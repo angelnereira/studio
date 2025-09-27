@@ -44,7 +44,13 @@ const analyzeJobCompatibilityPrompt = ai.definePrompt({
   name: 'analyzeJobCompatibilityPrompt',
   input: {schema: AnalyzeJobCompatibilityInputSchema},
   output: {schema: AnalyzeJobCompatibilityOutputSchema},
-  prompt: `You are an expert career advisor. You will analyze a job description and a user profile to determine the compatibility between them.\n\nJob Description: {{{jobDescription}}}\n\nUser Profile: {{{userProfile}}}\n\nProvide a compatibility score between 0 and 1, a detailed analysis of the compatibility, and suggestions for improving the profile.\n\nFormat your response as a JSON object that conforms to the following schema:\n${JSON.stringify(AnalyzeJobCompatibilityOutputSchema)}`,
+  prompt: `You are an expert career advisor. You will analyze a job description and a user profile to determine the compatibility between them.
+
+Job Description: {{{jobDescription}}}
+
+User Profile: {{{userProfile}}}
+
+Provide a compatibility score between 0 and 1, a detailed analysis of the compatibility, and suggestions for improving the profile.`,
 });
 
 const analyzeJobCompatibilityFlow = ai.defineFlow(
@@ -58,4 +64,3 @@ const analyzeJobCompatibilityFlow = ai.defineFlow(
     return output!;
   }
 );
-
