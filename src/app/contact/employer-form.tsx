@@ -1,20 +1,9 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { useFormStatus } from "react-dom";
-import { useEffect, useActionState, startTransition } from "react";
+import { useEffect, useActionState, startTransition, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -26,20 +15,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { onContactSubmit, FormState } from "./actions";
+import { Label } from "@/components/ui/label";
 
-const employerFormSchema = z.object({
-  recruiterName: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
-  email: z.string().email("Por favor, introduce una dirección de correo válida."),
-  companyName: z.string().min(2, "El nombre de la empresa es requerido."),
-  jobTitle: z.string().min(3, "El título del puesto es requerido."),
-  jobDescription: z.string().min(10, "La descripción debe tener al menos 10 caracteres."),
-  country: z.string().optional(),
-  industry: z.string().optional(),
-  salaryOffer: z.string().optional(),
-  contractType: z.string().optional(),
-});
-
-type EmployerFormValues = z.infer<typeof employerFormSchema>;
 
 const initialState: FormState = {
   message: "",
@@ -58,20 +35,7 @@ function SubmitButton() {
 export function EmployerForm() {
   const { toast } = useToast();
   const [state, formAction] = useActionState(onContactSubmit, initialState);
-  const form = useForm<EmployerFormValues>({
-    resolver: zodResolver(employerFormSchema),
-    defaultValues: {
-      recruiterName: "",
-      email: "",
-      companyName: "",
-      jobTitle: "",
-      jobDescription: "",
-      country: "",
-      industry: "",
-      salaryOffer: "",
-      contractType: "",
-    },
-  });
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (state.status === 'success' && state.message) {
@@ -79,191 +43,107 @@ export function EmployerForm() {
         title: "¡Información Recibida!",
         description: "Gracias por considerarme. Revisaré la oportunidad y te contactaré pronto.",
       });
-      form.reset();
-    } else if (state.status === 'error' && state.message) {
+      formRef.current?.reset();
+    } else if (state.status === 'error' && state.message && !state.issues) {
        toast({
         variant: "destructive",
         title: "Error al enviar",
-        description: state.message + (state.issues ? `: ${state.issues.join(", ")}` : ''),
+        description: state.message,
       });
     }
-  }, [state, form, toast]);
+  }, [state, toast]);
 
-  const onSubmit = (data: EmployerFormValues) => {
-    const formData = new FormData();
-    formData.append('formType', 'employer');
-    Object.entries(data).forEach(([key, value]) => {
-      if (value) {
-        formData.append(key, value as string);
-      }
-    });
-
+  const handleSubmit = (formData: FormData) => {
     startTransition(() => {
       formAction(formData);
     });
   };
 
-
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6"
-      >
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <FormField
-            control={form.control}
-            name="recruiterName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tu Nombre</FormLabel>
-                <FormControl>
-                  <Input placeholder="Nombre del reclutador" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email de Contacto</FormLabel>
-                <FormControl>
-                  <Input placeholder="tu.email@empresa.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <form
+      ref={formRef}
+      action={handleSubmit}
+      className="space-y-6"
+    >
+      <input type="hidden" name="formType" value="employer" />
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="recruiterName">Tu Nombre</Label>
+          <Input id="recruiterName" name="recruiterName" placeholder="Nombre del reclutador" />
+          {state.issues?.recruiterName && <p className="text-sm font-medium text-destructive">{state.issues.recruiterName}</p>}
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <FormField
-            control={form.control}
-            name="companyName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nombre de la Empresa</FormLabel>
-                <FormControl>
-                  <Input placeholder="Mi Empresa S.A." {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-           <FormField
-            control={form.control}
-            name="jobTitle"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Título del Puesto</FormLabel>
-                <FormControl>
-                  <Input placeholder="Senior Software Engineer" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <div className="space-y-2">
+          <Label htmlFor="email">Email de Contacto</Label>
+          <Input id="email" name="email" type="email" placeholder="tu.email@empresa.com" />
+          {state.issues?.email && <p className="text-sm font-medium text-destructive">{state.issues.email}</p>}
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>País (Opcional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="País de la empresa" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-            control={form.control}
-            name="salaryOffer"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Oferta Salarial (Opcional)</FormLabel>
-                <FormControl>
-                  <Input placeholder="Ej: $50k - $70k USD" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="companyName">Nombre de la Empresa</Label>
+          <Input id="companyName" name="companyName" placeholder="Mi Empresa S.A." />
+          {state.issues?.companyName && <p className="text-sm font-medium text-destructive">{state.issues.companyName}</p>}
         </div>
-         <FormField
-            control={form.control}
-            name="industry"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Rubro de la Empresa (Opcional)</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona el rubro" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="technology">Tecnología y Software</SelectItem>
-                    <SelectItem value="ecommerce">E-commerce y Retail</SelectItem>
-                    <SelectItem value="finance">Finanzas y Banca</SelectItem>
-                    <SelectItem value="health">Salud y Bienestar</SelectItem>
-                    <SelectItem value="education">Educación</SelectItem>
-                    <SelectItem value="professional-services">Servicios Profesionales</SelectItem>
-                    <SelectItem value="real-estate">Bienes Raíces</SelectItem>
-                    <SelectItem value="transport-logistics">Transporte y Logística</SelectItem>
-                    <SelectItem value="other">Otro</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-           <FormField
-            control={form.control}
-            name="contractType"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tipo de Contrato (Opcional)</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona el tipo de contrato" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="full-time">Tiempo Completo</SelectItem>
-                    <SelectItem value="part-time">Tiempo Parcial</SelectItem>
-                    <SelectItem value="contract">Contrato / Freelance</SelectItem>
-                    <SelectItem value="internship">Pasantía</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        <FormField
-          control={form.control}
+        <div className="space-y-2">
+          <Label htmlFor="jobTitle">Título del Puesto</Label>
+          <Input id="jobTitle" name="jobTitle" placeholder="Senior Software Engineer" />
+          {state.issues?.jobTitle && <p className="text-sm font-medium text-destructive">{state.issues.jobTitle}</p>}
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="country">País (Opcional)</Label>
+            <Input id="country" name="country" placeholder="País de la empresa" />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="salaryOffer">Oferta Salarial (Opcional)</Label>
+            <Input id="salaryOffer" name="salaryOffer" placeholder="Ej: $50k - $70k USD" />
+          </div>
+      </div>
+      <div className="space-y-2">
+          <Label htmlFor="industry">Rubro de la Empresa (Opcional)</Label>
+          <Select name="industry">
+            <SelectTrigger id="industry">
+              <SelectValue placeholder="Selecciona el rubro" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="technology">Tecnología y Software</SelectItem>
+              <SelectItem value="ecommerce">E-commerce y Retail</SelectItem>
+              <SelectItem value="finance">Finanzas y Banca</SelectItem>
+              <SelectItem value="health">Salud y Bienestar</SelectItem>
+              <SelectItem value="education">Educación</SelectItem>
+              <SelectItem value="professional-services">Servicios Profesionales</SelectItem>
+              <SelectItem value="real-estate">Bienes Raíces</SelectItem>
+              <SelectItem value="transport-logistics">Transporte y Logística</SelectItem>
+              <SelectItem value="other">Otro</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="contractType">Tipo de Contrato (Opcional)</Label>
+          <Select name="contractType">
+            <SelectTrigger id="contractType">
+              <SelectValue placeholder="Selecciona el tipo de contrato" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="full-time">Tiempo Completo</SelectItem>
+              <SelectItem value="part-time">Tiempo Parcial</SelectItem>
+              <SelectItem value="contract">Contrato / Freelance</SelectItem>
+              <SelectItem value="internship">Pasantía</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      <div className="space-y-2">
+        <Label htmlFor="jobDescription">Descripción o Enlace a la Vacante</Label>
+        <Textarea
+          id="jobDescription"
           name="jobDescription"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Descripción o Enlace a la Vacante</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Pega aquí la descripción del puesto o un enlace a la publicación de la vacante."
-                  className="min-h-[150px]"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          placeholder="Pega aquí la descripción del puesto o un enlace a la publicación de la vacante."
+          className="min-h-[150px]"
         />
-        <SubmitButton />
-      </form>
-    </Form>
+        {state.issues?.jobDescription && <p className="text-sm font-medium text-destructive">{state.issues.jobDescription}</p>}
+      </div>
+      <SubmitButton />
+    </form>
   );
 }

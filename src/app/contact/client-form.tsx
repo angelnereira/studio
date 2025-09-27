@@ -1,19 +1,8 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { useFormStatus } from "react-dom";
-import { useEffect, useActionState, startTransition } from "react";
+import { useEffect, useActionState, startTransition, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -26,19 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { services } from "@/lib/services";
 import { onContactSubmit, FormState } from "./actions";
-
-const clientFormSchema = z.object({
-  name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
-  email: z.string().email("Por favor, introduce una dirección de correo válida."),
-  company: z.string().optional(),
-  country: z.string().optional(),
-  industry: z.string().optional(),
-  service: z.string({ required_error: "Por favor, selecciona un servicio."}),
-  budget: z.string({ required_error: "Por favor, selecciona un presupuesto."}),
-  message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres."),
-});
-
-type ClientFormValues = z.infer<typeof clientFormSchema>;
+import { Label } from "@/components/ui/label";
 
 const initialState: FormState = {
   message: "",
@@ -57,17 +34,7 @@ function SubmitButton() {
 export function ClientForm() {
   const { toast } = useToast();
   const [state, formAction] = useActionState(onContactSubmit, initialState);
-  const form = useForm<ClientFormValues>({
-    resolver: zodResolver(clientFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      company: "",
-      country: "",
-      industry: "",
-      message: "",
-    },
-  });
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (state.status === 'success' && state.message) {
@@ -76,188 +43,113 @@ export function ClientForm() {
         description: state.message,
         "data-testid": "success-toast",
       });
-      form.reset();
-    } else if (state.status === 'error' && state.message) {
+      formRef.current?.reset();
+    } else if (state.status === 'error' && state.message && !state.issues) {
        toast({
         variant: "destructive",
         title: "Error al enviar",
-        description: state.message + (state.issues ? `: ${state.issues.join(", ")}` : ''),
+        description: state.message,
       });
     }
-  }, [state, form, toast]);
+  }, [state, toast]);
 
-  const onSubmit = (data: ClientFormValues) => {
-    const formData = new FormData();
-    formData.append('formType', 'client');
-    Object.entries(data).forEach(([key, value]) => {
-      if (value) {
-        formData.append(key, value as string);
-      }
-    });
-    
+  const handleSubmit = (formData: FormData) => {
     startTransition(() => {
       formAction(formData);
     });
   };
 
-
   return (
-    <Form {...form}>
-       <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6"
-        >
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nombre Completo</FormLabel>
-                <FormControl>
-                  <Input placeholder="Tu nombre" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="tu.email@ejemplo.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <form
+      ref={formRef}
+      action={handleSubmit}
+      className="space-y-6"
+    >
+      <input type="hidden" name="formType" value="client" />
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="name">Nombre Completo</Label>
+          <Input id="name" name="name" placeholder="Tu nombre" />
+          {state.issues?.name && <p className="text-sm font-medium text-destructive">{state.issues.name}</p>}
         </div>
-         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-           <FormField
-              control={form.control}
-              name="company"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Empresa (Opcional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Nombre de tu empresa" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>País (Opcional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="País de residencia" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" name="email" type="email" placeholder="tu.email@ejemplo.com" />
+          {state.issues?.email && <p className="text-sm font-medium text-destructive">{state.issues.email}</p>}
         </div>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-           <FormField
-            control={form.control}
-            name="service"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Servicio de Interés</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona un servicio" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {services.filter(s => s.published).map(service => (
-                       <SelectItem key={service.slug} value={service.slug}>{service.title}</SelectItem>
-                    ))}
-                    <SelectItem value="other">Otro</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-            <FormField
-            control={form.control}
-            name="budget"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Presupuesto Estimado</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona un rango" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="<1k">Menos de $1,000</SelectItem>
-                    <SelectItem value="1k-5k">$1,000 - $5,000</SelectItem>
-                    <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
-                    <SelectItem value=">10k">Más de $10,000</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="company">Empresa (Opcional)</Label>
+          <Input id="company" name="company" placeholder="Nombre de tu empresa" />
         </div>
-        <FormField
-            control={form.control}
-            name="industry"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Rubro de la Empresa (Opcional)</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona el rubro" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="technology">Tecnología y Software</SelectItem>
-                    <SelectItem value="ecommerce">E-commerce y Retail</SelectItem>
-                    <SelectItem value="finance">Finanzas y Banca</SelectItem>
-                    <SelectItem value="health">Salud y Bienestar</SelectItem>
-                    <SelectItem value="education">Educación</SelectItem>
-                    <SelectItem value="professional-services">Servicios Profesionales</SelectItem>
-                    <SelectItem value="real-estate">Bienes Raíces</SelectItem>
-                    <SelectItem value="transport-logistics">Transporte y Logística</SelectItem>
-                    <SelectItem value="other">Otro</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        <FormField
-          control={form.control}
+        <div className="space-y-2">
+          <Label htmlFor="country">País (Opcional)</Label>
+          <Input id="country" name="country" placeholder="País de residencia" />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="service">Servicio de Interés</Label>
+          <Select name="service">
+            <SelectTrigger id="service">
+              <SelectValue placeholder="Selecciona un servicio" />
+            </SelectTrigger>
+            <SelectContent>
+              {services.filter(s => s.published).map(service => (
+                  <SelectItem key={service.slug} value={service.slug}>{service.title}</SelectItem>
+              ))}
+              <SelectItem value="other">Otro</SelectItem>
+            </SelectContent>
+          </Select>
+          {state.issues?.service && <p className="text-sm font-medium text-destructive">{state.issues.service}</p>}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="budget">Presupuesto Estimado</Label>
+          <Select name="budget">
+            <SelectTrigger id="budget">
+              <SelectValue placeholder="Selecciona un rango" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="<1k">Menos de $1,000</SelectItem>
+              <SelectItem value="1k-5k">$1,000 - $5,000</SelectItem>
+              <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
+              <SelectItem value=">10k">Más de $10,000</SelectItem>
+            </SelectContent>
+          </Select>
+          {state.issues?.budget && <p className="text-sm font-medium text-destructive">{state.issues.budget}</p>}
+        </div>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="industry">Rubro de la Empresa (Opcional)</Label>
+        <Select name="industry">
+          <SelectTrigger id="industry">
+            <SelectValue placeholder="Selecciona el rubro" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="technology">Tecnología y Software</SelectItem>
+            <SelectItem value="ecommerce">E-commerce y Retail</SelectItem>
+            <SelectItem value="finance">Finanzas y Banca</SelectItem>
+            <SelectItem value="health">Salud y Bienestar</SelectItem>
+            <SelectItem value="education">Educación</SelectItem>
+            <SelectItem value="professional-services">Servicios Profesionales</SelectItem>
+            <SelectItem value="real-estate">Bienes Raíces</SelectItem>
+            <SelectItem value="transport-logistics">Transporte y Logística</SelectItem>
+            <SelectItem value="other">Otro</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="message">Cuéntame sobre tu proyecto</Label>
+        <Textarea
+          id="message"
           name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Cuéntame sobre tu proyecto</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Describe tus necesidades, objetivos y cualquier detalle relevante."
-                  className="min-h-[150px]"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          placeholder="Describe tus necesidades, objetivos y cualquier detalle relevante."
+          className="min-h-[150px]"
         />
-        <SubmitButton />
-      </form>
-    </Form>
+        {state.issues?.message && <p className="text-sm font-medium text-destructive">{state.issues.message}</p>}
+      </div>
+      <SubmitButton />
+    </form>
   );
 }

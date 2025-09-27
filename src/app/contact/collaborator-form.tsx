@@ -1,38 +1,15 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { useFormStatus } from "react-dom";
-import { useEffect, useActionState, startTransition } from "react";
+import { useEffect, useActionState, startTransition, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { onContactSubmit, FormState } from "./actions";
-
-
-const collaboratorFormSchema = z.object({
-  name: z.string().min(2, "El nombre debe tener al menos 2 caracteres."),
-  email: z.string().email("Por favor, introduce una dirección de correo válida."),
-  linkedin: z.string().url("Por favor, introduce una URL válida.").optional().or(z.literal('')),
-  portfolio: z.string().url("Por favor, introduce una URL válida.").optional().or(z.literal('')),
-  expertise: z.string().optional(),
-  subject: z.string().min(5, "El asunto debe tener al menos 5 caracteres."),
-  message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres."),
-});
-
-type CollaboratorFormValues = z.infer<typeof collaboratorFormSchema>;
+import { Label } from "@/components/ui/label";
 
 const initialState: FormState = {
   message: "",
@@ -48,22 +25,10 @@ function SubmitButton() {
   );
 }
 
-
 export function CollaboratorForm() {
   const { toast } = useToast();
   const [state, formAction] = useActionState(onContactSubmit, initialState);
-  const form = useForm<CollaboratorFormValues>({
-    resolver: zodResolver(collaboratorFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      linkedin: "",
-      portfolio: "",
-      expertise: "",
-      subject: "",
-      message: "",
-    },
-  });
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (state.status === 'success' && state.message) {
@@ -71,153 +36,88 @@ export function CollaboratorForm() {
         title: "¡Mensaje Recibido!",
         description: "Gracias por tu interés en colaborar. He guardado tu propuesta.",
       });
-      form.reset();
-    } else if (state.status === 'error' && state.message) {
+      formRef.current?.reset();
+    } else if (state.status === 'error' && state.message && !state.issues) {
        toast({
         variant: "destructive",
         title: "Error al enviar",
-        description: state.message + (state.issues ? `: ${state.issues.join(", ")}` : ''),
+        description: state.message,
       });
     }
-  }, [state, form, toast]);
+  }, [state, toast]);
 
-  const onSubmit = (data: CollaboratorFormValues) => {
-    const formData = new FormData();
-    formData.append('formType', 'collaborator');
-    Object.entries(data).forEach(([key, value]) => {
-      if (value) {
-        formData.append(key, value as string);
-      }
-    });
-
+  const handleSubmit = (formData: FormData) => {
     startTransition(() => {
       formAction(formData);
     });
   };
 
-
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6"
-      >
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tu Nombre</FormLabel>
-                <FormControl>
-                  <Input placeholder="Nombre y Apellido" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="tu.email@ejemplo.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <form
+      ref={formRef}
+      action={handleSubmit}
+      className="space-y-6"
+    >
+      <input type="hidden" name="formType" value="collaborator" />
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="name">Tu Nombre</Label>
+          <Input id="name" name="name" placeholder="Nombre y Apellido" />
+          {state.issues?.name && <p className="text-sm font-medium text-destructive">{state.issues.name}</p>}
         </div>
-         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="linkedin"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Perfil de LinkedIn (Opcional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="https://linkedin.com/in/..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="portfolio"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Portfolio o GitHub (Opcional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="https://github.com/..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" name="email" type="email" placeholder="tu.email@ejemplo.com" />
+          {state.issues?.email && <p className="text-sm font-medium text-destructive">{state.issues.email}</p>}
         </div>
-         <FormField
-            control={form.control}
-            name="expertise"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Área de Expertise (Opcional)</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona tu área principal" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="frontend">Frontend Development</SelectItem>
-                    <SelectItem value="backend">Backend Development</SelectItem>
-                    <SelectItem value="fullstack">Full-Stack Development</SelectItem>
-                    <SelectItem value="devops">DevOps / SRE</SelectItem>
-                    <SelectItem value="mobile">Mobile Development (iOS/Android)</SelectItem>
-                    <SelectItem value="ux-ui">UX/UI Design</SelectItem>
-                    <SelectItem value="data-science-ai">Data Science / AI / ML</SelectItem>
-                    <SelectItem value="project-management">Project Management</SelectItem>
-                    <SelectItem value="other">Otro</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        <FormField
-          control={form.control}
-          name="subject"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>¿De qué trata la colaboración?</FormLabel>
-              <FormControl>
-                <Input placeholder="Asunto principal de tu propuesta" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
+      </div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="linkedin">Perfil de LinkedIn (Opcional)</Label>
+            <Input id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/..." />
+            {state.issues?.linkedin && <p className="text-sm font-medium text-destructive">{state.issues.linkedin}</p>}
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="portfolio">Portfolio o GitHub (Opcional)</Label>
+            <Input id="portfolio" name="portfolio" placeholder="https://github.com/..." />
+            {state.issues?.portfolio && <p className="text-sm font-medium text-destructive">{state.issues.portfolio}</p>}
+          </div>
+      </div>
+      <div className="space-y-2">
+          <Label htmlFor="expertise">Área de Expertise (Opcional)</Label>
+          <Select name="expertise">
+            <SelectTrigger id="expertise">
+              <SelectValue placeholder="Selecciona tu área principal" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="frontend">Frontend Development</SelectItem>
+              <SelectItem value="backend">Backend Development</SelectItem>
+              <SelectItem value="fullstack">Full-Stack Development</SelectItem>
+              <SelectItem value="devops">DevOps / SRE</SelectItem>
+              <SelectItem value="mobile">Mobile Development (iOS/Android)</SelectItem>
+              <SelectItem value="ux-ui">UX/UI Design</SelectItem>
+              <SelectItem value="data-science-ai">Data Science / AI / ML</SelectItem>
+              <SelectItem value="project-management">Project Management</SelectItem>
+              <SelectItem value="other">Otro</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      <div className="space-y-2">
+        <Label htmlFor="subject">¿De qué trata la colaboración?</Label>
+        <Input id="subject" name="subject" placeholder="Asunto principal de tu propuesta" />
+        {state.issues?.subject && <p className="text-sm font-medium text-destructive">{state.issues.subject}</p>}
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="message">Propuesta o Idea</Label>
+        <Textarea
+          id="message"
           name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Propuesta o Idea</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Describe la colaboración que tienes en mente, el proyecto, o la idea que quieres discutir."
-                  className="min-h-[150px]"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          placeholder="Describe la colaboración que tienes en mente, el proyecto, o la idea que quieres discutir."
+          className="min-h-[150px]"
         />
-        <SubmitButton />
-      </form>
-    </Form>
+        {state.issues?.message && <p className="text-sm font-medium text-destructive">{state.issues.message}</p>}
+      </div>
+      <SubmitButton />
+    </form>
   );
 }
