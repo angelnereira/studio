@@ -118,7 +118,7 @@ function CvGeneratorButton() {
 }
 
 
-export default function HomePageClient() {
+export default function Page() {
 
   return (
     <div className="flex flex-col gap-12 md:gap-24 lg:gap-32">
