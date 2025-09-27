@@ -49,14 +49,15 @@ export const services: Service[] = [
       {
         name: "Lanzamiento Digital",
         price: 720,
-        originalPrice: 960,
+        originalPrice: 1200,
         description: "Ideal para startups y pequeños negocios que necesitan una presencia online rápida y efectiva.",
         features: [
           "Landing page responsiva",
           "Optimización SEO básica",
           "Formulario de contacto",
           "Integración Google Analytics",
-          "Hosting por 1 año"
+          "Hosting por 1 año",
+          "Mantenimiento post-entrega (desde $112/mes)"
         ],
         cta: "Empezar Lanzamiento",
         time: "2-3 semanas"
@@ -73,7 +74,7 @@ export const services: Service[] = [
           "Integración CRM básica",
           "Optimización de velocidad",
           "Certificado SSL premium",
-          "Backup automático"
+          "Mantenimiento post-entrega (desde $112/mes)"
         ],
         cta: "Construir Presencia",
         time: "4-6 semanas"
@@ -89,7 +90,7 @@ export const services: Service[] = [
           "API REST personalizada",
           "Integración con sistemas existentes",
           "Seguridad de nivel empresarial",
-          "Documentación técnica y capacitación"
+          "Mantenimiento post-entrega (desde $280/mes)"
         ],
         cta: "Diseñar Solución",
         time: "8-12+ semanas"
@@ -114,10 +115,10 @@ export const services: Service[] = [
     packages: [
       {
         name: "Catálogo Digital",
-        price: 900,
+        price: 720,
         originalPrice: 1200,
         description: "Muestra tus productos en un catálogo online profesional con opción de contacto directo para ventas.",
-        features: ["Catálogo de hasta 100 productos", "Diseño responsivo", "Galería de imágenes por producto", "Botón de WhatsApp para pedidos", "Capacitación de gestión"],
+        features: ["Catálogo de hasta 100 productos", "Diseño responsivo", "Galería de imágenes por producto", "Botón de WhatsApp para pedidos", "Capacitación de gestión", "Mantenimiento post-entrega (desde $112/mes)"],
         cta: "Crear Catálogo",
         time: "3-4 semanas"
       },
@@ -126,7 +127,7 @@ export const services: Service[] = [
         price: 1920,
         originalPrice: 2560,
         description: "Una tienda online completa con carrito de compras y pagos en línea para empezar a vender ya.",
-        features: ["Todo lo de Catálogo Digital", "Carrito de compras", "Integración con pasarelas de pago (Stripe/PayPal)", "Gestión de inventario básica", "Sistema de cupones de descuento"],
+        features: ["Todo lo de Catálogo Digital", "Carrito de compras", "Integración con pasarelas de pago (Stripe/PayPal)", "Gestión de inventario básica", "Sistema de cupones de descuento", "Mantenimiento post-entrega (desde $112/mes)"],
         cta: "Lanzar Tienda",
         time: "5-7 semanas"
       },
@@ -134,7 +135,7 @@ export const services: Service[] = [
         name: "E-commerce Avanzado",
         price: "4,800+",
         description: "Soluciones de e-commerce a medida para grandes volúmenes de venta y funcionalidades complejas.",
-        features: ["Todo lo de E-commerce Esencial", "Cuentas de clientes y perfiles", "Sistema de reseñas de productos", "Integración con sistemas de envío", "Facturación automática", "Optimización para la conversión"],
+        features: ["Todo lo de E-commerce Esencial", "Cuentas de clientes y perfiles", "Sistema de reseñas de productos", "Integración con sistemas de envío", "Facturación automática", "Mantenimiento post-entrega (desde $280/mes)"],
         cta: "Escalar Ventas",
         time: "8-12+ semanas"
       }
@@ -156,7 +157,7 @@ export const services: Service[] = [
         price: 1500,
         originalPrice: 2000,
         description: "Elige un módulo (Inventario, Planilla o Facturación) y digitaliza un área clave de tu empresa.",
-        features: ["Un módulo a elección", "Carga inicial de datos (hasta 500 registros)", "Dashboard de reportes básicos", "Capacitación para 2 usuarios", "Soporte de implementación"],
+        features: ["Un módulo a elección", "Carga inicial de datos (hasta 500 registros)", "Dashboard de reportes básicos", "Capacitación para 2 usuarios", "Mantenimiento post-entrega (desde $112/mes)"],
         cta: "Digitalizar Módulo",
         time: "4-6 semanas"
       },
@@ -165,7 +166,7 @@ export const services: Service[] = [
         price: 3600,
         originalPrice: 4800,
         description: "Una solución integrada con dos módulos a tu elección para una gestión más completa.",
-        features: ["Dos módulos a elección", "Integración entre módulos seleccionados", "Dashboard de reportes unificado", "Capacitación para 5 usuarios", "Roles y permisos de usuario"],
+        features: ["Dos módulos a elección", "Integración entre módulos seleccionados", "Dashboard de reportes unificado", "Capacitación para 5 usuarios", "Mantenimiento post-entrega (desde $280/mes)"],
         cta: "Integrar Suite",
         time: "8-10 semanas"
       },
@@ -173,7 +174,7 @@ export const services: Service[] = [
         name: "ERP a Medida",
         price: "7,200+",
         description: "Un sistema de planificación de recursos empresariales (ERP) completo y personalizado para tu compañía.",
-        features: ["Módulos de Inventario, Planilla y Facturación", "Módulos adicionales (CRM, Compras, etc.)", "Integración con hardware (scanners, impresoras fiscales)", "Migración de datos completa", "Soporte y mantenimiento premium"],
+        features: ["Módulos de Inventario, Planilla y Facturación", "Módulos adicionales (CRM, Compras, etc.)", "Integración con hardware (scanners, impresoras fiscales)", "Migración de datos completa", "Mantenimiento post-entrega (desde $784/trimestre)"],
         cta: "Construir ERP",
         time: "12-20+ semanas"
       }
@@ -194,7 +195,7 @@ export const services: Service[] = [
         name: "MVP App",
         price: "3,200 - 6,400",
         description: "Lanza una primera versión de tu aplicación para validar tu idea en el mercado con funcionalidades clave.",
-        features: ["App para iOS o Android (multiplataforma)", "Hasta 5 pantallas clave", "Diseño de interfaz estándar", "Integración con backend básico (Firebase)", "Publicación en tiendas de apps"],
+        features: ["App para iOS o Android (multiplataforma)", "Hasta 5 pantallas clave", "Diseño de interfaz estándar", "Integración con backend básico (Firebase)", "Publicación en tiendas de apps", "Mantenimiento post-entrega (desde $280/mes)"],
         cta: "Lanzar MVP",
         time: "6-8 semanas"
       },
@@ -202,7 +203,7 @@ export const services: Service[] = [
         name: "App Profesional",
         price: "6,400 - 12,000",
         description: "Una aplicación completa con diseño personalizado y funcionalidades avanzadas para un negocio establecido.",
-        features: ["App para iOS y Android", "Diseño de interfaz 100% personalizado", "Notificaciones push", "Cuentas de usuario y perfiles", "Integración con APIs de terceros"],
+        features: ["App para iOS y Android", "Diseño de interfaz 100% personalizado", "Notificaciones push", "Cuentas de usuario y perfiles", "Integración con APIs de terceros", "Mantenimiento post-entrega (desde $280/mes)"],
         cta: "Desarrollar App",
         time: "10-16 semanas"
       },
@@ -210,7 +211,7 @@ export const services: Service[] = [
         name: "App Empresarial",
         price: "12,000+",
         description: "Soluciones móviles complejas con integraciones a nivel de sistema, seguridad avanzada y escalabilidad.",
-        features: ["Todo lo del plan Profesional", "Pagos dentro de la app", "Funcionalidades offline", "Dashboard de administración web", "Analíticas avanzadas de uso"],
+        features: ["Todo lo del plan Profesional", "Pagos dentro de la app", "Funcionalidades offline", "Dashboard de administración web", "Mantenimiento post-entrega (desde $784/trimestre)"],
         cta: "Crear Solución Móvil",
         time: "16+ semanas"
       }
@@ -229,7 +230,7 @@ export const services: Service[] = [
     packages: [
       {
         name: "Portafolio Esencial",
-        price: 600,
+        price: 480,
         originalPrice: 800,
         description: "Tu tarjeta de presentación digital. Un sitio elegante y directo al grano.",
         features: [
@@ -238,6 +239,7 @@ export const services: Service[] = [
           "Sistema de gestión de citas básico",
           "Formulario de contacto funcional",
           "Hosting y dominio por 1 año",
+          "Mantenimiento post-entrega (desde $112/mes)"
         ],
         cta: "Crear Portafolio",
         time: "1-2 semanas",
@@ -252,6 +254,7 @@ export const services: Service[] = [
           "Sección de blog autogestionable",
           "Sistema de gestión de citas avanzado",
           "Galería de proyectos dinámica",
+          "Mantenimiento post-entrega (desde $112/mes)"
         ],
         cta: "Construir Marca",
         time: "3-4 semanas",
@@ -265,9 +268,7 @@ export const services: Service[] = [
           "Base de datos de clientes (CRM básico)",
           "Área de clientes privada",
           "Sistema de facturación integrado",
-          "Sistema de gestión de citas avanzado",
-          "Panel de control para autogestión total",
-          "Integraciones a medida",
+          "Mantenimiento post-entrega (desde $280/mes)"
         ],
         cta: "Diseñar Solución",
         time: "6-8+ semanas",
@@ -300,7 +301,7 @@ export const services: Service[] = [
           "Integración WhatsApp Business",
           "Dashboard de conversaciones",
           "Entrenamiento inicial",
-          "Soporte por 3 meses"
+          "Mantenimiento post-entrega (desde $112/mes)"
         ],
         cta: "Implementar Chatbot",
         time: "3-4 semanas"
@@ -314,7 +315,7 @@ export const services: Service[] = [
           "Sistema de recomendaciones de productos",
           "Análisis de sentimientos en comentarios",
           "Integración multi-canal",
-          "Dashboard de analytics de IA"
+          "Mantenimiento post-entrega (desde $280/mes)"
         ],
         cta: "Desarrollar IA",
         time: "6-8 semanas"
@@ -328,8 +329,7 @@ export const services: Service[] = [
           "Modelos de machine learning propios",
           "Integración con Big Data",
           "Pipeline de datos automatizado",
-          "Monitoreo y optimización continua",
-          "Consultoría estratégica en IA"
+          "Mantenimiento post-entrega (desde $784/trimestre)"
         ],
         cta: "Crear Solución IA",
         time: "10-16+ semanas"
@@ -351,7 +351,7 @@ export const services: Service[] = [
         name: "Tarea Específica",
         price: "400 - 1,200",
         description: "Automatiza una tarea repetitiva específica, como la generación de un reporte diario o la extracción de datos.",
-        features: ["Análisis de la tarea a automatizar", "Desarrollo de script de automatización", "Ejecución programada (diaria, semanal)", "Documentación y entrega del script"],
+        features: ["Análisis de la tarea a automatizar", "Desarrollo de script de automatización", "Ejecución programada (diaria, semanal)", "Documentación y entrega del script", "Mantenimiento post-entrega (desde $112/mes)"],
         cta: "Automatizar Tarea",
         time: "1-2 semanas"
       },
@@ -359,7 +359,7 @@ export const services: Service[] = [
         name: "Flujo de Trabajo",
         price: "1,600 - 4,000",
         description: "Conecta varias aplicaciones y automatiza un flujo de trabajo completo, como el onboarding de un nuevo cliente.",
-        features: ["Análisis del flujo de trabajo completo", "Integración de hasta 3 aplicaciones (vía API)", "Sistema de notificaciones por email/Slack", "Dashboard de monitoreo del flujo"],
+        features: ["Análisis del flujo de trabajo completo", "Integración de hasta 3 aplicaciones (vía API)", "Sistema de notificaciones por email/Slack", "Dashboard de monitoreo del flujo", "Mantenimiento post-entrega (desde $280/mes)"],
         cta: "Automatizar Flujo",
         time: "3-5 semanas"
       },
@@ -367,7 +367,7 @@ export const services: Service[] = [
         name: "RPA Empresarial",
         price: "5,600+",
         description: "Implementación de Robotic Process Automation (RPA) para automatizar procesos complejos a gran escala.",
-        features: ["Consultoría y estrategia de RPA", "Desarrollo de múltiples 'bots' de software", "Integración con sistemas legados", "Panel de control y orquestación de bots", "Capacitación y soporte continuo"],
+        features: ["Consultoría y estrategia de RPA", "Desarrollo de múltiples 'bots' de software", "Integración con sistemas legados", "Panel de control y orquestación de bots", "Mantenimiento post-entrega (desde $784/trimestre)"],
         cta: "Implementar RPA",
         time: "6-10+ semanas"
       }
