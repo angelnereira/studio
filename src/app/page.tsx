@@ -1,8 +1,6 @@
 "use client";
 
-import dynamic from 'next/dynamic';
-
-const HomePageClient = dynamic(() => import('@/components/home-page-client'), { ssr: false });
+import HomePageClient from '@/components/home-page-client';
 
 export default function Page() {
 
