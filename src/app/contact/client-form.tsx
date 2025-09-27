@@ -74,6 +74,7 @@ export function ClientForm() {
       toast({
         title: "¡Mensaje Enviado!",
         description: state.message,
+        "data-testid": "success-toast",
       });
       form.reset();
     } else if (state.status === 'error' && state.message) {
