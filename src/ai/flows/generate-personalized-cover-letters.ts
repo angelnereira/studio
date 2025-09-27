@@ -36,14 +36,11 @@ const prompt = ai.definePrompt({
   name: 'generatePersonalizedCoverLetterPrompt',
   input: {schema: GeneratePersonalizedCoverLetterInputSchema},
   output: {schema: GeneratePersonalizedCoverLetterOutputSchema},
-  prompt: `You are an expert resume and cover letter writer.
+  prompt: `You are an expert resume and cover letter writer. Given the job description and user profile, write a personalized cover letter.
 
-  Given the following job description and user profile, write a personalized cover letter.
+Job Description: {{{jobDescription}}}
 
-  Job Description: {{{jobDescription}}}
-  User Profile: {{{userProfile}}}
-
-  Cover Letter:`,
+User Profile: {{{userProfile}}}`,
 });
 
 const generatePersonalizedCoverLetterFlow = ai.defineFlow(
