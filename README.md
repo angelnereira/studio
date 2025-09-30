@@ -5,7 +5,7 @@
 
 Este repositorio contiene el código fuente de mi portafolio personal, una aplicación web moderna y dinámica diseñada no solo para mostrar mi trabajo, sino para demostrar mis habilidades en desarrollo full-stack, arquitectura en la nube e inteligencia artificial.
 
-**[Ver el sitio en vivo](https://your-live-url.com) (reemplazar con tu URL)**
+**[Ver el sitio en vivo](https://angelnereira.com)**
 
 ---
 
