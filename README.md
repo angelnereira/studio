@@ -24,11 +24,12 @@ Este no es un portafolio estático. Es una aplicación web full-stack que funcio
 
 Este proyecto utiliza un conjunto de tecnologías modernas y robustas, seleccionadas para optimizar el rendimiento, la escalabilidad y la experiencia de desarrollo.
 
-*   **Framework Frontend**: **Next.js 14+** (App Router)
+*   **Framework Frontend**: **Next.js 15** (App Router)
 *   **Lenguaje**: **TypeScript**
 *   **Estilos**: **Tailwind CSS** con **ShadCN UI** para componentes.
 *   **Inteligencia Artificial**: **Google Genkit** para flujos de IA y conexión con modelos de Gemini.
-*   **Backend & Base de Datos**: **Firebase** (Firestore para la base de datos de contactos, Firebase Auth para autenticación).
+*   **ORM**: **Prisma** - Type-safe database client con soporte completo para TypeScript.
+*   **Base de Datos**: **PostgreSQL** (Supabase) - Base de datos relacional escalable y moderna.
 *   **Despliegue (Hosting)**: **Vercel**
 *   **Control de Versiones**: **Git** y **GitHub** (con GitHub Actions para CI/CD).
 
@@ -42,7 +43,7 @@ Este proyecto utiliza un conjunto de tecnologías modernas y robustas, seleccion
     *   **Generador de Cartas de Presentación**: Crea cartas de presentación personalizadas basadas en una oferta de trabajo.
 *   **Contenido Dinámico**: Los artículos del blog se escriben en Markdown y se renderizan dinámicamente, optimizados para SEO con `generateStaticParams`.
 *   **Carrusel de Habilidades Interactivo**: Una visualización animada y atractiva de mis competencias técnicas.
-*   **Formularios de Contacto Inteligentes**: Múltiples formularios (cliente, empleador, etc.) que guardan la información directamente en una base de datos de Firestore a través de Server Actions.
+*   **Formularios de Contacto Inteligentes**: Múltiples formularios (cliente, empleador, colaborador, invitación) que guardan la información directamente en PostgreSQL a través de Server Actions con validación de tipo completa usando Prisma y Zod.
 *   **Diseño Responsivo y Adaptativo**: Interfaz de usuario pulida que funciona perfectamente en cualquier dispositivo.
 
 ---
@@ -100,27 +101,48 @@ Para clonar y ejecutar este proyecto en tu máquina local, sigue estos pasos:
     ```
 
 3.  **Configurar variables de entorno:**
-    Crea un archivo `.env.local` en la raíz del proyecto y añade las claves de API necesarias, especialmente las de Firebase y Google AI Studio.
+    Copia el archivo `.env.example` a `.env.local` y configura las variables necesarias:
+    ```bash
+    cp .env.example .env.local
+    ```
+    Edita `.env.local` con tus credenciales:
     ```env
-    # Firebase
-    NEXT_PUBLIC_FIREBASE_API_KEY=...
-    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
-    # ... otras variables de Firebase
+    # Base de Datos (PostgreSQL - Supabase recomendado)
+    DATABASE_URL="postgresql://usuario:contraseña@host:5432/database?schema=public"
+
+    # Supabase (para futuras funcionalidades de auth)
+    NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-anon-key
 
     # Google AI (Genkit)
-    GEMINI_API_KEY=...
+    GEMINI_API_KEY=tu-api-key
     ```
 
-4.  **Ejecutar el proyecto en modo desarrollo:**
+4.  **Configurar la base de datos:**
+    ```bash
+    # Generar el cliente de Prisma
+    npx prisma generate
+
+    # Ejecutar las migraciones (crea las tablas en la BD)
+    npx prisma migrate dev --name init
+    ```
+
+5.  **Ejecutar el proyecto en modo desarrollo:**
     ```bash
     npm run dev
     ```
     La aplicación estará disponible en `http://localhost:3000`.
 
-5.  **Ejecutar el servidor de Genkit (para los flujos de IA):**
+6.  **Ejecutar el servidor de Genkit (para los flujos de IA):**
     En una terminal separada, ejecuta:
     ```bash
     npm run genkit:dev
     ```
     Esto iniciará el servidor de desarrollo de Genkit, necesario para que las funcionalidades de IA funcionen localmente.
+
+7.  **Explorar la base de datos (opcional):**
+    ```bash
+    npx prisma studio
+    ```
+    Esto abrirá Prisma Studio en `http://localhost:5555` para visualizar y editar tus datos.
 

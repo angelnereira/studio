@@ -40,6 +40,9 @@ next-env.d.ts
 .genkit/*
 .env*
 
-# firebase
+# firebase (deprecated - to be removed)
 firebase-debug.log
 firestore-debug.log
+
+# prisma
+prisma/migrations/migration_lock.toml

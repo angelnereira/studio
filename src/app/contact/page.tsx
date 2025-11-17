@@ -39,13 +39,25 @@ export default function ContactPage() {
         </div>
       </AnimatedDiv>
       <AnimatedDiv delay={0.2}>
-        <div className="mx-auto mt-12 max-w-4xl">
+        <div className="mx-auto mt-8 sm:mt-10 md:mt-12 max-w-4xl">
            <Tabs defaultValue="client" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="client"><User className='mr-2' />Cliente</TabsTrigger>
-              <TabsTrigger value="employer"><Briefcase className='mr-2'/>Empleador</TabsTrigger>
-              <TabsTrigger value="collaboration"><Handshake className='mr-2'/>Colaboración</TabsTrigger>
-              <TabsTrigger value="invitation"><Calendar className='mr-2'/>Invitación</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-1 h-auto">
+              <TabsTrigger value="client" className="flex items-center justify-center gap-1 sm:gap-2">
+                <User className="h-4 w-4" />
+                <span className="text-xs sm:text-sm">Cliente</span>
+              </TabsTrigger>
+              <TabsTrigger value="employer" className="flex items-center justify-center gap-1 sm:gap-2">
+                <Briefcase className="h-4 w-4" />
+                <span className="text-xs sm:text-sm">Empleador</span>
+              </TabsTrigger>
+              <TabsTrigger value="collaboration" className="flex items-center justify-center gap-1 sm:gap-2">
+                <Handshake className="h-4 w-4" />
+                <span className="text-xs sm:text-sm">Colaboración</span>
+              </TabsTrigger>
+              <TabsTrigger value="invitation" className="flex items-center justify-center gap-1 sm:gap-2">
+                <Calendar className="h-4 w-4" />
+                <span className="text-xs sm:text-sm">Invitación</span>
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="client" className="mt-6">
               <ContactCard

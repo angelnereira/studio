@@ -29,28 +29,28 @@ export default function HomePageClient() {
     <div className="flex flex-col gap-12 md:gap-24 lg:gap-32">
         {/* Hero Section */}
         <section>
-          <div className="container px-4 md:px-6 text-center py-20 md:py-32 lg:py-40">
+          <div className="container px-4 md:px-6 text-center py-12 sm:py-16 md:py-24 lg:py-32 xl:py-40">
              <AnimatedDiv>
-               <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
-                  <span className="block mb-2">Angel Nereira</span>
+               <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl sm:tracking-tight md:text-4xl md:tracking-tighter lg:text-5xl xl:text-6xl font-headline">
+                  <span className="block mb-1 sm:mb-2">Angel Nereira</span>
                   <div className="relative w-full overflow-hidden">
                     <div className="flex animate-marquee whitespace-nowrap">
-                      <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
-                      <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
-                      <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
-                      <span className="block text-primary mx-4">Ingeniero de Software y DevOps</span>
+                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software y DevOps</span>
+                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software y DevOps</span>
+                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software y DevOps</span>
+                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software y DevOps</span>
                     </div>
                   </div>
               </h1>
-              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-6">
+              <p className="mx-auto max-w-[700px] text-sm sm:text-base text-muted-foreground md:text-lg lg:text-xl mt-4 sm:mt-5 md:mt-6">
                   De la Idea a la Solución Tecnológica
               </p>
-              <p className="mt-4 font-semibold text-lg text-primary/80">"Solucionar problemas para disfrutar la vida."</p>
-              <div className="mt-8 flex justify-center gap-4">
-                <Button asChild size="lg">
+              <p className="mt-3 sm:mt-4 font-semibold text-base sm:text-lg text-primary/80">"Solucionar problemas para disfrutar la vida."</p>
+              <div className="mt-6 sm:mt-7 md:mt-8 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0">
+                <Button asChild size="lg" className="w-full sm:w-auto">
                   <Link href="/contact">Hablemos</Link>
                 </Button>
-                <Button asChild variant="secondary" size="lg">
+                <Button asChild variant="secondary" size="lg" className="w-full sm:w-auto">
                   <Link href="/skills">Ver Habilidades</Link>
                 </Button>
               </div>

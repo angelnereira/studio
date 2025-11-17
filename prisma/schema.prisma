@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo para Contactos - Migrado desde Firebase Firestore
+model Contact {
+  id        String   @id @default(cuid())
+  formType  String   // "client" | "employer" | "collaborator" | "invitation"
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Campos comunes
+  name      String?
+  message   String?
+  country   String?
+  industry  String?
+
+  // Campos específicos de Cliente (formType: "client")
+  company   String?
+  service   String?
+  budget    String?
+
+  // Campos específicos de Empleador (formType: "employer")
+  recruiterName   String?
+  companyName     String?
+  jobTitle        String?
+  jobDescription  String?
+  salaryOffer     String?
+  contractType    String?
+
+  // Campos específicos de Colaborador (formType: "collaborator")
+  linkedin   String?
+  portfolio  String?
+  expertise  String?
+  subject    String?
+
+  // Campos específicos de Invitación (formType: "invitation")
+  inviterName      String?
+  eventName        String?
+  eventType        String?
+  proposedRole     String?
+  eventDate        DateTime?
+  eventTime        String?
+  eventLocation    String?
+  invitationReason String?
+
+  @@index([formType])
+  @@index([email])
+  @@index([createdAt])
+  @@map("contacts")
+}

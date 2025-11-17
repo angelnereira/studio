@@ -28,7 +28,7 @@ export default function SkillsPage() {
         </div>
       </AnimatedDiv>
 
-      <div className="grid gap-8 mt-12 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 md:gap-8 mt-8 sm:mt-10 md:mt-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {skills.map((skill, index) => {
           const Icon = skill.icon;
           return (
@@ -38,11 +38,11 @@ export default function SkillsPage() {
                 className="group block h-full"
               >
                 <SpotlightCard className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-xl">
-                  <CardHeader className="flex-row items-center gap-4">
-                    <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                      <Icon className="w-6 h-6" />
+                  <CardHeader className="flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                     </div>
-                    <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary text-lg">
+                    <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary text-base sm:text-lg">
                       {skill.name}
                     </CardTitle>
                   </CardHeader>
