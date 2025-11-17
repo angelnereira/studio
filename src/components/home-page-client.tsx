@@ -33,14 +33,7 @@ export default function HomePageClient() {
              <AnimatedDiv>
                <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl sm:tracking-tight md:text-4xl md:tracking-tighter lg:text-5xl xl:text-6xl font-headline">
                   <span className="block mb-1 sm:mb-2">Angel Nereira</span>
-                  <div className="relative w-full overflow-hidden">
-                    <div className="flex animate-marquee whitespace-nowrap">
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
-                    </div>
-                  </div>
+                  <span className="block text-primary">Ingeniero de Software</span>
               </h1>
               <p className="mx-auto max-w-[700px] text-sm sm:text-base text-muted-foreground md:text-lg lg:text-xl mt-4 sm:mt-5 md:mt-6">
                   Creador de Soluciones FinTech & GovTech
