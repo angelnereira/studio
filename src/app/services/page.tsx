@@ -22,7 +22,7 @@ export default function ServicesPage() {
             <div className="flex flex-wrap justify-center gap-2 pt-4">
               <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Next.js · TypeScript</span>
               <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">PostgreSQL · Oracle</span>
-              <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Google Cloud · Prisma</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Oracle Cloud · Prisma</span>
             </div>
           </div>
         </div>

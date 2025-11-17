@@ -33,20 +33,13 @@ export default function HomePageClient() {
              <AnimatedDiv>
                <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl sm:tracking-tight md:text-4xl md:tracking-tighter lg:text-5xl xl:text-6xl font-headline">
                   <span className="block mb-1 sm:mb-2">Angel Nereira</span>
-                  <div className="relative w-full overflow-hidden">
-                    <div className="flex animate-marquee whitespace-nowrap">
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
-                    </div>
-                  </div>
+                  <span className="block text-primary">Ingeniero de Software</span>
               </h1>
               <p className="mx-auto max-w-[700px] text-sm sm:text-base text-muted-foreground md:text-lg lg:text-xl mt-4 sm:mt-5 md:mt-6">
                   Creador de Soluciones FinTech & GovTech
               </p>
               <p className="mx-auto max-w-[600px] text-xs sm:text-sm text-muted-foreground/80 mt-2 sm:mt-3">
-                  Next.js · TypeScript · PostgreSQL · Oracle · Google Cloud
+                  Next.js · TypeScript · PostgreSQL · Oracle Cloud
               </p>
               <p className="mt-3 sm:mt-4 font-semibold text-base sm:text-lg text-primary/80">"Solucionar problemas para disfrutar la vida."</p>
               <div className="mt-6 sm:mt-7 md:mt-8 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0">
@@ -78,7 +71,7 @@ export default function HomePageClient() {
                         Mi trayectoria es única: pasé 7 años como <strong>productor musical e ingeniero de sonido</strong> antes de hacer la transición a la ingeniería de software. Esta experiencia me ha dado una perspectiva diferente sobre el <strong>diseño de soluciones</strong> y la atención al detalle.
                     </p>
                     <p>
-                        Actualmente trabajo en <strong>UbicSys S.A.</strong>, donde diseño y desarrollo soluciones FinTech y GovTech. Mi proyecto principal es <strong>SAGO-FACTU</strong>, un sistema SaaS completo de facturación electrónica que integra con la DGI de Panamá. También he arquitecturado <strong>UETA Travel Access</strong>, un sistema empresarial desplegado en <strong>Google Cloud Platform</strong> con integración de <strong>Oracle Database</strong>.
+                        Actualmente trabajo en <strong>UbicSys S.A.</strong>, donde diseño y desarrollo soluciones FinTech y GovTech. Mi proyecto principal es <strong>SAGO-FACTU</strong>, un sistema SaaS completo de facturación electrónica que integra con la DGI de Panamá. También he arquitecturado <strong>UETA Travel Access</strong>, un sistema empresarial desplegado en <strong>Oracle Cloud Infrastructure</strong> con <strong>Oracle Database</strong>.
                     </p>
                     <p>
                         Mi filosofía: <em>"Solucionar problemas para disfrutar la vida"</em>. Cada sistema que creo está pensado para <strong>generar valor de negocio real</strong>, desde la arquitectura hasta la implementación.

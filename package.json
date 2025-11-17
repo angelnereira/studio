@@ -68,6 +68,7 @@
     "recharts": "^2.15.1",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "resend": "^6.4.2",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "vercel": "^41.0.2",

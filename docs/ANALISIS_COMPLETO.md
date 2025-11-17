@@ -19,7 +19,7 @@
 
 ### Proyectos Destacados
 1. **SAGO-FACTU** - SaaS multi-tenant de facturación electrónica (proyecto principal)
-2. **UETA Travel Access** - Sistema de gestión de viajes (Google Cloud + Oracle)
+2. **UETA Travel Access** - Sistema de gestión de viajes (Oracle Cloud Infrastructure)
 3. **Portfolio Personal** - angelnereira.com (requiere actualización)
 
 ### Certificaciones en Progreso
@@ -105,13 +105,11 @@
 
 #### **Plataformas Cloud**
 - **Vercel** - ⭐ Nivel avanzado
-- **Google Cloud Platform** - 🟡 Nivel intermedio (UETA Travel Access)
-  - Compute Engine
-  - Cloud SQL
-  - Cloud Storage
 - **Oracle Cloud Infrastructure** - 🟡 Nivel intermedio (UETA Travel Access)
   - Oracle Database
   - Compute Instances
+  - Object Storage
+  - Networking & Security
 - **Railway** (PostgreSQL, Redis) - 🟡 Nivel intermedio
 
 #### **CI/CD & Version Control**
@@ -223,7 +221,7 @@
 
 #### 5. **Proyectos Reales de Complejidad**
 - **SAGO-FACTU:** Sistema completo de producción con usuarios reales
-- **UETA Travel Access:** Arquitectura híbrida con Google Cloud + Oracle
+- **UETA Travel Access:** Arquitectura enterprise en Oracle Cloud Infrastructure
 - Integración SOAP/XML con servicios gubernamentales
 - Manejo de certificados digitales y firmas electrónicas
 
@@ -281,7 +279,7 @@
 
 2. **Sin mostrar proyectos como soluciones**
    - SAGO-FACTU no aparece como caso de éxito
-   - UETA Travel Access no se muestra (Google Cloud + Oracle)
+   - UETA Travel Access no se muestra (Oracle Cloud Infrastructure)
    - Sin enlaces a GitHub
 
 3. **Sin sección de arquitectura de soluciones**
@@ -379,7 +377,7 @@ y desarrollo soluciones FinTech y GovTech. Mi proyecto principal es **SAGO-FACTU
 un sistema SaaS completo de facturación electrónica que integra con la DGI de Panamá.
 
 También he arquitecturado **UETA Travel Access**, un sistema de gestión de viajes
-empresarial desplegado en **Google Cloud Platform** con integración de **Oracle Database**.
+empresarial desplegado en **Oracle Cloud Infrastructure** con **Oracle Database**.
 
 ### Mi Enfoque Técnico
 
@@ -482,24 +480,24 @@ Next.js 15, React 19, TypeScript, PostgreSQL, Prisma
 
 ---
 
-### ☁️ Soluciones Cloud (Google Cloud + Oracle)
+### ☁️ Soluciones Cloud (Oracle Cloud Infrastructure)
 
 **¿Qué problema resuelvo?**
 Tu aplicación necesita infraestructura cloud robusta, escalable y con
 integración de bases de datos enterprise.
 
 **La solución:**
-- Arquitectura cloud híbrida (GCP + Oracle Cloud)
+- Arquitectura enterprise en Oracle Cloud Infrastructure
 - Bases de datos empresariales (Oracle Database)
-- Compute optimizado (GCE, Oracle Compute)
-- Storage escalable
+- Compute optimizado (Oracle Compute Instances)
+- Storage escalable (Oracle Object Storage)
 - Monitoreo y alertas
 
 **Tecnologías:**
-Google Cloud Platform, Oracle Cloud Infrastructure, Docker, Kubernetes
+Oracle Cloud Infrastructure, Oracle Database, Docker, Kubernetes
 
 **Casos de éxito:**
-- UETA Travel Access: Sistema híbrido GCP + Oracle
+- UETA Travel Access: Sistema enterprise en Oracle Cloud Infrastructure
 
 **Inversión:** Desde $8,000 USD
 **Timeline:** 8-16 semanas
@@ -863,39 +861,37 @@ Gestionar viajes corporativos requiere coordinación entre múltiples sistemas,
 bases de datos empresariales y alta disponibilidad.
 
 #### La Solución Creada
-Plataforma integral de gestión de viajes desplegada en infraestructura
-cloud híbrida (Google Cloud + Oracle Cloud) con integración de bases de
-datos enterprise.
+Plataforma integral de gestión de viajes desplegada completamente en
+Oracle Cloud Infrastructure con integración de bases de datos enterprise
+Oracle Database.
 
 #### Arquitectura Técnica
 ```
 Frontend: Next.js + TypeScript
-Cloud Platform:
-  - Google Cloud Platform (Compute, Storage)
-  - Oracle Cloud Infrastructure (Database)
+Cloud Platform: Oracle Cloud Infrastructure
 Base de Datos: Oracle Database
 Backend: Next.js API Routes
-Storage: Google Cloud Storage
-Compute: Google Compute Engine + Oracle Compute
+Storage: Oracle Object Storage
+Compute: Oracle Compute Instances
 ```
 
 #### Características Técnicas Destacadas
-- ✅ **Arquitectura Híbrida:** GCP + Oracle Cloud
+- ✅ **Arquitectura Enterprise:** Oracle Cloud Infrastructure
 - ✅ **Oracle Database:** Base de datos enterprise
 - ✅ **Alta Disponibilidad:** Multi-region deployment
-- ✅ **Cloud Storage:** Google Cloud Storage para archivos
-- ✅ **Compute Escalable:** Auto-scaling en GCP
+- ✅ **Cloud Storage:** Oracle Object Storage para archivos
+- ✅ **Compute Escalable:** Oracle Compute Instances
 - ✅ **Seguridad Enterprise:** Cumplimiento de normativas
 
 #### Desafíos Técnicos Resueltos
-- Integración entre Google Cloud y Oracle Cloud
+- Arquitectura enterprise en Oracle Cloud Infrastructure
 - Optimización de queries en Oracle Database
-- Sincronización de datos entre plataformas
+- Integración con servicios Oracle Cloud
 - Deploy automatizado con CI/CD
 
 #### Stack Completo
-Next.js, TypeScript, Google Cloud Platform, Oracle Cloud Infrastructure,
-Oracle Database, Google Compute Engine, Cloud Storage
+Next.js, TypeScript, Oracle Cloud Infrastructure,
+Oracle Database, Oracle Compute, Oracle Object Storage
 
 **Estado:** ✅ En Desarrollo
 
@@ -998,8 +994,8 @@ Next.js 15, TypeScript, Prisma, PostgreSQL, Tailwind CSS, Vercel
    - Certificados digitales
    - Validación XML
 
-3. **"Arquitectura Híbrida: Google Cloud + Oracle Database"**
-   - Por qué hibridar clouds
+3. **"Arquitectura Enterprise con Oracle Cloud Infrastructure"**
+   - Soluciones cloud enterprise
    - Mejores prácticas
    - Caso UETA Travel Access
 
@@ -1106,8 +1102,8 @@ abordar proyectos complejos con confianza.
 **Fortalezas Únicas:**
 ✅ **Pensamiento arquitectónico** - No solo ejecutas, diseñas
 ✅ **Stack moderno** - Next.js 15, TypeScript, Prisma
-✅ **Cloud enterprise** - GCP + Oracle Cloud
-✅ **Proyectos complejos** - SAGO-FACTU (FinTech), UETA (Cloud híbrido)
+✅ **Cloud enterprise** - Oracle Cloud Infrastructure
+✅ **Proyectos complejos** - SAGO-FACTU (FinTech), UETA (Oracle Cloud)
 ✅ **Sectores regulados** - GovTech, FinTech
 ✅ **Background único** - Música → Software (pensamiento creativo)
 
