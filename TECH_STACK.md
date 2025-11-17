@@ -62,15 +62,18 @@ Componentes utilizados para las funcionalidades de IA, como la generación de CV
 
 Tecnologías encargadas de la persistencia de datos, la lógica del servidor y la autenticación.
 
--   **Firebase**
-    -   **Rol**: Plataforma de desarrollo de aplicaciones de Google.
-    -   **Uso**:
-        -   **Firestore**: Base de datos NoSQL utilizada para guardar los envíos de los formularios de contacto.
-        -   **Firebase Authentication**: (Previsto) Para gestionar el acceso al panel de administración (`/admin`).
+-   **Prisma**
+    -   **Rol**: ORM (Object-Relational Mapping) moderno y type-safe.
+    -   **Uso**: Proporciona una API type-safe para interactuar con la base de datos PostgreSQL. Facilita las migraciones, consultas y validación de tipos en tiempo de desarrollo.
 
--   **Vercel Postgres**
-    -   **Rol**: Base de datos SQL gestionada por Vercel.
-    -   **Uso**: Se utiliza en el middleware (`/welcome`) como fuente principal de datos que se cachean en Vercel Edge Config. Ideal para datos estructurados.
+-   **PostgreSQL (Supabase)**
+    -   **Rol**: Base de datos relacional de código abierto.
+    -   **Uso**: Almacena todos los datos de la aplicación, incluyendo formularios de contacto (4 tipos: cliente, empleador, colaborador, invitación). Supabase proporciona PostgreSQL gestionado con funcionalidades adicionales como autenticación y storage.
+
+-   **Supabase**
+    -   **Rol**: Plataforma Backend-as-a-Service (alternativa open-source a Firebase).
+    -   **Uso Actual**: Proporciona la base de datos PostgreSQL.
+    -   **Uso Futuro**: Autenticación para el panel de administración y almacenamiento de archivos.
 
 -   **Markdown (`gray-matter`, `remark`)**
     -   **Rol**: Sistema de gestión de contenido (CMS) basado en archivos.

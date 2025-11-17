@@ -22,7 +22,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </AnimatedDiv>
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 md:gap-8 md:grid-cols-2">
         {services.filter(s => s.published).map((service: Service, index) => {
           const startingPackage = service.packages[0];
           const startingPrice = startingPackage.price;
@@ -60,15 +60,17 @@ export default function ServicesPage() {
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="grid grid-cols-2 gap-4 pt-4">
-                  <Button asChild variant="outline">
+                <CardFooter className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 pt-4">
+                  <Button asChild variant="outline" className="w-full">
                     <Link href={`/services/${service.slug}`}>
                        Ver Detalles
                     </Link>
                   </Button>
-                  <Button asChild>
+                  <Button asChild className="w-full">
                     <Link href={`/calculator?service=${service.slug}`}>
-                      Cotización Rápida <ArrowRight className="ml-2"/>
+                      <span className="hidden sm:inline">Cotización Rápida</span>
+                      <span className="sm:hidden">Cotizar</span>
+                      <ArrowRight className="ml-2 h-4 w-4"/>
                     </Link>
                   </Button>
                 </CardFooter>
@@ -77,7 +79,7 @@ export default function ServicesPage() {
           );
         })}
       </div>
-        <AnimatedDiv delay={0.5} className="text-center mt-16 p-8 bg-secondary/50 rounded-lg">
+        <AnimatedDiv delay={0.5} className="text-center mt-8 sm:mt-12 md:mt-16 p-6 sm:p-8 bg-secondary/50 rounded-lg">
             <h2 className="text-2xl font-bold tracking-tighter font-headline">¿Tienes un Reto Único?</h2>
             <p className="max-w-[600px] mx-auto mt-2 text-muted-foreground">
                 Cada proyecto es un mundo. Si tu idea no encaja perfectamente en estas categorías, es una excelente señal. Me especializo en crear soluciones a medida para problemas complejos.

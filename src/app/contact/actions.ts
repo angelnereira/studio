@@ -1,8 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { db } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { prisma } from "@/lib/prisma";
 
 // Define schemas for each form
 const clientSchema = z.object({
@@ -101,13 +100,25 @@ export async function onContactSubmit(
   }
 
   try {
-    const docData = {
+    // Preparar los datos para Prisma
+    const contactData: any = {
       ...parsed.data,
       formType,
-      createdAt: serverTimestamp(),
     };
 
-    await addDoc(collection(db, 'contacts'), docData);
+    // Convertir campos vacíos de URL a null
+    if (contactData.linkedin === '') contactData.linkedin = null;
+    if (contactData.portfolio === '') contactData.portfolio = null;
+
+    // Convertir eventDate string a Date si existe
+    if (contactData.eventDate) {
+      contactData.eventDate = new Date(contactData.eventDate);
+    }
+
+    // Guardar en la base de datos con Prisma
+    await prisma.contact.create({
+      data: contactData,
+    });
 
     return {
       status: 'success',
@@ -115,7 +126,7 @@ export async function onContactSubmit(
       formType
     };
   } catch (error) {
-    console.error("Error saving to Firestore:", error);
+    console.error("Error saving to database:", error);
     return {
       status: 'error',
       message: 'Ocurrió un error al guardar tu mensaje. Por favor, inténtalo de nuevo.',
