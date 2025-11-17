@@ -105,10 +105,11 @@ export async function sendContactEmail({ formType, data }: EmailData): Promise<{
     const htmlContent = formatter(data);
 
     const result = await resend.emails.send({
-      from: 'Portfolio Contact <onboarding@resend.dev>', // Resend provides this for testing
-      to: 'contact@angelnereira.com',
+      from: 'Contacto Portfolio <contact@angelnereira.com>',
+      to: 'angelnereira15@gmail.com', // Tu email personal donde recibirás los contactos
       subject: subject,
       html: htmlContent,
+      reply_to: data.email, // Permite responder directamente al remitente
     });
 
     if (result.error) {
