@@ -11,14 +11,14 @@
 
 ## 🎯 Sobre Mí
 
-No solo programo, **diseño soluciones completas**. Con experiencia en sistemas SaaS multi-tenant, integraciones gubernamentales (DGI Panamá) y arquitecturas cloud enterprise (Google Cloud + Oracle), creo software que genera valor de negocio real.
+No solo programo, **diseño soluciones completas**. Con experiencia en sistemas SaaS multi-tenant, integraciones gubernamentales (DGI Panamá) y arquitecturas cloud enterprise (Oracle Cloud Infrastructure), creo software que genera valor de negocio real.
 
 ### Filosofía
 > "Solucionar problemas para disfrutar la vida"
 
 ### Proyectos Destacados
 - **SAGO-FACTU**: Sistema SaaS de facturación electrónica multi-tenant con integración DGI Panamá
-- **UETA Travel Access**: Sistema empresarial en Google Cloud Platform + Oracle Cloud Infrastructure
+- **UETA Travel Access**: Sistema empresarial en Oracle Cloud Infrastructure con Oracle Database
 - **Este Portfolio**: Migración exitosa Firebase → Prisma ORM (type-safety completo)
 
 ---

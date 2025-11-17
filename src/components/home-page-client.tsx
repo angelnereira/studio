@@ -78,7 +78,7 @@ export default function HomePageClient() {
                         Mi trayectoria es única: pasé 7 años como <strong>productor musical e ingeniero de sonido</strong> antes de hacer la transición a la ingeniería de software. Esta experiencia me ha dado una perspectiva diferente sobre el <strong>diseño de soluciones</strong> y la atención al detalle.
                     </p>
                     <p>
-                        Actualmente trabajo en <strong>UbicSys S.A.</strong>, donde diseño y desarrollo soluciones FinTech y GovTech. Mi proyecto principal es <strong>SAGO-FACTU</strong>, un sistema SaaS completo de facturación electrónica que integra con la DGI de Panamá. También he arquitecturado <strong>UETA Travel Access</strong>, un sistema empresarial desplegado en <strong>Google Cloud Platform</strong> con integración de <strong>Oracle Database</strong>.
+                        Actualmente trabajo en <strong>UbicSys S.A.</strong>, donde diseño y desarrollo soluciones FinTech y GovTech. Mi proyecto principal es <strong>SAGO-FACTU</strong>, un sistema SaaS completo de facturación electrónica que integra con la DGI de Panamá. También he arquitecturado <strong>UETA Travel Access</strong>, un sistema empresarial desplegado en <strong>Oracle Cloud Infrastructure</strong> con <strong>Oracle Database</strong>.
                     </p>
                     <p>
                         Mi filosofía: <em>"Solucionar problemas para disfrutar la vida"</em>. Cada sistema que creo está pensado para <strong>generar valor de negocio real</strong>, desde la arquitectura hasta la implementación.
