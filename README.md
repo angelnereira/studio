@@ -1,22 +1,37 @@
 
-# Portafolio Profesional de Ángel Nereira - Ingeniero de Software
+# Portfolio Profesional - Ángel Nereira | Ingeniero de Software
 
 ![Header](https://picsum.photos/seed/readme-header/1200/300)
 
-Este repositorio contiene el código fuente de mi portafolio personal, una aplicación web moderna y dinámica diseñada no solo para mostrar mi trabajo, sino para demostrar mis habilidades en desarrollo full-stack, arquitectura en la nube e inteligencia artificial.
+**Ingeniero de Software** especializado en crear soluciones empresariales escalables para FinTech y GovTech. Este repositorio contiene el código fuente de mi portfolio profesional, diseñado para demostrar mi experiencia en arquitectura de software, desarrollo de soluciones complejas y uso de tecnologías modernas.
 
 **[Ver el sitio en vivo](https://angelnereira.com)**
 
 ---
 
-## 🚀 Sobre el Proyecto
+## 🎯 Sobre Mí
 
-Este no es un portafolio estático. Es una aplicación web full-stack que funciona como una carta de presentación interactiva y un centro de operaciones para mi marca personal. La plataforma está diseñada para ser:
+No solo programo, **diseño soluciones completas**. Con experiencia en sistemas SaaS multi-tenant, integraciones gubernamentales (DGI Panamá) y arquitecturas cloud enterprise (Google Cloud + Oracle), creo software que genera valor de negocio real.
 
-*   **Dinámica**: El contenido, como los proyectos y los posts del blog, se gestiona a través de archivos Markdown, permitiendo actualizaciones fáciles sin tocar el código.
-*   **Inteligente**: Integra funcionalidades de IA con **Google Genkit** para ofrecer herramientas útiles como un generador de CV personalizado y análisis de compatibilidad laboral.
-*   **Escalable**: Construido sobre una arquitectura moderna con **Next.js** y desplegado en **Vercel**, garantizando un rendimiento global y una experiencia de usuario fluida.
-*   **Autogestionable**: A través de un panel de administración, puedo generar contenido y analizar datos, convirtiendo mi portafolio en una herramienta de negocio.
+### Filosofía
+> "Solucionar problemas para disfrutar la vida"
+
+### Proyectos Destacados
+- **SAGO-FACTU**: Sistema SaaS de facturación electrónica multi-tenant con integración DGI Panamá
+- **UETA Travel Access**: Sistema empresarial en Google Cloud Platform + Oracle Cloud Infrastructure
+- **Este Portfolio**: Migración exitosa Firebase → Prisma ORM (type-safety completo)
+
+---
+
+## 🚀 Sobre este Proyecto
+
+Este portfolio es más que un sitio web estático. Es una **aplicación empresarial completa** que demuestra:
+
+*   **Arquitectura Moderna**: Next.js 15 + TypeScript + Prisma ORM + PostgreSQL
+*   **Type-Safety Completo**: Migración exitosa de Firebase a Prisma para mejor DX
+*   **Soluciones IA**: Integración con Google Genkit y Gemini para features inteligentes
+*   **Escalabilidad**: Diseñado con las mejores prácticas de software enterprise
+*   **Responsive Design**: Optimizado para móviles y desktop con Tailwind CSS
 
 ---
 
