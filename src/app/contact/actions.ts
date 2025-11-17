@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { sendContactEmail } from "@/lib/email";
 
 // Define schemas for each form
 const clientSchema = z.object({
@@ -119,6 +120,18 @@ export async function onContactSubmit(
     await prisma.contact.create({
       data: contactData,
     });
+
+    // Enviar email con los datos del formulario
+    const emailResult = await sendContactEmail({
+      formType,
+      data: parsed.data,
+    });
+
+    if (!emailResult.success) {
+      console.error('Error al enviar email:', emailResult.error);
+      // No fallamos la operación completa si el email falla
+      // pero lo registramos en los logs
+    }
 
     return {
       status: 'success',

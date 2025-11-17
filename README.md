@@ -45,6 +45,7 @@ Este proyecto utiliza un conjunto de tecnologías modernas y robustas, seleccion
 *   **Inteligencia Artificial**: **Google Genkit** para flujos de IA y conexión con modelos de Gemini.
 *   **ORM**: **Prisma** - Type-safe database client con soporte completo para TypeScript.
 *   **Base de Datos**: **PostgreSQL** (Supabase) - Base de datos relacional escalable y moderna.
+*   **Envío de Emails**: **Resend** - API moderna para envío transaccional de emails desde Server Actions.
 *   **Despliegue (Hosting)**: **Vercel**
 *   **Control de Versiones**: **Git** y **GitHub** (con GitHub Actions para CI/CD).
 
@@ -58,7 +59,7 @@ Este proyecto utiliza un conjunto de tecnologías modernas y robustas, seleccion
     *   **Generador de Cartas de Presentación**: Crea cartas de presentación personalizadas basadas en una oferta de trabajo.
 *   **Contenido Dinámico**: Los artículos del blog se escriben en Markdown y se renderizan dinámicamente, optimizados para SEO con `generateStaticParams`.
 *   **Carrusel de Habilidades Interactivo**: Una visualización animada y atractiva de mis competencias técnicas.
-*   **Formularios de Contacto Inteligentes**: Múltiples formularios (cliente, empleador, colaborador, invitación) que guardan la información directamente en PostgreSQL a través de Server Actions con validación de tipo completa usando Prisma y Zod.
+*   **Formularios de Contacto Inteligentes**: Múltiples formularios (cliente, empleador, colaborador, invitación) que guardan la información directamente en PostgreSQL a través de Server Actions con validación de tipo completa usando Prisma y Zod. Los datos se envían automáticamente por email formateados a contact@angelnereira.com usando Resend.
 *   **Diseño Responsivo y Adaptativo**: Interfaz de usuario pulida que funciona perfectamente en cualquier dispositivo.
 
 ---
@@ -131,6 +132,10 @@ Para clonar y ejecutar este proyecto en tu máquina local, sigue estos pasos:
 
     # Google AI (Genkit)
     GEMINI_API_KEY=tu-api-key
+
+    # Resend (para envío de emails desde formularios de contacto)
+    # Obtén tu API Key en https://resend.com/api-keys
+    RESEND_API_KEY=re_tu_api_key_aqui
     ```
 
 4.  **Configurar la base de datos:**
