@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Briefcase, Code, Database, GitBranch, Layers, Server, Shield, Zap, Repeat, FileCog, Users, Code2, BrainCircuit, Search, Route } from "lucide-react";
 import { FaPython, FaNodeJs, FaDocker, FaGitAlt } from "react-icons/fa";
-import { SiTypescript, SiPostgresql, SiFirebase, SiGooglecloud, SiVercel, SiKubernetes, SiTailwindcss, SiGithubactions } from "react-icons/si";
+import { SiTypescript, SiPostgresql, SiFirebase, SiOracle, SiVercel, SiKubernetes, SiTailwindcss, SiGithubactions } from "react-icons/si";
 import { TbBrandNextjs } from "react-icons/tb";
 import { GitIcon, GithubIcon, CiCdIcon, LinuxIcon, OpenShiftIcon } from "./icons";
 
@@ -90,15 +90,15 @@ export const skills: Skill[] = [
       { title: "Arquitectura de Microservicios", description: "Diseño sistemas de microservicios para 'Soluciones Empresariales' que requieren alta escalabilidad y resiliencia.", icon: Layers },
     ]
   },
-  { 
-    name: "Google Cloud", 
-    slug: "google-cloud",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <SiGooglecloud {...props} />,
-    description: "Permite construir y desplegar soluciones de clase mundial, escalables y seguras, sin tener que gestionar infraestructura física.",
+  {
+    name: "Oracle Cloud Infrastructure",
+    slug: "oracle-cloud",
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiOracle {...props} />,
+    description: "Plataforma enterprise cloud para desplegar soluciones de misión crítica con Oracle Database, almacenamiento escalable y alta disponibilidad.",
     practicalAbilities: [
-      { title: "Despliegue en Cloud Run y GKE", description: "Empaqueto y despliego aplicaciones en contenedores serverless (Cloud Run) o en clústeres de Kubernetes (GKE) para máxima escalabilidad.", icon: Zap },
-      { title: "Bases de Datos Gestionadas", description: "Utilizo Firestore y Cloud SQL para gestionar bases de datos NoSQL y SQL de manera segura y sin preocuparme por la infraestructura.", icon: Database },
-      { title: "Arquitecturas Serverless", description: "Diseño y construyo aplicaciones basadas en Cloud Functions para optimizar costos y escalar automáticamente en función de la demanda.", icon: Code2 },
+      { title: "Oracle Compute Instances", description: "Despliego y gestiono máquinas virtuales escalables con configuraciones personalizadas para aplicaciones enterprise de alto rendimiento.", icon: Zap },
+      { title: "Oracle Database Enterprise", description: "Implemento bases de datos Oracle Database con alta disponibilidad, replicación y optimización de queries para sistemas críticos.", icon: Database },
+      { title: "Oracle Object Storage", description: "Gestiono almacenamiento escalable y seguro para archivos, backups y contenido multimedia con integración nativa a servicios Oracle.", icon: Server },
     ]
   },
   { 

@@ -39,7 +39,7 @@ export default function HomePageClient() {
                   Creador de Soluciones FinTech & GovTech
               </p>
               <p className="mx-auto max-w-[600px] text-xs sm:text-sm text-muted-foreground/80 mt-2 sm:mt-3">
-                  Next.js · TypeScript · PostgreSQL · Oracle · Google Cloud
+                  Next.js · TypeScript · PostgreSQL · Oracle Cloud
               </p>
               <p className="mt-3 sm:mt-4 font-semibold text-base sm:text-lg text-primary/80">"Solucionar problemas para disfrutar la vida."</p>
               <div className="mt-6 sm:mt-7 md:mt-8 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0">

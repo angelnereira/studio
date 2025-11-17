@@ -38,8 +38,8 @@ const projects = [
     status: "En Producción",
     statusColor: "bg-green-500/10 text-green-600",
     type: "FinTech · GovTech · SaaS",
-    github: null, // privado
-    demo: null,
+    github: "https://github.com/angelnereira/sago-factu-V0.2",
+    demo: "https://sago-factu-v0-2.vercel.app/",
   },
   {
     id: "ueta-travel",
