@@ -35,23 +35,26 @@ export default function HomePageClient() {
                   <span className="block mb-1 sm:mb-2">Angel Nereira</span>
                   <div className="relative w-full overflow-hidden">
                     <div className="flex animate-marquee whitespace-nowrap">
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software y DevOps</span>
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software y DevOps</span>
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software y DevOps</span>
-                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software y DevOps</span>
+                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
+                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
+                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
+                      <span className="block text-primary mx-2 sm:mx-3 md:mx-4">Ingeniero de Software</span>
                     </div>
                   </div>
               </h1>
               <p className="mx-auto max-w-[700px] text-sm sm:text-base text-muted-foreground md:text-lg lg:text-xl mt-4 sm:mt-5 md:mt-6">
-                  De la Idea a la Solución Tecnológica
+                  Creador de Soluciones FinTech & GovTech
+              </p>
+              <p className="mx-auto max-w-[600px] text-xs sm:text-sm text-muted-foreground/80 mt-2 sm:mt-3">
+                  Next.js · TypeScript · PostgreSQL · Oracle · Google Cloud
               </p>
               <p className="mt-3 sm:mt-4 font-semibold text-base sm:text-lg text-primary/80">"Solucionar problemas para disfrutar la vida."</p>
               <div className="mt-6 sm:mt-7 md:mt-8 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0">
                 <Button asChild size="lg" className="w-full sm:w-auto">
-                  <Link href="/contact">Hablemos</Link>
+                  <Link href="/services">Ver Soluciones</Link>
                 </Button>
                 <Button asChild variant="secondary" size="lg" className="w-full sm:w-auto">
-                  <Link href="/skills">Ver Habilidades</Link>
+                  <Link href="/contact">Consultoría</Link>
                 </Button>
               </div>
             </AnimatedDiv>
@@ -66,16 +69,19 @@ export default function HomePageClient() {
                   <div className="space-y-2">
                     <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Sobre Mí</h2>
                      <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                        Soy un ingeniero de software panameño con una visión clara: impulsar la transformación tecnológica en Panamá y más allá, creando soluciones innovadoras, eficientes y de alto impacto.
+                        Ingeniero de software panameño especializado en crear soluciones empresariales escalables para FinTech y GovTech. No solo programo, diseño arquitecturas completas que transforman negocios.
                     </p>
                   </div>
                 </div>
                 <div className="mx-auto max-w-3xl pt-8 text-lg text-center text-foreground/80 space-y-4">
                     <p>
-                        Mi trayectoria es una fusión poco común entre la ingeniería de sonido y la ingeniería de software. Esta dualidad me ha enseñado a abordar los problemas con la precisión técnica de un ingeniero y la creatividad de un artista. Mi filosofía es simple: "Solucionar problemas para disfrutar la vida". Aplico esta mentalidad para desarrollar software robusto, escalable y seguro que genera valor real.
+                        Mi trayectoria es única: pasé 7 años como <strong>productor musical e ingeniero de sonido</strong> antes de hacer la transición a la ingeniería de software. Esta experiencia me ha dado una perspectiva diferente sobre el <strong>diseño de soluciones</strong> y la atención al detalle.
                     </p>
                     <p>
-                        Mi objetivo es ser un pionero en la innovación tecnológica de Panamá, con un enfoque en software, ciencia de datos e inteligencia artificial, siempre con una proyección global. Apuesto por la inclusión y el empoderamiento de las personas a través de la tecnología.
+                        Actualmente trabajo en <strong>UbicSys S.A.</strong>, donde diseño y desarrollo soluciones FinTech y GovTech. Mi proyecto principal es <strong>SAGO-FACTU</strong>, un sistema SaaS completo de facturación electrónica que integra con la DGI de Panamá. También he arquitecturado <strong>UETA Travel Access</strong>, un sistema empresarial desplegado en <strong>Google Cloud Platform</strong> con integración de <strong>Oracle Database</strong>.
+                    </p>
+                    <p>
+                        Mi filosofía: <em>"Solucionar problemas para disfrutar la vida"</em>. Cada sistema que creo está pensado para <strong>generar valor de negocio real</strong>, desde la arquitectura hasta la implementación.
                     </p>
                 </div>
               </div>

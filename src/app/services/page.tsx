@@ -15,10 +15,15 @@ export default function ServicesPage() {
       <AnimatedDiv>
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Soluciones a la Medida de tu Negocio</h1>
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Soluciones Empresariales de Software</h1>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
-              Desde MVPs para startups hasta sistemas empresariales con IA. Transformamos tus ideas en software robusto y escalable que genera resultados.
+              No solo programo, <strong>diseño soluciones completas</strong>. Desde arquitecturas SaaS multi-tenant hasta integraciones complejas con sistemas gubernamentales. Especializado en FinTech y GovTech.
             </p>
+            <div className="flex flex-wrap justify-center gap-2 pt-4">
+              <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Next.js · TypeScript</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">PostgreSQL · Oracle</span>
+              <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Google Cloud · Prisma</span>
+            </div>
           </div>
         </div>
       </AnimatedDiv>
