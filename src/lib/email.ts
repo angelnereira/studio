@@ -105,7 +105,7 @@ export async function sendContactEmail({ formType, data }: EmailData): Promise<{
     const htmlContent = formatter(data);
 
     const result = await resend.emails.send({
-      from: 'Contacto Portfolio <contact@angelnereira.com>',
+      from: 'Contacto Portfolio <onboarding@resend.dev>', // Temporal: cambiar a contact@angelnereira.com cuando el dominio esté verificado
       to: 'angelnereira15@gmail.com', // Tu email personal donde recibirás los contactos
       subject: subject,
       html: htmlContent,
