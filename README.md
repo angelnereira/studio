@@ -2,8 +2,6 @@
 
 <div align="center">
 
-![Header](https://picsum.photos/seed/readme-header/1200/300)
-
 **Ingeniero de Software** especializado en crear soluciones empresariales escalables para FinTech y GovTech
 
 ### 🌐 [angelnereira.com](https://angelnereira.com)
