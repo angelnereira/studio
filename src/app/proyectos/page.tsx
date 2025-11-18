@@ -69,7 +69,7 @@ const projects = [
     status: "En Desarrollo",
     statusColor: "bg-blue-500/10 text-blue-600",
     type: "Enterprise · Cloud · Travel",
-    github: null,
+    github: "https://github.com/angelnereira/Ueta-Travel-Access",
     demo: null,
   },
   {
