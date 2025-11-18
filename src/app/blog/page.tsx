@@ -50,7 +50,7 @@ export default async function BlogPage() {
                   </div>
                   <span className="text-xs">{new Date(post.date).toLocaleDateString('es-PA', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                   <span>&middot;</span>
-                  <span className="text-xs">{post.readingTime} min de lectura</span>
+                  <span className="text-xs">{post.readingTime}</span>
                 </CardFooter>
               </SpotlightCard>
             </Link>
