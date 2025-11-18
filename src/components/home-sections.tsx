@@ -18,52 +18,65 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ServicesCarousel } from './services-carousel';
 
-const AccessControlIcon = (props: React.SVGProps<SVGSVGElement>) => (
+// Icon for SAGO-FACTU - Electronic Invoicing
+const SagoFactuIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M19.5 12a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" stroke="currentColor" strokeWidth="2"/>
-        <path d="M12 4.5V3M19.5 19.5l-1.06-1.06M4.5 19.5l1.06-1.06M12 19.5V21M4.5 4.5l1.06 1.06" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M14 2v6h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M8 13h8M8 17h8M8 9h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 );
 
-const SalesDashboardIcon = (props: React.SVGProps<SVGSVGElement>) => (
+// Icon for UETA Travel - Travel Management System
+const UetaTravelIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+    </svg>
+);
+
+// Icon for GovTech Portal - Government Services
+const GovTechPortalIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 21h18M3 10h18M12 3l9 7v11H3V10l9-7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M9 21v-6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+);
+
+// Icon for FinTech Dashboard - Financial Analytics
+const FinTechDashboardIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 3v18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="m19 9-5 5-4-4-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M18 14h3v7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 );
 
-const PayrollManagementIcon = (props: React.SVGProps<SVGSVGElement>) => (
+// Icon for Biometric Access Control
+const BiometricAccessIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M9 13h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M9 17h3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+        <path d="M12 2a10 10 0 0 1 8.66 5M12 22a10 10 0 0 1-8.66-5M3.34 7A10 10 0 0 1 12 2M20.66 17A10 10 0 0 1 12 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M8 12h.01M16 12h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
     </svg>
 );
 
-const CiCdPipelineIcon = (props: React.SVGProps<SVGSVGElement>) => (
+// Icon for Payments API - Multi-channel Payments
+const PaymentsAPIIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M21 6v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M12 18a6 6 0 0 1-6-6h12a6 6 0 0 1-6 6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M12 6a6 6 0 0 1 6 6H6a6 6 0 0 1 6-6Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-);
-
-const AiChatbotIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M12 7v.01M9 11h.01M15 11h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <rect x="1" y="4" width="22" height="16" rx="2" stroke="currentColor" strokeWidth="2"/>
+        <path d="M1 10h22" stroke="currentColor" strokeWidth="2"/>
+        <path d="M6 15h4M15 15h3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
     </svg>
 );
 
 const projectIcons: { [key: string]: React.ElementType } = {
-    'access-control': AccessControlIcon,
-    'sales-dashboard': SalesDashboardIcon,
-    'payroll-management': PayrollManagementIcon,
-    'ci-cd-pipeline': CiCdPipelineIcon,
-    'ai-chatbot': AiChatbotIcon
+    'sago-factu': SagoFactuIcon,
+    'ueta-travel': UetaTravelIcon,
+    'govtech-portal': GovTechPortalIcon,
+    'fintech-dashboard': FinTechDashboardIcon,
+    'biometric-access': BiometricAccessIcon,
+    'payments-api': PaymentsAPIIcon
 };
 
 export function SkillsSection() {
