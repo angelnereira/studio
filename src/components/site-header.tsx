@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BrainCircuit, Menu, Moon, Sun, Home, Briefcase, Code2, FileText, Mail, FolderKanban } from "lucide-react";
+import { BrainCircuit, Menu, Moon, Sun, Home, Briefcase, Code2, FileText, Mail, FolderKanban, Calculator } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ const navItems = [
   { href: "/", label: "Home", icon: <Home className="h-4 w-4" /> },
   { href: "/services", label: "Soluciones", icon: <Briefcase className="h-4 w-4" /> },
   { href: "/proyectos", label: "Proyectos", icon: <FolderKanban className="h-4 w-4" /> },
+  { href: "/calculadora", label: "Calculadora", icon: <Calculator className="h-4 w-4" /> },
   { href: "/skills", label: "Stack", icon: <Code2 className="h-4 w-4" /> },
   { href: "/blog", label: "Blog", icon: <FileText className="h-4 w-4" /> },
   { href: "/contact", label: "Contacto", icon: <Mail className="h-4 w-4" /> },

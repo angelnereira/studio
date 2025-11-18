@@ -58,6 +58,7 @@
     "geist": "^1.5.1",
     "genkit": "^1.19.3",
     "gray-matter": "^4.0.3",
+    "jspdf": "^3.0.3",
     "lucide-react": "^0.475.0",
     "next": "15.5.3",
     "next-themes": "^0.3.0",
