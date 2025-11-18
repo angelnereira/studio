@@ -1,11 +1,19 @@
+# Portfolio Profesional - Ángel Nereira
 
-# Portfolio Profesional - Ángel Nereira | Ingeniero de Software
+<div align="center">
 
 ![Header](https://picsum.photos/seed/readme-header/1200/300)
 
-**Ingeniero de Software** especializado en crear soluciones empresariales escalables para FinTech y GovTech. Este repositorio contiene el código fuente de mi portfolio profesional, diseñado para demostrar mi experiencia en arquitectura de software, desarrollo de soluciones complejas y uso de tecnologías modernas.
+**Ingeniero de Software** especializado en crear soluciones empresariales escalables para FinTech y GovTech
 
-**[Ver el sitio en vivo](https://angelnereira.com)**
+### 🌐 [angelnereira.com](https://angelnereira.com)
+
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma)](https://www.prisma.io/)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://vercel.com)
+
+</div>
 
 ---
 
@@ -39,28 +47,70 @@ Este portfolio es más que un sitio web estático. Es una **aplicación empresar
 
 Este proyecto utiliza un conjunto de tecnologías modernas y robustas, seleccionadas para optimizar el rendimiento, la escalabilidad y la experiencia de desarrollo.
 
-*   **Framework Frontend**: **Next.js 15** (App Router)
-*   **Lenguaje**: **TypeScript**
-*   **Estilos**: **Tailwind CSS** con **ShadCN UI** para componentes.
-*   **Inteligencia Artificial**: **Google Genkit** para flujos de IA y conexión con modelos de Gemini.
-*   **ORM**: **Prisma** - Type-safe database client con soporte completo para TypeScript.
-*   **Base de Datos**: **PostgreSQL** (Supabase) - Base de datos relacional escalable y moderna.
-*   **Envío de Emails**: **Resend** - API moderna para envío transaccional de emails desde Server Actions.
-*   **Despliegue (Hosting)**: **Vercel**
-*   **Control de Versiones**: **Git** y **GitHub** (con GitHub Actions para CI/CD).
+### Core
+*   **Framework**: **Next.js 15** (App Router) - Framework React con SSR, SSG y Server Components
+*   **Lenguaje**: **TypeScript 5.0** - Type-safety completo en todo el proyecto
+*   **ORM**: **Prisma** - Cliente de base de datos type-safe con schema-first approach
+*   **Base de Datos**: **PostgreSQL** (Supabase) - Base de datos relacional escalable
+
+### Frontend & UI
+*   **Estilos**: **Tailwind CSS** - Utility-first CSS framework
+*   **Componentes**: **ShadCN UI** - Componentes accesibles y personalizables
+*   **Animaciones**: **Framer Motion** - Transiciones y animaciones fluidas
+*   **Visualización de Datos**: **Recharts** - Gráficos interactivos para dashboards
+
+### Backend & Integrations
+*   **Server Actions**: Next.js 15 Server Actions para lógica server-side
+*   **Validación**: **Zod** - Schema validation para formularios y datos
+*   **Emails**: **Resend** - API moderna para envío transaccional de emails
+*   **PDF Generation**: **jsPDF** - Generación de documentos PDF client-side
+
+### AI & Machine Learning
+*   **Google Genkit** - Framework para flujos de IA con type-safe prompts
+*   **Gemini AI** - Modelo de lenguaje de Google para generación de contenido
+
+### DevOps & Deployment
+*   **Hosting**: **Vercel** - Despliegue continuo con edge functions
+*   **CI/CD**: **GitHub Actions** - Automatización de testing y deployment
+*   **Monitoreo**: Vercel Analytics & Web Vitals
 
 ---
 
 ## ✨ Características Destacadas
 
-*   **Generador de CV con IA**: Una herramienta que utiliza Genkit para generar un CV profesional en formato Markdown basado en mi perfil, proyectos y habilidades actualizadas.
-*   **Panel de Administración Privado**: Una sección protegida (`/admin`) que incluye herramientas como:
-    *   **Analizador de Compatibilidad Laboral**: Sube una descripción de trabajo y mi perfil para obtener un análisis de compatibilidad con IA.
-    *   **Generador de Cartas de Presentación**: Crea cartas de presentación personalizadas basadas en una oferta de trabajo.
-*   **Contenido Dinámico**: Los artículos del blog se escriben en Markdown y se renderizan dinámicamente, optimizados para SEO con `generateStaticParams`.
-*   **Carrusel de Habilidades Interactivo**: Una visualización animada y atractiva de mis competencias técnicas.
-*   **Formularios de Contacto Inteligentes**: Múltiples formularios (cliente, empleador, colaborador, invitación) que guardan la información directamente en PostgreSQL a través de Server Actions con validación de tipo completa usando Prisma y Zod. Los datos se envían automáticamente por email formateados a contact@angelnereira.com usando Resend.
-*   **Diseño Responsivo y Adaptativo**: Interfaz de usuario pulida que funciona perfectamente en cualquier dispositivo.
+### 💰 **Calculadora de Presupuestos** (Nuevo)
+Sistema interactivo de cotización de proyectos de software con:
+*   **Wizard Multi-Paso**: 5 pasos para configurar servicio, complejidad, timeline, complementos y ver resultados
+*   **Cálculo Inteligente**: Precios basados en múltiples factores (complejidad, país, urgencia, tipo de cliente)
+*   **Recomendaciones Personalizadas**: Sistema de sugerencias según el tipo de proyecto y presupuesto
+*   **Exportación PDF**: Genera presupuestos profesionales en PDF descargables
+*   **Envío por Email**: Envía presupuestos formateados directamente al email del cliente
+*   **Persistencia Local**: Guarda cálculos en localStorage para recuperación posterior
+
+### 🤖 **Herramientas con IA**
+*   **Generador de CV con IA**: Genera CVs profesionales en Markdown usando Genkit y Gemini
+*   **Panel de Administración Privado** (`/admin`):
+    *   **Analizador de Compatibilidad Laboral**: Análisis de match entre perfil y ofertas de trabajo
+    *   **Generador de Cartas de Presentación**: Cartas personalizadas basadas en ofertas específicas
+
+### 📝 **Blog Técnico Interactivo**
+*   **Contenido en Markdown**: Artículos técnicos optimizados para SEO con `generateStaticParams`
+*   **Análisis de Datos Musicales**: Dashboard interactivo con visualizaciones de Recharts
+*   **Comparación Interactiva de Artistas**: Herramienta de comparación con gráficos de barras y radar
+*   **Responsive Tables**: Tablas adaptativas para móviles con scroll horizontal
+
+### 📬 **Sistema de Contacto Avanzado**
+*   **Formularios Multi-Tipo**: 4 tipos de formularios (cliente, empleador, colaborador, invitación)
+*   **Validación Completa**: Zod + Prisma para type-safety en validación
+*   **Persistencia en PostgreSQL**: Almacenamiento directo con Prisma ORM
+*   **Email Automático**: Envío formateado a través de Resend API
+*   **Server Actions**: Procesamiento server-side con Next.js 15
+
+### 🎨 **Experiencia de Usuario**
+*   **Diseño Responsive**: Optimizado para todo tipo de dispositivos
+*   **Animaciones Fluidas**: Transiciones suaves con Framer Motion
+*   **Dark Mode**: Tema claro y oscuro con persistencia
+*   **Carrusel de Habilidades**: Visualización interactiva de competencias técnicas
 
 ---
 
