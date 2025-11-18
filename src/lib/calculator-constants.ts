@@ -14,12 +14,13 @@ import type {
 } from '@/types/calculator';
 
 // Base Services with estimated prices and timeline
+// PRECIOS PROMOCIONALES 2025 - Descuento del 40% para atraer nuevos clientes
 export const SERVICIOS_BASE: Record<ServiceType, ServiceBase> = {
   'web-app': {
     id: 'web-app',
     name: 'Aplicación Web',
     description: 'Aplicación web moderna con frontend y backend completo',
-    basePrice: 8000,
+    basePrice: 4800,
     estimatedWeeks: 8,
     features: [
       'Diseño responsive',
@@ -34,7 +35,7 @@ export const SERVICIOS_BASE: Record<ServiceType, ServiceBase> = {
     id: 'mobile-app',
     name: 'Aplicación Móvil',
     description: 'App nativa o híbrida para iOS y Android',
-    basePrice: 12000,
+    basePrice: 7200,
     estimatedWeeks: 12,
     features: [
       'Desarrollo iOS y Android',
@@ -49,7 +50,7 @@ export const SERVICIOS_BASE: Record<ServiceType, ServiceBase> = {
     id: 'ecommerce',
     name: 'E-commerce',
     description: 'Tienda online completa con carrito y pagos',
-    basePrice: 10000,
+    basePrice: 6000,
     estimatedWeeks: 10,
     features: [
       'Catálogo de productos',
@@ -64,7 +65,7 @@ export const SERVICIOS_BASE: Record<ServiceType, ServiceBase> = {
     id: 'landing-page',
     name: 'Landing Page',
     description: 'Página de aterrizaje optimizada para conversión',
-    basePrice: 2000,
+    basePrice: 1200,
     estimatedWeeks: 2,
     features: [
       'Diseño moderno y responsive',
@@ -79,7 +80,7 @@ export const SERVICIOS_BASE: Record<ServiceType, ServiceBase> = {
     id: 'crm-erp',
     name: 'CRM/ERP',
     description: 'Sistema de gestión empresarial personalizado',
-    basePrice: 15000,
+    basePrice: 9000,
     estimatedWeeks: 16,
     features: [
       'Gestión de clientes',
@@ -94,7 +95,7 @@ export const SERVICIOS_BASE: Record<ServiceType, ServiceBase> = {
     id: 'api-backend',
     name: 'API/Backend',
     description: 'Backend robusto con API REST o GraphQL',
-    basePrice: 6000,
+    basePrice: 3600,
     estimatedWeeks: 6,
     features: [
       'API REST o GraphQL',
@@ -109,7 +110,7 @@ export const SERVICIOS_BASE: Record<ServiceType, ServiceBase> = {
     id: 'migration',
     name: 'Migración de Sistema',
     description: 'Migración y modernización de aplicaciones legacy',
-    basePrice: 7000,
+    basePrice: 4200,
     estimatedWeeks: 8,
     features: [
       'Análisis del sistema actual',
@@ -124,7 +125,7 @@ export const SERVICIOS_BASE: Record<ServiceType, ServiceBase> = {
     id: 'maintenance',
     name: 'Mantenimiento y Soporte',
     description: 'Mantenimiento continuo y soporte técnico',
-    basePrice: 1500,
+    basePrice: 900,
     estimatedWeeks: 4,
     features: [
       'Actualizaciones de seguridad',
@@ -284,73 +285,74 @@ export const AJUSTES_TIPO_CLIENTE: Record<ClientType, ClientTypeAdjustment> = {
 };
 
 // Add-ons
+// PRECIOS PROMOCIONALES 2025 - Descuento del 40%
 export const ADD_ONS: Record<AddOnType, AddOn> = {
   'seo-optimization': {
     id: 'seo-optimization',
     name: 'Optimización SEO',
     description: 'Optimización completa para motores de búsqueda',
-    price: 800,
+    price: 480,
     estimatedHours: 20,
   },
   'analytics-setup': {
     id: 'analytics-setup',
     name: 'Setup de Analytics',
     description: 'Configuración de Google Analytics, Tag Manager y métricas personalizadas',
-    price: 500,
+    price: 300,
     estimatedHours: 12,
   },
   'cloud-deployment': {
     id: 'cloud-deployment',
     name: 'Despliegue en Cloud',
     description: 'Configuración y despliegue en AWS, Oracle Cloud o plataforma cloud',
-    price: 1000,
+    price: 600,
     estimatedHours: 24,
   },
   'ci-cd-pipeline': {
     id: 'ci-cd-pipeline',
     name: 'Pipeline CI/CD',
     description: 'Configuración de integración y despliegue continuo',
-    price: 1200,
+    price: 720,
     estimatedHours: 30,
   },
   'security-audit': {
     id: 'security-audit',
     name: 'Auditoría de Seguridad',
     description: 'Revisión completa de seguridad y vulnerabilidades',
-    price: 1500,
+    price: 900,
     estimatedHours: 40,
   },
   documentation: {
     id: 'documentation',
     name: 'Documentación Completa',
     description: 'Documentación técnica y de usuario detallada',
-    price: 600,
+    price: 360,
     estimatedHours: 15,
   },
   training: {
     id: 'training',
     name: 'Capacitación',
     description: 'Sesiones de capacitación para el equipo del cliente',
-    price: 800,
+    price: 480,
     estimatedHours: 16,
   },
   'support-3-months': {
     id: 'support-3-months',
     name: 'Soporte 3 Meses',
     description: 'Soporte técnico por 3 meses post-lanzamiento',
-    price: 1500,
+    price: 900,
   },
   'support-6-months': {
     id: 'support-6-months',
     name: 'Soporte 6 Meses',
     description: 'Soporte técnico por 6 meses post-lanzamiento',
-    price: 2700,
+    price: 1620,
   },
   'support-12-months': {
     id: 'support-12-months',
     name: 'Soporte 12 Meses',
     description: 'Soporte técnico por 12 meses post-lanzamiento',
-    price: 5000,
+    price: 3000,
   },
 };
 
