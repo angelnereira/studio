@@ -1,17 +1,22 @@
 /** @type {import('next').NextConfig} */
 
+const path = require('path');
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
 const nextConfig = {
   /* config options here */
+  turbopack: {
+    root: __dirname,
+  },
+  outputFileTracingRoot: __dirname,
+  transpilePackages: ['react-icons'],
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  turbopack: {},
   images: {
     remotePatterns: [
       {
