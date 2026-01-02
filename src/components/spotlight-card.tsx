@@ -55,11 +55,11 @@ export function SpotlightCard({ className, children, as: Comp = 'div', ...props 
         className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300"
         style={{
           opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, hsla(var(--primary) / 0.15), transparent 60%)`,
+          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, hsla(var(--primary) / 0.08), transparent 60%)`,
         }}
       />
       {Comp === 'div' ? (
-        <Card className={cn("h-full w-full", props.className)} {...props}>
+        <Card className={cn("h-full w-full rounded-[var(--radius)] border-white/5", props.className)} {...props}>
           {children}
         </Card>
       ) : (

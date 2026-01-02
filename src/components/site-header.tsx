@@ -27,7 +27,7 @@ export function SiteHeader() {
   const { setTheme, theme } = useTheme();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b glass">
       <div className="container flex h-14 items-center">
         <div className="mr-4 flex items-center">
           <Link href="/" className="mr-6 flex items-center space-x-2 group">
@@ -81,7 +81,7 @@ export function SiteHeader() {
               </SheetHeader>
               <div className="flex flex-col h-full">
                 <div className="flex items-center space-x-2 mb-8">
-                   <BrainCircuit className="h-6 w-6 text-primary" />
+                  <BrainCircuit className="h-6 w-6 text-primary" />
                   <span className="font-bold">Ángel Nereira</span>
                 </div>
                 <div className="flex flex-col space-y-2">
@@ -99,7 +99,7 @@ export function SiteHeader() {
                       {item.label}
                     </Link>
                   ))}
-                  
+
                 </div>
               </div>
             </SheetContent>

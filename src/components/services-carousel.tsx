@@ -19,7 +19,7 @@ const carouselOptions: EmblaOptionsType = {
 
 export const ServicesCarousel: React.FC = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(carouselOptions, [
-    Autoplay({ playOnInit: true, delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true }),
+    Autoplay({ playOnInit: true, delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true }),
   ]);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([]);
@@ -27,7 +27,7 @@ export const ServicesCarousel: React.FC = () => {
   const scrollTo = React.useCallback((index: number) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
   const scrollPrev = React.useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
   const scrollNext = React.useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
-  
+
   const onSelect = React.useCallback((emblaApi: EmblaCarouselType) => {
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, []);
@@ -66,7 +66,7 @@ export const ServicesCarousel: React.FC = () => {
           ))}
         </div>
       </div>
-      
+
       <div className="absolute -bottom-14 left-1/2 -translate-x-1/2 flex items-center justify-center gap-4">
         <Button
           variant="outline"
@@ -79,16 +79,16 @@ export const ServicesCarousel: React.FC = () => {
         </Button>
 
         <div className="flex items-center justify-center gap-2">
-            {scrollSnaps.map((_, index) => (
+          {scrollSnaps.map((_, index) => (
             <button
-                key={index}
-                onClick={() => scrollTo(index)}
-                className={cn(
+              key={index}
+              onClick={() => scrollTo(index)}
+              className={cn(
                 'h-2 w-2 rounded-full transition-all duration-300',
                 selectedIndex === index ? 'w-4 bg-primary' : 'bg-muted-foreground/50'
-                )}
+              )}
             />
-            ))}
+          ))}
         </div>
 
         <Button
