@@ -37,26 +37,37 @@ const coreTechnologies = [
   { name: "Oracle Cloud", icon: Cloud },
 ];
 
-// Value propositions for target audience
-const valueProps = [
+// Solution categories - more engaging and interactive
+const solutionCards = [
   {
-    title: "Para Empresarios y Ejecutivos",
-    desc: "Soluciones tecnológicas que impulsan el crecimiento y optimizan operaciones.",
+    title: "Sistemas Empresariales",
+    desc: "Arquitecturas robustas que escalan con tu negocio. ERP, facturación electrónica, integraciones gubernamentales.",
     icon: Building2,
+    href: "/services",
+    gradient: "from-violet-500/20 to-purple-500/20",
+    stats: "99.9% uptime",
   },
   {
-    title: "Para Reclutadores",
-    desc: "Ingeniero senior con experiencia en sistemas empresariales críticos.",
-    icon: Users,
-  },
-  {
-    title: "Para Emprendedores",
-    desc: "De MVP a producto escalable. Arquitectura pensada para el crecimiento.",
+    title: "Productos Digitales",
+    desc: "De concepto a producto lanzado. Desarrollo ágil, iteraciones rápidas, enfoque en el usuario final.",
     icon: Sparkles,
+    href: "/services",
+    gradient: "from-blue-500/20 to-cyan-500/20",
+    stats: "MVP en 4 semanas",
+  },
+  {
+    title: "Consultoría Técnica",
+    desc: "Auditorías de código, arquitectura de software, optimización de rendimiento y mentoría para equipos.",
+    icon: Users,
+    href: "/contact",
+    gradient: "from-emerald-500/20 to-teal-500/20",
+    stats: "15+ tecnologías",
   },
 ];
 
 export default function HomePageClient() {
+  const [hoveredCard, setHoveredCard] = React.useState<number | null>(null);
+
   return (
     <div className="flex flex-col gap-12 md:gap-24 lg:gap-32">
       {/* Hero Section - Redesigned */}
@@ -134,30 +145,52 @@ export default function HomePageClient() {
         </div>
       </section>
 
-      {/* Value Propositions - Target Audience */}
+      {/* Solutions Section - Interactive */}
       <section className="w-full">
         <div className="container px-4 md:px-6">
           <AnimatedDiv>
             <div className="text-center mb-12">
               <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl font-headline mb-4">
-                ¿Cómo puedo ayudarte?
+                Soluciones que Transforman
               </h2>
               <p className="max-w-[700px] mx-auto text-muted-foreground md:text-lg">
-                Soluciones adaptadas a tus necesidades específicas.
+                Cada proyecto es único. Explora las áreas donde puedo aportar valor a tu visión.
               </p>
             </div>
           </AnimatedDiv>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {valueProps.map((prop, index) => (
+            {solutionCards.map((solution, index) => (
               <AnimatedDiv key={index} delay={0.1 * index}>
-                <SpotlightCard className="group h-full p-6 bg-secondary/30 border border-white/5 hover:border-primary/30 transition-all duration-300">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                    <prop.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">{prop.title}</h3>
-                  <p className="text-muted-foreground text-sm">{prop.desc}</p>
-                </SpotlightCard>
+                <Link href={solution.href} className="block h-full">
+                  <SpotlightCard
+                    className={`group h-full p-6 bg-gradient-to-br ${solution.gradient} border border-white/10 hover:border-primary/40 transition-all duration-500 cursor-pointer hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10`}
+                    onMouseEnter={() => setHoveredCard(index)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className={`w-14 h-14 bg-background/50 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 ${hoveredCard === index ? 'scale-110 bg-primary/20' : ''}`}>
+                        <solution.icon className={`w-7 h-7 transition-colors duration-300 ${hoveredCard === index ? 'text-primary' : 'text-foreground/70'}`} />
+                      </div>
+                      <Badge variant="secondary" className="text-xs px-2 py-1 bg-background/50 backdrop-blur-sm">
+                        {solution.stats}
+                      </Badge>
+                    </div>
+
+                    <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+                      {solution.title}
+                    </h3>
+
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                      {solution.desc}
+                    </p>
+
+                    <div className={`flex items-center text-sm font-medium transition-all duration-300 ${hoveredCard === index ? 'text-primary translate-x-2' : 'text-muted-foreground'}`}>
+                      Explorar
+                      <ArrowRight className={`ml-2 h-4 w-4 transition-transform duration-300 ${hoveredCard === index ? 'translate-x-1' : ''}`} />
+                    </div>
+                  </SpotlightCard>
+                </Link>
               </AnimatedDiv>
             ))}
           </div>
