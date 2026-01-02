@@ -1,6 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { LanguageProvider } from "@/lib/language-context";
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (
@@ -10,7 +11,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
             enableSystem
             disableTransitionOnChange
         >
-            {children}
+            <LanguageProvider>
+                {children}
+            </LanguageProvider>
         </ThemeProvider>
     );
 }

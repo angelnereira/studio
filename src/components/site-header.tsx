@@ -9,10 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import * as React from "react";
+import { LanguageToggle } from "@/components/language-toggle";
 
 const navItems = [
-  { href: "/", label: "Home", icon: <Home className="h-4 w-4" /> },
-  { href: "/services", label: "Soluciones", icon: <Briefcase className="h-4 w-4" /> },
+  { href: "/", label: "Inicio", icon: <Home className="h-4 w-4" /> },
+  { href: "/services", label: "Servicios", icon: <Briefcase className="h-4 w-4" /> },
   { href: "/proyectos", label: "Proyectos", icon: <FolderKanban className="h-4 w-4" /> },
   { href: "/calculadora", label: "Calculadora", icon: <Calculator className="h-4 w-4" /> },
   { href: "/skills", label: "Stack", icon: <Code2 className="h-4 w-4" /> },
@@ -57,6 +58,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex flex-1 items-center justify-end space-x-2">
+          <LanguageToggle />
           <Button
             variant="ghost"
             size="icon"
@@ -109,3 +111,4 @@ export function SiteHeader() {
     </header>
   );
 }
+
