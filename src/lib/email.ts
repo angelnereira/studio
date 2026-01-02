@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+
 
 type FormType = 'client' | 'employer' | 'collaborator' | 'invitation';
 
@@ -63,10 +63,10 @@ function formatInvitationEmail(data: any): string {
     <p><strong>Tipo de Evento:</strong> ${data.eventType}</p>
     <p><strong>Rol Propuesto:</strong> ${data.proposedRole}</p>
     <p><strong>Fecha del Evento:</strong> ${new Date(data.eventDate).toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })}</p>
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })}</p>
     ${data.eventTime ? `<p><strong>Hora:</strong> ${data.eventTime}</p>` : ''}
     <p><strong>Ubicación:</strong> ${data.eventLocation}</p>
     <p><strong>Motivo de la Invitación:</strong></p>
@@ -95,6 +95,8 @@ export async function sendContactEmail({ formType, data }: EmailData): Promise<{
       return { success: false, error: 'Configuración de email no disponible' };
     }
 
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
     const formatter = emailFormatters[formType];
     const subject = emailSubjects[formType];
 
@@ -105,8 +107,8 @@ export async function sendContactEmail({ formType, data }: EmailData): Promise<{
     const htmlContent = formatter(data);
 
     const result = await resend.emails.send({
-      from: 'Contacto Portfolio <onboarding@resend.dev>', // Temporal: cambiar a contact@angelnereira.com cuando el dominio esté verificado
-      to: 'angelnereira15@gmail.com', // Tu email personal donde recibirás los contactos
+      from: 'Ángel Nereira <contact@angelnereira.com>',
+      to: 'contact@angelnereira.com',
       subject: subject,
       html: htmlContent,
       reply_to: data.email, // Permite responder directamente al remitente

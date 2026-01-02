@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
+// import { prisma } from "@/lib/prisma";
 import { sendContactEmail } from "@/lib/email";
 
 // Define schemas for each form
@@ -11,8 +11,8 @@ const clientSchema = z.object({
   company: z.string().optional(),
   country: z.string().optional(),
   industry: z.string().optional(),
-  service: z.string({ required_error: "Por favor, selecciona un servicio."}),
-  budget: z.string({ required_error: "Por favor, selecciona un presupuesto."}),
+  service: z.string({ required_error: "Por favor, selecciona un servicio." }),
+  budget: z.string({ required_error: "Por favor, selecciona un presupuesto." }),
   message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres."),
 });
 
@@ -88,7 +88,7 @@ export async function onContactSubmit(
     const issues: ZodIssues = {};
     parsed.error.issues.forEach(issue => {
       const path = issue.path[0];
-      if(path) {
+      if (path) {
         issues[path] = issue.message;
       }
     });
@@ -117,9 +117,17 @@ export async function onContactSubmit(
     }
 
     // Guardar en la base de datos con Prisma
-    await prisma.contact.create({
-      data: contactData,
-    });
+    /*
+      // Guardar en la base de datos con Prisma (Opcional - No bloqueante)
+      try {
+        // await prisma.contact.create({
+        //   data: contactData,
+        // });
+      } catch (dbError) {
+        console.warn("Advertencia: No se pudo guardar en la base de datos, pero se intentará enviar el email.", dbError);
+        // Continuar con el envío de email
+      }
+    */
 
     // Enviar email con los datos del formulario
     const emailResult = await sendContactEmail({
@@ -128,10 +136,14 @@ export async function onContactSubmit(
     });
 
     if (!emailResult.success) {
-      console.error('Error al enviar email:', emailResult.error);
-      // No fallamos la operación completa si el email falla
-      // pero lo registramos en los logs
+      console.error('Error final al enviar email:', emailResult.error);
+      return {
+        status: 'error',
+        message: 'No se pudo enviar el email. Por favor, intenta contactarme directamente a contact@angelnereira.com.',
+        formType
+      };
     }
+
 
     return {
       status: 'success',
