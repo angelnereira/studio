@@ -3,6 +3,7 @@
 import { ComplexityLevel, Country } from '@/types/calculator';
 import { MULTIPLICADORES_COMPLEJIDAD, AJUSTES_PAIS } from '@/lib/calculator-constants';
 import { Card } from '@/components/ui/card';
+import { SpotlightCard } from '@/components/spotlight-card';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Check } from 'lucide-react';
@@ -39,11 +40,10 @@ export function StepConfiguration({
             return (
               <Card
                 key={complexity.level}
-                className={`p-5 cursor-pointer transition-all hover:shadow-md ${
-                  isSelected
-                    ? 'border-primary border-2 bg-primary/5'
-                    : 'border-border hover:border-primary/50'
-                }`}
+                className={`p-5 cursor-pointer transition-all hover:shadow-md ${isSelected
+                  ? 'border-primary border-2 bg-primary/5'
+                  : 'border-border hover:border-primary/50'
+                  }`}
                 onClick={() => onComplexitySelect(complexity.level)}
               >
                 <div className="flex justify-between items-start mb-2">

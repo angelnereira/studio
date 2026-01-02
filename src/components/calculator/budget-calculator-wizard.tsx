@@ -13,6 +13,7 @@ import {
 import { calcularPresupuesto, saveCalculation } from '@/lib/calculator-logic';
 import { exportToPDF } from '@/lib/pdf-export';
 import { Card } from '@/components/ui/card';
+import { SpotlightCard } from '@/components/spotlight-card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -145,20 +146,18 @@ export function BudgetCalculatorWizard() {
             return (
               <div key={stepNumber} className="flex-1 text-center">
                 <div
-                  className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium mb-2 transition-colors ${
-                    isActive
-                      ? 'bg-primary text-primary-foreground'
-                      : isCompleted
+                  className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium mb-2 transition-colors ${isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : isCompleted
                       ? 'bg-primary/20 text-primary'
                       : 'bg-secondary text-muted-foreground'
-                  }`}
+                    }`}
                 >
                   {stepNumber}
                 </div>
                 <p
-                  className={`text-xs ${
-                    isActive ? 'text-foreground font-medium' : 'text-muted-foreground'
-                  }`}
+                  className={`text-xs ${isActive ? 'text-foreground font-medium' : 'text-muted-foreground'
+                    }`}
                 >
                   {title}
                 </p>
@@ -170,7 +169,7 @@ export function BudgetCalculatorWizard() {
       </div>
 
       {/* Step Content */}
-      <Card className="p-8 mb-6">
+      <SpotlightCard className="p-8 mb-6 bg-card/50 backdrop-blur-md border-white/5">
         {currentStep === 1 && (
           <StepService
             selectedService={serviceType}
@@ -211,7 +210,7 @@ export function BudgetCalculatorWizard() {
             onSendEmail={handleSendEmail}
           />
         )}
-      </Card>
+      </SpotlightCard>
 
       {/* Navigation */}
       <div className="flex justify-between">

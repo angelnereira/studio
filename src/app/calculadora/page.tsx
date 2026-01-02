@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { AnimatedDiv } from '@/components/animated-div';
 import { BudgetCalculatorWizard } from '@/components/calculator/budget-calculator-wizard';
 import { Calculator, Sparkles } from 'lucide-react';
+import { SpotlightCard } from '@/components/spotlight-card';
 
 export const metadata: Metadata = {
   title: 'Calculadora de Presupuestos | Ángel Nereira',
@@ -32,16 +33,16 @@ export default function CalculadoraPage() {
             Nuestra calculadora considera múltiples factores para brindarte un presupuesto preciso y personalizado.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Calculator className="h-4 w-4" />
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-foreground/70">
+            <div className="flex items-center gap-2 bg-secondary/50 px-3 py-1 rounded-full border border-white/5">
+              <Calculator className="h-4 w-4 text-primary" />
               <span>Estimación instantánea</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-secondary/50 px-3 py-1 rounded-full border border-white/5">
               <span>•</span>
               <span>Desglose detallado</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-secondary/50 px-3 py-1 rounded-full border border-white/5">
               <span>•</span>
               <span>Exportar PDF</span>
             </div>
@@ -53,7 +54,7 @@ export default function CalculadoraPage() {
 
         {/* Info Section */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          <div className="text-center p-6">
+          <SpotlightCard className="text-center p-6 bg-secondary/30 backdrop-blur-sm border-white/5">
             <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
               <Calculator className="h-6 w-6 text-primary" />
             </div>
@@ -61,9 +62,9 @@ export default function CalculadoraPage() {
             <p className="text-sm text-muted-foreground">
               Nuestros precios están basados en años de experiencia y análisis del mercado tecnológico
             </p>
-          </div>
+          </SpotlightCard>
 
-          <div className="text-center p-6">
+          <SpotlightCard className="text-center p-6 bg-secondary/30 backdrop-blur-sm border-white/5">
             <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
               <Sparkles className="h-6 w-6 text-primary" />
             </div>
@@ -71,9 +72,9 @@ export default function CalculadoraPage() {
             <p className="text-sm text-muted-foreground">
               Ajusta complejidad, urgencia y ubicación para obtener un presupuesto que se adapte a tus necesidades
             </p>
-          </div>
+          </SpotlightCard>
 
-          <div className="text-center p-6">
+          <SpotlightCard className="text-center p-6 bg-secondary/30 backdrop-blur-sm border-white/5">
             <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl">📊</span>
             </div>
@@ -81,7 +82,7 @@ export default function CalculadoraPage() {
             <p className="text-sm text-muted-foreground">
               Desglose completo de costos y recomendaciones personalizadas para maximizar el valor de tu inversión
             </p>
-          </div>
+          </SpotlightCard>
         </div>
 
         {/* FAQ Section */}

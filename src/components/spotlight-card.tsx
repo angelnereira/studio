@@ -49,7 +49,7 @@ export function SpotlightCard({ className, children, as: Comp = 'div', ...props 
       onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={cn("relative w-full", Comp === 'div' && 'card-spotlight', className)}
+      className={cn("relative w-full overflow-hidden rounded-[var(--radius)]", Comp === 'div' && 'card-spotlight', className)}
     >
       <div
         className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300"

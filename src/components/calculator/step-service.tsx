@@ -3,6 +3,7 @@
 import { ServiceType } from '@/types/calculator';
 import { SERVICIOS_BASE } from '@/lib/calculator-constants';
 import { Card } from '@/components/ui/card';
+import { SpotlightCard } from '@/components/spotlight-card';
 import { Badge } from '@/components/ui/badge';
 import { Check } from 'lucide-react';
 
@@ -28,11 +29,10 @@ export function StepService({ selectedService, onSelect }: StepServiceProps) {
           return (
             <Card
               key={service.id}
-              className={`p-6 cursor-pointer transition-all hover:shadow-lg ${
-                isSelected
-                  ? 'border-primary border-2 bg-primary/5'
-                  : 'border-border hover:border-primary/50'
-              }`}
+              className={`p-6 cursor-pointer transition-all hover:shadow-lg ${isSelected
+                ? 'border-primary border-2 bg-primary/5'
+                : 'border-border hover:border-primary/50'
+                }`}
               onClick={() => onSelect(service.id)}
             >
               <div className="flex justify-between items-start mb-3">
