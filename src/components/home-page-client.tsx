@@ -161,32 +161,34 @@ export default function HomePageClient() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {solutionCards.map((solution, index) => (
-              <AnimatedDiv key={index} delay={0.1 * index}>
+              <AnimatedDiv key={index} delay={0.1 * index} className="h-full">
                 <Link href={solution.href} className="block h-full">
                   <SpotlightCard
-                    className={`group h-full p-6 bg-gradient-to-br ${solution.gradient} border border-white/10 hover:border-primary/40 transition-all duration-500 cursor-pointer hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10`}
+                    className={`group h-full flex flex-col p-8 bg-gradient-to-br ${solution.gradient} border border-white/10 hover:border-primary/40 transition-all duration-500 cursor-pointer hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10`}
                     onMouseEnter={() => setHoveredCard(index)}
                     onMouseLeave={() => setHoveredCard(null)}
                   >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className={`w-14 h-14 bg-background/50 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 ${hoveredCard === index ? 'scale-110 bg-primary/20' : ''}`}>
-                        <solution.icon className={`w-7 h-7 transition-colors duration-300 ${hoveredCard === index ? 'text-primary' : 'text-foreground/70'}`} />
+                    <div className="flex items-start justify-between mb-6">
+                      <div className={`w-16 h-16 bg-background/50 backdrop-blur-sm rounded-2xl flex items-center justify-center transition-all duration-300 shadow-md ${hoveredCard === index ? 'scale-110 bg-primary/20' : ''}`}>
+                        <solution.icon className={`w-8 h-8 transition-colors duration-300 ${hoveredCard === index ? 'text-primary' : 'text-foreground/80'}`} />
                       </div>
-                      <Badge variant="secondary" className="text-xs px-2 py-1 bg-background/50 backdrop-blur-sm">
+                      <Badge variant="secondary" className="text-xs font-medium px-2.5 py-1 bg-background/50 backdrop-blur-sm border-white/5">
                         {solution.stats}
                       </Badge>
                     </div>
 
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                      {solution.title}
-                    </h3>
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors duration-300 leading-tight">
+                        {solution.title}
+                      </h3>
 
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                      {solution.desc}
-                    </p>
+                      <p className="text-muted-foreground text-base leading-relaxed mb-6">
+                        {solution.desc}
+                      </p>
+                    </div>
 
-                    <div className={`flex items-center text-sm font-medium transition-all duration-300 ${hoveredCard === index ? 'text-primary translate-x-2' : 'text-muted-foreground'}`}>
-                      Explorar
+                    <div className={`mt-auto pt-4 flex items-center text-sm font-semibold transition-all duration-300 border-t border-white/5 ${hoveredCard === index ? 'text-primary' : 'text-muted-foreground'}`}>
+                      <span>Explorar Solución</span>
                       <ArrowRight className={`ml-2 h-4 w-4 transition-transform duration-300 ${hoveredCard === index ? 'translate-x-1' : ''}`} />
                     </div>
                   </SpotlightCard>
