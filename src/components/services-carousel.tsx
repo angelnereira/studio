@@ -14,13 +14,25 @@ import { SpotlightCard } from './spotlight-card';
 
 const carouselOptions: EmblaOptionsType = {
   loop: true,
-  align: 'center', // Changed from 'start' to 'center'
+  align: 'start',
+  dragFree: false,
+  containScroll: 'trimSnaps',
+  skipSnaps: false,
 };
 
 export const ServicesCarousel: React.FC = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel(carouselOptions, [
-    Autoplay({ playOnInit: true, delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true }),
-  ]);
+  const autoplayPlugin = React.useMemo(
+    () => Autoplay({
+      playOnInit: true,
+      delay: 4000,
+      stopOnInteraction: true,
+      stopOnMouseEnter: true,
+      stopOnFocusIn: true,
+    }),
+    []
+  );
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(carouselOptions, [autoplayPlugin]);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([]);
 
