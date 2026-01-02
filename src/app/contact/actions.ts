@@ -71,7 +71,17 @@ export async function onContactSubmit(
   prevState: FormState,
   data: FormData
 ): Promise<FormState> {
-  const formData = Object.fromEntries(data);
+  // React 19's useActionState adds numeric prefixes (e.g., "1_name") to form fields
+  // We need to strip these prefixes to get the actual field names
+  const rawFormData = Object.fromEntries(data);
+  const formData: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(rawFormData)) {
+    // Remove numeric prefix like "1_" or "0_" from field names
+    const cleanKey = key.replace(/^\d+_/, '');
+    formData[cleanKey] = value;
+  }
+
   const formType = formData.formType as keyof typeof formSchemas;
 
   if (!formType || !formSchemas[formType]) {
