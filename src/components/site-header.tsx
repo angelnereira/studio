@@ -10,22 +10,23 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { cn } from "@/lib/utils";
 import * as React from "react";
 import { LanguageToggle } from "@/components/language-toggle";
-
-const navItems = [
-  { href: "/", label: "Inicio", icon: <Home className="h-4 w-4" /> },
-  { href: "/services", label: "Servicios", icon: <Briefcase className="h-4 w-4" /> },
-  { href: "/proyectos", label: "Proyectos", icon: <FolderKanban className="h-4 w-4" /> },
-  { href: "/calculadora", label: "Calculadora", icon: <Calculator className="h-4 w-4" /> },
-  { href: "/skills", label: "Stack", icon: <Code2 className="h-4 w-4" /> },
-  { href: "/blog", label: "Blog", icon: <FileText className="h-4 w-4" /> },
-  { href: "/contact", label: "Contacto", icon: <Mail className="h-4 w-4" /> },
-];
+import { useLanguage } from "@/lib/language-context";
 
 export function SiteHeader() {
   const [isSheetOpen, setSheetOpen] = React.useState(false);
   const pathname = usePathname();
-
   const { setTheme, theme } = useTheme();
+  const { t } = useLanguage();
+
+  const navItems = React.useMemo(() => [
+    { href: "/", label: t('nav.home'), icon: <Home className="h-4 w-4" /> },
+    { href: "/services", label: t('nav.services'), icon: <Briefcase className="h-4 w-4" /> },
+    { href: "/proyectos", label: t('nav.projects'), icon: <FolderKanban className="h-4 w-4" /> },
+    { href: "/calculadora", label: t('nav.calculator'), icon: <Calculator className="h-4 w-4" /> },
+    { href: "/skills", label: t('skills.title'), icon: <Code2 className="h-4 w-4" /> },
+    { href: "/blog", label: "Blog", icon: <FileText className="h-4 w-4" /> },
+    { href: "/contact", label: t('nav.contact'), icon: <Mail className="h-4 w-4" /> },
+  ], [t]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b glass">

@@ -84,6 +84,8 @@ const translations: Record<Language, Record<string, string>> = {
         // Footer
         'footer.rights': 'Todos los derechos reservados.',
         'footer.built': 'Diseñado y desarrollado con',
+        'footer.quote': '“Solucionar problemas para disfrutar la vida.”',
+        'footer.builtBy': 'Construido por Ángel Nereira.',
 
         // General
         'general.learnMore': 'Saber más',
@@ -162,6 +164,8 @@ const translations: Record<Language, Record<string, string>> = {
         // Footer
         'footer.rights': 'All rights reserved.',
         'footer.built': 'Designed and built with',
+        'footer.quote': '“Solving problems to enjoy life.”',
+        'footer.builtBy': 'Built by Ángel Nereira.',
 
         // General
         'general.learnMore': 'Learn more',
