@@ -55,16 +55,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   let post;
+
   try {
-    const { slug } = await params;
     post = getPostBySlug(slug);
   } catch (error) {
     notFound();
   }
 
   // Obtener posts relacionados
-  const relatedPosts = getRelatedPosts(params.slug, 3);
+  const relatedPosts = getRelatedPosts(slug, 3);
 
   return (
     <AnimatedDiv>
