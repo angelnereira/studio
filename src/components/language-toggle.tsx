@@ -2,12 +2,6 @@
 
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Languages } from "lucide-react";
 
 type Language = 'es' | 'en';
@@ -24,11 +18,12 @@ export function LanguageToggle() {
         }
     }, []);
 
-    const setLanguage = (lang: Language) => {
-        setLanguageState(lang);
-        localStorage.setItem('language', lang);
-        document.documentElement.lang = lang;
-        // Trigger a page reload to apply translations
+    const toggleLanguage = () => {
+        const newLang = language === 'es' ? 'en' : 'es';
+        setLanguageState(newLang);
+        localStorage.setItem('language', newLang);
+        document.documentElement.lang = newLang;
+        // Trigger a page reload to apply translations globally
         window.location.reload();
     };
 
@@ -42,26 +37,18 @@ export function LanguageToggle() {
     }
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative">
-                    <Languages className="h-[1.2rem] w-[1.2rem]" />
-                    <span className="absolute -bottom-0.5 -right-0.5 text-[10px] font-bold uppercase bg-primary text-primary-foreground rounded px-0.5">
-                        {language}
-                    </span>
-                    <span className="sr-only">Toggle language</span>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setLanguage("es")} className={language === 'es' ? 'bg-accent' : ''}>
-                    <span className="mr-2">🇪🇸</span>
-                    Español
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setLanguage("en")} className={language === 'en' ? 'bg-accent' : ''}>
-                    <span className="mr-2">🇺🇸</span>
-                    English
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
+        <Button
+            variant="ghost"
+            size="icon"
+            className="relative hover:bg-accent hover:text-accent-foreground"
+            onClick={toggleLanguage}
+            title={language === 'es' ? "Cambiar a Inglés" : "Switch to Spanish"}
+        >
+            <Languages className="h-[1.3rem] w-[1.3rem] transition-all" />
+            <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground border border-background">
+                {language.toUpperCase()}
+            </span>
+            <span className="sr-only">Toggle language</span>
+        </Button>
     );
 }

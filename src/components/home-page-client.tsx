@@ -21,13 +21,7 @@ const DynamicTestimonialsSection = dynamic(() => import('@/components/home-secti
   loading: () => <Skeleton className="h-64 w-full" />,
 });
 
-// Key stats for credibility
-const stats = [
-  { value: "5+", label: "Años de Experiencia", icon: TrendingUp },
-  { value: "20+", label: "Proyectos Entregados", icon: CheckCircle2 },
-  { value: "100%", label: "Clientes Satisfechos", icon: Users },
-  { value: "15+", label: "Tecnologías Dominadas", icon: Zap },
-];
+import { useLanguage } from "@/lib/language-context";
 
 // Core technologies (replacing the marquee)
 const coreTechnologies = [
@@ -37,35 +31,45 @@ const coreTechnologies = [
   { name: "Oracle Cloud", icon: Cloud },
 ];
 
-// Solution categories - more engaging and interactive
-const solutionCards = [
-  {
-    title: "Sistemas Empresariales",
-    desc: "Arquitecturas robustas que escalan con tu negocio. ERP, facturación electrónica, integraciones gubernamentales.",
-    icon: Building2,
-    href: "/services",
-    gradient: "from-violet-500/20 to-purple-500/20",
-    stats: "99.9% uptime",
-  },
-  {
-    title: "Productos Digitales",
-    desc: "De concepto a producto lanzado. Desarrollo ágil, iteraciones rápidas, enfoque en el usuario final.",
-    icon: Sparkles,
-    href: "/services",
-    gradient: "from-blue-500/20 to-cyan-500/20",
-    stats: "MVP en 4 semanas",
-  },
-  {
-    title: "Consultoría Técnica",
-    desc: "Auditorías de código, arquitectura de software, optimización de rendimiento y mentoría para equipos.",
-    icon: Users,
-    href: "/contact",
-    gradient: "from-emerald-500/20 to-teal-500/20",
-    stats: "15+ tecnologías",
-  },
-];
-
 export default function HomePageClient() {
+  const { t } = useLanguage();
+
+  // Key stats for credibility
+  const stats = [
+    { value: "5+", label: t('hero.stats.years'), icon: TrendingUp },
+    { value: "20+", label: t('hero.stats.projects'), icon: CheckCircle2 },
+    { value: "100%", label: t('hero.stats.clients'), icon: Users },
+    { value: "15+", label: t('hero.stats.tech'), icon: Zap },
+  ];
+
+  // Solution categories - more engaging and interactive
+  const solutionCards = [
+    {
+      title: t('solutions.enterprise.title'),
+      desc: t('solutions.enterprise.desc'),
+      icon: Building2,
+      href: "/services",
+      gradient: "from-violet-500/20 to-purple-500/20",
+      stats: t('solutions.enterprise.stats'),
+    },
+    {
+      title: t('solutions.digital.title'),
+      desc: t('solutions.digital.desc'),
+      icon: Sparkles,
+      href: "/services",
+      gradient: "from-blue-500/20 to-cyan-500/20",
+      stats: t('solutions.digital.stats'),
+    },
+    {
+      title: t('solutions.consulting.title'),
+      desc: t('solutions.consulting.desc'),
+      icon: Users,
+      href: "/contact",
+      gradient: "from-emerald-500/20 to-teal-500/20",
+      stats: t('solutions.consulting.stats'),
+    },
+  ];
+
   const [hoveredCard, setHoveredCard] = React.useState<number | null>(null);
 
   return (
@@ -82,26 +86,26 @@ export default function HomePageClient() {
             {/* Badge */}
             <Badge variant="outline" className="mb-6 px-4 py-2 text-sm font-medium border-primary/30 bg-primary/5">
               <Sparkles className="w-4 h-4 mr-2 text-primary" />
-              Disponible para nuevos proyectos
+              {t('hero.badge')}
             </Badge>
 
             {/* Main heading */}
             <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-headline mb-6">
               <span className="block text-muted-foreground text-lg sm:text-xl md:text-2xl font-normal mb-2">
-                Hola, soy
+                {t('hero.greeting')}
               </span>
-              <span className="block text-gradient">Ángel Nereira</span>
-              <span className="block text-primary mt-2">Ingeniero de Software</span>
+              <span className="block text-gradient">{t('hero.name')}</span>
+              <span className="block text-primary mt-2">{t('hero.title')}</span>
             </h1>
 
             {/* Subtitle */}
             <p className="mx-auto max-w-[700px] text-lg sm:text-xl md:text-2xl text-foreground font-medium mb-4">
-              Transformo ideas en soluciones digitales escalables
+              {t('hero.subtitle')}
             </p>
 
             {/* Description */}
             <p className="mx-auto max-w-[600px] text-muted-foreground md:text-lg mb-8">
-              Especialista en FinTech y GovTech. Diseño arquitecturas empresariales que generan valor real para tu negocio.
+              {t('hero.description')}
             </p>
 
             {/* Core tech stack badges */}
@@ -118,13 +122,13 @@ export default function HomePageClient() {
             <div className="flex flex-col sm:flex-row justify-center gap-4 px-4 sm:px-0">
               <Button asChild size="lg" className="text-base px-8">
                 <Link href="/services">
-                  Ver Soluciones
+                  {t('hero.cta.services')}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="text-base px-8">
                 <Link href="/contact">
-                  Agendar Consultoría
+                  {t('hero.cta.contact')}
                 </Link>
               </Button>
             </div>
@@ -151,10 +155,10 @@ export default function HomePageClient() {
           <AnimatedDiv>
             <div className="text-center mb-12">
               <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl font-headline mb-4">
-                Soluciones que Transforman
+                {t('solutions.title')}
               </h2>
               <p className="max-w-[700px] mx-auto text-muted-foreground md:text-lg">
-                Cada proyecto es único. Explora las áreas donde puedo aportar valor a tu visión.
+                {t('solutions.subtitle')}
               </p>
             </div>
           </AnimatedDiv>
@@ -188,7 +192,7 @@ export default function HomePageClient() {
                     </div>
 
                     <div className={`mt-auto pt-4 flex items-center text-sm font-semibold transition-all duration-300 border-t border-white/5 ${hoveredCard === index ? 'text-primary' : 'text-muted-foreground'}`}>
-                      <span>Explorar Solución</span>
+                      <span>{t('solutions.explore')}</span>
                       <ArrowRight className={`ml-2 h-4 w-4 transition-transform duration-300 ${hoveredCard === index ? 'translate-x-1' : ''}`} />
                     </div>
                   </SpotlightCard>
@@ -206,32 +210,32 @@ export default function HomePageClient() {
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-headline mb-4">
-                  Sobre Mí
+                  {t('about.title')}
                 </h2>
                 <p className="text-muted-foreground md:text-lg">
-                  Ingeniero de software panameño especializado en crear soluciones empresariales escalables para FinTech y GovTech. No solo programo, diseño arquitecturas completas que transforman negocios.
+                  {t('about.description')}
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                 <SpotlightCard className="p-6 bg-secondary/30 border border-white/5">
-                  <h3 className="font-semibold text-lg mb-3 text-primary">Una Perspectiva Única</h3>
+                  <h3 className="font-semibold text-lg mb-3 text-primary">{t('about.background.title')}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    Mi trayectoria es única: pasé 7 años como productor musical e ingeniero de sonido antes de hacer la transición a la ingeniería de software. Esta experiencia me ha dado una perspectiva diferente sobre el diseño de soluciones y la atención al detalle.
+                    {t('about.background.text')}
                   </p>
                 </SpotlightCard>
 
                 <SpotlightCard className="p-6 bg-secondary/30 border border-white/5">
-                  <h3 className="font-semibold text-lg mb-3 text-primary">Experiencia Actual</h3>
+                  <h3 className="font-semibold text-lg mb-3 text-primary">{t('about.current.title')}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    Actualmente trabajo en UbicSys S.A., donde diseño y desarrollo soluciones FinTech y GovTech. Mi proyecto principal es SAGO-FACTU, un sistema SaaS completo de facturación electrónica que integra con la DGI de Panamá.
+                    {t('about.current.text')}
                   </p>
                 </SpotlightCard>
               </div>
 
               <div className="text-center mt-8">
                 <blockquote className="text-xl md:text-2xl font-medium italic text-primary/80">
-                  "Solucionar problemas para disfrutar la vida"
+                  "{t('about.philosophy.text')}"
                 </blockquote>
               </div>
             </div>
@@ -250,14 +254,14 @@ export default function HomePageClient() {
           <div className="container px-4 md:px-6">
             <SpotlightCard className="max-w-4xl mx-auto p-8 md:p-12 bg-gradient-to-br from-primary/10 to-purple-500/10 border border-primary/20 text-center">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter font-headline mb-4">
-                ¿Listo para transformar tu negocio?
+                {t('cta.title')}
               </h2>
               <p className="max-w-[600px] mx-auto text-muted-foreground md:text-lg mb-8">
-                Colaboremos en soluciones que escalen globalmente. Estoy disponible para nuevos desafíos y oportunidades.
+                {t('cta.subtitle')}
               </p>
               <Button asChild size="lg" className="text-base px-8">
                 <Link href="/contact">
-                  Conversemos sobre tu proyecto
+                  {t('cta.button')}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>

@@ -20,10 +20,25 @@ const translations: Record<Language, Record<string, string>> = {
         'hero.description': 'Especialista en FinTech y GovTech. Diseño arquitecturas empresariales que generan valor real para tu negocio.',
         'hero.cta.services': 'Ver Soluciones',
         'hero.cta.contact': 'Agendar Consultoría',
+        'hero.badge': 'Disponible para nuevos proyectos',
         'hero.stats.years': 'Años de Experiencia',
         'hero.stats.projects': 'Proyectos Entregados',
         'hero.stats.clients': 'Clientes Satisfechos',
         'hero.stats.tech': 'Tecnologías Dominadas',
+
+        // Solutions Section
+        'solutions.title': 'Soluciones que Transforman',
+        'solutions.subtitle': 'Cada proyecto es único. Explora las áreas donde puedo aportar valor a tu visión.',
+        'solutions.enterprise.title': 'Sistemas Empresariales',
+        'solutions.enterprise.desc': 'Arquitecturas robustas que escalan con tu negocio. ERP, facturación electrónica, integraciones gubernamentales.',
+        'solutions.enterprise.stats': '99.9% uptime',
+        'solutions.digital.title': 'Productos Digitales',
+        'solutions.digital.desc': 'De concepto a producto lanzado. Desarrollo ágil, iteraciones rápidas, enfoque en el usuario final.',
+        'solutions.digital.stats': 'MVP en 4 semanas',
+        'solutions.consulting.title': 'Consultoría Técnica',
+        'solutions.consulting.desc': 'Auditorías de código, arquitectura de software, optimización de rendimiento y mentoría para equipos.',
+        'solutions.consulting.stats': '15+ tecnologías',
+        'solutions.explore': 'Explorar Solución',
 
         // About
         'about.title': 'Sobre Mí',
@@ -83,10 +98,25 @@ const translations: Record<Language, Record<string, string>> = {
         'hero.description': 'FinTech and GovTech specialist. I design enterprise architectures that generate real value for your business.',
         'hero.cta.services': 'View Solutions',
         'hero.cta.contact': 'Book a Consultation',
+        'hero.badge': 'Available for new projects',
         'hero.stats.years': 'Years of Experience',
         'hero.stats.projects': 'Projects Delivered',
         'hero.stats.clients': 'Happy Clients',
         'hero.stats.tech': 'Technologies Mastered',
+
+        // Solutions Section
+        'solutions.title': 'Solutions that Transform',
+        'solutions.subtitle': 'Each project is unique. Explore the areas where I can add value to your vision.',
+        'solutions.enterprise.title': 'Enterprise Systems',
+        'solutions.enterprise.desc': 'Robust architectures that scale with your business. ERP, electronic invoicing, government integrations.',
+        'solutions.enterprise.stats': '99.9% uptime',
+        'solutions.digital.title': 'Digital Products',
+        'solutions.digital.desc': 'From concept to launched product. Agile development, fast iterations, end-user focus.',
+        'solutions.digital.stats': 'MVP in 4 weeks',
+        'solutions.consulting.title': 'Technical Consulting',
+        'solutions.consulting.desc': 'Code audits, software architecture, performance optimization, and team mentorship.',
+        'solutions.consulting.stats': '15+ technologies',
+        'solutions.explore': 'Explore Solution',
 
         // About
         'about.title': 'About Me',
