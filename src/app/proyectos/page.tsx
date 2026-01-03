@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { ExternalLink, Github, Code2, Cloud, Database, Lock } from "lucide-react";
+import { ExternalLink, Github, Code2, Cloud, Database, Lock, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -10,36 +10,37 @@ import { AnimatedDiv } from "@/components/animated-div";
 const projects = [
   {
     id: "sago-factu",
-    title: "SAGO-FACTU",
-    subtitle: "Sistema SaaS de Facturación Electrónica Multi-Tenant",
-    description: "Solución completa de facturación electrónica que integra con la DGI de Panamá a través de The Factory HKA. Arquitectura multi-tenant que permite a múltiples empresas gestionar sus facturas de forma independiente.",
-    problem: "Las empresas panameñas necesitan cumplir con la normativa de facturación electrónica de la DGI, pero las soluciones existentes son costosas, inflexibles o requieren instalación local.",
-    solution: "Sistema SaaS completo que permite a múltiples empresas gestionar su facturación electrónica de forma independiente, con integración total con la Dirección General de Ingresos de Panamá.",
+    title: "Sago One",
+    subtitle: "Plataforma de Facturación Electrónica PWA Offline-First",
+    description: "Solución líder en Panamá para facturación electrónica. PWA progresiva que permite emitir facturas sin internet, con cifrado militar AES-256 e integración directa con proveedores PAC y DGI. Rendimiento extremo con Next.js 15 y Neon DB.",
+    problem: "Comerciantes sufren con sistemas lentos, burocráticos y dependientes de internet estable. La seguridad de datos fiscales y la movilidad eran inexistentes en soluciones tradicionales.",
+    solution: "PWA Offline-First que garantiza facturación ininterrumpida. Sincronización automática, cifrado de extremo a extremo y experiencia de usuario fluida en cualquier dispositivo móvil o desktop.",
     features: [
-      "Arquitectura Multi-Tenant con aislamiento total de datos",
-      "Integración SOAP con DGI Panamá (The Factory HKA)",
-      "Manejo de Certificados Digitales (XMLDSig, PKCS#12)",
-      "Procesamiento Asíncrono con BullMQ + Redis",
-      "Sistema de Roles y Permisos Granulares",
-      "Generación automática de CUFE y códigos QR",
-      "Panel de administración por empresa",
-      "API REST para integraciones externas"
+      "PWA Offline-First con Service Workers",
+      "Seguridad Bancaria (Cifrado AES-256)",
+      "Integración DGI/PAC en Tiempo Real",
+      "Sincronización Automática de Datos",
+      "Multi-Tenant y Multi-Usuario",
+      "Generación de QR y CUFE Instantánea",
+      "Panel de Métricas en Tiempo Real",
+      "API RESTful Escalable"
     ],
     stack: [
       "Next.js 15",
       "TypeScript",
-      "PostgreSQL",
       "Prisma ORM",
-      "BullMQ",
-      "Redis",
-      "SOAP",
-      "XML/XMLDSig"
+      "Neon Postgres",
+      "PWA / Service Workers",
+      "Tailwind CSS",
+      "Vercel",
+      "AES-256"
     ],
     status: "En Producción",
     statusColor: "bg-green-500/10 text-green-600",
-    type: "FinTech · GovTech · SaaS",
+    type: "FinTech · GovTech · PWA",
     github: "https://github.com/angelnereira/sago-factu-V0.2",
-    demo: "https://sago-factu-v0-2.vercel.app/",
+    demo: "https://sagoone.com",
+    caseStudy: "/proyectos/sago-factu"
   },
   {
     id: "ueta-travel",
@@ -184,8 +185,16 @@ export default function ProyectosPage() {
                 </div>
 
                 {/* Actions */}
-                {(project.github || project.demo) && (
+                {(project.github || project.demo || project.caseStudy) && (
                   <div className="flex flex-wrap gap-3 pt-4 border-t border-white/10">
+                    {project.caseStudy && (
+                      <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
+                        <Link href={project.caseStudy}>
+                          <BookOpen className="mr-2 h-4 w-4" />
+                          Ver Caso de Estudio
+                        </Link>
+                      </Button>
+                    )}
                     {project.github && (
                       <Button asChild variant="outline" size="sm">
                         <Link href={project.github} target="_blank">
@@ -195,7 +204,7 @@ export default function ProyectosPage() {
                       </Button>
                     )}
                     {project.demo && (
-                      <Button asChild size="sm">
+                      <Button asChild variant="secondary" size="sm">
                         <Link href={project.demo} target="_blank">
                           <ExternalLink className="mr-2 h-4 w-4" />
                           Ver Demo

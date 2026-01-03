@@ -9,24 +9,26 @@ export type Project = {
   impact: string;
   githubUrl?: string;
   liveUrl?: string;
+  caseStudy?: string;
 };
 
 export type Testimonial = {
-    name: string;
-    title: string;
-    quote: string;
-    avatarId: string;
+  name: string;
+  title: string;
+  quote: string;
+  avatarId: string;
 };
 
 export const projectsData: Project[] = [
   {
-    title: "SAGO-FACTU",
+    title: "Sago One",
     id: "sago-factu",
-    description: "Sistema SaaS completo de facturación electrónica integrado con la DGI de Panamá. Permite a empresas emitir facturas electrónicas válidas, gestionar inventario, clientes y generar reportes fiscales automatizados en cumplimiento con la ley panameña.",
-    technologies: ["Next.js", "TypeScript", "PostgreSQL", "Node.js", "API DGI", "Docker", "AWS"],
-    problem: "Las empresas panameñas necesitaban cumplir con la obligación legal de facturación electrónica de la DGI, pero carecían de un sistema accesible y fácil de usar que se integrara directamente con los servicios gubernamentales.",
-    impact: "Automatización completa del proceso de facturación electrónica para +50 empresas, garantizando cumplimiento fiscal, reduciendo errores manuales en un 95% y disminuyendo el tiempo de emisión de facturas de minutos a segundos.",
-    liveUrl: "https://factu.sago.com.pa",
+    description: "Plataforma de facturación electrónica líder en Panamá. PWA Offline-first que permite emitir facturas en segundos desde cualquier dispositivo. Seguridad bancaria AES-256 integrando proveedores PAC y DGI.",
+    technologies: ["Next.js 15", "TypeScript", "Prisma", "Neon DB", "PWA", "AES-256", "Vercel"],
+    problem: "Comerciantes y PYMES enfrentaban procesos burocráticos lentos, sistemas de facturación costosos y dependencia de conexión a internet para cumplir con la DGI.",
+    impact: "Digitalización masiva de facturación con experiencia PWA. Emisión sin conexión, sincronización automática y cumplimiento fiscal garantizado. Reducción de 90% en tiempos de gestión.",
+    liveUrl: "https://sagoone.com",
+    githubUrl: "https://github.com/angelnereira/sago-factu-V0.2",
   },
   {
     title: "UETA Travel Access",
@@ -44,7 +46,7 @@ export const projectsData: Project[] = [
     problem: "Los ciudadanos debían hacer largas filas y múltiples visitas presenciales para completar trámites gubernamentales básicos, generando frustración y pérdida de productividad.",
     impact: "Digitalización de 15+ trámites gubernamentales, reduciendo tiempos de espera en 80%, mejorando la satisfacción ciudadana y liberando recursos de la institución para casos que realmente requieren atención presencial.",
   },
-   {
+  {
     title: "Dashboard Ejecutivo FinTech",
     id: "fintech-dashboard",
     description: "Dashboard analítico en tiempo real para monitoreo de métricas financieras clave. Integra datos de múltiples fuentes (transacciones, cuentas, inversiones) y presenta KPIs visuales con alertas automáticas para detección de anomalías y oportunidades.",
