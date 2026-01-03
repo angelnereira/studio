@@ -193,13 +193,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         return translations[language][key] || key;
     };
 
-    if (!mounted) {
-        return <>{children}</>;
-    }
+    // Always provide the context, but use default language ('es') during SSR
+    // We handle hydration mismatch by only rendering children after mount if strictly needed,
+    // or better: we provide the context immediately.
+    // The previous issue was returning <>{children}</> without Provider wrapping it.
+
+    // During SSR/Pre-render, effects don't run, so mounted is false.
+    // We must wraps children in Provider regardless.
 
     return (
         <LanguageContext.Provider value={{ language, setLanguage, t }}>
-            {children}
+            {mounted ? children : children /* Render children immediately to allow SSR text generation with default language */}
         </LanguageContext.Provider>
     );
 }
