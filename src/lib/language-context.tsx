@@ -90,6 +90,13 @@ const translations: Record<Language, Record<string, string>> = {
         // General
         'general.learnMore': 'Saber más',
         'general.viewAll': 'Ver todo',
+
+        // Admin
+        'admin.title': 'Panel de Administración',
+        'admin.dashboard': 'Dashboard',
+        'admin.job_analysis': 'Análisis de Empleos',
+        'admin.cover_letters': 'Cartas de Presentación',
+        'admin.back_to_site': 'Volver al Sitio',
     },
     en: {
         // Hero
@@ -170,6 +177,13 @@ const translations: Record<Language, Record<string, string>> = {
         // General
         'general.learnMore': 'Learn more',
         'general.viewAll': 'View all',
+
+        // Admin
+        'admin.title': 'Admin Panel',
+        'admin.dashboard': 'Dashboard',
+        'admin.job_analysis': 'Job Analysis',
+        'admin.cover_letters': 'Cover Letters',
+        'admin.back_to_site': 'Back to Site',
     },
 };
 
