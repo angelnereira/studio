@@ -8,7 +8,8 @@ export type ServiceType =
   | 'crm-erp'
   | 'api-backend'
   | 'migration'
-  | 'maintenance';
+  | 'maintenance'
+  | 'fiscal-system';
 
 export type ComplexityLevel = 'basico' | 'intermedio' | 'avanzado' | 'enterprise';
 

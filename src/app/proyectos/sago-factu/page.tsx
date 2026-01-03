@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { AnimatedDiv } from "@/components/animated-div";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { ExternalLink, Github, ArrowLeft, CheckCircle2, Shield, Zap, WifiOff, Globe, Server, Code2, Database, Layout } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function SagoOneCaseStudy() {
@@ -52,13 +53,15 @@ export default function SagoOneCaseStudy() {
                             </Button>
                         </div>
 
-                        {/* Mockup Placeholder - In a real scenario, this would be an image */}
-                        <div className="relative mx-auto max-w-5xl aspect-[16/9] rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-primary/20 bg-secondary/50 backdrop-blur-sm flex items-center justify-center group">
-                            <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-purple-500/5 group-hover:opacity-75 transition-opacity" />
-                            <div className="text-center p-10">
-                                <Layout className="w-24 h-24 mx-auto text-primary/40 mb-4" />
-                                <p className="text-muted-foreground font-medium">Dashboard Interactivo Sago One</p>
-                            </div>
+                        {/* Mockup - Real Image */}
+                        <div className="relative mx-auto max-w-5xl aspect-[16/9] rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-primary/20 bg-secondary/50 backdrop-blur-sm group">
+                            <Image
+                                src="/projects/sago-one/dashboard.png"
+                                alt="Dashboard Sago One"
+                                fill
+                                className="object-cover object-top hover:scale-105 transition-transform duration-700"
+                                priority
+                            />
                         </div>
                     </AnimatedDiv>
                 </div>
@@ -171,6 +174,66 @@ export default function SagoOneCaseStudy() {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </AnimatedDiv>
+                    </div>
+                </div>
+            </section>
+
+
+            {/* Interface Gallery */}
+            <section className="py-20 bg-secondary/5">
+                <div className="container px-4">
+                    <AnimatedDiv>
+                        <h2 className="text-3xl font-bold text-center mb-16 font-headline">Interfaz Intuitiva</h2>
+                    </AnimatedDiv>
+
+                    <div className="grid md:grid-cols-2 gap-8">
+                        <AnimatedDiv delay={0.1} className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/10 shadow-lg group">
+                            <Image
+                                src="/projects/sago-one/new-invoice.png"
+                                alt="Creación de Factura Optimizada"
+                                fill
+                                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                <p className="text-white font-medium">Facturación Rápida Offline</p>
+                            </div>
+                        </AnimatedDiv>
+
+                        <AnimatedDiv delay={0.2} className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/10 shadow-lg group">
+                            <Image
+                                src="/projects/sago-one/metrics.png"
+                                alt="Métricas Financieras"
+                                fill
+                                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                <p className="text-white font-medium">Métricas en Tiempo Real</p>
+                            </div>
+                        </AnimatedDiv>
+
+                        <AnimatedDiv delay={0.3} className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/10 shadow-lg group">
+                            <Image
+                                src="/projects/sago-one/inventory.png"
+                                alt="Gestión de Inventario"
+                                fill
+                                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                <p className="text-white font-medium">Control de Inventario</p>
+                            </div>
+                        </AnimatedDiv>
+
+                        <AnimatedDiv delay={0.4} className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/10 shadow-lg group">
+                            <Image
+                                src="/projects/sago-one/invoice-detail.png"
+                                alt="Detalle de Factura"
+                                fill
+                                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                <p className="text-white font-medium">Detalle Fiscal y Firma Digital</p>
                             </div>
                         </AnimatedDiv>
                     </div>

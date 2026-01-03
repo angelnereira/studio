@@ -136,6 +136,21 @@ export const SERVICIOS_BASE: Record<ServiceType, ServiceBase> = {
       'Soporte técnico prioritario',
     ],
   },
+  'fiscal-system': {
+    id: 'fiscal-system',
+    name: 'Sistema Fiscal / PWA',
+    description: 'Plataforma de facturación electrónica y cumplimiento fiscal (DGI) con arquitectura PWA Offline-First',
+    basePrice: 8500,
+    estimatedWeeks: 12,
+    features: [
+      'Integración DGI / PAC',
+      'Firma Electrónica (XMLDSig)',
+      'Offline-First (PWA)',
+      'Seguridad Bancaria (AES-256)',
+      'Validación de Esquemas',
+      'Generación de QR y CUFE',
+    ],
+  },
 };
 
 // Complexity Multipliers
@@ -374,4 +389,5 @@ export const RECOMMENDATIONS_BY_SERVICE: Record<ServiceType, AddOnType[]> = {
   'api-backend': ['cloud-deployment', 'ci-cd-pipeline', 'documentation', 'security-audit'],
   migration: ['documentation', 'training', 'support-6-months'],
   maintenance: ['security-audit'],
+  'fiscal-system': ['security-audit', 'cloud-deployment', 'training', 'support-12-months'],
 };

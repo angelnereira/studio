@@ -15,7 +15,7 @@ export type ServicePackage = {
 };
 
 export type ServiceAddOn = {
-  name:string;
+  name: string;
   price: number;
   originalPrice?: number;
   priceSuffix?: string;
@@ -97,15 +97,15 @@ export const services: Service[] = [
       }
     ],
     addOns: [
-        { name: "Blog integrado", price: 240, description: "Para el paquete Lanzamiento Digital." },
-        { name: "Chat en vivo", price: 160, description: "Para cualquier paquete." },
-        { name: "Multiidioma (ES/EN)", price: 320, description: "Para cualquier paquete." },
-        { name: "Sistema de citas online", price: 640, description: "Para el paquete Presencia Corporativa." },
+      { name: "Blog integrado", price: 240, description: "Para el paquete Lanzamiento Digital." },
+      { name: "Chat en vivo", price: 160, description: "Para cualquier paquete." },
+      { name: "Multiidioma (ES/EN)", price: 320, description: "Para cualquier paquete." },
+      { name: "Sistema de citas online", price: 640, description: "Para el paquete Presencia Corporativa." },
     ],
     tags: ["Web", "Startups", "PYMEs", "Corporativo"],
     published: true,
   },
-   {
+  {
     title: "Tienda Online (E-commerce)",
     slug: "tienda-online-ecommerce",
     icon: ShoppingCart,
@@ -190,7 +190,7 @@ export const services: Service[] = [
     category: "Web Development",
     shortDescription: "Apps para iOS y Android que conectan con tus usuarios y fortalecen tu marca.",
     fullDescription: "Lleva tu servicio o producto al bolsillo de tus clientes con aplicaciones móviles nativas o multiplataforma. Creamos apps intuitivas, de alto rendimiento y listas para publicar en la App Store y Google Play.",
-     packages: [
+    packages: [
       {
         name: "MVP App",
         price: "3,200 - 6,400",
@@ -220,7 +220,7 @@ export const services: Service[] = [
     tags: ["Móvil", "iOS", "Android", "Startups"],
     published: true,
   },
-    {
+  {
     title: "Portafolio Profesional y Marca Personal",
     slug: "portafolio-profesional",
     icon: Puzzle,
@@ -339,7 +339,7 @@ export const services: Service[] = [
     tags: ["IA", "Chatbot", "Machine Learning", "Automatización"],
     published: true,
   },
-   {
+  {
     title: "Automatización de Procesos",
     slug: "automatizacion-de-procesos",
     icon: Repeat,
@@ -464,6 +464,48 @@ export const services: Service[] = [
     ],
     addOns: [],
     tags: ["Soporte", "Suscripción", "Mantenimiento", "Corporativo"],
+    published: true,
+  },
+  {
+    title: "Sistemas Fiscales & DGI",
+    slug: "sistemas-fiscales-dgi",
+    icon: Receipt,
+    category: "Business Management",
+    shortDescription: "Integración certificada con Facturación Electrónica de Panamá (DGI/PAC).",
+    fullDescription: "Desarrollo de software de facturación electrónica certificado y conforme a la normativa de la DGI de Panamá. Implementamos soluciones completas con firma electrónica, validación de esquemas, códigos QR/CUFE y comunicación segura con PACs autorizados.",
+    packages: [
+      {
+        name: "Integración API",
+        price: 2400,
+        originalPrice: 3200,
+        description: "Módulo de conexión para integrar tu software existente con la facturación electrónica.",
+        features: ["Integración API (REST/SOAP)", "Generación de XML firmados", "Manejo de Respuestas DGI/PAC", "Pruebas de Homologación", "Mantenimiento post-entrega (desde $140/mes)"],
+        cta: "Integrar Facturación",
+        time: "3-5 semanas"
+      },
+      {
+        name: "Portal de Facturación",
+        price: 4800,
+        originalPrice: 6000,
+        description: "Portal web completo para emisión y recepción de facturas electrónicas.",
+        features: ["Portal Web Seguro", "Emisión, Anulación y Notas de Crédito", "Recepción de Documentos y Gastos", "Manejo de Clientes y Productos", "Dashboard Fiscal", "Mantenimiento post-entrega (desde $350/mes)"],
+        cta: "Crear Portal",
+        time: "6-8 semanas"
+      },
+      {
+        name: "Sistema Fiscal Completo",
+        price: "8,500+",
+        description: "Solución integral tipo ERP fiscal con contabilidad, inventario y reportes avanzados.",
+        features: ["Todo lo del Portal de Facturación", "Control de Inventario Avanzado", "Módulo de Contabilidad Básica", "Reportes 43 y 94 (DGI)", "Arquitectura Multi-empresa (SaaS)", "Mantenimiento post-entrega (desde $850/trimestre)"],
+        cta: "Desarrollar Sistema",
+        time: "10-14+ semanas"
+      }
+    ],
+    addOns: [
+      { name: "Homologación PAC", price: 800, description: "Gestión completa del proceso de certificación." },
+      { name: "Soporte 24/7", price: 500, priceSuffix: "/mes", description: "Soporte crítico para emisión de facturas." }
+    ],
+    tags: ["DGI", "Panamá", "FinTech", "Legal"],
     published: true,
   },
 ];
