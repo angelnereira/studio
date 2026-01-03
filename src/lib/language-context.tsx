@@ -63,6 +63,12 @@ const translations: Record<Language, Record<string, string>> = {
         // Projects
         'projects.title': 'Proyectos Destacados',
         'projects.description': 'Una selección de proyectos que demuestran mi enfoque en la resolución de problemas.',
+        'projects.page_title': 'Casos de Éxito',
+        'projects.page_subtitle': 'Soluciones reales que están transformando negocios. Desde sistemas SaaS multi-tenant hasta arquitecturas cloud enterprise híbridas.',
+
+        // Services
+        'services.page_title': 'Soluciones Empresariales de Software',
+        'services.page_subtitle': 'No solo programo, diseño soluciones completas. Desde arquitecturas SaaS multi-tenant hasta integraciones complejas con sistemas gubernamentales. Especializado en FinTech y GovTech.',
 
         // Testimonials
         'testimonials.title': 'Lo que dicen otros',
@@ -150,6 +156,12 @@ const translations: Record<Language, Record<string, string>> = {
         // Projects
         'projects.title': 'Featured Projects',
         'projects.description': 'A selection of projects that demonstrate my problem-solving approach.',
+        'projects.page_title': 'Success Stories',
+        'projects.page_subtitle': 'Real solutions transforming businesses. From multi-tenant SaaS systems to hybrid enterprise cloud architectures.',
+
+        // Services
+        'services.page_title': 'Enterprise Software Solutions',
+        'services.page_subtitle': 'I don\'t just code, I design complete solutions. From multi-tenant SaaS architectures to complex integrations with government systems. Specialized in FinTech and GovTech.',
 
         // Testimonials
         'testimonials.title': 'What others say',

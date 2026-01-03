@@ -18,9 +18,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   try {
-    const post = getPostBySlug(params.slug);
+    const { slug } = await params;
+    const post = getPostBySlug(slug);
 
     return {
       title: `${post.title} | Ángel Nereira`,
@@ -47,16 +48,17 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       },
     };
   } catch (error) {
-     return {
+    return {
       title: 'Post no encontrado',
     };
   }
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   let post;
   try {
-    post = getPostBySlug(params.slug);
+    const { slug } = await params;
+    post = getPostBySlug(slug);
   } catch (error) {
     notFound();
   }
@@ -98,7 +100,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           <ReactMarkdown
             components={{
               // Sintaxis highlighting para código
-              code({node, inline, className, children, ...props}) {
+              code({ node, inline, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || '');
                 return !inline && match ? (
                   <SyntaxHighlighter
@@ -116,7 +118,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 );
               },
               // Links externos con target blank
-              a({node, href, children, ...props}) {
+              a({ node, href, children, ...props }) {
                 const isExternal = href?.startsWith('http');
                 return (
                   <a

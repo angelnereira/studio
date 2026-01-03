@@ -1,3 +1,4 @@
+"use client";
 
 import * as React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
@@ -8,16 +9,19 @@ import { Badge } from "@/components/ui/badge";
 import { services, Service } from "@/lib/services";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
+import { useLanguage } from "@/lib/language-context";
 
 export default function ServicesPage() {
+  const { t } = useLanguage();
+
   return (
     <>
       <AnimatedDiv>
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Soluciones Empresariales de Software</h1>
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">{t('services.page_title')}</h1>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
-              No solo programo, <strong>diseño soluciones completas</strong>. Desde arquitecturas SaaS multi-tenant hasta integraciones complejas con sistemas gubernamentales. Especializado en FinTech y GovTech.
+              {t('services.page_subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-2 pt-4">
               <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">Next.js · TypeScript</span>
@@ -48,13 +52,13 @@ export default function ServicesPage() {
                 </CardHeader>
                 <CardContent className="flex-1 space-y-4">
                   <div>
-                      <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Planes desde</h4>
-                       <div className="flex items-baseline gap-2">
-                          <p className="text-2xl font-bold text-primary">${startingPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">{priceSuffix}</span></p>
-                          {originalPrice && (
-                            <p className="text-lg font-normal text-muted-foreground line-through">${originalPrice.toLocaleString()}</p>
-                          )}
-                      </div>
+                    <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Planes desde</h4>
+                    <div className="flex items-baseline gap-2">
+                      <p className="text-2xl font-bold text-primary">${startingPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">{priceSuffix}</span></p>
+                      {originalPrice && (
+                        <p className="text-lg font-normal text-muted-foreground line-through">${originalPrice.toLocaleString()}</p>
+                      )}
+                    </div>
                   </div>
                   <div>
                     <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Ideal para</h4>
@@ -68,14 +72,14 @@ export default function ServicesPage() {
                 <CardFooter className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 pt-4">
                   <Button asChild variant="outline" className="w-full">
                     <Link href={`/services/${service.slug}`}>
-                       Ver Detalles
+                      Ver Detalles
                     </Link>
                   </Button>
                   <Button asChild className="w-full">
                     <Link href={`/calculator?service=${service.slug}`}>
                       <span className="hidden sm:inline">Cotización Rápida</span>
                       <span className="sm:hidden">Cotizar</span>
-                      <ArrowRight className="ml-2 h-4 w-4"/>
+                      <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
                 </CardFooter>
@@ -84,15 +88,15 @@ export default function ServicesPage() {
           );
         })}
       </div>
-        <AnimatedDiv delay={0.5} className="text-center mt-8 sm:mt-12 md:mt-16 p-6 sm:p-8 bg-secondary/50 rounded-lg">
-            <h2 className="text-2xl font-bold tracking-tighter font-headline">¿Tienes un Reto Único?</h2>
-            <p className="max-w-[600px] mx-auto mt-2 text-muted-foreground">
-                Cada proyecto es un mundo. Si tu idea no encaja perfectamente en estas categorías, es una excelente señal. Me especializo en crear soluciones a medida para problemas complejos.
-            </p>
-            <Button asChild size="lg" className="mt-6">
-                <Link href="/contact?subject=Proyecto a Medida">Hablemos de tu Proyecto</Link>
-            </Button>
-        </AnimatedDiv>
+      <AnimatedDiv delay={0.5} className="text-center mt-8 sm:mt-12 md:mt-16 p-6 sm:p-8 bg-secondary/50 rounded-lg">
+        <h2 className="text-2xl font-bold tracking-tighter font-headline">¿Tienes un Reto Único?</h2>
+        <p className="max-w-[600px] mx-auto mt-2 text-muted-foreground">
+          Cada proyecto es un mundo. Si tu idea no encaja perfectamente en estas categorías, es una excelente señal. Me especializo en crear soluciones a medida para problemas complejos.
+        </p>
+        <Button asChild size="lg" className="mt-6">
+          <Link href="/contact?subject=Proyecto a Medida">Hablemos de tu Proyecto</Link>
+        </Button>
+      </AnimatedDiv>
     </>
   );
 }
