@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Sparkles, TrendingUp, Zap, CheckCircle2, Shield, Code2, Database, Cloud, Server, Rocket } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
@@ -76,77 +77,83 @@ export default function HomePageClient() {
   return (
     <div className="flex flex-col gap-12 md:gap-24 lg:gap-32">
       {/* Hero Section - Arquitecto Full Stack FinTech */}
-      <section className="relative">
+      <section className="relative overflow-hidden pt-8 md:pt-12 lg:pt-20 pb-16">
         {/* Background gradient effect */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl opacity-50" />
         </div>
 
-        <div className="container px-4 md:px-6 text-center py-12 sm:py-16 md:py-24 lg:py-32">
-          <AnimatedDiv>
-            {/* Badge */}
-            <Badge variant="outline" className="mb-6 px-4 py-2 text-sm font-medium border-primary/30 bg-primary/5">
-              <Sparkles className="w-4 h-4 mr-2 text-primary" />
-              {t('hero.badge')}
-            </Badge>
+        <div className="container px-4 md:px-6">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center mb-16">
 
-            {/* Main heading - NUEVO: Arquitecto Full Stack */}
-            <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-headline mb-6">
-              <span className="block text-muted-foreground text-lg sm:text-xl md:text-2xl font-normal mb-2">
-                {t('hero.greeting')}
-              </span>
-              <span className="block text-gradient">{t('hero.name')}</span>
-              <span className="block text-primary mt-2">{t('hero.title')}</span>
-            </h1>
-
-            {/* Subtitle - Especialista PWA/Next.js */}
-            <p className="mx-auto max-w-[700px] text-lg sm:text-xl md:text-2xl text-foreground font-medium mb-4">
-              {t('hero.subtitle')}
-            </p>
-
-            {/* Description */}
-            <p className="mx-auto max-w-[600px] text-muted-foreground md:text-lg mb-8">
-              {t('hero.description')}
-            </p>
-
-            {/* Core tech stack badges - Stack de Sago One / Plenty Market */}
-            <div className="flex flex-wrap justify-center gap-2 mb-8">
-              {coreTechnologies.map((tech) => (
-                <Badge key={tech.name} variant="secondary" className="px-3 py-1.5 text-sm">
-                  <tech.icon className="w-3.5 h-3.5 mr-1.5" />
-                  {tech.name}
+            {/* Columna Izquierda: Contenido */}
+            <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+              <div>
+                {/* Badge */}
+                <Badge variant="outline" className="mb-6 px-4 py-2 text-sm font-medium border-primary/30 bg-primary/5 inline-flex">
+                  <Sparkles className="w-4 h-4 mr-2 text-primary" />
+                  {t('hero.badge')}
                 </Badge>
-              ))}
-            </div>
 
-            {/* CTA Buttons - NUEVO: Ver Arquitecturas / Consultoría Técnica */}
-            <div className="flex flex-col sm:flex-row justify-center gap-4 px-4 sm:px-0">
-              <Button asChild size="lg" className="text-base px-8">
-                <Link href="/proyectos">
-                  {t('hero.cta.services')}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="text-base px-8">
-                <Link href="/contact">
-                  {t('hero.cta.contact')}
-                </Link>
-              </Button>
-            </div>
-          </AnimatedDiv>
+                {/* Main heading */}
+                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl font-headline mb-6 leading-tight">
+                  <span className="block text-muted-foreground text-xl sm:text-2xl font-normal mb-2">
+                    {t('hero.greeting')}
+                  </span>
+                  <span className="block text-gradient">{t('hero.name')}</span>
+                  <span className="block text-primary mt-2 text-3xl sm:text-4xl md:text-5xl">{t('hero.title')}</span>
+                </h1>
 
-          {/* Stats Section - Métricas técnicas */}
-          <AnimatedDiv delay={0.2}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-16 max-w-4xl mx-auto">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center p-4 rounded-xl bg-secondary/30 border border-white/5">
-                  <stat.icon className="w-6 h-6 mx-auto mb-2 text-primary" />
-                  <div className="text-2xl sm:text-3xl font-bold text-foreground">{stat.value}</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground">{stat.label}</div>
+                {/* Description */}
+                <p className="max-w-[600px] text-muted-foreground text-lg sm:text-xl mb-8 leading-relaxed mx-auto lg:mx-0">
+                  {t('hero.description')}
+                </p>
+
+                {/* Buttons */}
+                <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                  <Button asChild size="lg" className="rounded-full h-12 px-8 text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all hover:scale-105">
+                    <Link href="/contact">
+                      {t('hero.cta.contact')} <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="rounded-full h-12 px-8 text-base border-white/10 hover:bg-secondary/50 transition-all hover:scale-105">
+                    <Link href="/proyectos">
+                      {t('hero.cta.services')}
+                    </Link>
+                  </Button>
                 </div>
-              ))}
+              </div>
             </div>
-          </AnimatedDiv>
+
+            {/* Columna Derecha: Imagen Hero */}
+            <div className="relative w-full max-w-[500px] lg:max-w-none mx-auto lg:mr-0 flex justify-center lg:justify-end">
+              <div className="relative w-full aspect-square max-w-[500px] lg:max-w-[600px]">
+                {/* Glow effect behind image */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-purple-500/20 rounded-full blur-3xl opacity-60 scale-75 animate-pulse" />
+                <Image
+                  src="/images/hero-architect.png"
+                  alt="Software Architect Building Digital Solutions"
+                  fill
+                  className="object-contain drop-shadow-[0_0_40px_rgba(124,58,237,0.2)]"
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Stats Bar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-5xl mx-auto border-t border-white/5 pt-8 lg:pt-12">
+            {stats.map((stat, index) => (
+              <AnimatedDiv key={stat.label} delay={0.3 + (0.1 * index)} className="flex flex-col items-center lg:items-start text-center lg:text-left p-4 rounded-2xl hover:bg-white/5 transition-colors duration-300">
+                <div className="flex items-center gap-2 mb-2 text-primary">
+                  <stat.icon className="w-5 h-5" />
+                  <span className="text-2xl font-bold tracking-tight">{stat.value}</span>
+                </div>
+                <span className="text-sm text-muted-foreground font-medium">{stat.label}</span>
+              </AnimatedDiv>
+            ))}
+          </div>
         </div>
       </section>
 
