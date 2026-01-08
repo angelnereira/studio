@@ -38,25 +38,27 @@ export default function SkillsPage() {
                 className="group block h-full"
               >
                 <SpotlightCard className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-xl">
-                  <CardHeader className="flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <CardHeader className="flex-row items-center gap-4 p-5 pb-2">
+                    <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-xl flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+                      <Icon className="w-6 h-6" />
                     </div>
-                    <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary text-base sm:text-lg">
-                      {skill.name}
-                    </CardTitle>
+                    <div className="flex flex-col">
+                      <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary text-lg font-bold">
+                        {skill.name}
+                      </CardTitle>
+                    </div>
                   </CardHeader>
-                  <CardContent className="flex-1">
-                    <CardDescription className="line-clamp-4">
+                  <CardContent className="flex-1 p-5 pt-2">
+                    <CardDescription className="text-base leading-relaxed text-muted-foreground/90">
                       {skill.description}
                     </CardDescription>
                   </CardContent>
-                  <CardFooter>
+                  <CardFooter className="p-5 pt-0">
                     <Button
                       variant="link"
-                      className="p-0 text-primary transition-transform duration-300 group-hover:translate-x-1"
+                      className="p-0 h-auto font-semibold text-primary/80 group-hover:text-primary transition-colors duration-300"
                     >
-                      Ver detalles <ArrowRight className="ml-2 h-4 w-4" />
+                      Ver detalles <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Button>
                   </CardFooter>
                 </SpotlightCard>

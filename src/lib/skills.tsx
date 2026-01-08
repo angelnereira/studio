@@ -1,12 +1,11 @@
 
 
 import * as React from "react";
-import { Briefcase, Code, Database, GitBranch, Layers, Server, Shield, Zap, Repeat, FileCog, Users, Code2, BrainCircuit, Search, Route } from "lucide-react";
-import { FaPython, FaNodeJs, FaDocker, FaGitAlt } from "react-icons/fa";
-import { SiTypescript, SiPostgresql, SiFirebase, SiOracle, SiVercel, SiKubernetes, SiTailwindcss, SiGithubactions } from "react-icons/si";
+import { Server, Shield, Zap, Layers, Code2, Database, GitBranch, Briefcase } from "lucide-react";
+import { FaDocker, FaGitAlt } from "react-icons/fa";
+import { SiTypescript, SiPostgresql, SiVercel, SiKubernetes, SiJavascript, SiGooglecloud } from "react-icons/si";
 import { TbBrandNextjs } from "react-icons/tb";
-import { GitIcon, GithubIcon, CiCdIcon, LinuxIcon, OpenShiftIcon } from "./icons";
-
+import { LinuxIcon, PrismaIcon, NeonIcon, OracleCloudIcon } from "./icons";
 
 export type PracticalAbility = {
   title: string;
@@ -19,207 +18,199 @@ export type Skill = {
   slug: string;
   icon: React.ElementType;
   description: string;
+  category: "core" | "data" | "infrastructure";
   practicalAbilities: PracticalAbility[];
 };
 
-
 export const skills: Skill[] = [
+  // === CORE: Frontend & Backend ===
   {
-    name: "Ingeniería de Software",
-    slug: "ingenieria-de-software",
-    icon: FileCog,
-    description: "Un buen fundamento de software garantiza que la solución pueda crecer y adaptarse con el negocio, previniendo problemas a futuro.",
-    practicalAbilities: [
-        { title: "Diseño de Arquitecturas Escalables", description: "Diseño sistemas (Monolitos, Microservicios, Serverless) que pueden crecer junto con el negocio del cliente, evitando futuros cuellos de botella.", icon: Layers },
-        { title: "Patrones de Diseño de Software", description: "Aplico patrones de diseño probados para resolver problemas comunes, lo que resulta en un código más limpio, reutilizable y comprensible para el equipo.", icon: Code2 },
-        { title: "Calidad y Pruebas de Código", description: "Implemento una cultura de calidad a través de pruebas unitarias, de integración y E2E, garantizando que el software entregado sea fiable y cumpla con los requisitos.", icon: Shield },
-    ]
-  },
-  {
-    name: "Metodologías Ágiles",
-    slug: "metodologias-agiles",
-    icon: Users,
-    description: "La entrega de valor rápida y continua es más importante que seguir un plan rígido, permitiendo adaptabilidad y feedback constante.",
-    practicalAbilities: [
-        { title: "Gestión de Proyectos con Scrum/Kanban", description: "Organizo proyectos en sprints o flujos continuos, gestiono backlogs y facilito ceremonias ágiles para una entrega de valor predecible.", icon: Briefcase },
-        { title: "Planificación Iterativa y Adaptativa", description: "Descompongo problemas complejos en entregas pequeñas, permitiendo la adaptación a cambios y la incorporación constante del feedback del cliente.", icon: Repeat },
-        { title: "Enfoque en el Cliente (User Stories)", description: "Traduzco los requisitos del negocio en historias de usuario claras y accionables, asegurando que el desarrollo esté siempre alineado con las necesidades del usuario final.", icon: Search },
-    ]
-  },
-  { 
-    name: "Python", 
-    slug: "python",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <FaPython {...props} />,
-    description: "Construyo desde APIs robustas hasta complejos modelos de IA, siendo la navaja suiza para resolver problemas de backend.",
-    practicalAbilities: [
-        { title: "Desarrollo de APIs RESTful", description: "Construcción de APIs robustas y escalables con frameworks como FastAPI y Flask para dar soporte a aplicaciones web y móviles.", icon: Server },
-        { title: "Automatización y Scripting", description: "Creación de scripts para automatizar tareas repetitivas (web scraping, generación de reportes), optimizando la eficiencia operativa de los negocios.", icon: Zap },
-        { title: "Machine Learning y IA", description: "Implementación de modelos de IA con TensorFlow y Scikit-learn para crear soluciones como chatbots, sistemas de recomendación y análisis predictivo.", icon: BrainCircuit },
-    ]
-  },
-  { 
-    name: "TypeScript", 
-    slug: "typescript",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <SiTypescript {...props} />,
-    description: "Aporta seguridad y robustez al código. Reduce errores, mejora la colaboración en equipo y hace el código auto-documentado.",
-    practicalAbilities: [
-        { title: "Tipado Estricto en Proyectos Complejos", description: "Garantizo la robustez y escalabilidad del código en aplicaciones grandes, reduciendo errores antes de que lleguen a producción.", icon: Shield },
-        { title: "Desarrollo Full-Stack", description: "Uso TypeScript tanto en el frontend con React/Next.js como en el backend con Node.js, creando un ecosistema de desarrollo cohesivo.", icon: Layers },
-        { title: "Interfaces y Tipos Reutilizables", description: "Creo sistemas de tipos que mejoran la colaboración y la mantenibilidad a largo plazo, clave en proyectos para equipos.", icon: GitBranch },
-    ]
-  },
-  { 
-    name: "Next.js", 
+    name: "Next.js",
     slug: "nextjs",
     icon: (props: React.SVGProps<SVGSVGElement>) => <TbBrandNextjs {...props} />,
-    description: "Es el estándar para crear aplicaciones React de producción: rápidas, optimizadas para SEO y con una experiencia de desarrollo superior.",
+    description: "Framework React de producción para aplicaciones web de alto rendimiento con SSR, SSG y React Server Components.",
+    category: "core",
     practicalAbilities: [
-      { title: "Renderizado Híbrido (SSR y SSG)", description: "Optimizo el rendimiento y el SEO de las aplicaciones web eligiendo la estrategia de renderizado adecuada para cada caso de uso (dinámico vs. estático).", icon: Zap },
-      { title: "APIs con Route Handlers", description: "Construyo APIs eficientes y seguras directamente dentro de la aplicación Next.js, ideal para soluciones todo-en-uno como 'Suites PYME'.", icon: Server },
-      { title: "Aplicaciones Full-Stack", description: "Creo aplicaciones completas en un monorepo, desde la interfaz de usuario hasta la lógica del servidor, agilizando el desarrollo de 'Soluciones Empresariales'.", icon: Code2 },
-    ]
-  },
-  { 
-    name: "Node.js", 
-    slug: "nodejs",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <FaNodeJs {...props} />,
-    description: "Perfecto para construir APIs y microservicios rápidos y eficientes, capaces de manejar miles de conexiones simultáneas sin esfuerzo.",
-    practicalAbilities: [
-      { title: "APIs REST y GraphQL", description: "Desarrollo APIs performantes y bien estructuradas que sirven como el cerebro para aplicaciones web y móviles complejas.", icon: Server },
-      { title: "Sistemas de Autenticación Seguros", description: "Implemento sistemas de seguridad con JWT, OAuth y gestión de sesiones para proteger los datos de los usuarios en todas mis aplicaciones.", icon: Shield },
-      { title: "Arquitectura de Microservicios", description: "Diseño sistemas de microservicios para 'Soluciones Empresariales' que requieren alta escalabilidad y resiliencia.", icon: Layers },
+      { title: "App Router & Server Components", description: "Arquitecturas modernas con React Server Components para renderizado óptimo y bundle size mínimo.", icon: Zap },
+      { title: "API Routes & Server Actions", description: "Backend integrado con endpoints RESTful y Server Actions para operaciones de base de datos.", icon: Server },
+      { title: "PWA & Offline-First", description: "Implementación de Service Workers y estrategias de caché para aplicaciones offline-first.", icon: Shield },
     ]
   },
   {
-    name: "Oracle Cloud Infrastructure",
-    slug: "oracle-cloud",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <SiOracle {...props} />,
-    description: "Plataforma enterprise cloud para desplegar soluciones de misión crítica con Oracle Database, almacenamiento escalable y alta disponibilidad.",
+    name: "TypeScript",
+    slug: "typescript",
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiTypescript {...props} />,
+    description: "Superset de JavaScript con tipado estático. Esencial para proyectos escalables y mantenibles.",
+    category: "core",
     practicalAbilities: [
-      { title: "Oracle Compute Instances", description: "Despliego y gestiono máquinas virtuales escalables con configuraciones personalizadas para aplicaciones enterprise de alto rendimiento.", icon: Zap },
-      { title: "Oracle Database Enterprise", description: "Implemento bases de datos Oracle Database con alta disponibilidad, replicación y optimización de queries para sistemas críticos.", icon: Database },
-      { title: "Oracle Object Storage", description: "Gestiono almacenamiento escalable y seguro para archivos, backups y contenido multimedia con integración nativa a servicios Oracle.", icon: Server },
+      { title: "Type Safety End-to-End", description: "Tipado desde la base de datos (Prisma) hasta el frontend, eliminando errores en tiempo de compilación.", icon: Shield },
+      { title: "Interfaces & Generics", description: "Diseño de tipos reutilizables para APIs, componentes y lógica de negocio.", icon: Layers },
+      { title: "Integración con Prisma", description: "Tipos autogenerados desde el schema para queries type-safe.", icon: Database },
     ]
   },
-  { 
-    name: "Firebase", 
-    slug: "firebase",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <SiFirebase {...props} />,
-    description: "Acelera el desarrollo de MVPs y aplicaciones completas. Permite lanzar productos en tiempo récord sin sacrificar escalabilidad.",
+  {
+    name: "JavaScript",
+    slug: "javascript",
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiJavascript {...props} />,
+    description: "Lenguaje fundamental de la web. Dominio profundo de ES6+, async/await y patrones modernos.",
+    category: "core",
     practicalAbilities: [
-      { title: "Autenticación de Usuarios Simplificada", description: "Implemento sistemas de login social (Google, etc.) y por correo/contraseña de forma rápida y segura para cualquier app.", icon: Shield },
-      { title: "Bases de Datos en Tiempo Real (Firestore)", description: "Utilizo Firestore para sincronizar datos entre clientes al instante, ideal para chats, dashboards y apps colaborativas.", icon: Database },
-      { title: "Desarrollo Rápido de MVPs", description: "Acelero la creación de prototipos y Productos Mínimos Viables, permitiendo a las startups validar ideas en el mercado rápidamente.", icon: Briefcase },
+      { title: "ES6+ & Modern Patterns", description: "Destructuring, spread operators, modules, async/await y programación funcional.", icon: Code2 },
+      { title: "Node.js Runtime", description: "Desarrollo backend con Node.js, APIs RESTful y scripts de automatización.", icon: Server },
+      { title: "Service Workers", description: "Implementación de PWA con caché strategies y sincronización offline.", icon: Zap },
     ]
   },
-  { 
-    name: "Docker", 
-    slug: "docker",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <FaDocker {...props} />,
-    description: "Garantiza que el software funcione de manera idéntica en cualquier entorno, eliminando el clásico 'en mi máquina sí funciona'.",
-    practicalAbilities: [
-        { title: "Contenerización de Aplicaciones", description: "Empaqueto aplicaciones y sus dependencias en contenedores, asegurando que funcionen de manera idéntica en cualquier entorno.", icon: Briefcase },
-        { title: "Orquestación con Docker Compose", description: "Defino y gestiono aplicaciones multi-contenedor, simplificando la configuración de entornos de desarrollo complejos.", icon: Layers },
-        { title: "Optimización de Imágenes", description: "Construyo imágenes de Docker ligeras y seguras, lo que resulta en despliegues más rápidos y una menor superficie de ataque.", icon: Shield },
-    ]
-  },
-  { 
-    name: "Git", 
-    slug: "git",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <FaGitAlt {...props} />,
-    description: "Es el pilar de la colaboración en equipo. Permite un desarrollo paralelo, seguro y un historial de cambios impecable en cualquier proyecto.",
-    practicalAbilities: [
-        { title: "Control de Versiones Avanzado", description: "Manejo ramas, fusiones y rebases para mantener un historial de código limpio, permitiendo la colaboración en equipos grandes y pequeños.", icon: GitBranch },
-        { title: "Estrategias de Branching (GitFlow)", description: "Implemento flujos de trabajo como GitFlow para gestionar el desarrollo de nuevas funcionalidades y lanzamientos de forma ordenada y sin errores.", icon: Layers },
-        { title: "Resolución de Conflictos", description: "Soluciono conflictos de fusión de manera eficiente, una habilidad clave para mantener la integridad del código en proyectos colaborativos.", icon: Code2 },
-    ]
-  },
-  { 
-    name: "GitHub/GitLab", 
-    slug: "github",
-    icon: GithubIcon, 
-    description: "Centralizan el código, automatizan los flujos de trabajo y potencian la colaboración, siendo el centro de operaciones de cualquier proyecto moderno.",
-    practicalAbilities: [
-        { title: "Automatización con GitHub Actions", description: "Configuro flujos de trabajo (CI/CD) para automatizar pruebas y despliegues, acelerando la entrega de valor a los usuarios.", icon: Zap },
-        { title: "Revisión de Código (Pull Requests)", description: "Facilito la colaboración y aseguro la calidad del código a través de un proceso de revisión estructurado, esencial en mentorías de equipo.", icon: GitBranch },
-        { title: "Gestión de Proyectos", description: "Utilizo las herramientas de gestión de proyectos (Issues, Projects) para organizar tareas y mantener la visibilidad del progreso.", icon: Briefcase },
-    ]
-  },
-  { 
-    name: "CI/CD", 
-    slug: "cicd",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <SiGithubactions {...props} />,
-    description: "La automatización es clave para entregar software de alta calidad de forma rápida y fiable, minimizando el riesgo de errores humanos.",
-    practicalAbilities: [
-        { title: "Pipelines de Despliegue Automatizado", description: "Diseño pipelines que automatizan el proceso desde el `git push` hasta la producción, asegurando despliegues rápidos y consistentes.", icon: Zap },
-        { title: "Pruebas Automatizadas", description: "Integro pruebas unitarias, de integración y end-to-end en el pipeline para detectar errores tempranamente y garantizar la calidad.", icon: Shield },
-        { title: "Entrega Continua y Segura", description: "Configuro despliegues automáticos a entornos de staging y producción, utilizando estrategias como blue-green para minimizar el riesgo.", icon: Briefcase },
-    ]
-  },
-  { 
-    name: "Linux", 
-    slug: "linux",
-    icon: LinuxIcon, 
-    description: "Es el sistema operativo de la nube. Su dominio me permite administrar, asegurar y optimizar el entorno donde viven las aplicaciones.",
-    practicalAbilities: [
-        { title: "Administración de Servidores", description: "Configuro, aseguro y mantengo servidores Linux para alojar aplicaciones web de alto rendimiento, como parte de mis planes de soporte.", icon: Server },
-        { title: "Scripting en Bash", description: "Automatizo tareas de administración de sistemas y despliegue con scripts de Bash, reduciendo el trabajo manual y los errores humanos.", icon: Zap },
-        { title: "Gestión de Redes y Seguridad", description: "Configuro firewalls (iptables, ufw) y gestiono la red para proteger las aplicaciones y los datos de los clientes contra amenazas.", icon: Shield },
-    ]
-  },
-  { 
-    name: "Vercel", 
-    slug: "vercel",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <SiVercel {...props} />,
-    description: "La plataforma definitiva para desplegar aplicaciones Next.js. Ofrece rendimiento global, escalabilidad y una experiencia de desarrollo sin fricciones.",
-    practicalAbilities: [
-        { title: "Despliegue Continuo (GitOps)", description: "Integro repositorios de GitHub para un despliegue automático en cada `push`, permitiendo una entrega de funcionalidades extremadamente rápida.", icon: Zap },
-        { title: "Gestión de Dominios y DNS", description: "Configuro dominios personalizados y gestiono los registros DNS para que los sitios de mis clientes estén en línea de forma profesional y rápida.", icon: Server },
-        { title: "Edge Functions", description: "Utilizo funciones en el borde de la red para ejecutar lógica de backend con baja latencia, ideal para personalización y A/B testing.", icon: Code2 },
-    ]
-  },
-  { 
-    name: "Kubernetes", 
-    slug: "kubernetes",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <SiKubernetes {...props} />,
-    description: "El estándar para orquestar aplicaciones en contenedores a gran escala, garantizando alta disponibilidad, resiliencia y escalabilidad automática.",
-    practicalAbilities: [
-        { title: "Orquestación de Contenedores", description: "Gestiono el ciclo de vida de aplicaciones en contenedores para alta disponibilidad y escalabilidad, fundamental para sistemas críticos.", icon: Layers },
-        { title: "Despliegues sin Downtime", description: "Realizo actualizaciones de aplicaciones utilizando estrategias como 'rolling updates' para no afectar a los usuarios durante el mantenimiento.", icon: Zap },
-        { title: "Auto-escalado (HPA)", description: "Configuro el escalado automático de aplicaciones basado en el uso de CPU y memoria, garantizando rendimiento y control de costos.", icon: Briefcase },
-    ]
-  },
-  { 
-    name: "OpenShift", 
-    slug: "openshift",
-    icon: OpenShiftIcon, 
-    description: "La solución Kubernetes para el mundo empresarial, que ofrece un ecosistema de desarrollo seguro y robusto para entornos corporativos.",
-    practicalAbilities: [
-        { title: "Desarrollo y Despliegue Empresarial", description: "Utilizo las herramientas integradas para un ciclo de vida de desarrollo de software seguro y eficiente en grandes organizaciones.", icon: Briefcase },
-        { title: "Seguridad y Cumplimiento Normativo", description: "Aplico políticas de seguridad y cumplo con los estándares corporativos, una necesidad en sectores regulados como finanzas o salud.", icon: Shield },
-        { title: "Pipelines CI/CD con Tekton", description: "Construyo y gestiono pipelines de CI/CD nativos en la plataforma para una automatización completa y segura dentro del entorno corporativo.", icon: Zap },
-    ]
-  },
-  { 
-    name: "Tailwind CSS", 
-    slug: "tailwindcss",
-    icon: (props: React.SVGProps<SVGSVGElement>) => <SiTailwindcss {...props} />,
-    description: "Permite construir interfaces de usuario complejas y personalizadas a una velocidad increíble, sin sacrificar la consistencia del diseño.",
-    practicalAbilities: [
-        { title: "Diseño de Interfaces a Medida", description: "Creo diseños únicos y consistentes sin salir del HTML, aplicando la filosofía 'utility-first' para una máxima personalización.", icon: Code2 },
-        { title: "Sistemas de Diseño Escalables", description: "Adapto y extiendo el tema de Tailwind para crear sistemas de diseño que se alinean con la identidad de marca del cliente y son fáciles de mantener.", icon: Layers },
-        { title: "Desarrollo Rápido de UI", description: "Acelero significativamente el proceso de maquetación de interfaces complejas y responsivas, entregando prototipos funcionales en tiempo récord.", icon: Zap },
-    ]
-  },
-  { 
-    name: "PostgreSQL", 
+
+  // === DATA: Databases & ORMs ===
+  {
+    name: "PostgreSQL",
     slug: "postgresql",
     icon: (props: React.SVGProps<SVGSVGElement>) => <SiPostgresql {...props} />,
-    description: "Base de datos relacional robusta, fiable y extensible, ideal para aplicaciones que demandan integridad y consistencia de datos.",
+    description: "Base de datos relacional robusta y extensible. El estándar para aplicaciones empresariales.",
+    category: "data",
     practicalAbilities: [
-        { title: "Diseño de Esquemas Relacionales", description: "Modelo estructuras de datos eficientes y normalizadas para garantizar la integridad y el rendimiento de la información crítica del negocio.", icon: Database },
-        { title: "Consultas SQL Optimizadas", description: "Escribo consultas complejas y optimizadas (con JOINs, subqueries, etc.) para obtener datos de manera eficiente en aplicaciones de alto rendimiento.", icon: Code2 },
-        { title: "Gestión de Transacciones ACID", description: "Aseguro la consistencia de los datos en operaciones críticas (como pagos o movimientos de inventario) utilizando el sistema transaccional de PostgreSQL.", icon: Shield },
+      { title: "Diseño de Esquemas", description: "Modelado de datos normalizados, relaciones complejas y constraints para integridad.", icon: Database },
+      { title: "Queries Optimizadas", description: "JOINs eficientes, índices estratégicos y análisis de query plans.", icon: Zap },
+      { title: "Transacciones ACID", description: "Operaciones atómicas para datos críticos (facturación, inventario, pagos).", icon: Shield },
     ]
-  }
+  },
+  {
+    name: "Prisma ORM",
+    slug: "prisma",
+    icon: PrismaIcon,
+    description: "ORM moderno con tipado automático. Schema declarativo y migraciones versionadas.",
+    category: "data",
+    practicalAbilities: [
+      { title: "Schema Declarativo", description: "Definición de modelos, relaciones y validaciones en un solo archivo.", icon: Layers },
+      { title: "Migraciones Versionadas", description: "Control de versiones del schema con rollback y historial de cambios.", icon: GitBranch },
+      { title: "Type-Safe Queries", description: "Autocompletado y validación de queries en tiempo de compilación.", icon: Shield },
+    ]
+  },
+  {
+    name: "Neon",
+    slug: "neon",
+    icon: NeonIcon,
+    description: "PostgreSQL serverless con branching. Ideal para desarrollo y producción escalable.",
+    category: "data",
+    practicalAbilities: [
+      { title: "Serverless PostgreSQL", description: "Escalado automático y pago por uso. Sin administración de servidores.", icon: Zap },
+      { title: "Database Branching", description: "Crear branches de la base de datos para desarrollo y testing aislado.", icon: GitBranch },
+      { title: "Connection Pooling", description: "Gestión eficiente de conexiones para aplicaciones serverless.", icon: Server },
+    ]
+  },
+  {
+    name: "SQL",
+    slug: "sql",
+    icon: (props: React.SVGProps<SVGSVGElement>) => (
+      <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 4.02 2 6.5v11C2 19.98 6.48 22 12 22s10-2.02 10-4.5v-11C22 4.02 17.52 2 12 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M2 6.5C2 8.98 6.48 11 12 11s10-2.02 10-4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M2 12c0 2.48 4.48 4.5 10 4.5s10-2.02 10-4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    description: "Lenguaje estándar para consultas de bases de datos relacionales.",
+    category: "data",
+    practicalAbilities: [
+      { title: "Queries Complejas", description: "CTEs, window functions, subqueries y aggregations avanzadas.", icon: Code2 },
+      { title: "Optimización", description: "Análisis de EXPLAIN plans e indexación estratégica.", icon: Zap },
+      { title: "Stored Procedures", description: "Lógica de negocio en la base de datos cuando es apropiado.", icon: Server },
+    ]
+  },
+
+  // === INFRASTRUCTURE: Cloud & DevOps ===
+  {
+    name: "Vercel",
+    slug: "vercel",
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiVercel {...props} />,
+    description: "Plataforma de despliegue para Next.js. Edge functions, preview deployments y CI/CD automático.",
+    category: "infrastructure",
+    practicalAbilities: [
+      { title: "GitOps & Preview Deploys", description: "Deploy automático en cada push con URLs de preview para cada PR.", icon: GitBranch },
+      { title: "Edge Functions", description: "Lógica serverless ejecutada en el edge para baja latencia global.", icon: Zap },
+      { title: "Analytics & Monitoring", description: "Web Vitals, logs en tiempo real y monitoreo de performance.", icon: Layers },
+    ]
+  },
+  {
+    name: "Docker",
+    slug: "docker",
+    icon: (props: React.SVGProps<SVGSVGElement>) => <FaDocker {...props} />,
+    description: "Containerización de aplicaciones. Ambientes consistentes desde desarrollo hasta producción.",
+    category: "infrastructure",
+    practicalAbilities: [
+      { title: "Dockerfiles Optimizados", description: "Multi-stage builds para imágenes ligeras y seguras.", icon: Layers },
+      { title: "Docker Compose", description: "Orquestación local de servicios para desarrollo.", icon: Server },
+      { title: "Registry & CI/CD", description: "Integración con registries y pipelines de despliegue.", icon: GitBranch },
+    ]
+  },
+  {
+    name: "Kubernetes",
+    slug: "kubernetes",
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiKubernetes {...props} />,
+    description: "Orquestación de contenedores a escala. Auto-scaling, self-healing y rolling updates.",
+    category: "infrastructure",
+    practicalAbilities: [
+      { title: "Deployments & Services", description: "Configuración de pods, réplicas, load balancing y networking.", icon: Server },
+      { title: "Auto-Scaling (HPA)", description: "Escalado automático basado en métricas de CPU/memoria.", icon: Zap },
+      { title: "Helm Charts", description: "Gestión de configuraciones complejas con templates reutilizables.", icon: Layers },
+    ]
+  },
+  {
+    name: "Google Cloud",
+    slug: "google-cloud",
+    icon: (props: React.SVGProps<SVGSVGElement>) => <SiGooglecloud {...props} />,
+    description: "Plataforma cloud enterprise. GKE, Cloud Run, Cloud SQL y servicios serverless.",
+    category: "infrastructure",
+    practicalAbilities: [
+      { title: "GKE (Kubernetes Engine)", description: "Clusters de Kubernetes administrados con auto-scaling y auto-repair.", icon: Server },
+      { title: "Cloud Run", description: "Contenedores serverless con escalado a cero y pago por uso.", icon: Zap },
+      { title: "Cloud SQL", description: "PostgreSQL administrado con backups automáticos y alta disponibilidad.", icon: Database },
+    ]
+  },
+  {
+    name: "Oracle Cloud",
+    slug: "oracle-cloud",
+    icon: OracleCloudIcon,
+    description: "Cloud enterprise para cargas de trabajo críticas. OCI Compute, Object Storage y networking avanzado.",
+    category: "infrastructure",
+    practicalAbilities: [
+      { title: "OCI Compute", description: "Instancias escalables con shapes flexibles y bare metal.", icon: Server },
+      { title: "Object Storage", description: "Almacenamiento de objetos con tiers de acceso y lifecycle policies.", icon: Database },
+      { title: "Networking & Security", description: "VCNs, subnets, security lists y NSGs para arquitecturas seguras.", icon: Shield },
+    ]
+  },
+  {
+    name: "Git",
+    slug: "git",
+    icon: (props: React.SVGProps<SVGSVGElement>) => <FaGitAlt {...props} />,
+    description: "Control de versiones distribuido. Branching strategies, rebasing y colaboración en equipo.",
+    category: "infrastructure",
+    practicalAbilities: [
+      { title: "GitFlow & Trunk-Based", description: "Estrategias de branching según el contexto del proyecto.", icon: GitBranch },
+      { title: "Rebase & Cherry-Pick", description: "Historial limpio y manipulación precisa de commits.", icon: Layers },
+      { title: "GitHub Actions", description: "CI/CD pipelines, automated testing y deploy workflows.", icon: Zap },
+    ]
+  },
+  {
+    name: "Linux",
+    slug: "linux",
+    icon: LinuxIcon,
+    description: "Sistema operativo de servidores. Administración, scripting y seguridad.",
+    category: "infrastructure",
+    practicalAbilities: [
+      { title: "Shell Scripting", description: "Automatización de tareas con Bash y scripts de mantenimiento.", icon: Code2 },
+      { title: "Administración de Servidores", description: "Configuración de servicios, usuarios, permisos y networking.", icon: Server },
+      { title: "Seguridad", description: "Firewalls (iptables/ufw), SSH hardening y auditoría de logs.", icon: Shield },
+    ]
+  },
 ];
+
+// Helper para obtener skills por categoría
+export const getSkillsByCategory = (category: "core" | "data" | "infrastructure") =>
+  skills.filter(skill => skill.category === category);
+
+// Categorías para el grid visual
+export const skillCategories = [
+  { id: "core", name: "Core", description: "Frontend & Backend" },
+  { id: "data", name: "Data", description: "Bases de Datos & ORMs" },
+  { id: "infrastructure", name: "Infrastructure", description: "Cloud & DevOps" },
+] as const;

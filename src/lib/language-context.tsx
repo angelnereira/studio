@@ -12,89 +12,95 @@ interface LanguageContextType {
 
 const translations: Record<Language, Record<string, string>> = {
     es: {
-        // Hero
+        // Hero - Ingeniero de Software Full Stack (no Arquitecto)
         'hero.greeting': 'Hola, soy',
         'hero.name': 'Ángel Nereira',
-        'hero.title': 'Ingeniero de Software',
-        'hero.subtitle': 'Transformo ideas en soluciones digitales escalables',
-        'hero.description': 'Especialista en FinTech y GovTech. Diseño arquitecturas empresariales que generan valor real para tu negocio.',
-        'hero.cta.services': 'Ver Soluciones',
-        'hero.cta.contact': 'Agendar Consultoría',
-        'hero.badge': 'Creador de Sago One (SaaS)',
+        'hero.title': 'Ingeniero de Software Full Stack',
+        'hero.subtitle': 'Desarrollador FinTech & Especialista PWA',
+        'hero.description': 'Especialista en ecosistemas Next.js, aplicaciones PWA Offline-First y soluciones SaaS escalables. Creador de Sago One.',
+        'hero.cta.services': 'Ver Proyectos',
+        'hero.cta.contact': 'Consultoría Técnica',
+        'hero.badge': 'Creador de Sago One · FinTech SaaS',
         'hero.stats.years': 'Años de Experiencia',
         'hero.stats.projects': 'Proyectos Entregados',
-        'hero.stats.clients': 'Clientes Satisfechos',
-        'hero.stats.tech': 'Tecnologías Dominadas',
+        'hero.stats.facturas': 'Facturas Procesadas',
+        'hero.stats.uptime': 'Uptime SaaS',
 
         // Solutions Section
-        'solutions.title': 'Soluciones que Transforman',
-        'solutions.subtitle': 'Cada proyecto es único. Explora las áreas donde puedo aportar valor a tu visión.',
-        'solutions.enterprise.title': 'Sistemas Empresariales',
-        'solutions.enterprise.desc': 'Arquitecturas robustas que escalan con tu negocio. ERP, facturación electrónica, integraciones gubernamentales.',
-        'solutions.enterprise.stats': '99.9% uptime',
-        'solutions.digital.title': 'Productos Digitales',
-        'solutions.digital.desc': 'De concepto a producto lanzado. Desarrollo ágil, iteraciones rápidas, enfoque en el usuario final.',
-        'solutions.digital.stats': 'MVP en 4 semanas',
-        'solutions.consulting.title': 'Consultoría Técnica',
-        'solutions.consulting.desc': 'Auditorías de código, arquitectura de software, optimización de rendimiento y mentoría para equipos.',
-        'solutions.consulting.stats': '15+ tecnologías',
-        'solutions.explore': 'Explorar Solución',
+        'solutions.title': 'Soluciones que Escalan',
+        'solutions.subtitle': 'Ingeniería de software de alto nivel para productos que necesitan rendimiento, seguridad y disponibilidad.',
+        'solutions.enterprise.title': 'FinTech & Compliance',
+        'solutions.enterprise.desc': 'Sistemas de facturación electrónica, integración con entidades gubernamentales (DGI, PAC) y seguridad de nivel bancario.',
+        'solutions.enterprise.stats': 'AES-256 Encryption',
+        'solutions.digital.title': 'PWA Offline-First',
+        'solutions.digital.desc': 'Aplicaciones progresivas que funcionan sin internet. Service Workers, caché estratégico y sincronización inteligente.',
+        'solutions.digital.stats': '100% Offline Capable',
+        'solutions.consulting.title': 'Desarrollo SaaS',
+        'solutions.consulting.desc': 'Sistemas multi-tenant, escalabilidad horizontal y optimización de bases de datos PostgreSQL.',
+        'solutions.consulting.stats': 'Multi-Tenant Ready',
+        'solutions.explore': 'Ver Detalles',
 
-        // About
+        // About - Sin referencias a productor musical
         'about.title': 'Sobre Mí',
-        'about.description': 'Ingeniero de software panameño especializado en crear soluciones empresariales escalables para FinTech y GovTech. No solo programo, diseño arquitecturas completas que transforman negocios.',
-        'about.background.title': 'Una Perspectiva Única',
-        'about.background.text': 'Mi trayectoria es única: pasé 7 años como productor musical e ingeniero de sonido antes de hacer la transición a la ingeniería de software. Esta experiencia me ha dado una perspectiva diferente sobre el diseño de soluciones y la atención al detalle.',
-        'about.current.title': 'Experiencia Actual',
-        'about.current.text': 'Actualmente trabajo en UbicSys S.A. y soy el creador de Sago One, un sistema SaaS completo de facturación electrónica PWA Offline-First que integra con la DGI de Panamá.',
+        'about.description': 'Ingeniero de Software Full Stack especializado en FinTech y GovTech. Diseño y construyo sistemas SaaS escalables que procesan miles de transacciones diarias.',
+        'about.background.title': 'Enfoque Técnico',
+        'about.background.text': 'Mi especialidad es construir aplicaciones PWA Offline-First y sistemas de alta disponibilidad. Trabajo con Next.js, TypeScript y PostgreSQL para crear productos robustos que resuelven problemas reales de negocio.',
+        'about.current.title': 'Proyectos Actuales',
+        'about.current.text': 'Actualmente desarrollo Sago One (SaaS de facturación electrónica) y Plenty Market (E-commerce PWA). Ambos sistemas manejan datos críticos con encriptación AES-256 y diseño multi-tenant.',
         'about.philosophy.title': 'Mi Filosofía',
-        'about.philosophy.text': 'Solucionar problemas para disfrutar la vida',
+        'about.philosophy.text': 'Código limpio, soluciones escalables, documentación clara',
 
         // Skills
         'skills.title': 'Stack Tecnológico',
-        'skills.description': 'Herramientas y tecnologías que domino para resolver problemas complejos.',
-        'skills.cta': 'Ver todas las Habilidades',
+        'skills.description': 'Las herramientas que uso para construir Sago One y Plenty Market.',
+        'skills.cta': 'Ver Stack Completo',
+        'skills.category.core': 'Core',
+        'skills.category.data': 'Data',
+        'skills.category.infrastructure': 'Infrastructure',
 
         // Services
-        'services.title': 'Mis Servicios',
-        'services.description': 'Soluciones de software a la medida para potenciar tu negocio.',
+        'services.title': 'Servicios',
+        'services.description': 'Soluciones de software para productos que necesitan escalar.',
         'services.cta': 'Ver todos los servicios',
 
         // Projects
-        'projects.title': 'Proyectos Destacados',
-        'projects.description': 'Una selección de proyectos que demuestran mi enfoque en la resolución de problemas.',
+        'projects.title': 'Proyectos en Producción',
+        'projects.description': 'Sistemas reales procesando transacciones. La ingeniería detrás de cada solución.',
         'projects.page_title': 'Casos de Éxito',
-        'projects.page_subtitle': 'Soluciones reales que están transformando negocios. Desde sistemas SaaS multi-tenant hasta arquitecturas cloud enterprise híbridas.',
+        'projects.page_subtitle': 'Sistemas FinTech y E-commerce en producción. La ingeniería detrás de cada solución.',
+        'projects.challenge': 'El Desafío Técnico',
+        'projects.tech_highlights': 'Highlights Técnicos',
+
+        // Metrics (replacing testimonials)
+        'metrics.title': 'Métricas en Producción',
+        'metrics.subtitle': 'Números reales de sistemas en producción.',
 
         // Services
-        'services.page_title': 'Soluciones Empresariales de Software',
-        'services.page_subtitle': 'No solo programo, diseño soluciones completas. Desde arquitecturas SaaS multi-tenant hasta integraciones complejas con sistemas gubernamentales. Especializado en FinTech y GovTech.',
-
-        // Testimonials
-        'testimonials.title': 'Lo que dicen otros',
+        'services.page_title': 'Soluciones de Software Enterprise',
+        'services.page_subtitle': 'Desarrollo sistemas completos: desde PWA Offline-First hasta integraciones complejas con APIs gubernamentales. Especializado en FinTech SaaS.',
 
         // CTA
-        'cta.title': '¿Listo para transformar tu negocio?',
-        'cta.subtitle': 'Colaboremos en soluciones que escalen globalmente. Estoy disponible para nuevos desafíos y oportunidades.',
-        'cta.button': 'Conversemos sobre tu proyecto',
+        'cta.title': '¿Necesitas un desarrollo de alto nivel?',
+        'cta.subtitle': 'Construyamos sistemas que escalen. Disponible para proyectos FinTech, E-commerce y SaaS.',
+        'cta.button': 'Agendar Consultoría',
 
         // Navigation
         'nav.home': 'Inicio',
         'nav.about': 'Sobre Mí',
         'nav.services': 'Servicios',
         'nav.projects': 'Proyectos',
-        'nav.skills': 'Habilidades',
+        'nav.skills': 'Stack',
         'nav.contact': 'Contacto',
         'nav.calculator': 'Calculadora',
 
         // Footer
         'footer.rights': 'Todos los derechos reservados.',
-        'footer.built': 'Diseñado y desarrollado con',
-        'footer.quote': '“Solucionar problemas para disfrutar la vida.”',
+        'footer.built': 'Desarrollado con',
+        'footer.quote': '"Código limpio, soluciones escalables."',
         'footer.builtBy': 'Construido por Ángel Nereira.',
 
         // General
-        'general.learnMore': 'Saber más',
+        'general.learnMore': 'Ver más',
         'general.viewAll': 'Ver todo',
 
         // Admin
@@ -105,85 +111,91 @@ const translations: Record<Language, Record<string, string>> = {
         'admin.back_to_site': 'Volver al Sitio',
     },
     en: {
-        // Hero
+        // Hero - Full Stack Software Engineer (not Architect)
         'hero.greeting': 'Hi, I\'m',
         'hero.name': 'Ángel Nereira',
-        'hero.title': 'Software Engineer',
-        'hero.subtitle': 'I transform ideas into scalable digital solutions',
-        'hero.description': 'FinTech and GovTech specialist. I design enterprise architectures that generate real value for your business.',
-        'hero.cta.services': 'View Solutions',
-        'hero.cta.contact': 'Book a Consultation',
-        'hero.badge': 'Creator of Sago One (SaaS)',
+        'hero.title': 'Full Stack Software Engineer',
+        'hero.subtitle': 'FinTech Developer & PWA Specialist',
+        'hero.description': 'Specialist in Next.js ecosystems, Offline-First PWA applications and scalable SaaS solutions. Creator of Sago One.',
+        'hero.cta.services': 'View Projects',
+        'hero.cta.contact': 'Technical Consulting',
+        'hero.badge': 'Creator of Sago One · FinTech SaaS',
         'hero.stats.years': 'Years of Experience',
         'hero.stats.projects': 'Projects Delivered',
-        'hero.stats.clients': 'Happy Clients',
-        'hero.stats.tech': 'Technologies Mastered',
+        'hero.stats.facturas': 'Invoices Processed',
+        'hero.stats.uptime': 'SaaS Uptime',
 
         // Solutions Section
-        'solutions.title': 'Solutions that Transform',
-        'solutions.subtitle': 'Each project is unique. Explore the areas where I can add value to your vision.',
-        'solutions.enterprise.title': 'Enterprise Systems',
-        'solutions.enterprise.desc': 'Robust architectures that scale with your business. ERP, electronic invoicing, government integrations.',
-        'solutions.enterprise.stats': '99.9% uptime',
-        'solutions.digital.title': 'Digital Products',
-        'solutions.digital.desc': 'From concept to launched product. Agile development, fast iterations, end-user focus.',
-        'solutions.digital.stats': 'MVP in 4 weeks',
-        'solutions.consulting.title': 'Technical Consulting',
-        'solutions.consulting.desc': 'Code audits, software architecture, performance optimization, and team mentorship.',
-        'solutions.consulting.stats': '15+ technologies',
-        'solutions.explore': 'Explore Solution',
+        'solutions.title': 'Solutions that Scale',
+        'solutions.subtitle': 'High-level software engineering for products that need performance, security and availability.',
+        'solutions.enterprise.title': 'FinTech & Compliance',
+        'solutions.enterprise.desc': 'Electronic invoicing systems, government integrations (DGI, PAC) and bank-grade security.',
+        'solutions.enterprise.stats': 'AES-256 Encryption',
+        'solutions.digital.title': 'PWA Offline-First',
+        'solutions.digital.desc': 'Progressive applications that work without internet. Service Workers, strategic caching and smart sync.',
+        'solutions.digital.stats': '100% Offline Capable',
+        'solutions.consulting.title': 'SaaS Development',
+        'solutions.consulting.desc': 'Multi-tenant systems, horizontal scalability and PostgreSQL database optimization.',
+        'solutions.consulting.stats': 'Multi-Tenant Ready',
+        'solutions.explore': 'View Details',
 
-        // About
+        // About - No references to music producer
         'about.title': 'About Me',
-        'about.description': 'Panamanian software engineer specialized in creating scalable enterprise solutions for FinTech and GovTech. I don\'t just code, I design complete architectures that transform businesses.',
-        'about.background.title': 'A Unique Perspective',
-        'about.background.text': 'My journey is unique: I spent 7 years as a music producer and sound engineer before transitioning to software engineering. This experience has given me a different perspective on solution design and attention to detail.',
-        'about.current.title': 'Current Experience',
-        'about.current.text': 'I currently work at UbicSys S.A. and I am the creator of Sago One, a complete Offline-First PWA SaaS electronic invoicing system that integrates with Panama\'s DGI.',
+        'about.description': 'Full Stack Software Engineer specialized in FinTech and GovTech. I design and build scalable SaaS systems that process thousands of daily transactions.',
+        'about.background.title': 'Technical Focus',
+        'about.background.text': 'My specialty is building Offline-First PWA applications and high-availability systems. I work with Next.js, TypeScript and PostgreSQL to create robust products that solve real business problems.',
+        'about.current.title': 'Current Projects',
+        'about.current.text': 'Currently developing Sago One (electronic invoicing SaaS) and Plenty Market (E-commerce PWA). Both systems handle critical data with AES-256 encryption and multi-tenant design.',
         'about.philosophy.title': 'My Philosophy',
-        'about.philosophy.text': 'Solving problems to enjoy life',
+        'about.philosophy.text': 'Clean code, scalable solutions, clear documentation',
 
         // Skills
         'skills.title': 'Tech Stack',
-        'skills.description': 'Tools and technologies I master to solve complex problems.',
-        'skills.cta': 'View all Skills',
+        'skills.description': 'The tools I use to build Sago One and Plenty Market.',
+        'skills.cta': 'View Full Stack',
+        'skills.category.core': 'Core',
+        'skills.category.data': 'Data',
+        'skills.category.infrastructure': 'Infrastructure',
 
         // Services
-        'services.title': 'My Services',
-        'services.description': 'Custom software solutions to empower your business.',
+        'services.title': 'Services',
+        'services.description': 'Software solutions for products that need to scale.',
         'services.cta': 'View all services',
 
         // Projects
-        'projects.title': 'Featured Projects',
-        'projects.description': 'A selection of projects that demonstrate my problem-solving approach.',
+        'projects.title': 'Projects in Production',
+        'projects.description': 'Real systems processing transactions. The engineering behind each solution.',
         'projects.page_title': 'Success Stories',
-        'projects.page_subtitle': 'Real solutions transforming businesses. From multi-tenant SaaS systems to hybrid enterprise cloud architectures.',
+        'projects.page_subtitle': 'FinTech and E-commerce systems in production. The engineering behind each solution.',
+        'projects.challenge': 'The Technical Challenge',
+        'projects.tech_highlights': 'Technical Highlights',
+
+        // Metrics (replacing testimonials)
+        'metrics.title': 'Production Metrics',
+        'metrics.subtitle': 'Real numbers from production systems.',
 
         // Services
         'services.page_title': 'Enterprise Software Solutions',
-        'services.page_subtitle': 'I don\'t just code, I design complete solutions. From multi-tenant SaaS architectures to complex integrations with government systems. Specialized in FinTech and GovTech.',
-
-        // Testimonials
-        'testimonials.title': 'What others say',
+        'services.page_subtitle': 'I develop complete systems: from Offline-First PWAs to complex government API integrations. Specialized in FinTech SaaS.',
 
         // CTA
-        'cta.title': 'Ready to transform your business?',
-        'cta.subtitle': 'Let\'s collaborate on solutions that scale globally. I\'m available for new challenges and opportunities.',
-        'cta.button': 'Let\'s discuss your project',
+        'cta.title': 'Need high-level development?',
+        'cta.subtitle': 'Let\'s build systems that scale. Available for FinTech, E-commerce and SaaS projects.',
+        'cta.button': 'Book Consulting',
 
         // Navigation
         'nav.home': 'Home',
         'nav.about': 'About',
         'nav.services': 'Services',
         'nav.projects': 'Projects',
-        'nav.skills': 'Skills',
+        'nav.skills': 'Stack',
         'nav.contact': 'Contact',
         'nav.calculator': 'Calculator',
 
         // Footer
         'footer.rights': 'All rights reserved.',
-        'footer.built': 'Designed and built with',
-        'footer.quote': '“Solving problems to enjoy life.”',
+        'footer.built': 'Developed with',
+        'footer.quote': '"Clean code, scalable solutions."',
         'footer.builtBy': 'Built by Ángel Nereira.',
 
         // General
@@ -223,17 +235,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         return translations[language][key] || key;
     };
 
-    // Always provide the context, but use default language ('es') during SSR
-    // We handle hydration mismatch by only rendering children after mount if strictly needed,
-    // or better: we provide the context immediately.
-    // The previous issue was returning <>{children}</> without Provider wrapping it.
-
-    // During SSR/Pre-render, effects don't run, so mounted is false.
-    // We must wraps children in Provider regardless.
-
     return (
         <LanguageContext.Provider value={{ language, setLanguage, t }}>
-            {mounted ? children : children /* Render children immediately to allow SSR text generation with default language */}
+            {mounted ? children : children}
         </LanguageContext.Provider>
     );
 }

@@ -42,3 +42,37 @@ export const OpenShiftIcon = (props: IconProps) => (
         <path d="M12.38 2.01 6.23 4.41a2 2 0 0 0-1.23 1.83v9.52a2 2 0 0 0 1.23 1.83l6.15 2.4a2 2 0 0 0 1.54 0l6.15-2.4a2 2 0 0 0 1.23-1.83V6.24a2 2 0 0 0-1.23-1.83l-6.15-2.4a2 2 0 0 0-1.54 0z" /><path d="m16.5 8-9 4.5" /><path d="m12 12.25 4.5 2.25" /><path d="M12 17v-4.75" />
     </svg>
 );
+
+// Nombre: prisma
+// Descripción: Icono estilizado de Prisma ORM.
+export const PrismaIcon = (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" />
+        <path d="M12 22V12" />
+        <path d="M12 12L3 7" />
+        <path d="M12 12l9-5" />
+    </svg>
+);
+
+// Nombre: neon
+// Descripción: Icono estilizado de Neon Database.
+export const NeonIcon = (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <circle cx="12" cy="12" r="10" />
+        <path d="M8 12h8" />
+        <path d="M12 8v8" />
+        <circle cx="12" cy="12" r="3" />
+    </svg>
+);
+
+// Nombre: oracle-cloud
+// Descripción: Icono estilizado de Oracle Cloud Infrastructure.
+export const OracleCloudIcon = (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <ellipse cx="12" cy="12" rx="10" ry="5" />
+        <path d="M2 12v4c0 2.76 4.48 5 10 5s10-2.24 10-5v-4" />
+        <path d="M2 8v4" />
+        <path d="M22 8v4" />
+        <ellipse cx="12" cy="8" rx="10" ry="5" />
+    </svg>
+);

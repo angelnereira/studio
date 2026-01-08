@@ -14,6 +14,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  // Project URLs - Descriptive for SEO
+  const projectUrls: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/proyectos/sago-one-fintech-saas`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/proyectos/plenty-market-ecommerce-pwa`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+  ];
+
   // Static pages
   const staticUrls: MetadataRoute.Sitemap = [
     {
@@ -38,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/calculadora`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.9,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/skills`,
@@ -60,5 +76,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  return [...staticUrls, ...blogUrls];
+  return [...staticUrls, ...projectUrls, ...blogUrls];
 }
+

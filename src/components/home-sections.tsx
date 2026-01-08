@@ -3,23 +3,21 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRight, Github } from 'lucide-react';
+import { ArrowRight, Github, Shield, Database, Zap, Code2, Target, ExternalLink } from 'lucide-react';
 import { AnimatedDiv } from '@/components/animated-div';
-import { skills } from '@/lib/skills';
-import type { Project, Testimonial } from '@/lib/projects-and-testimonials';
+import { skills, skillCategories, getSkillsByCategory } from '@/lib/skills';
+import type { Project, Metric } from '@/lib/projects-and-testimonials';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { SpotlightCard } from '@/components/spotlight-card';
 import { CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ServicesCarousel } from './services-carousel';
+import { useLanguage } from '@/lib/language-context';
 
-// Icon for SAGO-FACTU - Electronic Invoicing
-const SagoFactuIcon = (props: React.SVGProps<SVGSVGElement>) => (
+// Project Icons
+const SagoOneIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M14 2v6h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -27,59 +25,32 @@ const SagoFactuIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-// Icon for UETA Travel - Travel Management System
-const UetaTravelIcon = (props: React.SVGProps<SVGSVGElement>) => (
+const PlentyMarketIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
-  </svg>
-);
-
-// Icon for GovTech Portal - Government Services
-const GovTechPortalIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3 21h18M3 10h18M12 3l9 7v11H3V10l9-7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M9 21v-6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-// Icon for FinTech Dashboard - Financial Analytics
-const FinTechDashboardIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M3 3v18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="m19 9-5 5-4-4-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M18 14h3v7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-// Icon for Biometric Access Control
-const BiometricAccessIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
-    <path d="M12 2a10 10 0 0 1 8.66 5M12 22a10 10 0 0 1-8.66-5M3.34 7A10 10 0 0 1 12 2M20.66 17A10 10 0 0 1 12 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    <path d="M8 12h.01M16 12h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
-
-// Icon for Payments API - Multi-channel Payments
-const PaymentsAPIIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg {...props} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="1" y="4" width="22" height="16" rx="2" stroke="currentColor" strokeWidth="2" />
-    <path d="M1 10h22" stroke="currentColor" strokeWidth="2" />
-    <path d="M6 15h4M15 15h3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3 6h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M16 10a4 4 0 0 1-8 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const projectIcons: { [key: string]: React.ElementType } = {
-  'sago-factu': SagoFactuIcon,
-  'ueta-travel': UetaTravelIcon,
-  'govtech-portal': GovTechPortalIcon,
-  'fintech-dashboard': FinTechDashboardIcon,
-  'biometric-access': BiometricAccessIcon,
-  'payments-api': PaymentsAPIIcon
+  'sago-one-fintech-saas': SagoOneIcon,
+  'plenty-market-ecommerce-pwa': PlentyMarketIcon,
+};
+
+// Icon mapping for tech highlights
+const highlightIcons: { [key: string]: React.ElementType } = {
+  'Seguridad Nivel Bancario': Shield,
+  'Base de Datos Multi-Tenant': Database,
+  'Performance Extremo': Zap,
+  'Gestión de Estado Optimizada': Code2,
+  'Optimización de Media': Zap,
+  'Migración de Base de Datos': Database,
 };
 
 export function SkillsSection() {
+  const { t } = useLanguage();
+
   return (
     <TooltipProvider>
       <section id="skills" className="w-full">
@@ -88,42 +59,54 @@ export function SkillsSection() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">
-                  Habilidades y Stack Tecnológico
+                  {t('skills.title')}
                 </h2>
                 <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Más que una lista de tecnologías, esta es mi caja de herramientas para resolver problemas complejos. Cada habilidad y herramienta se aplica con un propósito: construir soluciones eficientes, escalables y centradas en el usuario que generan un impacto real.
+                  {t('skills.description')}
                 </p>
               </div>
             </div>
           </AnimatedDiv>
-          <div className="group/container relative mt-12 w-full overflow-hidden">
-            <div className="absolute inset-y-0 left-0 z-10 w-[7.5%] bg-gradient-to-r from-background to-transparent" />
-            <div className="flex h-40 w-max animate-marquee items-center transition-all duration-500 ease-geist py-4 group-hover/container:[animation-play-state:paused]">
-              {[...skills, ...skills].map((skill, index) => (
-                <Tooltip key={`${skill.slug}-tooltip-${index}`}>
-                  <TooltipTrigger asChild>
-                    <Link href={`/skills/${skill.slug}`} className="block">
-                      <div className="relative mx-2 flex w-36 h-28 flex-col items-center justify-center text-center transition-all duration-500 ease-geist hover:translate-y-2">
-                        <div
-                          className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-secondary/50 p-6 transition-all duration-300"
-                        >
-                          <skill.icon className='h-10 w-10 text-primary' />
-                        </div>
-                      </div>
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{skill.name}</p>
-                  </TooltipContent>
-                </Tooltip>
-              ))}
-            </div>
-            <div className="absolute inset-y-0 right-0 z-10 w-[7.5%] bg-gradient-to-l from-background to-transparent" />
+
+          {/* Grid de Skills por Categoría - Engineering-First */}
+          <div className="mt-12 space-y-12">
+            {skillCategories.map((category, catIndex) => (
+              <AnimatedDiv key={category.id} delay={0.1 * catIndex}>
+                <div className="mb-6">
+                  <h3 className="text-xl font-bold text-primary mb-1">{category.name}</h3>
+                  <p className="text-sm text-muted-foreground">{category.description}</p>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {getSkillsByCategory(category.id).map((skill) => (
+                    <Tooltip key={skill.slug}>
+                      <TooltipTrigger asChild>
+                        <Link href={`/skills/${skill.slug}`}>
+                          <SpotlightCard className="group p-4 bg-secondary/30 border border-white/5 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                            <div className="flex flex-col items-center text-center gap-3">
+                              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                <skill.icon className="w-6 h-6 text-primary" />
+                              </div>
+                              <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                                {skill.name}
+                              </span>
+                            </div>
+                          </SpotlightCard>
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="max-w-xs">{skill.description}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  ))}
+                </div>
+              </AnimatedDiv>
+            ))}
           </div>
-          <AnimatedDiv delay={0.4} className="text-center mt-8">
+
+          <AnimatedDiv delay={0.4} className="text-center mt-12">
             <Button asChild variant="outline">
               <Link href="/skills">
-                Ver todas las Habilidades <ArrowRight className="ml-2" />
+                {t('skills.cta')} <ArrowRight className="ml-2" />
               </Link>
             </Button>
           </AnimatedDiv>
@@ -135,12 +118,13 @@ export function SkillsSection() {
 
 export function ProjectsSection({ projects: projectsData }: { projects: Project[] }) {
   const [isClient, setIsClient] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  if (!projectsData) {
+  if (!projectsData || projectsData.length === 0) {
     return null;
   }
 
@@ -152,64 +136,104 @@ export function ProjectsSection({ projects: projectsData }: { projects: Project[
         <AnimatedDiv>
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Proyectos Destacados</h2>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">{t('projects.title')}</h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Una selección de proyectos que demuestran mi enfoque en la resolución de problemas y la aplicación de tecnología.
+                {t('projects.description')}
               </p>
             </div>
           </div>
         </AnimatedDiv>
-        <div className="mx-auto grid max-w-5xl justify-center gap-8 py-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-5xl justify-center gap-8 py-12 grid-cols-1 lg:grid-cols-2">
           {projects.map((project, index) => (
             <AnimatedDiv key={project.id} delay={0.1 * index}>
               {isClient ? (
                 <Dialog>
                   <DialogTrigger asChild>
-                    <SpotlightCard className="group relative flex flex-col overflow-hidden transition-all duration-600 ease-geist w-full bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl cursor-pointer">
-                      <CardHeader className="flex-row items-center gap-4">
+                    <SpotlightCard className="group relative flex flex-col overflow-hidden transition-all duration-600 ease-geist w-full h-full bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl cursor-pointer">
+                      <CardHeader className="flex-row items-start gap-4">
                         {project.logo && (
-                          <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                            <project.logo className="w-6 h-6" />
+                          <div className="w-14 h-14 flex-shrink-0 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+                            <project.logo className="w-7 h-7" />
                           </div>
                         )}
-                        <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary">{project.title}</CardTitle>
+                        <div className="flex-1">
+                          <Badge variant="outline" className="mb-2 text-xs font-medium">{project.label}</Badge>
+                          <CardTitle className="transition-colors duration-300 ease-geist group-hover:text-primary text-xl">{project.title}</CardTitle>
+                        </div>
                       </CardHeader>
-                      <CardContent>
-                        <CardDescription className="line-clamp-3">{project.description}</CardDescription>
+                      <CardContent className="flex-1">
+                        <CardDescription className="line-clamp-4 text-sm leading-relaxed">{project.description}</CardDescription>
                       </CardContent>
-                      <CardFooter className="mt-auto">
+                      <CardFooter className="mt-auto flex-col items-start gap-4">
                         <div className="flex flex-wrap gap-2">
-                          {project.technologies.slice(0, 3).map((tech) => (
-                            <Badge key={tech} variant="secondary">{tech}</Badge>
+                          {project.technologies.slice(0, 4).map((tech) => (
+                            <Badge key={tech} variant="secondary" className="text-xs">{tech}</Badge>
                           ))}
-                          {project.technologies.length > 3 && <Badge variant="outline">+{project.technologies.length - 3}</Badge>}
+                          {project.technologies.length > 4 && <Badge variant="outline" className="text-xs">+{project.technologies.length - 4}</Badge>}
+                        </div>
+                        <div className="flex items-center text-sm text-primary font-medium group-hover:underline">
+                          Ver Caso de Ingeniería <ArrowRight className="ml-1 h-4 w-4" />
                         </div>
                       </CardFooter>
                     </SpotlightCard>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-[625px]">
+                  <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                       <div className="flex items-center gap-4 mb-4">
                         {project.logo && (
-                          <div className="w-16 h-16 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                          <div className="w-16 h-16 flex-shrink-0 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
                             <project.logo className="w-8 h-8" />
                           </div>
                         )}
-                        <DialogTitle className="text-2xl">{project.title}</DialogTitle>
+                        <div>
+                          <Badge variant="outline" className="mb-2 text-xs">{project.label}</Badge>
+                          <DialogTitle className="text-2xl">{project.title}</DialogTitle>
+                        </div>
                       </div>
-                      <DialogDescription>{project.description}</DialogDescription>
+                      <DialogDescription className="text-base leading-relaxed">{project.description}</DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-6 py-4">
+                      {/* El Desafío Técnico */}
+                      {project.challenge && (
+                        <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                          <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                            <Target className="h-5 w-5 text-primary" />
+                            {t('projects.challenge')}
+                          </h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{project.challenge}</p>
+                        </div>
+                      )}
+
+                      {/* Tech Highlights */}
                       <div>
-                        <h4 className="font-semibold text-foreground mb-2">Problema Resuelto</h4>
-                        <p className="text-sm text-muted-foreground">{project.problem}</p>
+                        <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <Zap className="h-5 w-5 text-primary" />
+                          {t('projects.tech_highlights')}
+                        </h4>
+                        <div className="grid gap-3">
+                          {project.techHighlights.map((highlight, i) => {
+                            const IconComponent = highlightIcons[highlight.title] || Code2;
+                            return (
+                              <div key={i} className="flex items-start gap-3 p-3 bg-secondary/30 rounded-lg">
+                                <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                  <IconComponent className="w-4 h-4 text-primary" />
+                                </div>
+                                <div>
+                                  <p className="font-medium text-foreground text-sm">{highlight.title}</p>
+                                  <p className="text-xs text-muted-foreground">{highlight.description}</p>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
+
+                      {/* Stack */}
                       <div>
-                        <h4 className="font-semibold text-foreground mb-2">Impacto Generado</h4>
-                        <p className="text-sm text-muted-foreground">{project.impact}</p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-2">Tecnologías Utilizadas</h4>
+                        <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                          <Database className="h-5 w-5 text-primary" />
+                          Stack Tecnológico
+                        </h4>
                         <div className="flex flex-wrap gap-2">
                           {project.technologies.map((tech) => (
                             <Badge key={tech} variant="secondary">{tech}</Badge>
@@ -217,32 +241,45 @@ export function ProjectsSection({ projects: projectsData }: { projects: Project[
                         </div>
                       </div>
                     </div>
-                    <div className="flex justify-end gap-2 mt-4">
-                      {project.githubUrl && <Button variant="ghost" size="sm" asChild><Link href={project.githubUrl}><Github className="mr-2 h-4 w-4" /> Código Fuente</Link></Button>}
-                      {project.liveUrl && <Button asChild size="sm"><Link href={project.liveUrl}>Ver Demo <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>}
+                    <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-white/10">
+                      {project.githubUrl && (
+                        <Button variant="ghost" size="sm" asChild>
+                          <Link href={project.githubUrl} target="_blank">
+                            <Github className="mr-2 h-4 w-4" /> Código
+                          </Link>
+                        </Button>
+                      )}
+                      {project.liveUrl && (
+                        <Button asChild size="sm">
+                          <Link href={project.liveUrl} target="_blank">
+                            <ExternalLink className="mr-2 h-4 w-4" /> Ver en Producción
+                          </Link>
+                        </Button>
+                      )}
                     </div>
                   </DialogContent>
                 </Dialog>
               ) : (
-                // Render a placeholder or null on the server
-                <SpotlightCard className="group relative flex flex-col overflow-hidden transition-all duration-600 ease-geist w-full bg-secondary/50 backdrop-blur-sm border border-white/10">
+                <SpotlightCard className="group relative flex flex-col overflow-hidden transition-all duration-600 ease-geist w-full h-full bg-secondary/50 backdrop-blur-sm border border-white/10">
                   <CardHeader className="flex-row items-center gap-4">
                     {project.logo && (
-                      <div className="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
-                        <project.logo className="w-6 h-6" />
+                      <div className="w-14 h-14 flex-shrink-0 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+                        <project.logo className="w-7 h-7" />
                       </div>
                     )}
-                    <CardTitle>{project.title}</CardTitle>
+                    <div>
+                      <Badge variant="outline" className="mb-2">{project.label}</Badge>
+                      <CardTitle>{project.title}</CardTitle>
+                    </div>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="line-clamp-3">{project.description}</CardDescription>
+                    <CardDescription className="line-clamp-4">{project.description}</CardDescription>
                   </CardContent>
                   <CardFooter className="mt-auto">
                     <div className="flex flex-wrap gap-2">
-                      {project.technologies.slice(0, 3).map((tech) => (
+                      {project.technologies.slice(0, 4).map((tech) => (
                         <Badge key={tech} variant="secondary">{tech}</Badge>
                       ))}
-                      {project.technologies.length > 3 && <Badge variant="outline">+{project.technologies.length - 3}</Badge>}
                     </div>
                   </CardFooter>
                 </SpotlightCard>
@@ -250,48 +287,57 @@ export function ProjectsSection({ projects: projectsData }: { projects: Project[
             </AnimatedDiv>
           ))}
         </div>
+        <AnimatedDiv delay={0.3} className="text-center">
+          <Button asChild variant="outline">
+            <Link href="/proyectos">
+              Ver Todos los Casos <ArrowRight className="ml-2" />
+            </Link>
+          </Button>
+        </AnimatedDiv>
       </div>
     </section>
   );
 }
 
-export function TestimonialsSection({ testimonials: testimonialsData }: { testimonials: Testimonial[] }) {
+// NUEVO: Metrics Section (reemplaza Testimonials)
+export function MetricsSection({ metrics: metricsData }: { metrics: Metric[] }) {
+  const { t } = useLanguage();
 
-  if (!testimonialsData) {
+  if (!metricsData || metricsData.length === 0) {
     return null;
   }
 
-  const testimonials = testimonialsData.map(t => {
-    const avatar = PlaceHolderImages.find(p => p.id === t.avatarId);
-    return { ...t, avatar };
-  });
+  const metricIcons = [
+    { icon: Code2 },
+    { icon: Shield },
+    { icon: Zap },
+    { icon: Database },
+  ];
 
   return (
-    <section id="testimonials" className="w-full">
+    <section id="metrics" className="w-full">
       <div className="container px-4 md:px-6">
         <AnimatedDiv>
-          <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl font-headline">Lo que dicen otros</h2>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">{t('metrics.title')}</h2>
+            <p className="max-w-[600px] mx-auto mt-4 text-muted-foreground md:text-lg">
+              {t('metrics.subtitle')}
+            </p>
+          </div>
         </AnimatedDiv>
-        <div className="grid gap-8 mt-12 grid-cols-1 md:grid-cols-2">
-          {testimonials.map((testimonial, index) => (
-            <AnimatedDiv key={testimonial.name} delay={0.1 * index}>
-              <SpotlightCard className="relative transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
-                <CardContent className="pt-6">
-                  <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
-                </CardContent>
-                <CardFooter className="flex items-center gap-4">
-                  {testimonial.avatar && (
-                    <Avatar>
-                      <AvatarImage src={testimonial.avatar.imageUrl} alt={testimonial.name} data-ai-hint={testimonial.avatar.imageHint} />
-                      <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                  )}
-                  <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.title}</p>
-                  </div>
-                </CardFooter>
-              </SpotlightCard>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto border-t border-b border-white/5 py-12 divide-y lg:divide-y-0 lg:divide-x divide-white/5">
+          {metricsData.map((metric, index) => (
+            <AnimatedDiv key={metric.label} delay={0.1 * index} className="flex flex-col items-center text-center px-4">
+              <div className="w-12 h-12 mb-4 bg-primary/5 rounded-full flex items-center justify-center text-primary transform transition-transform duration-500 hover:scale-110">
+                {React.createElement(metricIcons[index % metricIcons.length].icon, { className: "w-6 h-6" })}
+              </div>
+              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2 tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50">
+                {metric.value}
+              </div>
+              <div className="text-sm font-bold uppercase tracking-widest text-primary mb-2 opacity-80">{metric.label}</div>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-[200px]">
+                {metric.description}
+              </p>
             </AnimatedDiv>
           ))}
         </div>
@@ -300,16 +346,24 @@ export function TestimonialsSection({ testimonials: testimonialsData }: { testim
   );
 }
 
+// Mantener TestimonialsSection por compatibilidad pero vacío
+export function TestimonialsSection({ testimonials: testimonialsData }: { testimonials: { name: string; title: string; quote: string; avatarId: string }[] }) {
+  // No renderizar nada - reemplazado por MetricsSection
+  return null;
+}
+
 export function ServicesSection() {
+  const { t } = useLanguage();
+
   return (
     <section id="services" className="w-full">
       <div className="container px-4 md:px-6">
         <AnimatedDiv>
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">Mis Servicios</h2>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline">{t('services.title')}</h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Soluciones de software a la medida para potenciar tu negocio. Desde aplicaciones web hasta inteligencia artificial.
+                {t('services.description')}
               </p>
             </div>
           </div>
@@ -322,7 +376,7 @@ export function ServicesSection() {
         <AnimatedDiv delay={0.4} className="text-center">
           <Button asChild variant="outline">
             <Link href="/services">
-              Ver todos los servicios <ArrowRight className="ml-2" />
+              {t('services.cta')} <ArrowRight className="ml-2" />
             </Link>
           </Button>
         </AnimatedDiv>
