@@ -105,9 +105,19 @@ export default function HomePageClient() {
                 </h1>
 
                 {/* Description */}
-                <p className="max-w-[600px] text-muted-foreground text-lg sm:text-xl mb-8 leading-relaxed mx-auto lg:mx-0">
+                <p className="max-w-[600px] text-muted-foreground text-lg sm:text-xl mb-6 leading-relaxed mx-auto lg:mx-0">
                   {t('hero.description')}
                 </p>
+
+                {/* Core tech stack badges - Stack de Sago One / Plenty Market */}
+                <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-8">
+                  {coreTechnologies.map((tech) => (
+                    <Badge key={tech.name} variant="secondary" className="px-3 py-1.5 text-xs sm:text-sm bg-secondary/50 border-white/5 backdrop-blur-sm">
+                      <tech.icon className="w-3.5 h-3.5 mr-1.5 text-primary" />
+                      {tech.name}
+                    </Badge>
+                  ))}
+                </div>
 
                 {/* Buttons */}
                 <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
