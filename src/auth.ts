@@ -18,7 +18,35 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     providers: [
         Resend({
             apiKey: process.env.RESEND_API_KEY,
-            from: "login@angelnereira.com",
+            from: "Ángel Nereira <login@angelnereira.com>",
+            sendVerificationRequest: async ({ identifier: email, url, provider }) => {
+                const { host } = new URL(url)
+
+                try {
+                    const response = await fetch("https://api.resend.com/emails", {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${provider.apiKey}`,
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            from: provider.from,
+                            to: email,
+                            subject: `Iniciar sesión en ${host}`,
+                            html: html({ url, host, email }),
+                            text: text({ url, host }),
+                        }),
+                    })
+
+                    if (!response.ok) {
+                        const error = await response.text()
+                        throw new Error(error)
+                    }
+                } catch (error) {
+                    console.error("Failed to send verification email", error)
+                    throw new Error("Failed to send verification email")
+                }
+            },
         }),
     ],
     callbacks: {
@@ -55,3 +83,42 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     debug: process.env.NODE_ENV === "development",
 })
+
+function html({ url, host, email }: { url: string; host: string; email: string }) {
+    const escapedHost = host.replace(/\./g, "&#8203;.")
+    const brandColor = "#ccf381" // Tu color verde neon
+    const textColor = "#000000"
+    const backgroundColor = "#f9f9f9"
+
+    return `
+<body style="background: ${backgroundColor};">
+  <table width="100%" border="0" cellspacing="20" cellpadding="0" style="background: ${backgroundColor}; max-width: 600px; margin: auto; border-radius: 10px;">
+    <tr>
+      <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
+        <strong>${escapedHost}</strong>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" style="padding: 20px 0;">
+        <table border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="center" style="border-radius: 5px;" bgcolor="${brandColor}">
+              <a href="${url}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${textColor}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${brandColor}; display: inline-block; font-weight: bold;">Iniciar Sesión</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${textColor};">
+        Si no solicitaste este correo, puedes ignorarlo con seguridad.
+      </td>
+    </tr>
+  </table>
+</body>
+`
+}
+
+function text({ url, host }: { url: string; host: string }) {
+    return `Iniciar sesión en ${host}\n${url}\n\n`
+}
