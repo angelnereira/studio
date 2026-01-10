@@ -3,6 +3,7 @@ import './globals.css';
 import { RootLayoutClient } from '@/components/root-layout-client';
 import { BackgroundAnimation } from '@/components/ui/background-animation';
 import { GlobalEasterEggs } from '@/components/global-easter-eggs';
+import { AdminBar } from '@/components/admin/admin-bar';
 
 // SEO Metadata optimizada para Ingeniero de Software Full Stack FinTech
 export const metadata: Metadata = {
@@ -210,6 +211,7 @@ export default function RootLayout({
       <RootLayoutClient>
         <GlobalEasterEggs />
         <BackgroundAnimation />
+        <AdminBar />
         {children}
       </RootLayoutClient>
     </html>
