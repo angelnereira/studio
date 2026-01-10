@@ -25,6 +25,7 @@ import { cn } from "@/lib/utils"
 
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { services } from "@/lib/services"
+import { systemTemplates, type SystemTemplate } from "@/lib/system-email-templates"
 import { createSenderIdentity, createTemplate, sendCampaign, saveCampaignDraft, deleteSenderIdentity } from "@/app/admin/(dashboard)/emails/marketing-actions"
 
 // Types
@@ -49,6 +50,20 @@ interface EmailMarketingStudioProps {
 export function EmailMarketingStudio({ identities, templates, campaigns }: EmailMarketingStudioProps) {
     const { toast } = useToast()
     const router = useRouter()
+
+    // Combine database templates with system templates
+    const allTemplates = [
+        ...systemTemplates.map(st => ({
+            id: st.id,
+            name: st.name,
+            content: st.content,
+            subject: st.subject,
+            category: st.category,
+            description: st.description,
+            isSystem: true,
+        })),
+        ...templates.map(t => ({ ...t, isSystem: false, category: 'custom', description: '' }))
+    ]
 
     // --- Compose State ---
     const [step, setStep] = useState(1)
@@ -270,14 +285,21 @@ export function EmailMarketingStudio({ identities, templates, campaigns }: Email
                                     <div className="flex justify-between items-center">
                                         <Label>Email Content</Label>
                                         <Select onValueChange={(v) => {
-                                            const t = templates.find(t => t.id === v)
+                                            const t = allTemplates.find(t => t.id === v)
                                             if (t) setDraft({ ...draft, content: t.content, subject: draft.subject || t.subject || "" })
                                         }}>
                                             <SelectTrigger className="w-[200px] h-8 text-xs">
                                                 <SelectValue placeholder="Load Template..." />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                {templates.map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                                                <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">📦 Templates del Sistema</div>
+                                                {allTemplates.filter(t => t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                                                {templates.length > 0 && (
+                                                    <>
+                                                        <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground border-t border-white/10 mt-1 pt-2">📝 Mis Templates</div>
+                                                        {allTemplates.filter(t => !t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                                                    </>
+                                                )}
                                             </SelectContent>
                                         </Select>
                                     </div>
@@ -486,27 +508,70 @@ export function EmailMarketingStudio({ identities, templates, campaigns }: Email
 
             {/* --- TEMPLATES TAB --- */}
             <TabsContent value="templates">
-                <div className="grid grid-cols-3 gap-6">
-                    {templates.map(t => (
-                        <Card key={t.id} className="bg-black/40 border-white/10 hover:border-primary/50 cursor-pointer group transition-all">
-                            <CardHeader>
-                                <CardTitle className="text-lg">{t.name}</CardTitle>
-                            </CardHeader>
-                            <CardContent className="h-[150px] overflow-hidden relative">
-                                <div className="scale-[0.5] origin-top-left w-[200%] bg-white text-black p-4 rounded-md h-[300px]" dangerouslySetInnerHTML={{ __html: t.content }} />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-                            </CardContent>
-                            <CardFooter>
-                                <Button variant="secondary" className="w-full opacity-0 group-hover:opacity-100 transition-opacity">Edit Template</Button>
-                            </CardFooter>
-                        </Card>
-                    ))}
-                    <Card className="bg-black/20 border-white/10 border-dashed flex items-center justify-center min-h-[250px] hover:bg-black/30 cursor-pointer">
-                        <div className="text-center">
-                            <Plus className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                            <p className="font-medium">Create Template</p>
+                <div className="space-y-8">
+                    {/* System Templates Section */}
+                    <div>
+                        <div className="flex items-center gap-2 mb-4">
+                            <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30">📦 Sistema</Badge>
+                            <h3 className="text-lg font-semibold">Templates Predefinidos</h3>
                         </div>
-                    </Card>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {allTemplates.filter(t => t.isSystem).map(t => (
+                                <Card key={t.id} className="bg-black/40 border-white/10 hover:border-primary/50 cursor-pointer group transition-all">
+                                    <CardHeader className="pb-2">
+                                        <CardTitle className="text-base flex items-center gap-2">{t.name}</CardTitle>
+                                        <CardDescription className="text-xs">{t.description}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="h-[120px] overflow-hidden relative">
+                                        <div className="scale-[0.4] origin-top-left w-[250%] text-black p-2 rounded-md h-[300px]" dangerouslySetInnerHTML={{ __html: t.content }} />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                                    </CardContent>
+                                    <CardFooter className="pt-2">
+                                        <Button
+                                            variant="secondary"
+                                            className="w-full opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                                            onClick={() => {
+                                                setDraft({ ...draft, content: t.content, subject: t.subject || "" })
+                                                toast({ title: "Template Cargado", description: `"${t.name}" listo para usar en Compose.` })
+                                            }}
+                                        >
+                                            Usar Template
+                                        </Button>
+                                    </CardFooter>
+                                </Card>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Custom Templates Section */}
+                    <div>
+                        <div className="flex items-center gap-2 mb-4">
+                            <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">📝 Personalizados</Badge>
+                            <h3 className="text-lg font-semibold">Mis Templates</h3>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {templates.map(t => (
+                                <Card key={t.id} className="bg-black/40 border-white/10 hover:border-primary/50 cursor-pointer group transition-all">
+                                    <CardHeader>
+                                        <CardTitle className="text-lg">{t.name}</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="h-[150px] overflow-hidden relative">
+                                        <div className="scale-[0.5] origin-top-left w-[200%] bg-white text-black p-4 rounded-md h-[300px]" dangerouslySetInnerHTML={{ __html: t.content }} />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                                    </CardContent>
+                                    <CardFooter>
+                                        <Button variant="secondary" className="w-full opacity-0 group-hover:opacity-100 transition-opacity">Edit Template</Button>
+                                    </CardFooter>
+                                </Card>
+                            ))}
+                            <Card className="bg-black/20 border-white/10 border-dashed flex items-center justify-center min-h-[250px] hover:bg-black/30 cursor-pointer">
+                                <div className="text-center">
+                                    <Plus className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                                    <p className="font-medium">Create Template</p>
+                                </div>
+                            </Card>
+                        </div>
+                    </div>
                 </div>
             </TabsContent>
         </Tabs>
