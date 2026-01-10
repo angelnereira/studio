@@ -1,16 +1,25 @@
-
+import { auth } from "@/auth"
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
-  const currentUser = request.cookies.get('authjs.session-token')?.value;
+export default auth((req) => {
+  const isLoggedIn = !!req.auth;
+  const isOnAdminPanel = req.nextUrl.pathname.startsWith('/admin');
+  const isOnLoginPage = req.nextUrl.pathname === '/admin/login';
 
-  // Simple check for existence of session token for admin routes
-  // The real protection happens in the page/component or via next-auth middleware helper
-  if (!currentUser && request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
-    return Response.redirect(new URL('/admin/login', request.url));
+  // Allow access to login page always
+  if (isOnLoginPage) {
+    return NextResponse.next();
   }
-}
+
+  // Protect admin routes (except login)
+  if (isOnAdminPanel && !isLoggedIn) {
+    return NextResponse.redirect(new URL('/admin/login', req.url));
+  }
+
+  return NextResponse.next();
+});
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
