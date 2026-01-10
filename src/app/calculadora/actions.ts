@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 import { CalculationResult } from '@/types/calculator';
 import { formatPrice, formatTimeline } from '@/lib/calculator-logic';
 
-const resend = new Resend(process.env.RESEND_API_KEY_SEND);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface SendBudgetEmailParams {
   result: CalculationResult;

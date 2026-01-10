@@ -3,7 +3,7 @@ import { Resend } from 'resend';
 import WelcomeEmail from '@/emails/welcome-template';
 
 // Initialize Resend with API Key from environment
-const resend = new Resend(process.env.RESEND_API_KEY_SEND);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * Send a professional email using React Email templates
@@ -12,8 +12,8 @@ const resend = new Resend(process.env.RESEND_API_KEY_SEND);
  * @param name Client name for personalization
  */
 export async function sendWelcomeEmail(to: string, name: string) {
-    if (!process.env.RESEND_API_KEY_SEND) {
-        console.warn("RESEND_API_KEY_SEND is missing. Email not sent.");
+    if (!process.env.RESEND_API_KEY) {
+        console.warn("RESEND_API_KEY is missing. Email not sent.");
         return { success: false, error: "Missing API Key" };
     }
 
