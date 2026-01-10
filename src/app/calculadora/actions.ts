@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 import { CalculationResult } from '@/types/calculator';
 import { formatPrice, formatTimeline } from '@/lib/calculator-logic';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY_SEND);
 
 interface SendBudgetEmailParams {
   result: CalculationResult;
@@ -58,9 +58,8 @@ export async function sendBudgetEmail({
         <td style="padding: 8px 0; color: #666;"><strong>Duración estimada:</strong></td>
         <td style="padding: 8px 0;">${formatTimeline(timeline.adjustedWeeks)}</td>
       </tr>
-      ${
-        timeline.startDate && timeline.estimatedEndDate
-          ? `
+      ${timeline.startDate && timeline.estimatedEndDate
+        ? `
       <tr>
         <td style="padding: 8px 0; color: #666;"><strong>Fecha de entrega:</strong></td>
         <td style="padding: 8px 0;">${new Date(timeline.estimatedEndDate).toLocaleDateString('es-PA', {
@@ -70,7 +69,7 @@ export async function sendBudgetEmail({
         })}</td>
       </tr>
       `
-          : ''
+        : ''
       }
     </table>
 
@@ -86,9 +85,8 @@ export async function sendBudgetEmail({
           ${formatPrice(priceBreakdown.basePrice, currency)}
         </td>
       </tr>
-      ${
-        priceBreakdown.complexityAdjustment !== 0
-          ? `
+      ${priceBreakdown.complexityAdjustment !== 0
+        ? `
       <tr>
         <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Ajuste por complejidad</td>
         <td style="padding: 10px; border-bottom: 1px solid #e0e0e0; text-align: right; color: #667eea;">
@@ -96,11 +94,10 @@ export async function sendBudgetEmail({
         </td>
       </tr>
       `
-          : ''
+        : ''
       }
-      ${
-        priceBreakdown.urgencyAdjustment !== 0
-          ? `
+      ${priceBreakdown.urgencyAdjustment !== 0
+        ? `
       <tr>
         <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Ajuste por urgencia</td>
         <td style="padding: 10px; border-bottom: 1px solid #e0e0e0; text-align: right; color: #ff9800;">
@@ -108,11 +105,10 @@ export async function sendBudgetEmail({
         </td>
       </tr>
       `
-          : ''
+        : ''
       }
-      ${
-        priceBreakdown.addOnsTotal > 0
-          ? `
+      ${priceBreakdown.addOnsTotal > 0
+        ? `
       <tr>
         <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">
           Complementos (${selectedAddOns.length})
@@ -122,7 +118,7 @@ export async function sendBudgetEmail({
         </td>
       </tr>
       `
-          : ''
+        : ''
       }
       <tr style="background: #667eea; color: white;">
         <td style="padding: 15px; font-weight: bold; font-size: 18px;">TOTAL</td>
@@ -132,30 +128,28 @@ export async function sendBudgetEmail({
       </tr>
     </table>
 
-    ${
-      selectedAddOns.length > 0
+    ${selectedAddOns.length > 0
         ? `
     <h3 style="color: #333; border-bottom: 2px solid #667eea; padding-bottom: 8px; margin-top: 30px;">
       Complementos Incluidos
     </h3>
     <ul style="list-style: none; padding: 0; margin: 15px 0;">
       ${selectedAddOns
-        .map(
-          (addOn) => `
+          .map(
+            (addOn) => `
         <li style="padding: 8px 0; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between;">
           <span>✓ ${addOn.name}</span>
           <span style="color: #667eea; font-weight: 600;">${formatPrice(addOn.price, currency)}</span>
         </li>
       `
-        )
-        .join('')}
+          )
+          .join('')}
     </ul>
     `
         : ''
-    }
+      }
 
-    ${
-      recommendations.length > 0
+    ${recommendations.length > 0
         ? `
     <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin: 30px 0; border-left: 4px solid #2196f3;">
       <h3 style="color: #1976d2; margin-top: 0;">Recomendaciones</h3>
@@ -165,7 +159,7 @@ export async function sendBudgetEmail({
     </div>
     `
         : ''
-    }
+      }
 
     <p style="font-size: 16px; margin-top: 30px;">
       Este presupuesto es una estimación basada en los parámetros seleccionados.
@@ -189,10 +183,10 @@ export async function sendBudgetEmail({
   <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
     <p>Presupuesto válido por 30 días desde la fecha de generación.</p>
     <p>Generado el ${new Date().toLocaleDateString('es-PA', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })}</p>
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })}</p>
   </div>
 </body>
 </html>

@@ -234,12 +234,12 @@ const emailSubjects = {
 
 export async function sendContactEmail({ formType, data }: EmailData): Promise<{ success: boolean; error?: string }> {
   try {
-    if (!process.env.RESEND_API_KEY) {
-      console.error('RESEND_API_KEY no está configurada');
+    if (!process.env.RESEND_API_KEY_SEND) {
+      console.error('RESEND_API_KEY_SEND no está configurada');
       return { success: false, error: 'Configuración de email no disponible' };
     }
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const resend = new Resend(process.env.RESEND_API_KEY_SEND);
 
     const formatter = emailFormatters[formType];
     const subject = emailSubjects[formType];
