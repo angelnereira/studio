@@ -54,7 +54,14 @@ export default function LoginPage() {
                         <form
                             action={async (formData) => {
                                 "use server"
-                                await signIn("resend", formData)
+                                try {
+                                    await signIn("resend", formData)
+                                } catch (error) {
+                                    // Log the error for debugging
+                                    console.error("SignIn error:", error)
+                                    // Re-throw to let Next.js handle it properly
+                                    throw error
+                                }
                             }}
                             className="space-y-4"
                         >
