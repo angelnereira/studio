@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
 import { useLanguage } from "@/lib/language-context";
+import { TiltCard } from "@/components/ui/tilt-card";
 
 export default function ProyectosPage() {
   const { t } = useLanguage();
@@ -119,105 +120,108 @@ export default function ProyectosPage() {
       <div className="mt-12 space-y-16">
         {projects.map((project, index) => (
           <AnimatedDiv key={project.id} delay={0.1 * (index + 1)}>
-            <SpotlightCard className="relative overflow-hidden bg-secondary/50 backdrop-blur-sm border border-white/10">
-              <div className="p-6 sm:p-8 md:p-10">
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
-                  <div>
-                    <div className="flex items-center gap-3 mb-2 flex-wrap">
-                      <Badge variant="outline" className="text-xs font-medium">{project.label}</Badge>
-                      <Badge className={project.statusColor}>{project.status}</Badge>
+            <TiltCard className="h-full">
+              <SpotlightCard className="relative overflow-hidden bg-secondary/50 backdrop-blur-sm border border-white/10 h-full">
+                <div className="p-6 sm:p-8 md:p-10">
+                  {/* ... content ... */}
+                  {/* Header */}
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                    <div>
+                      <div className="flex items-center gap-3 mb-2 flex-wrap">
+                        <Badge variant="outline" className="text-xs font-medium">{project.label}</Badge>
+                        <Badge className={project.statusColor}>{project.status}</Badge>
+                      </div>
+                      <h2 className="text-2xl sm:text-3xl font-bold font-headline">{project.title}</h2>
+                      <p className="text-lg text-muted-foreground mt-1">{project.subtitle}</p>
                     </div>
-                    <h2 className="text-2xl sm:text-3xl font-bold font-headline">{project.title}</h2>
-                    <p className="text-lg text-muted-foreground mt-1">{project.subtitle}</p>
                   </div>
-                </div>
 
-                {/* Description */}
-                <p className="text-foreground/80 mb-8 leading-relaxed">{project.description}</p>
+                  {/* Description */}
+                  <p className="text-foreground/80 mb-8 leading-relaxed">{project.description}</p>
 
-                {/* El Desafío Técnico */}
-                <div className="p-5 bg-primary/5 border border-primary/20 rounded-lg mb-8">
-                  <h3 className="font-semibold mb-3 flex items-center gap-2 text-primary">
-                    <Target className="h-5 w-5" />
-                    {t('projects.challenge')}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">{project.challenge}</p>
-                </div>
+                  {/* El Desafío Técnico */}
+                  <div className="p-5 bg-primary/5 border border-primary/20 rounded-lg mb-8">
+                    <h3 className="font-semibold mb-3 flex items-center gap-2 text-primary">
+                      <Target className="h-5 w-5" />
+                      {t('projects.challenge')}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">{project.challenge}</p>
+                  </div>
 
-                {/* Tech Highlights */}
-                <div className="mb-8">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Code2 className="h-5 w-5 text-primary" />
-                    {t('projects.tech_highlights')}
-                  </h3>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {project.techHighlights.map((highlight, i) => (
-                      <div key={i} className="p-4 bg-secondary/50 border border-white/5 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                            <highlight.icon className="w-4 h-4 text-primary" />
+                  {/* Tech Highlights */}
+                  <div className="mb-8">
+                    <h3 className="font-semibold mb-4 flex items-center gap-2">
+                      <Code2 className="h-5 w-5 text-primary" />
+                      {t('projects.tech_highlights')}
+                    </h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {project.techHighlights.map((highlight, i) => (
+                        <div key={i} className="p-4 bg-secondary/50 border border-white/5 rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                              <highlight.icon className="w-4 h-4 text-primary" />
+                            </div>
+                            <span className="font-medium text-foreground text-sm">{highlight.title}</span>
                           </div>
-                          <span className="font-medium text-foreground text-sm">{highlight.title}</span>
+                          <p className="text-xs text-muted-foreground leading-relaxed">{highlight.description}</p>
                         </div>
-                        <p className="text-xs text-muted-foreground leading-relaxed">{highlight.description}</p>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Métricas */}
+                  <div className="mb-8">
+                    <h3 className="font-semibold mb-4 flex items-center gap-2">
+                      <Zap className="h-5 w-5 text-primary" />
+                      Métricas en Producción
+                    </h3>
+                    <div className="grid grid-cols-3 gap-4">
+                      {project.metrics.map((metric, i) => (
+                        <div key={i} className="text-center p-4 bg-primary/5 border border-primary/10 rounded-lg">
+                          <div className="text-xl sm:text-2xl font-bold text-primary">{metric.value}</div>
+                          <div className="text-xs text-muted-foreground">{metric.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Tech Stack */}
+                  <div className="mb-8">
+                    <h3 className="font-semibold mb-4 flex items-center gap-2">
+                      <Database className="h-5 w-5 text-primary" />
+                      Stack Tecnológico
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {project.stack.map((tech) => (
+                        <Badge key={tech} variant="secondary" className="bg-primary/10 hover:bg-primary/20">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex flex-wrap gap-3 pt-6 border-t border-white/10">
+                    {project.github && (
+                      <Button asChild variant="outline" size="sm">
+                        <Link href={project.github} target="_blank">
+                          <Github className="mr-2 h-4 w-4" />
+                          Ver Código
+                        </Link>
+                      </Button>
+                    )}
+                    {project.demo && (
+                      <Button asChild size="sm">
+                        <Link href={project.demo} target="_blank">
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          Ver en Producción
+                        </Link>
+                      </Button>
+                    )}
                   </div>
                 </div>
-
-                {/* Métricas */}
-                <div className="mb-8">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Zap className="h-5 w-5 text-primary" />
-                    Métricas en Producción
-                  </h3>
-                  <div className="grid grid-cols-3 gap-4">
-                    {project.metrics.map((metric, i) => (
-                      <div key={i} className="text-center p-4 bg-primary/5 border border-primary/10 rounded-lg">
-                        <div className="text-xl sm:text-2xl font-bold text-primary">{metric.value}</div>
-                        <div className="text-xs text-muted-foreground">{metric.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tech Stack */}
-                <div className="mb-8">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Database className="h-5 w-5 text-primary" />
-                    Stack Tecnológico
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {project.stack.map((tech) => (
-                      <Badge key={tech} variant="secondary" className="bg-primary/10 hover:bg-primary/20">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Actions */}
-                <div className="flex flex-wrap gap-3 pt-6 border-t border-white/10">
-                  {project.github && (
-                    <Button asChild variant="outline" size="sm">
-                      <Link href={project.github} target="_blank">
-                        <Github className="mr-2 h-4 w-4" />
-                        Ver Código
-                      </Link>
-                    </Button>
-                  )}
-                  {project.demo && (
-                    <Button asChild size="sm">
-                      <Link href={project.demo} target="_blank">
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        Ver en Producción
-                      </Link>
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </SpotlightCard>
+              </SpotlightCard>
+            </TiltCard>
           </AnimatedDiv>
         ))}
       </div>

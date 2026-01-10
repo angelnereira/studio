@@ -68,7 +68,7 @@ export const projectsData: Project[] = [
       }
     ],
     challenge: "El desafío era migrar un sitio estático a una plataforma e-commerce completa manteniendo la experiencia de usuario fluida. Implementamos un sistema de Partner Program que permite a vendedores internacionales gestionar inventario con zonas de impuestos diferenciadas y sincronización de stock en tiempo real.",
-    liveUrl: "https://plentymarket.com",
+    liveUrl: "https://plenty-market.vercel.app",
     githubUrl: "https://github.com/angelnereira/plenty-market",
   },
 ];

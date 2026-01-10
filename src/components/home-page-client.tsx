@@ -11,6 +11,8 @@ import dynamic from 'next/dynamic';
 import { Skeleton } from "@/components/ui/skeleton";
 import { SpotlightCard } from "./spotlight-card";
 import { Badge } from "@/components/ui/badge";
+import { HackerText } from "@/components/ui/hacker-text";
+import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 
 const DynamicServicesSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ServicesSection), {
   loading: () => <Skeleton className="h-96 w-full" />,
@@ -51,7 +53,7 @@ export default function HomePageClient() {
       desc: t('solutions.enterprise.desc'),
       icon: Shield,
       href: "/services",
-      gradient: "from-violet-500/20 to-purple-500/20",
+      gradient: "from-emerald-500/20 to-teal-500/20",
       stats: t('solutions.enterprise.stats'),
     },
     {
@@ -59,7 +61,7 @@ export default function HomePageClient() {
       desc: t('solutions.digital.desc'),
       icon: Sparkles,
       href: "/services",
-      gradient: "from-blue-500/20 to-cyan-500/20",
+      gradient: "from-lime-500/20 to-emerald-500/20",
       stats: t('solutions.digital.stats'),
     },
     {
@@ -67,7 +69,7 @@ export default function HomePageClient() {
       desc: t('solutions.consulting.desc'),
       icon: Cloud,
       href: "/contact",
-      gradient: "from-emerald-500/20 to-teal-500/20",
+      gradient: "from-teal-500/20 to-cyan-500/20",
       stats: t('solutions.consulting.stats'),
     },
   ];
@@ -100,7 +102,9 @@ export default function HomePageClient() {
                   <span className="block text-muted-foreground text-xl sm:text-2xl font-normal mb-2">
                     {t('hero.greeting')}
                   </span>
-                  <span className="block text-gradient">{t('hero.name')}</span>
+                  <span className="block text-gradient">
+                    <HackerText text={t('hero.name') || "Ángel Nereira"} />
+                  </span>
                   <span className="block text-primary mt-2 text-3xl sm:text-4xl md:text-5xl">{t('hero.title')}</span>
                 </h1>
 
@@ -121,16 +125,20 @@ export default function HomePageClient() {
 
                 {/* Buttons */}
                 <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-                  <Button asChild size="lg" className="rounded-full h-12 px-8 text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all hover:scale-105">
-                    <Link href="/contact">
-                      {t('hero.cta.contact')} <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg" className="rounded-full h-12 px-8 text-base border-white/10 hover:bg-secondary/50 transition-all hover:scale-105">
-                    <Link href="/proyectos">
-                      {t('hero.cta.services')}
-                    </Link>
-                  </Button>
+                  <MagneticWrapper>
+                    <Button asChild size="lg" className="rounded-full h-12 px-8 text-base shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all hover:scale-105">
+                      <Link href="/contact">
+                        {t('hero.cta.contact')} <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </MagneticWrapper>
+                  <MagneticWrapper>
+                    <Button asChild variant="outline" size="lg" className="rounded-full h-12 px-8 text-base border-white/10 hover:bg-secondary/50 transition-all hover:scale-105">
+                      <Link href="/proyectos">
+                        {t('hero.cta.services')}
+                      </Link>
+                    </Button>
+                  </MagneticWrapper>
                 </div>
               </div>
             </div>
@@ -139,12 +147,12 @@ export default function HomePageClient() {
             <div className="relative w-full max-w-[500px] lg:max-w-none mx-auto lg:mr-0 flex justify-center lg:justify-end">
               <div className="relative w-full aspect-square max-w-[500px] lg:max-w-[600px]">
                 {/* Glow effect behind image */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-purple-500/20 rounded-full blur-3xl opacity-60 scale-75 animate-pulse" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-emerald-500/20 rounded-full blur-3xl opacity-60 scale-75 animate-pulse" />
                 <Image
                   src="/images/hero-architect.png"
                   alt="Software Architect Building Digital Solutions"
                   fill
-                  className="object-contain drop-shadow-[0_0_40px_rgba(124,58,237,0.2)]"
+                  className="object-contain drop-shadow-[0_0_40px_rgba(223,255,0,0.2)]"
                   priority
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
@@ -278,7 +286,7 @@ export default function HomePageClient() {
       <section className="w-full">
         <AnimatedDiv>
           <div className="container px-4 md:px-6">
-            <SpotlightCard className="max-w-4xl mx-auto p-8 bg-gradient-to-br from-primary/10 to-purple-500/10 border border-primary/20 text-center">
+            <SpotlightCard className="max-w-4xl mx-auto p-8 bg-gradient-to-br from-primary/10 to-emerald-500/10 border border-primary/20 text-center">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter font-headline mb-4">
                 {t('cta.title')}
               </h2>

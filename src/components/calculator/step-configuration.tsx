@@ -7,6 +7,7 @@ import { SpotlightCard } from '@/components/spotlight-card';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Check } from 'lucide-react';
+import { TiltCard } from '@/components/ui/tilt-card';
 
 interface StepConfigurationProps {
   selectedComplexity: ComplexityLevel | null;
@@ -38,43 +39,45 @@ export function StepConfiguration({
             const isSelected = selectedComplexity === complexity.level;
 
             return (
-              <Card
-                key={complexity.level}
-                className={`p-5 cursor-pointer transition-all hover:shadow-md ${isSelected
-                  ? 'border-primary border-2 bg-primary/5'
-                  : 'border-border hover:border-primary/50'
-                  }`}
-                onClick={() => onComplexitySelect(complexity.level)}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <h4 className="font-semibold">{complexity.name}</h4>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {complexity.description}
-                    </p>
-                  </div>
-                  {isSelected && (
-                    <div className="bg-primary text-primary-foreground rounded-full p-1">
-                      <Check className="h-3 w-3" />
+              <TiltCard key={complexity.level} className="h-full">
+                <Card
+                  className={`p-5 cursor-pointer transition-all hover:shadow-md h-full ${isSelected
+                    ? 'border-primary border-2 bg-primary/5'
+                    : 'border-border hover:border-primary/50'
+                    }`}
+                  onClick={() => onComplexitySelect(complexity.level)}
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    {/* ... content ... */}
+                    <div>
+                      <h4 className="font-semibold">{complexity.name}</h4>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {complexity.description}
+                      </p>
                     </div>
-                  )}
-                </div>
+                    {isSelected && (
+                      <div className="bg-primary text-primary-foreground rounded-full p-1">
+                        <Check className="h-3 w-3" />
+                      </div>
+                    )}
+                  </div>
 
-                <ul className="space-y-1 mt-3">
-                  {complexity.characteristics.map((char, index) => (
-                    <li key={index} className="text-xs text-muted-foreground flex items-center gap-1">
-                      <span className="text-primary">•</span>
-                      {char}
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="space-y-1 mt-3">
+                    {complexity.characteristics.map((char, index) => (
+                      <li key={index} className="text-xs text-muted-foreground flex items-center gap-1">
+                        <span className="text-primary">•</span>
+                        {char}
+                      </li>
+                    ))}
+                  </ul>
 
-                <div className="mt-3 pt-3 border-t">
-                  <span className="text-xs font-medium text-primary">
-                    Multiplicador: {complexity.multiplier}x
-                  </span>
-                </div>
-              </Card>
+                  <div className="mt-3 pt-3 border-t">
+                    <span className="text-xs font-medium text-primary">
+                      Multiplicador: {complexity.multiplier}x
+                    </span>
+                  </div>
+                </Card>
+              </TiltCard>
             );
           })}
         </div>

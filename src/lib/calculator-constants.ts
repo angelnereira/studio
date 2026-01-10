@@ -201,13 +201,100 @@ export const MULTIPLICADORES_COMPLEJIDAD: Record<ComplexityLevel, ComplexityMult
   },
 };
 
-// ... (Country stays same) ...
+// Ajustes regionales para latam/global
+export const AJUSTES_PAIS: Record<Country, CountryAdjustment> = {
+  panama: {
+    country: 'panama',
+    name: 'Panamá',
+    multiplier: 1.0,
+    currency: 'USD',
+  },
+  usa: {
+    country: 'usa',
+    name: 'Estados Unidos',
+    multiplier: 1.8,
+    currency: 'USD',
+  },
+  spain: {
+    country: 'spain',
+    name: 'España',
+    multiplier: 1.4,
+    currency: 'EUR',
+  },
+  mexico: {
+    country: 'mexico',
+    name: 'México',
+    multiplier: 0.9,
+    currency: 'MXN',
+  },
+  colombia: {
+    country: 'colombia',
+    name: 'Colombia',
+    multiplier: 0.7,
+    currency: 'COP',
+  },
+  'latam-other': {
+    country: 'latam-other',
+    name: 'Resto de Latam',
+    multiplier: 0.85,
+    currency: 'USD',
+  },
+};
 
 // Urgency Multipliers
-// ... (Urgency stays same) ...
+// Urgency Multipliers
+export const MULTIPLICADORES_URGENCIA: Record<UrgencyLevel, UrgencyMultiplier> = {
+  normal: {
+    level: 'normal',
+    name: 'Estándar',
+    multiplier: 1.0,
+    description: 'Tiempo de desarrollo óptimo sin recargos',
+    timeReduction: '0%',
+  },
+  urgente: {
+    level: 'urgente',
+    name: 'Prioridad Alta',
+    multiplier: 1.25,
+    description: 'Recursos dedicados extra para entrega rápida',
+    timeReduction: '-25%',
+  },
+  'muy-urgente': {
+    level: 'muy-urgente',
+    name: 'Rush / Emergencia',
+    multiplier: 1.5,
+    description: 'Equipo trabajando fines de semana y noches',
+    timeReduction: '-50%',
+  },
+};
 
 // Client Type Adjustments
-// ... (Client stays same) ...
+// Client Type Adjustments
+export const AJUSTES_TIPO_CLIENTE: Record<ClientType, ClientTypeAdjustment> = {
+  startup: {
+    type: 'startup',
+    name: 'Startup / Emprendedor',
+    multiplier: 1.0,
+    description: 'Enfoque en MVP y velocidad',
+  },
+  pyme: {
+    type: 'pyme',
+    name: 'Pequeña/Mediana Empresa',
+    multiplier: 1.1,
+    description: 'Procesos más formales y requerimientos específicos',
+  },
+  enterprise: {
+    type: 'enterprise',
+    name: 'Corporación',
+    multiplier: 1.5,
+    description: 'Compliance, seguridad y burocracia corporativa',
+  },
+  gobierno: {
+    type: 'gobierno',
+    name: 'Gobierno / ONG',
+    multiplier: 1.3,
+    description: 'Procesos de licitación y documentación extra',
+  },
+};
 
 // Add-ons (Precios ajustados a realidad LATAM)
 export const ADD_ONS: Record<AddOnType, AddOn> = {

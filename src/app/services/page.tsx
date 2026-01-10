@@ -10,6 +10,8 @@ import { services, Service } from "@/lib/services";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
 import { useLanguage } from "@/lib/language-context";
+import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
+import { TiltCard } from "@/components/ui/tilt-card";
 
 export default function ServicesPage() {
   const { t } = useLanguage();
@@ -40,50 +42,54 @@ export default function ServicesPage() {
 
           return (
             <AnimatedDiv key={service.slug} delay={0.1 * (index + 1)}>
-              <SpotlightCard className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl">
-                <CardHeader className="flex flex-row items-start gap-4">
-                  <div className="bg-primary/10 text-primary p-3 rounded-full mt-1">
-                    <service.icon className="h-6 w-6" />
-                  </div>
-                  <div className="flex-1">
-                    <CardTitle className="text-xl font-headline transition-colors duration-300 ease-geist group-hover:text-primary">{service.title}</CardTitle>
-                    <CardDescription className="text-sm">{service.shortDescription}</CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent className="flex-1 space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Planes desde</h4>
-                    <div className="flex items-baseline gap-2">
-                      <p className="text-2xl font-bold text-primary">${startingPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">{priceSuffix}</span></p>
-                      {originalPrice && (
-                        <p className="text-lg font-normal text-muted-foreground line-through">${originalPrice.toLocaleString()}</p>
-                      )}
+              <TiltCard className="h-full">
+                <SpotlightCard className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl h-full">
+                  <CardHeader className="flex flex-row items-start gap-4">
+                    <div className="bg-primary/10 text-primary p-3 rounded-full mt-1">
+                      <service.icon className="h-6 w-6" />
                     </div>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Ideal para</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {service.tags.map((tag) => (
-                        <Badge key={tag} variant="outline">{tag}</Badge>
-                      ))}
+                    <div className="flex-1">
+                      <CardTitle className="text-xl font-headline transition-colors duration-300 ease-geist group-hover:text-primary">{service.title}</CardTitle>
+                      <CardDescription className="text-sm">{service.shortDescription}</CardDescription>
                     </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 pt-4">
-                  <Button asChild variant="outline" className="w-full">
-                    <Link href={`/services/${service.slug}`}>
-                      Ver Detalles
-                    </Link>
-                  </Button>
-                  <Button asChild className="w-full">
-                    <Link href={`/calculator?service=${service.slug}`}>
-                      <span className="hidden sm:inline">Cotización Rápida</span>
-                      <span className="sm:hidden">Cotizar</span>
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardFooter>
-              </SpotlightCard>
+                  </CardHeader>
+                  <CardContent className="flex-1 space-y-4">
+                    <div>
+                      <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Planes desde</h4>
+                      <div className="flex items-baseline gap-2">
+                        <p className="text-2xl font-bold text-primary">${startingPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">{priceSuffix}</span></p>
+                        {originalPrice && (
+                          <p className="text-lg font-normal text-muted-foreground line-through">${originalPrice.toLocaleString()}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Ideal para</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {service.tags.map((tag) => (
+                          <Badge key={tag} variant="outline">{tag}</Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 pt-4">
+                    <Button asChild variant="outline" className="w-full">
+                      <Link href={`/services/${service.slug}`}>
+                        Ver Detalles
+                      </Link>
+                    </Button>
+                    <MagneticWrapper className="w-full">
+                      <Button asChild className="w-full">
+                        <Link href={`/calculator?service=${service.slug}`}>
+                          <span className="hidden sm:inline">Cotización Rápida</span>
+                          <span className="sm:hidden">Cotizar</span>
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </MagneticWrapper>
+                  </CardFooter>
+                </SpotlightCard>
+              </TiltCard>
             </AnimatedDiv>
           );
         })}

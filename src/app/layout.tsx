@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { RootLayoutClient } from '@/components/root-layout-client';
+import { BackgroundAnimation } from '@/components/ui/background-animation';
+import { GlobalEasterEggs } from '@/components/global-easter-eggs';
 
 // SEO Metadata optimizada para Ingeniero de Software Full Stack FinTech
 export const metadata: Metadata = {
@@ -101,7 +103,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;700&family=Geist+Sans:wght@400;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;700&family=Geist+Sans:wght@400;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
           rel="stylesheet"
         />
         {/* Structured Data - JSON-LD */}
@@ -137,7 +139,11 @@ export default function RootLayout({
           }}
         />
       </head>
-      <RootLayoutClient>{children}</RootLayoutClient>
+      <RootLayoutClient>
+        <GlobalEasterEggs />
+        <BackgroundAnimation />
+        {children}
+      </RootLayoutClient>
     </html>
   );
 }

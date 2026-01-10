@@ -9,21 +9,24 @@ import { EmployerForm } from './employer-form';
 import { CollaboratorForm } from './collaborator-form';
 import { SpotlightCard } from '@/components/spotlight-card';
 import { InvitationForm } from './invitation-form';
+import { TiltCard } from '@/components/ui/tilt-card';
 
 function ContactCard({ icon, title, description, children }: { icon: React.ReactNode, title: string, description: string, children: React.ReactNode }) {
   return (
-    <SpotlightCard className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 ease-geist bg-card/40 backdrop-blur-md border border-white/5 hover:border-primary/50 hover:shadow-primary/20 hover:shadow-xl rounded-[var(--radius)]">
-      <CardHeader className="text-center">
-        <div className="mx-auto bg-primary/10 text-primary p-3 rounded-full w-fit mb-2">
-          {icon}
-        </div>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        {children}
-      </CardContent>
-    </SpotlightCard>
+    <TiltCard className="h-full">
+      <SpotlightCard className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 ease-geist bg-card/40 backdrop-blur-md border border-white/5 hover:border-primary/50 hover:shadow-primary/20 hover:shadow-xl rounded-[var(--radius)]">
+        <CardHeader className="text-center">
+          <div className="mx-auto bg-primary/10 text-primary p-3 rounded-full w-fit mb-2">
+            {icon}
+          </div>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {children}
+        </CardContent>
+      </SpotlightCard>
+    </TiltCard>
   )
 }
 
