@@ -55,7 +55,7 @@ export default function LoginPage() {
                             action={async (formData) => {
                                 "use server"
                                 try {
-                                    await signIn("resend", formData)
+                                    await signIn("resend", formData, { redirectTo: "/admin" })
                                 } catch (error) {
                                     // Log the error for debugging
                                     console.error("SignIn error:", error)

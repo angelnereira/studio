@@ -40,6 +40,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
             console.warn(`Login attempt denied for email: ${user.email}`);
             return false; // Block everyone else
+        },
+        async redirect({ url, baseUrl }) {
+            // If the url starts with baseUrl, allow it, otherwise redirect to admin
+            if (url.startsWith("/")) return `${baseUrl}${url}`
+            else if (new URL(url).origin === baseUrl) return url
+            return baseUrl + "/admin"
         }
     },
     pages: {
