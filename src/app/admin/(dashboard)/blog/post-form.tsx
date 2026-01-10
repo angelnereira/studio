@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -12,12 +12,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
+import { CldUploadWidget } from 'next-cloudinary';
 import {
     Card,
     CardContent,
     CardHeader,
     CardTitle,
-    CardDescription,
 } from "@/components/ui/card"
 import {
     Form,
@@ -29,7 +29,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { createPost, updatePost } from "./actions"
-import { Loader2, Save, ArrowLeft, Image as ImageIcon } from "lucide-react"
+import { Loader2, Save, ArrowLeft, Image as ImageIcon, Trash2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 
@@ -246,6 +246,72 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                                         </FormItem>
                                     )}
                                 />
+
+                                <FormField
+                                    control={form.control}
+                                    name="coverImage"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Cover Image</FormLabel>
+                                            <FormControl>
+                                                <div className="space-y-4">
+                                                    <CldUploadWidget
+                                                        uploadPreset="studio_preset"
+                                                        onSuccess={(result: any) => {
+                                                            console.log("Upload Result:", result);
+                                                            if (result?.info?.secure_url) {
+                                                                field.onChange(result.info.secure_url)
+                                                            }
+                                                        }}
+                                                        // Added options to ensure better UX
+                                                        options={{
+                                                            sources: ['local', 'url'],
+                                                            multiple: false,
+                                                            maxFiles: 1
+                                                        }}
+                                                    >
+                                                        {({ open }) => (
+                                                            <Button
+                                                                type="button"
+                                                                variant="secondary"
+                                                                className="w-full"
+                                                                onClick={() => open()}
+                                                            >
+                                                                <ImageIcon className="w-4 h-4 mr-2" />
+                                                                Upload Image
+                                                            </Button>
+                                                        )}
+                                                    </CldUploadWidget>
+
+                                                    {/* Fallback Manual Input */}
+                                                    <Input
+                                                        placeholder="Or paste image URL..."
+                                                        value={field.value}
+                                                        onChange={field.onChange}
+                                                        className="text-xs bg-black/20"
+                                                    />
+                                                </div>
+                                            </FormControl>
+                                            {field.value && (
+                                                <div className="mt-2 rounded-md overflow-hidden aspect-video relative border border-white/10 group">
+                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                    <img src={field.value} alt="Preview" className="w-full h-full object-cover transition-transform group-hover:scale-105" />
+                                                    <Button
+                                                        type="button"
+                                                        variant="destructive"
+                                                        size="icon"
+                                                        className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                        onClick={() => field.onChange("")}
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </Button>
+                                                </div>
+                                            )}
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
                                 <FormField
                                     control={form.control}
                                     name="seoTitle"
@@ -255,24 +321,6 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                                             <FormControl>
                                                 <Input placeholder="Optional override" {...field} />
                                             </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="coverImage"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Cover Image URL</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="https://..." {...field} />
-                                            </FormControl>
-                                            {field.value && (
-                                                <div className="mt-2 rounded-md overflow-hidden aspect-video relative border border-white/10">
-                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                    <img src={field.value} alt="Preview" className="w-full h-full object-cover" />
-                                                </div>
-                                            )}
                                         </FormItem>
                                     )}
                                 />
