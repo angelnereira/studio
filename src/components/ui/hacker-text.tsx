@@ -36,14 +36,19 @@ export function HackerText({ text, className }: HackerTextProps) {
                 clearInterval(intervalRef.current!);
             }
 
-            iteration += 1 / 3;
-        }, 30);
+            iteration += 0.5; // Faster convergence (was 1/3)
+        }, 60); // Low power mode (was 30)
     };
 
     useEffect(() => {
-        // Initial scramble on mount
-        scramble();
-        return () => clearInterval(intervalRef.current!);
+        // Delay initial animation to avoid blocking hydration/TBT
+        const timeout = setTimeout(() => {
+            scramble();
+        }, 2000);
+        return () => {
+            clearTimeout(timeout);
+            clearInterval(intervalRef.current!);
+        };
     }, []);
 
     const handleMouseEnter = () => {
