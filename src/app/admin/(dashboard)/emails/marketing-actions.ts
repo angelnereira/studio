@@ -3,40 +3,17 @@
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { Resend } from "resend"
-import { z } from "zod"
 import { revalidatePath } from "next/cache"
+import {
+    SenderIdentitySchema,
+    TemplateSchema,
+    CampaignSchema,
+    type SenderIdentityInput,
+    type TemplateInput,
+    type CampaignInput
+} from "./schemas"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-
-// --- Schemas ---
-
-export const SenderIdentitySchema = z.object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
-    email: z.string().email("Invalid email address"),
-})
-
-export const TemplateSchema = z.object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
-    subject: z.string().min(1, "Subject is required"),
-    content: z.string().min(1, "Content is required"),
-    category: z.string().optional(),
-})
-
-export const CampaignSchema = z.object({
-    name: z.string().min(2, "Internal name is required"),
-    subject: z.string().min(1, "Subject is required"),
-    content: z.string().min(1, "Content is required"),
-    senderId: z.string().min(1, "Sender Identity is required"),
-    templateId: z.string().optional(),
-    audienceFilter: z.record(z.any()).optional(), // { formType: 'client', ... }
-    audienceFilter: z.record(z.any()).optional(), // { formType: 'client', ... }
-    scheduledAt: z.date().optional(),
-    attachments: z.array(z.object({
-        filename: z.string(),
-        content: z.string(), // Base64
-        // type: z.string().optional() // Content-Type
-    })).optional()
-})
 
 // --- Sender Identity Actions ---
 
@@ -46,7 +23,7 @@ export async function getSenderIdentities() {
     return await prisma.senderIdentity.findMany({ orderBy: { createdAt: 'desc' } })
 }
 
-export async function createSenderIdentity(data: z.infer<typeof SenderIdentitySchema>) {
+export async function createSenderIdentity(data: SenderIdentityInput) {
     const session = await auth()
     if (!session?.user) return { success: false, message: "Unauthorized" }
 
@@ -85,7 +62,7 @@ export async function getTemplates() {
     return await prisma.emailTemplate.findMany({ orderBy: { updatedAt: 'desc' } })
 }
 
-export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
+export async function createTemplate(data: TemplateInput) {
     const session = await auth()
     if (!session?.user) return { success: false, message: "Unauthorized" }
 
@@ -105,7 +82,7 @@ export async function createTemplate(data: z.infer<typeof TemplateSchema>) {
 
 // --- Campaign Actions ---
 
-export async function saveCampaignDraft(data: z.infer<typeof CampaignSchema> & { id?: string }) {
+export async function saveCampaignDraft(data: CampaignInput & { id?: string }) {
     const session = await auth()
     if (!session?.user) return { success: false, message: "Unauthorized" }
 
