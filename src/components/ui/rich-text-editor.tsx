@@ -36,29 +36,57 @@ const Toolbar = ({ editor, services = [] }: { editor: Editor | null, services?: 
         const priceSuffix = startingPackage.priceSuffix || ''
         const url = `https://angelnereira.com/services/${service.slug}`
 
+        // Design Tokens matching site (Deep Forest / Neon)
+        const colors = {
+            background: "#0a0a0a", // Deep dark background
+            cardBg: "#111111", // Slightly lighter card
+            primary: "#ccf381", // Neon Green Brand Color
+            text: "#ffffff",
+            muted: "#888888",
+            border: "#333333"
+        }
+
         const html = `
             <br />
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 20px auto; border: 1px solid #333; border-radius: 8px; overflow: hidden; font-family: sans-serif; background: #000; color: #fff;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 20px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
                 <tr>
-                    <td style="padding: 20px; text-align: center; border-bottom: 1px solid #333;">
-                         <h2 style="margin: 0; font-size: 24px;">${service.title}</h2>
-                         <p style="margin: 5px 0 0; color: #888;">${service.shortDescription}</p>
+                    <td style="background-color: ${colors.cardBg}; border: 1px solid ${colors.border}; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <!-- Header -->
+                            <tr>
+                                <td style="padding: 30px 20px 10px; text-align: center;">
+                                     <h2 style="margin: 0; font-size: 24px; font-weight: 700; color: ${colors.text}; letter-spacing: -0.5px;">${service.title}</h2>
+                                     <p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: ${colors.muted};">${service.shortDescription}</p>
+                                </td>
+                            </tr>
+                            
+                            <!-- Price & CTA -->
+                            <tr>
+                                <td style="padding: 20px; text-align: center;">
+                                    <div style="background-color: rgba(204, 243, 129, 0.1); border: 1px solid rgba(204, 243, 129, 0.2); border-radius: 8px; display: inline-block; padding: 15px 30px;">
+                                        <p style="font-size: 12px; text-transform: uppercase; color: ${colors.primary}; letter-spacing: 1px; margin: 0; font-weight: 600;">Planes desde</p>
+                                        <p style="font-size: 36px; font-weight: 800; margin: 5px 0 10px; color: ${colors.text};">
+                                            $${typeof price === 'number' ? price.toLocaleString() : price}
+                                            <span style="font-size: 16px; font-weight: normal; color: ${colors.muted};">${priceSuffix}</span>
+                                        </p>
+                                    </div>
+                                    
+                                    <div style="margin-top: 25px;">
+                                        <a href="${url}" style="display: inline-block; background-color: ${colors.primary}; color: #000000; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-weight: 600; font-size: 16px; transition: all 0.2s;">Ver Detalles del Servicio &rarr;</a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Footer/Tags -->
+                            <tr>
+                                 <td style="padding: 20px; text-align: center; border-top: 1px solid ${colors.border};">
+                                    <p style="margin: 0; font-size: 13px; color: ${colors.muted};">
+                                        <strong style="color: ${colors.text};">Ideal para:</strong> ${service.tags.join(' · ')}
+                                    </p>
+                                 </td>
+                            </tr>
+                        </table>
                     </td>
-                </tr>
-                <tr>
-                    <td style="padding: 20px; text-align: center;">
-                        <p style="font-size: 14px; text-transform: uppercase; color: #666; letter-spacing: 1px; margin: 0;">Planes desde</p>
-                        <p style="font-size: 32px; font-weight: bold; margin: 10px 0; color: #ccf381;">
-                            $${typeof price === 'number' ? price.toLocaleString() : price}
-                            <span style="font-size: 16px; font-weight: normal; color: #888;">${priceSuffix}</span>
-                        </p>
-                        <a href="${url}" style="display: inline-block; background: #ccf381; color: #000; text-decoration: none; padding: 12px 24px; border-radius: 4px; font-weight: bold; margin-top: 10px;">Ver Detalles</a>
-                    </td>
-                </tr>
-                <tr>
-                     <td style="padding: 15px; background: #111; text-align: center; font-size: 12px; color: #666;">
-                        Ideal para: ${service.tags.join(' · ')}
-                     </td>
                 </tr>
             </table>
             <br />
