@@ -66,20 +66,15 @@ export function TiltCard({ children, className = "", rotationIntensity = 10 }: T
             onMouseLeave={isHoverable ? handleMouseLeave : undefined}
             whileTap={{ scale: 0.98 }}
             style={{
+                perspective: 1000, // Añadir perspectiva aquí para el efecto 3D
                 rotateX: isHoverable ? springRotateX : 0,
                 rotateY: isHoverable ? springRotateY : 0,
-                transformStyle: "preserve-3d",
             }}
-            // Hardware acceleration hints for crisp text
-            className={`relative transition-colors duration-200 ease-out will-change-transform backface-hidden ${className}`}
+            // Eliminamos will-change-transform por defecto para evitar rasterización prematura
+            // Usamos una clase simple
+            className={`relative transition-colors duration-200 ease-out ${className}`}
         >
-            <div style={{
-                transform: isHoverable ? "translateZ(30px)" : "none",
-                transformStyle: "preserve-3d",
-                backfaceVisibility: "hidden" // Critical for text sharpness
-            }}>
-                {children}
-            </div>
+            {children}
         </motion.div>
     );
 }
