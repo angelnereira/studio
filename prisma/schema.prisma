@@ -55,6 +55,8 @@ model Contact {
   eventLocation    String?
   invitationReason String?
 
+  campaignRecipients CampaignRecipient[]
+
   @@index([formType])
   @@index([email])
   @@index([createdAt])
@@ -142,4 +144,93 @@ model Post {
   @@index([slug])
   @@index([published])
   @@map("posts")
+}
+
+// Email Marketing System
+
+model SenderIdentity {
+  id        String   @id @default(cuid())
+  name      String   // Display name, e.g. "Angel Nereira"
+  email     String   // email address
+  verified  Boolean  @default(false)
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  campaigns EmailCampaign[]
+
+  @@map("sender_identities")
+}
+
+model EmailTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  subject     String?  // Default subject
+  content     String   @db.Text // HTML/JSON content
+  category    String?  // "newsletter", "promotion", "transactional"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  campaigns   EmailCampaign[]
+
+  @@map("email_templates")
+}
+
+model EmailCampaign {
+  id              String   @id @default(cuid())
+  name            String   // Internal name
+  subject         String
+  content         String   @db.Text
+  status          String   @default("draft") // "draft", "scheduled", "sending", "completed", "failed"
+  
+  scheduledAt     DateTime?
+  sentAt          DateTime?
+  
+  // Audience
+  audienceFilter  Json?    // Stores filters used (e.g. { formType: "client" })
+  recipientCount  Int      @default(0)
+
+  // Content Extensions
+  attachments     Json?    // Stores array of { filename, content(base64), type }
+
+  // Stats (Aggregated for speed)
+  statsSent       Int      @default(0)
+  statsDelivered  Int      @default(0)
+  statsOpened     Int      @default(0)
+  statsClicked    Int      @default(0)
+
+  // Relations
+  senderId        String
+  sender          SenderIdentity @relation(fields: [senderId], references: [id])
+  
+  templateId      String?
+  template        EmailTemplate? @relation(fields: [templateId], references: [id])
+
+  recipients      CampaignRecipient[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("email_campaigns")
+}
+
+model CampaignRecipient {
+  id          String   @id @default(cuid())
+  email       String
+  status      String   @default("pending") // "sent", "delivered", "failed", "bounced"
+  
+  openedAt    DateTime?
+  clickedAt   DateTime?
+  
+  campaignId  String
+  campaign    EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  
+  contactId   String?  // Optional link to Contact model
+  contact     Contact? @relation(fields: [contactId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([campaignId])
+  @@index([email])
+  @@map("campaign_recipients")
 }
