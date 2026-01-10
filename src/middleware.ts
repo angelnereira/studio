@@ -1,19 +1,18 @@
 import { auth } from "@/auth"
-import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 export default auth((req) => {
   const isLoggedIn = !!req.auth;
-  const isOnAdminPanel = req.nextUrl.pathname.startsWith('/admin');
-  const isOnLoginPage = req.nextUrl.pathname === '/admin/login';
+  const { pathname } = req.nextUrl;
 
-  // Allow access to login page always
-  if (isOnLoginPage) {
+  // Never protect these paths
+  const publicAdminPaths = ['/admin/login', '/admin/verify-request'];
+  if (publicAdminPaths.includes(pathname)) {
     return NextResponse.next();
   }
 
-  // Protect admin routes (except login)
-  if (isOnAdminPanel && !isLoggedIn) {
+  // Protect all other admin routes
+  if (pathname.startsWith('/admin') && !isLoggedIn) {
     return NextResponse.redirect(new URL('/admin/login', req.url));
   }
 
@@ -21,5 +20,6 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  // Only run middleware on admin routes
+  matcher: ['/admin/:path*'],
 };
