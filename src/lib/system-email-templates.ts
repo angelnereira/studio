@@ -82,8 +82,8 @@ export const systemTemplates: SystemTemplate[] = [
         <p style="color: #9ca3af; font-size: 14px; line-height: 24px; text-align: center;">Hola {{name}}, tengo una oferta especial para ti.</p>
         <div style="background: linear-gradient(135deg, rgba(19,109,86,0.2), rgba(223,255,0,0.1)); border: 2px solid #DFFF00; border-radius: 12px; padding: 24px; margin: 24px 0; text-align: center;">
             <p style="color: #9ca3af; font-size: 14px; margin: 0 0 8px 0;">{{serviceName}}</p>
-            <p style="color: #6b7280; font-size: 24px; text-decoration: line-through; margin: 0;">${{ originalPrice }}</p>
-            <p style="color: #DFFF00; font-size: 36px; font-weight: bold; margin: 0;">${{ discountedPrice }}</p>
+            <p style="color: #6b7280; font-size: 24px; text-decoration: line-through; margin: 0;">\${{originalPrice}}</p>
+            <p style="color: #DFFF00; font-size: 36px; font-weight: bold; margin: 0;">\${{discountedPrice}}</p>
             <p style="color: #FF6B35; font-size: 16px; font-weight: bold; margin: 8px 0 0 0;">¡Ahorras {{discountPercentage}}%!</p>
         </div>
         <div style="background: rgba(255,255,255,0.05); border: 1px dashed #6b7280; border-radius: 8px; padding: 16px; margin: 24px 0; text-align: center;">
