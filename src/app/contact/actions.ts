@@ -1,8 +1,9 @@
 "use server";
 
 import { z } from "zod";
-// import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { sendContactEmail } from "@/lib/email";
+import { sendWelcomeEmail } from "@/lib/email-sender";
 
 // Define schemas for each form
 const clientSchema = z.object({
@@ -71,13 +72,10 @@ export async function onContactSubmit(
   prevState: FormState,
   data: FormData
 ): Promise<FormState> {
-  // React 19's useActionState adds numeric prefixes (e.g., "1_name") to form fields
-  // We need to strip these prefixes to get the actual field names
   const rawFormData = Object.fromEntries(data);
   const formData: Record<string, unknown> = {};
 
   for (const [key, value] of Object.entries(rawFormData)) {
-    // Remove numeric prefix like "1_" or "0_" from field names
     const cleanKey = key.replace(/^\d+_/, '');
     formData[cleanKey] = value;
   }
@@ -111,35 +109,27 @@ export async function onContactSubmit(
   }
 
   try {
-    // Preparar los datos para Prisma
     const contactData: any = {
       ...parsed.data,
       formType,
+      status: 'new'
     };
 
-    // Convertir campos vacíos de URL a null
     if (contactData.linkedin === '') contactData.linkedin = null;
     if (contactData.portfolio === '') contactData.portfolio = null;
 
-    // Convertir eventDate string a Date si existe
     if (contactData.eventDate) {
       contactData.eventDate = new Date(contactData.eventDate);
     }
 
-    // Guardar en la base de datos con Prisma
-    /*
-      // Guardar en la base de datos con Prisma (Opcional - No bloqueante)
-      try {
-        // await prisma.contact.create({
-        //   data: contactData,
-        // });
-      } catch (dbError) {
-        console.warn("Advertencia: No se pudo guardar en la base de datos, pero se intentará enviar el email.", dbError);
-        // Continuar con el envío de email
-      }
-    */
+    try {
+      await prisma.contact.create({
+        data: contactData,
+      });
+    } catch (dbError) {
+      console.warn("Advertencia: No se pudo guardar en la base de datos (CRM), pero se enviará el email.", dbError);
+    }
 
-    // Enviar email con los datos del formulario
     const emailResult = await sendContactEmail({
       formType,
       data: parsed.data,
@@ -154,10 +144,14 @@ export async function onContactSubmit(
       };
     }
 
+    if (parsed.data.email && ['client', 'employer', 'collaborator'].includes(formType)) {
+      const name = parsed.data.name || parsed.data.recruiterName || "Visitante";
+      sendWelcomeEmail(parsed.data.email, name).catch(console.error);
+    }
 
     return {
       status: 'success',
-      message: 'Tu mensaje ha sido recibido. Gracias por contactarme.',
+      message: 'Tu mensaje ha sido recibido. Te he enviado una confirmación a tu correo.',
       formType
     };
   } catch (error) {
