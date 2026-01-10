@@ -1,7 +1,12 @@
-// Middleware disabled temporarily due to NextAuth v5 beta edge runtime issues
-// Protection is handled at the page level instead
-export { default } from 'next-auth/middleware'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
+// Middleware disabled - protection is handled at the page level
+export function middleware(request: NextRequest) {
+  return NextResponse.next()
+}
+
+// Don't run on any routes
 export const config = {
-  matcher: [], // Disable middleware
+  matcher: [],
 }
