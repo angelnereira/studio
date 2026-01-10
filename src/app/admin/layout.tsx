@@ -1,84 +1,87 @@
-"use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {
-  BarChart,
-  Briefcase,
-  FileText,
-  Home,
-  LayoutDashboard,
-} from "lucide-react";
-import {
-  SidebarProvider,
-  Sidebar,
-  SidebarHeader,
-  SidebarContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarInset,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import * as React from "react";
-import { useLanguage } from "@/lib/language-context";
-export default function AdminLayout({
+import Link from "next/link"
+import { LayoutDashboard, FileText, Mail, Users, Settings, LogOut, ExternalLink } from "lucide-react"
+import { auth, signOut } from "@/auth"
+import { Button } from "@/components/ui/button"
+import { redirect } from "next/navigation"
+
+export default async function AdminLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const pathname = usePathname();
-  const { t } = useLanguage();
+  const session = await auth()
 
-  const menuItems = React.useMemo(() => [
-    { href: "/admin", label: t('admin.dashboard'), icon: <LayoutDashboard /> },
-    { href: "/admin/job-analysis", label: t('admin.job_analysis'), icon: <Briefcase /> },
-    { href: "/admin/cover-letter", label: t('admin.cover_letters'), icon: <FileText /> },
-  ], [t]);
+  if (!session) {
+    redirect("/admin/login")
+  }
 
   return (
-    <SidebarProvider>
-      <div className="flex min-h-[calc(100vh-theme(spacing.14))]">
-        <Sidebar>
-          <SidebarHeader>
-            <div className="flex items-center gap-2">
-              <BarChart className="size-6 text-primary" />
-              <h2 className="text-lg font-semibold">{t('admin.title')}</h2>
+    <div className="flex h-screen bg-black/95 text-foreground overflow-hidden font-sans">
+      {/* Sidebar */}
+      <aside className="w-64 border-r border-white/10 bg-background/50 backdrop-blur-xl hidden md:flex flex-col">
+        <div className="p-6 border-b border-white/10">
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-bold group-hover:scale-110 transition-transform">
+              AN
             </div>
-          </SidebarHeader>
-          <SidebarContent>
-            <SidebarMenu>
-              {menuItems.map((item) => (
-                <SidebarMenuItem key={item.href}>
-                  <Link href={item.href} className="w-full">
-                    <SidebarMenuButton
-                      className="w-full"
-                      isActive={pathname === item.href}
-                    >
-                      {item.icon}
-                      <span>{item.label}</span>
-                    </SidebarMenuButton>
-                  </Link>
-                </SidebarMenuItem>
-              ))}
-              <SidebarMenuItem>
-                <Link href="/" className="w-full">
-                  <SidebarMenuButton className="w-full">
-                    <Home />
-                    <span>{t('admin.back_to_site')}</span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarContent>
-        </Sidebar>
-        <SidebarInset>
-          <div className="p-4 md:p-6 lg:p-8">
-            <SidebarTrigger className="md:hidden mb-4" />
-            {children}
+            <span className="font-bold tracking-tight group-hover:text-primary transition-colors">Studio Admin</span>
+          </Link>
+        </div>
+
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+          <SidebarItem href="/admin" icon={LayoutDashboard} label="Dashboard" />
+          <SidebarItem href="/admin/blog" icon={FileText} label="Blog & CMS" />
+          <SidebarItem href="/admin/emails" icon={Mail} label="Email Marketing" />
+          <SidebarItem href="/admin/crm" icon={Users} label="CRM & Leads" />
+          <SidebarItem href="/admin/settings" icon={Settings} label="System Config" />
+        </nav>
+
+        <div className="p-4 border-t border-white/10 space-y-2">
+          <div className="flex items-center gap-3 px-3 py-2">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-purple-600" />
+            <div className="text-xs">
+              <p className="font-medium truncate max-w-[120px]">{session.user?.name || "Admin User"}</p>
+              <p className="text-muted-foreground truncate max-w-[120px]">{session.user?.email}</p>
+            </div>
           </div>
-        </SidebarInset>
-      </div>
-    </SidebarProvider>
-  );
+          <form action={async () => {
+            "use server"
+            await signOut()
+          }}>
+            <Button variant="ghost" className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-950/30">
+              <LogOut className="mr-2 h-4 w-4" /> Sign Out
+            </Button>
+          </form>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-y-auto relative">
+        <div className="absolute inset-0 bg-grid-white/[0.02] -z-10" />
+        <header className="h-16 border-b border-white/5 flex items-center justify-between px-6 bg-background/50 backdrop-blur-sm sticky top-0 z-10">
+          <h1 className="font-semibold text-lg">Command Center</h1>
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/" target="_blank">
+              <ExternalLink className="mr-2 h-4 w-4" /> Live Site
+            </Link>
+          </Button>
+        </header>
+        <div className="p-8 max-w-7xl mx-auto">
+          {children}
+        </div>
+      </main>
+    </div>
+  )
+}
+
+function SidebarItem({ href, icon: Icon, label }: { href: string, icon: any, label: string }) {
+  return (
+    <Button variant="ghost" asChild className="w-full justify-start text-muted-foreground hover:text-primary hover:bg-primary/5">
+      <Link href={href}>
+        <Icon className="mr-2 h-4 w-4" />
+        {label}
+      </Link>
+    </Button>
+  )
 }

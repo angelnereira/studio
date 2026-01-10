@@ -1,37 +1,16 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { get } from '@vercel/edge-config';
-import { sql } from '@vercel/postgres';
 
-export const config = { 
-  matcher: '/welcome' 
-};
+import type { NextRequest } from 'next/server';
 
-export async function middleware(request: NextRequest) {
-  try {
-    // Intenta obtener desde Edge Config (caché rápido)
-    let greeting = await get('greeting');
-    let source = 'edge-config';
-    
-    // Si no existe en Edge Config, consulta la BD
-    if (!greeting) {
-      source = 'database';
-      const { rows } = await sql`SELECT message FROM greetings WHERE active = true LIMIT 1`;
-      greeting = rows[0]?.message || 'Bienvenido';
-      
-      // Opcional: actualizar Edge Config para próximas consultas
-      // Esto requiere configurar un webhook o API route
-    }
-    
-    return NextResponse.json({ 
-      message: greeting,
-      source: source
-    });
-    
-  } catch (error: any) {
-    console.error('Error:', error);
-    return NextResponse.json({ 
-      message: 'Error al cargar saludo',
-      error: error.message 
-    }, { status: 500 });
+export function middleware(request: NextRequest) {
+  const currentUser = request.cookies.get('authjs.session-token')?.value;
+
+  // Simple check for existence of session token for admin routes
+  // The real protection happens in the page/component or via next-auth middleware helper
+  if (!currentUser && request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
+    return Response.redirect(new URL('/admin/login', request.url));
   }
 }
+
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+};
