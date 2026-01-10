@@ -17,6 +17,7 @@ model Contact {
   formType  String   // "client" | "employer" | "collaborator" | "invitation"
   email     String
   status    String   @default("new") // "new", "contacted", "closed", "spam"
+  tags      String[] @default([])    // Custom labels: ["vip", "hot-lead", "follow-up", etc.]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -56,6 +57,7 @@ model Contact {
   invitationReason String?
 
   campaignRecipients CampaignRecipient[]
+  activityLogs       ActivityLog[]
 
   @@index([formType])
   @@index([email])
@@ -234,3 +236,22 @@ model CampaignRecipient {
   @@index([email])
   @@map("campaign_recipients")
 }
+
+// Activity Log - Lightweight tracking for CRM
+model ActivityLog {
+  id          String   @id @default(cuid())
+  
+  contactId   String
+  contact     Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  
+  type        String   // "email_sent", "status_change", "note", "email_opened", "email_clicked"
+  title       String   // Short description: "Welcome email sent", "Status → Contacted"
+  metadata    Json?    // Optional: { campaignId, oldStatus, newStatus, emailSubject }
+  
+  createdAt   DateTime @default(now())
+
+  @@index([contactId])
+  @@index([createdAt])
+  @@map("activity_logs")
+}
+
