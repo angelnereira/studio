@@ -109,42 +109,42 @@ const translations: Record<Language, Record<string, string>> = {
         'admin.job_analysis': 'Análisis de Empleos',
         'admin.cover_letters': 'Cartas de Presentación',
         'admin.back_to_site': 'Volver al Sitio',
+
+        // Projects Details
+        'project.sago_one.title': 'Sago One',
+        'project.sago_one.label': 'FinTech SaaS | Compliance | Next.js 15',
+        'project.sago_one.subtitle': 'Plataforma SaaS de Facturación Electrónica PWA Offline-First',
+        'project.sago_one.description': 'Plataforma SaaS de facturación electrónica certificada por la DGI. Construida sobre Next.js 15 para aprovechar el Server-Side Rendering y velocidad extrema. Implementa una arquitectura PWA (Progressive Web App) que garantiza operatividad offline-first mediante Service Workers, crucial para la estabilidad comercial en zonas con baja conectividad.',
+        'project.sago_one.challenge': 'El reto era mantener la facturación operativa sin internet. La solución fue implementar una estrategia de caché agresiva con Service Workers y sincronización en segundo plano al recuperar conexión. Esto permite a comerciantes en zonas rurales o con conectividad inestable seguir facturando sin interrupciones.',
+        'project.sago_one.highlight.security.title': 'Seguridad Nivel Bancario',
+        'project.sago_one.highlight.security.desc': 'Encriptación AES-256 para credenciales PAC/DGI, autenticación robusta y manejo seguro de datos.',
+        'project.sago_one.highlight.database.title': 'Base de Datos Multi-Tenant',
+        'project.sago_one.highlight.database.desc': 'PostgreSQL optimizado para multi-tenancy, permitiendo gestión de múltiples empresas con aislamiento.',
+        'project.sago_one.highlight.performance.title': 'Performance Extremo',
+        'project.sago_one.highlight.performance.desc': '99.9% Uptime. React Server Components para renderizado óptimo y bundle size mínimo.',
+
+        'project.plenty_market.title': 'Plenty Market',
+        'project.plenty_market.label': 'E-commerce Internacional | PWA | Logística Compleja',
+        'project.plenty_market.subtitle': 'PWA E-commerce con Partner Program y Gestión de Inventarios',
+        'project.plenty_market.description': 'Modernización completa de una página estática a una PWA de alto rendimiento desarrollada en Next.js 14 y TypeScript. Integra un sistema complejo de logística (Partner Program) con gestión de inventarios en tiempo real, variantes de productos y zonas libres de impuestos.',
+        'project.plenty_market.challenge': 'El desafío era migrar un sitio estático a una plataforma e-commerce completa manteniendo la UX fluida. Implementamos un sistema de Partner Program que permite a vendedores gestionar inventario con zonas de impuestos diferenciadas y sincronización en tiempo real.',
+        'project.plenty_market.highlight.state.title': 'Gestión de Estado Optimizada',
+        'project.plenty_market.highlight.state.desc': 'Zustand para manejo de carrito y sesión global ligero. Persistencia de estado sin overhead.',
+        'project.plenty_market.highlight.media.title': 'Optimización de Media',
+        'project.plenty_market.highlight.media.desc': 'Integración con Cloudinary para transformación on-the-fly (WebP/AVIF) y Lazy loading inteligente.',
+        'project.plenty_market.highlight.migration.title': 'Migración de Base de Datos',
+        'project.plenty_market.highlight.migration.desc': 'Migración a PostgreSQL (Neon) vía Prisma ORM para integridad de datos relacionales complejos.',
+
+        // Metrics Details
+        'metric.facturas.label': 'Facturas Procesadas',
+        'metric.facturas.desc': 'Facturas electrónicas emitidas a través de Sago One con cumplimiento DGI.',
+        'metric.uptime.label': 'Uptime Garantizado',
+        'metric.uptime.desc': 'Disponibilidad de servicios en producción con arquitectura serverless.',
+        'metric.latency.label': 'Tiempo de Respuesta',
+        'metric.latency.desc': 'Latencia promedio de API en operaciones críticas de facturación.',
+        'metric.offline.label': 'Offline Capable',
+        'metric.offline.desc': 'Funcionalidad completa sin conexión gracias a Service Workers y PWA.',
     },
-    // Projects Details
-    'project.sago_one.title': 'Sago One',
-    'project.sago_one.label': 'FinTech SaaS | Compliance | Next.js 15',
-    'project.sago_one.subtitle': 'Plataforma SaaS de Facturación Electrónica PWA Offline-First',
-    'project.sago_one.description': 'Plataforma SaaS de facturación electrónica certificada por la DGI. Construida sobre Next.js 15 para aprovechar el Server-Side Rendering y velocidad extrema. Implementa una arquitectura PWA (Progressive Web App) que garantiza operatividad offline-first mediante Service Workers, crucial para la estabilidad comercial en zonas con baja conectividad.',
-    'project.sago_one.challenge': 'El reto era mantener la facturación operativa sin internet. La solución fue implementar una estrategia de caché agresiva con Service Workers y sincronización en segundo plano al recuperar conexión. Esto permite a comerciantes en zonas rurales o con conectividad inestable seguir facturando sin interrupciones.',
-    'project.sago_one.highlight.security.title': 'Seguridad Nivel Bancario',
-    'project.sago_one.highlight.security.desc': 'Encriptación AES-256 para credenciales PAC/DGI, autenticación robusta y manejo seguro de datos.',
-    'project.sago_one.highlight.database.title': 'Base de Datos Multi-Tenant',
-    'project.sago_one.highlight.database.desc': 'PostgreSQL optimizado para multi-tenancy, permitiendo gestión de múltiples empresas con aislamiento.',
-    'project.sago_one.highlight.performance.title': 'Performance Extremo',
-    'project.sago_one.highlight.performance.desc': '99.9% Uptime. React Server Components para renderizado óptimo y bundle size mínimo.',
-
-    'project.plenty_market.title': 'Plenty Market',
-    'project.plenty_market.label': 'E-commerce Internacional | PWA | Logística Compleja',
-    'project.plenty_market.subtitle': 'PWA E-commerce con Partner Program y Gestión de Inventarios',
-    'project.plenty_market.description': 'Modernización completa de una página estática a una PWA de alto rendimiento desarrollada en Next.js 14 y TypeScript. Integra un sistema complejo de logística (Partner Program) con gestión de inventarios en tiempo real, variantes de productos y zonas libres de impuestos.',
-    'project.plenty_market.challenge': 'El desafío era migrar un sitio estático a una plataforma e-commerce completa manteniendo la UX fluida. Implementamos un sistema de Partner Program que permite a vendedores gestionar inventario con zonas de impuestos diferenciadas y sincronización en tiempo real.',
-    'project.plenty_market.highlight.state.title': 'Gestión de Estado Optimizada',
-    'project.plenty_market.highlight.state.desc': 'Zustand para manejo de carrito y sesión global ligero. Persistencia de estado sin overhead.',
-    'project.plenty_market.highlight.media.title': 'Optimización de Media',
-    'project.plenty_market.highlight.media.desc': 'Integración con Cloudinary para transformación on-the-fly (WebP/AVIF) y Lazy loading inteligente.',
-    'project.plenty_market.highlight.migration.title': 'Migración de Base de Datos',
-    'project.plenty_market.highlight.migration.desc': 'Migración a PostgreSQL (Neon) vía Prisma ORM para integridad de datos relacionales complejos.',
-
-    // Metrics Details
-    'metric.facturas.label': 'Facturas Procesadas',
-    'metric.facturas.desc': 'Facturas electrónicas emitidas a través de Sago One con cumplimiento DGI.',
-    'metric.uptime.label': 'Uptime Garantizado',
-    'metric.uptime.desc': 'Disponibilidad de servicios en producción con arquitectura serverless.',
-    'metric.latency.label': 'Tiempo de Respuesta',
-    'metric.latency.desc': 'Latencia promedio de API en operaciones críticas de facturación.',
-    'metric.offline.label': 'Offline Capable',
-    'metric.offline.desc': 'Funcionalidad completa sin conexión gracias a Service Workers y PWA.',
-},
     en: {
         // Hero - Full Stack Software Engineer (not Architect)
         'hero.greeting': 'Hi, I\'m',
@@ -281,7 +281,7 @@ const translations: Record<Language, Record<string, string>> = {
         'admin.back_to_site': 'Back to Site',
     },
 };
-};
+
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
