@@ -6,6 +6,7 @@
     "dev": "next dev",
     "genkit:dev": "genkit start --port 4000 -- tsx src/ai/dev.ts",
     "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
+    "postinstall": "prisma generate",
     "build": "next build",
     "analyze": "ANALYZE=true next build",
     "start": "next start",
