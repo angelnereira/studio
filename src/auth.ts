@@ -3,7 +3,6 @@ import NextAuth from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import Resend from "next-auth/providers/resend"
-import QRCode from "qrcode"
 
 // Validation of required environment variables
 if (!process.env.RESEND_API_KEY) {
@@ -24,8 +23,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const { host } = new URL(url)
 
         try {
-          // Generate QR Code
-          const qrCodeDataUrl = await QRCode.toDataURL(url, { margin: 1, width: 200 })
+          // Generate QR Code URL using external service (data URLs are blocked by email clients)
+          const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`
 
           const response = await fetch("https://api.resend.com/emails", {
             method: "POST",
@@ -37,7 +36,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               from: provider.from,
               to: email,
               subject: `Iniciar sesión en ${host}`,
-              html: html({ url, host, email, qrCodeDataUrl }),
+              html: html({ url, host, email, qrCodeUrl }),
               text: text({ url, host }),
             }),
           })
@@ -88,7 +87,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: process.env.NODE_ENV === "development",
 })
 
-function html({ url, host, email, qrCodeDataUrl }: { url: string; host: string; email: string; qrCodeDataUrl?: string }) {
+function html({ url, host, email, qrCodeUrl }: { url: string; host: string; email: string; qrCodeUrl?: string }) {
   const escapedHost = host.replace(/\./g, "&#8203;.")
   const brandColor = "#ccf381" // Tu color verde neon
   const textColor = "#000000"
@@ -110,11 +109,11 @@ function html({ url, host, email, qrCodeDataUrl }: { url: string; host: string; 
               <a href="${url}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${textColor}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${brandColor}; display: inline-block; font-weight: bold;">Iniciar Sesión</a>
             </td>
           </tr>
-          ${qrCodeDataUrl ? `
+          ${qrCodeUrl ? `
           <tr>
             <td align="center" style="padding-top: 20px;">
                 <p style="font-size: 14px; font-family: Helvetica, Arial, sans-serif; color: #666; margin-bottom: 10px;">O escanea este código desde tu móvil:</p>
-                <img src="${qrCodeDataUrl}" alt="QR Login Code" width="200" height="200" style="display: block; border: 1px solid #eee; border-radius: 8px;" />
+                <img src="${qrCodeUrl}" alt="QR Login Code" width="200" height="200" style="display: block; border: 1px solid #eee; border-radius: 8px;" />
             </td>
           </tr>
           ` : ''}
