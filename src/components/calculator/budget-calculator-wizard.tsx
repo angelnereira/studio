@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   ServiceType,
   ComplexityLevel,
@@ -24,6 +25,7 @@ import { StepAddOns } from './step-addons';
 import { StepResults } from './step-results';
 
 export function BudgetCalculatorWizard() {
+  const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [result, setResult] = useState<CalculationResult | null>(null);
 
@@ -34,6 +36,41 @@ export function BudgetCalculatorWizard() {
   const [urgencyLevel, setUrgencyLevel] = useState<UrgencyLevel | null>(null);
   const [startDate, setStartDate] = useState('');
   const [addOns, setAddOns] = useState<AddOnType[]>([]);
+
+  // Auto-select service from URL
+  useEffect(() => {
+    const serviceSlug = searchParams.get('service');
+    if (serviceSlug && !serviceType) {
+      // Map slugs to ServiceType
+      let mappedType: ServiceType | null = null;
+      let defaultAddOns: AddOnType[] = [];
+
+      if (serviceSlug.includes('saas') || serviceSlug.includes('fintech')) {
+        mappedType = 'web-app';
+        defaultAddOns = ['security-audit', 'cloud-deployment'];
+      } else if (serviceSlug.includes('ecommerce') || serviceSlug.includes('tienda')) {
+        mappedType = 'ecommerce';
+        defaultAddOns = ['analytics-setup', 'seo-optimization'];
+      } else if (serviceSlug.includes('landing') || serviceSlug.includes('corporate')) {
+        mappedType = 'landing-page';
+        defaultAddOns = ['seo-optimization'];
+      } else if (serviceSlug.includes('pwa') || serviceSlug.includes('mobile')) {
+        mappedType = 'mobile-app';
+        defaultAddOns = ['analytics-setup'];
+      } else if (serviceSlug.includes('crm') || serviceSlug.includes('erp')) {
+        mappedType = 'crm-erp';
+      }
+
+      if (mappedType) {
+        setServiceType(mappedType);
+        // Smart Logic: Pre-select addons that make sense
+        setAddOns(defaultAddOns);
+        // Auto-advance to configuration step
+        setCurrentStep(2);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   const totalSteps = 5;
   const progress = (currentStep / totalSteps) * 100;

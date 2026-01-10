@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { AnimatedDiv } from '@/components/animated-div';
 import { BudgetCalculatorWizard } from '@/components/calculator/budget-calculator-wizard';
 import { Calculator, Sparkles } from 'lucide-react';
@@ -50,7 +51,9 @@ export default function CalculadoraPage() {
         </div>
 
         {/* Calculator Wizard */}
-        <BudgetCalculatorWizard />
+        <Suspense fallback={<div className="w-full h-96 flex items-center justify-center text-muted-foreground">Cargando calculadora...</div>}>
+          <BudgetCalculatorWizard />
+        </Suspense>
 
         {/* Info Section */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
