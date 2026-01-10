@@ -13,6 +13,7 @@ import { SpotlightCard } from "./spotlight-card";
 import { Badge } from "@/components/ui/badge";
 import { HackerText } from "@/components/ui/hacker-text";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
+import { FAQSection } from "@/components/home/faq-section";
 
 const DynamicServicesSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ServicesSection), {
   loading: () => <Skeleton className="h-96 w-full" />,
@@ -281,6 +282,9 @@ export default function HomePageClient() {
       <DynamicServicesSection />
       <DynamicProjectsSection projects={projectsData} />
       <DynamicMetricsSection metrics={metricsData} />
+
+      {/* FAQ Section for AI/SEO */}
+      <FAQSection />
 
       {/* CTA Section - Consultoría Técnica */}
       <section className="w-full">

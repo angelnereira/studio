@@ -107,35 +107,103 @@ export default function RootLayout({
           rel="stylesheet"
         />
         {/* Structured Data - JSON-LD */}
+        {/* Structured Data - JSON-LD optimized for AI Agents */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Person',
-              name: 'Ángel Nereira',
-              jobTitle: 'Full Stack Software Engineer',
-              description: 'Ingeniero de Software Full Stack especializado en Next.js, TypeScript y PostgreSQL. Desarrollo de soluciones SaaS FinTech.',
-              url: 'https://angelnereira.com',
-              sameAs: [
-                'https://github.com/angelnereira',
-                'https://linkedin.com/in/angelnereira',
-              ],
-              knowsAbout: [
-                'Next.js',
-                'TypeScript',
-                'PostgreSQL',
-                'Prisma ORM',
-                'PWA Development',
-                'FinTech SaaS',
-                'Electronic Invoicing',
-              ],
-              worksFor: {
-                '@type': 'Organization',
-                name: 'Sago One',
-                url: 'https://sagoone.com',
+            __html: JSON.stringify([
+              {
+                '@context': 'https://schema.org',
+                '@type': 'Person',
+                '@id': 'https://angelnereira.com/#person',
+                name: 'Ángel Nereira',
+                jobTitle: 'Full Stack Software Engineer',
+                description: 'Ingeniero de Software Full Stack especializado en Next.js, TypeScript y PostgreSQL. Desarrollo de soluciones SaaS FinTech.',
+                url: 'https://angelnereira.com',
+                image: 'https://angelnereira.com/og-image.png',
+                sameAs: [
+                  'https://github.com/angelnereira',
+                  'https://linkedin.com/in/angelnereira',
+                  'https://twitter.com/angelnereira',
+                ],
+                knowsAbout: [
+                  'Next.js', 'React', 'TypeScript', 'Node.js',
+                  'PostgreSQL', 'Prisma ORM', 'Deep Learning',
+                  'PWA Development', 'SaaS Architecture', 'FinTech Security',
+                  'Electronic Invoicing Integration'
+                ],
               },
-            }),
+              {
+                '@context': 'https://schema.org',
+                '@type': 'ProfessionalService',
+                '@id': 'https://angelnereira.com/#service',
+                name: 'Ángel Nereira Studio',
+                description: 'Development studio specializing in high-performance web applications, FinTech solutions, and AI integration.',
+                url: 'https://angelnereira.com',
+                logo: 'https://angelnereira.com/logo.png',
+                image: 'https://angelnereira.com/og-image.png',
+                priceRange: '$$$',
+                address: {
+                  '@type': 'PostalAddress',
+                  addressCountry: 'PA',
+                  addressLocality: 'Panama City'
+                },
+                telephone: '+50760000000', // Update with real generic contact if available
+                openingHoursSpecification: {
+                  '@type': 'OpeningHoursSpecification',
+                  dayOfWeek: [
+                    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
+                  ],
+                  opens: '09:00',
+                  closes: '18:00'
+                },
+                hasOfferCatalog: {
+                  '@type': 'OfferCatalog',
+                  name: 'Software Development Services',
+                  itemListElement: [
+                    {
+                      '@type': 'Offer',
+                      itemOffered: {
+                        '@type': 'Service',
+                        name: 'SaaS Development',
+                        description: 'End-to-end development of scalable Software as a Service platforms.'
+                      }
+                    },
+                    {
+                      '@type': 'Offer',
+                      itemOffered: {
+                        '@type': 'Service',
+                        name: 'FinTech Integrations',
+                        description: 'Secure payment gateway and electronic invoicing integration.'
+                      }
+                    },
+                    {
+                      '@type': 'Offer',
+                      itemOffered: {
+                        '@type': 'Service',
+                        name: 'PWA Development',
+                        description: 'Offline-first Progressive Web Apps for mobile and desktop.'
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                '@id': 'https://angelnereira.com/#website',
+                url: 'https://angelnereira.com',
+                name: 'Ángel Nereira - Full Stack Developer',
+                publisher: {
+                  '@id': 'https://angelnereira.com/#person'
+                },
+                potentialAction: {
+                  '@type': 'SearchAction',
+                  target: 'https://angelnereira.com/search?q={search_term_string}',
+                  'query-input': 'required name=search_term_string'
+                }
+              }
+            ]),
           }}
         />
       </head>
