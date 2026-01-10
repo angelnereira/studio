@@ -43,7 +43,7 @@ export default function ServicesPage() {
           return (
             <AnimatedDiv key={service.slug} delay={0.1 * (index + 1)}>
               <TiltCard className="h-full">
-                <SpotlightCard className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl h-full">
+                <SpotlightCard className="group relative flex flex-col transition-all duration-600 ease-geist bg-secondary/30 hover:bg-secondary/50 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-2xl h-full">
                   <CardHeader className="flex flex-row items-start gap-4">
                     <div className="bg-primary/10 text-primary p-3 rounded-full mt-1">
                       <service.icon className="h-6 w-6" />
