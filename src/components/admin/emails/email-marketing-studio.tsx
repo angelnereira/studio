@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { format } from "date-fns"
 import {
     Send, LayoutTemplate, Users, Settings, Plus,
-    ArrowRight, ChevronRight, Check, Calendar,
+    ArrowRight, ChevronRight, Check, Calendar as CalendarIcon,
     FileText, Save, Loader2, Trash2, Mail, Paperclip
 } from "lucide-react"
 
@@ -351,7 +351,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns }: Email
 
                                 <div className="p-4 border border-white/10 rounded-lg bg-black/20 flex items-center justify-between">
                                     <div className="flex items-center gap-2">
-                                        <Calendar className="w-5 h-5 text-muted-foreground" />
+                                        <CalendarIcon className="w-5 h-5 text-muted-foreground" />
                                         <div>
                                             <p className="font-medium">Schedule for later</p>
                                             <p className="text-xs text-muted-foreground">Pick a date to send this campaign automatically.</p>
@@ -366,7 +366,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns }: Email
                                                     !draft.scheduledAt && "text-muted-foreground"
                                                 )}
                                             >
-                                                <Calendar className="mr-2 h-4 w-4" />
+                                                <CalendarIcon className="mr-2 h-4 w-4" />
                                                 {draft.scheduledAt ? format(draft.scheduledAt, "PPP") : <span>Pick a date</span>}
                                             </Button>
                                         </PopoverTrigger>
@@ -396,7 +396,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns }: Email
                             <Button onClick={handleNext}>Next Step <ArrowRight className="w-4 h-4 ml-2" /></Button>
                         ) : (
                             <Button className="bg-yellow-400 text-black hover:bg-yellow-500" onClick={handleSend} disabled={isSending}>
-                                {isSending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : (draft.scheduledAt ? <Calendar className="w-4 h-4 mr-2" /> : <Send className="w-4 h-4 mr-2" />)}
+                                {isSending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : (draft.scheduledAt ? <CalendarIcon className="w-4 h-4 mr-2" /> : <Send className="w-4 h-4 mr-2" />)}
                                 {draft.scheduledAt ? "Schedule Campaign" : "Send Campaign"}
                             </Button>
                         )}
