@@ -116,7 +116,7 @@ export function SkillsSection() {
   )
 }
 
-export function ProjectsSection({ projects: projectsData }: { projects: Project[] }) {
+export function ProjectsSection() {
   const [isClient, setIsClient] = useState(false);
   const { t } = useLanguage();
 
@@ -124,11 +124,40 @@ export function ProjectsSection({ projects: projectsData }: { projects: Project[
     setIsClient(true);
   }, []);
 
-  if (!projectsData || projectsData.length === 0) {
-    return null;
-  }
-
-  const projects = projectsData.map(p => ({ ...p, logo: projectIcons[p.id] }));
+  const projects = [
+    {
+      id: 'sago-one-fintech-saas',
+      title: t('project.sago_one.title'),
+      label: t('project.sago_one.label'),
+      description: t('project.sago_one.description'),
+      technologies: ["Next.js 15", "TypeScript", "Prisma ORM", "Neon PostgreSQL", "PWA", "Service Workers", "AES-256", "Vercel"],
+      logo: SagoOneIcon,
+      githubUrl: "https://github.com/angelnereira/sago-factu-V0.2",
+      liveUrl: "https://sagoone.com",
+      challenge: t('project.sago_one.challenge'),
+      techHighlights: [
+        { title: 'Seguridad Nivel Bancario', description: t('project.sago_one.highlight.security.desc') }, // Title matches icon mapping
+        { title: 'Base de Datos Multi-Tenant', description: t('project.sago_one.highlight.database.desc') },
+        { title: 'Performance Extremo', description: t('project.sago_one.highlight.performance.desc') }
+      ]
+    },
+    {
+      id: 'plenty-market-ecommerce-pwa',
+      title: t('project.plenty_market.title'),
+      label: t('project.plenty_market.label'),
+      description: t('project.plenty_market.description'),
+      technologies: ["Next.js 14", "TypeScript", "Prisma ORM", "Neon PostgreSQL", "Zustand", "Cloudinary", "Vercel", "PWA"],
+      logo: PlentyMarketIcon,
+      githubUrl: "https://github.com/angelnereira/plenty-market",
+      liveUrl: "https://plenty-market.vercel.app",
+      challenge: t('project.plenty_market.challenge'),
+      techHighlights: [
+        { title: 'Gestión de Estado Optimizada', description: t('project.plenty_market.highlight.state.desc') },
+        { title: 'Optimización de Media', description: t('project.plenty_market.highlight.media.desc') },
+        { title: 'Migración de Base de Datos', description: t('project.plenty_market.highlight.migration.desc') }
+      ]
+    }
+  ];
 
   return (
     <section id="projects" className="w-full bg-background/50">
@@ -172,7 +201,7 @@ export function ProjectsSection({ projects: projectsData }: { projects: Project[
                           {project.technologies.length > 4 && <Badge variant="outline" className="text-xs">+{project.technologies.length - 4}</Badge>}
                         </div>
                         <div className="flex items-center text-sm text-primary font-medium group-hover:underline">
-                          Ver Caso de Ingeniería <ArrowRight className="ml-1 h-4 w-4" />
+                          {t('general.viewAll') || 'View Details'} <ArrowRight className="ml-1 h-4 w-4" />
                         </div>
                       </CardFooter>
                     </SpotlightCard>
@@ -219,6 +248,7 @@ export function ProjectsSection({ projects: projectsData }: { projects: Project[
                                   <IconComponent className="w-4 h-4 text-primary" />
                                 </div>
                                 <div>
+                                  {/* Using t() for titles if we wanted, but map matches icons. Description is translated. */}
                                   <p className="font-medium text-foreground text-sm">{highlight.title}</p>
                                   <p className="text-xs text-muted-foreground">{highlight.description}</p>
                                 </div>
@@ -245,14 +275,14 @@ export function ProjectsSection({ projects: projectsData }: { projects: Project[
                       {project.githubUrl && (
                         <Button variant="ghost" size="sm" asChild>
                           <Link href={project.githubUrl} target="_blank">
-                            <Github className="mr-2 h-4 w-4" /> Código
+                            <Github className="mr-2 h-4 w-4" /> {t('general.viewCode') || 'Code'}
                           </Link>
                         </Button>
                       )}
                       {project.liveUrl && (
                         <Button asChild size="sm">
                           <Link href={project.liveUrl} target="_blank">
-                            <ExternalLink className="mr-2 h-4 w-4" /> Ver en Producción
+                            <ExternalLink className="mr-2 h-4 w-4" /> {t('general.viewLive') || 'Live'}
                           </Link>
                         </Button>
                       )}
@@ -290,7 +320,7 @@ export function ProjectsSection({ projects: projectsData }: { projects: Project[
         <AnimatedDiv delay={0.3} className="text-center">
           <Button asChild variant="outline">
             <Link href="/proyectos">
-              Ver Todos los Casos <ArrowRight className="ml-2" />
+              {t('general.viewAll') || 'View All'} <ArrowRight className="ml-2" />
             </Link>
           </Button>
         </AnimatedDiv>
@@ -300,12 +330,15 @@ export function ProjectsSection({ projects: projectsData }: { projects: Project[
 }
 
 // NUEVO: Metrics Section (reemplaza Testimonials)
-export function MetricsSection({ metrics: metricsData }: { metrics: Metric[] }) {
+export function MetricsSection() {
   const { t } = useLanguage();
 
-  if (!metricsData || metricsData.length === 0) {
-    return null;
-  }
+  const metricsData = [
+    { value: "10,000+", label: t('metric.facturas.label'), description: t('metric.facturas.desc') },
+    { value: "99.9%", label: t('metric.uptime.label'), description: t('metric.uptime.desc') },
+    { value: "< 200ms", label: t('metric.latency.label'), description: t('metric.latency.desc') },
+    { value: "100%", label: t('metric.offline.label'), description: t('metric.offline.desc') },
+  ];
 
   const metricIcons = [
     { icon: Code2 },

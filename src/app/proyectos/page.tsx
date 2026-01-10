@@ -16,25 +16,25 @@ export default function ProyectosPage() {
   const projects = [
     {
       id: "sago-one-fintech-saas",
-      title: "Sago One",
-      label: "FinTech SaaS | Compliance | Next.js 15",
-      subtitle: "Plataforma SaaS de Facturación Electrónica PWA Offline-First",
-      description: "Plataforma SaaS de facturación electrónica certificada por la DGI. Construida sobre Next.js 15 para aprovechar el Server-Side Rendering y velocidad extrema. Implementa una arquitectura PWA (Progressive Web App) que garantiza operatividad offline-first mediante Service Workers, crucial para la estabilidad comercial en zonas con baja conectividad.",
-      challenge: "El reto era mantener la facturación operativa sin internet. La solución fue implementar una estrategia de caché agresiva con Service Workers y sincronización en segundo plano al recuperar conexión. Esto permite a comerciantes en zonas rurales o con conectividad inestable seguir facturando sin interrupciones.",
+      title: t('project.sago_one.title'),
+      label: t('project.sago_one.label'),
+      subtitle: t('project.sago_one.subtitle'),
+      description: t('project.sago_one.description'),
+      challenge: t('project.sago_one.challenge'),
       techHighlights: [
         {
-          title: "Seguridad Nivel Bancario",
-          description: "Encriptación AES-256 para credenciales PAC/DGI. Autenticación robusta y manejo seguro de datos fiscales sensibles.",
+          title: t('project.sago_one.highlight.security.title'),
+          description: t('project.sago_one.highlight.security.desc'),
           icon: Shield
         },
         {
-          title: "Base de Datos Multi-Tenant",
-          description: "PostgreSQL optimizado para multi-tenancy, permitiendo gestión de múltiples sucursales y empresas con aislamiento de datos.",
+          title: t('project.sago_one.highlight.database.title'),
+          description: t('project.sago_one.highlight.database.desc'),
           icon: Database
         },
         {
-          title: "Performance Extremo",
-          description: "99.9% Uptime y carga instantánea. React Server Components para renderizado óptimo y bundle size mínimo.",
+          title: t('project.sago_one.highlight.performance.title'),
+          description: t('project.sago_one.highlight.performance.desc'),
           icon: Zap
         }
       ],
@@ -51,7 +51,7 @@ export default function ProyectosPage() {
       status: "En Producción",
       statusColor: "bg-green-500/10 text-green-600",
       metrics: [
-        { value: "10,000+", label: "Facturas Procesadas" },
+        { value: "10,000+", label: t('metric.facturas.label') },
         { value: "99.9%", label: "Uptime" },
         { value: "< 200ms", label: "Response Time" },
       ],
@@ -60,25 +60,25 @@ export default function ProyectosPage() {
     },
     {
       id: "plenty-market-ecommerce-pwa",
-      title: "Plenty Market",
-      label: "E-commerce Internacional | PWA | Logística Compleja",
-      subtitle: "PWA E-commerce con Partner Program y Gestión de Inventarios",
-      description: "Modernización completa de una página estática a una PWA de alto rendimiento desarrollada en Next.js 14 (App Router) y TypeScript. Integra un sistema complejo de logística (Partner Program) con gestión de inventarios en tiempo real, variantes de productos y zonas libres de impuestos.",
-      challenge: "El desafío era migrar un sitio estático a una plataforma e-commerce completa manteniendo la experiencia de usuario fluida. Implementamos un sistema de Partner Program que permite a vendedores internacionales gestionar inventario con zonas de impuestos diferenciadas y sincronización de stock en tiempo real.",
+      title: t('project.plenty_market.title'),
+      label: t('project.plenty_market.label'),
+      subtitle: t('project.plenty_market.subtitle'),
+      description: t('project.plenty_market.description'),
+      challenge: t('project.plenty_market.challenge'),
       techHighlights: [
         {
-          title: "Gestión de Estado Optimizada",
-          description: "Zustand para manejo de carrito y sesión global ligero y rápido. Persistencia de estado entre sesiones sin overhead.",
+          title: t('project.plenty_market.highlight.state.title'),
+          description: t('project.plenty_market.highlight.state.desc'),
           icon: Code2
         },
         {
-          title: "Optimización de Media",
-          description: "Integración con Cloudinary para transformación de imágenes on-the-fly (WebP/AVIF). Lazy loading inteligente.",
+          title: t('project.plenty_market.highlight.media.title'),
+          description: t('project.plenty_market.highlight.media.desc'),
           icon: Zap
         },
         {
-          title: "Migración de Base de Datos",
-          description: "Migración a PostgreSQL (Neon) vía Prisma ORM para integridad de datos relacionales complejos (Pedidos vs. Inventario).",
+          title: t('project.plenty_market.highlight.migration.title'),
+          description: t('project.plenty_market.highlight.migration.desc'),
           icon: Database
         }
       ],
@@ -100,7 +100,7 @@ export default function ProyectosPage() {
         { value: "< 3s", label: "Time to Interactive" },
       ],
       github: "https://github.com/angelnereira/plenty-market",
-      demo: "https://plentymarket.com",
+      demo: "https://plenty-market.vercel.app",
     },
   ];
 
