@@ -22,7 +22,22 @@ export function TiltCard({ children, className = "", rotationIntensity = 20 }: T
     const springRotateX = useSpring(rotateX, { stiffness: 150, damping: 20 });
     const springRotateY = useSpring(rotateY, { stiffness: 150, damping: 20 });
 
+    const [isHoverable, setIsHoverable] = useState(false);
+
+    React.useEffect(() => {
+        // Only enable tilt on devices that support hover (desktop/mouse)
+        const checkHover = () => {
+            setIsHoverable(window.matchMedia('(hover: hover)').matches);
+        };
+
+        checkHover();
+        window.addEventListener('resize', checkHover);
+        return () => window.removeEventListener('resize', checkHover);
+    }, []);
+
     function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+        if (!isHoverable) return;
+
         const rect = ref.current?.getBoundingClientRect();
         if (!rect) return;
 
@@ -37,7 +52,8 @@ export function TiltCard({ children, className = "", rotationIntensity = 20 }: T
 
         x.set(xPct);
         y.set(yPct);
-        scale.set(1.05); // Slight zoom
+        // Minimal scale for desktop to avoid blurriness
+        scale.set(1.02);
     }
 
     function handleMouseLeave() {
@@ -49,18 +65,19 @@ export function TiltCard({ children, className = "", rotationIntensity = 20 }: T
     return (
         <motion.div
             ref={ref}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            whileTap={{ scale: 0.95 }}
+            onMouseMove={isHoverable ? handleMouseMove : undefined}
+            onMouseLeave={isHoverable ? handleMouseLeave : undefined}
+            whileTap={{ scale: 0.98 }}
             style={{
-                rotateX: springRotateX,
-                rotateY: springRotateY,
+                rotateX: isHoverable ? springRotateX : 0,
+                rotateY: isHoverable ? springRotateY : 0,
                 scale: scale,
                 transformStyle: "preserve-3d",
             }}
-            className={`relative transition-colors duration-200 ease-out ${className}`}
+            // Force hardware acceleration
+            className={`relative transition-colors duration-200 ease-out will-change-transform ${className}`}
         >
-            <div style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}>
+            <div style={{ transform: isHoverable ? "translateZ(30px)" : "none", transformStyle: "preserve-3d" }}>
                 {children}
             </div>
         </motion.div>
