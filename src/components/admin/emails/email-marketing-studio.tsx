@@ -24,6 +24,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils"
 
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
+import { services } from "@/lib/services"
 import { createSenderIdentity, createTemplate, sendCampaign, saveCampaignDraft, deleteSenderIdentity } from "@/app/admin/(dashboard)/emails/marketing-actions"
 
 // Types
@@ -283,6 +284,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns }: Email
                                     <RichTextEditor
                                         content={draft.content}
                                         onChange={(html) => setDraft({ ...draft, content: html })}
+                                        services={services}
                                     />
 
                                     {/* Attachments UI */}
