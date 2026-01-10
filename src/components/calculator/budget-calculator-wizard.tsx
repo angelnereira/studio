@@ -24,27 +24,17 @@ import { StepTimeline } from './step-timeline';
 import { StepAddOns } from './step-addons';
 import { StepResults } from './step-results';
 
-export function BudgetCalculatorWizard() {
+// Helper component to safely handle URL params within Suspense
+function ServiceAutoSelector({ onSelect }: { onSelect: (type: ServiceType, defaults: AddOnType[]) => void }) {
   const searchParams = useSearchParams();
-  const [currentStep, setCurrentStep] = useState(1);
-  const [result, setResult] = useState<CalculationResult | null>(null);
 
-  // Form state
-  const [serviceType, setServiceType] = useState<ServiceType | null>(null);
-  const [complexityLevel, setComplexityLevel] = useState<ComplexityLevel | null>(null);
-  const [country, setCountry] = useState<Country | null>(null);
-  const [urgencyLevel, setUrgencyLevel] = useState<UrgencyLevel | null>(null);
-  const [startDate, setStartDate] = useState('');
-  const [addOns, setAddOns] = useState<AddOnType[]>([]);
-
-  // Auto-select service from URL
   useEffect(() => {
     const serviceSlug = searchParams.get('service');
-    if (serviceSlug && !serviceType) {
-      // Map slugs to ServiceType
-      let mappedType: ServiceType | null = null;
-      let defaultAddOns: AddOnType[] = [];
+    // Map slugs to ServiceType
+    let mappedType: ServiceType | null = null;
+    let defaultAddOns: AddOnType[] = [];
 
+    if (serviceSlug) {
       if (serviceSlug.includes('saas') || serviceSlug.includes('fintech')) {
         mappedType = 'web-app';
         defaultAddOns = ['security-audit', 'cloud-deployment'];
@@ -62,15 +52,34 @@ export function BudgetCalculatorWizard() {
       }
 
       if (mappedType) {
-        setServiceType(mappedType);
-        // Smart Logic: Pre-select addons that make sense
-        setAddOns(defaultAddOns);
-        // Auto-advance to configuration step
-        setCurrentStep(2);
+        onSelect(mappedType, defaultAddOns);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
+
+  return null;
+}
+
+export function BudgetCalculatorWizard() {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [result, setResult] = useState<CalculationResult | null>(null);
+
+  // Form state
+  const [serviceType, setServiceType] = useState<ServiceType | null>(null);
+  const [complexityLevel, setComplexityLevel] = useState<ComplexityLevel | null>(null);
+  const [country, setCountry] = useState<Country | null>(null);
+  const [urgencyLevel, setUrgencyLevel] = useState<UrgencyLevel | null>(null);
+  const [startDate, setStartDate] = useState('');
+  const [addOns, setAddOns] = useState<AddOnType[]>([]);
+
+  const handleAutoSelect = (type: ServiceType, defaults: AddOnType[]) => {
+    if (!serviceType) { // Only auto-select if not already selected
+      setServiceType(type);
+      setAddOns(defaults);
+      setCurrentStep(2);
+    }
+  };
 
   const totalSteps = 5;
   const progress = (currentStep / totalSteps) * 100;
@@ -172,6 +181,10 @@ export function BudgetCalculatorWizard() {
 
   return (
     <div className="max-w-5xl mx-auto">
+      <Suspense fallback={null}>
+        <ServiceAutoSelector onSelect={handleAutoSelect} />
+      </Suspense>
+
       {/* Progress Header */}
       <div className="mb-8">
         <div className="flex justify-between mb-4">
