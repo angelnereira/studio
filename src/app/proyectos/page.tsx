@@ -117,6 +117,33 @@ export default function ProyectosPage() {
         </div>
       </AnimatedDiv>
 
+      {/* Structured Data for Projects - Real Software Products Visibility */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(projects.map(project => ({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": project.title,
+            "description": project.description,
+            "applicationCategory": project.id.includes('fintech') ? "FinanceApplication" : "BusinessApplication",
+            "operatingSystem": "Web, Chrome, Safari, iOS, Android (PWA)",
+            "url": project.demo,
+            "author": {
+              "@type": "Person",
+              "name": "Ángel Nereira"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/OnlineOnly"
+            },
+            "featureList": project.techHighlights.map(h => h.title).join(", ")
+          })))
+        }}
+      />
+
       <div className="mt-12 space-y-16">
         {projects.map((project, index) => (
           <AnimatedDiv key={project.id} delay={0.1 * (index + 1)}>

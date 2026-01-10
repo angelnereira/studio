@@ -33,6 +33,40 @@ export default function ServicesPage() {
           </div>
         </div>
       </AnimatedDiv>
+
+      {/* Structured Data for Services - Service Focused Visibility */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": services.filter(s => s.published).map((service, index) => ({
+              "@type": "ListItem",
+              "position": index + 1,
+              "item": {
+                "@type": "Service",
+                "name": service.title,
+                "description": service.description,
+                "url": `https://angelnereira.com/services/${service.slug}`,
+                "provider": {
+                  "@type": "ProfessionalService",
+                  "name": "Ángel Nereira Studio",
+                  "image": "https://angelnereira.com/logo.png"
+                },
+                "offers": {
+                  "@type": "Offer",
+                  "price": service.packages[0].price,
+                  "priceCurrency": "USD",
+                  "availability": "https://schema.org/OnlineOnly"
+                },
+                "serviceType": service.tags.join(", ")
+              }
+            }))
+          })
+        }}
+      />
+
       <div className="grid gap-4 sm:gap-6 md:gap-8 md:grid-cols-2">
         {services.filter(s => s.published).map((service: Service, index) => {
           const startingPackage = service.packages[0];
