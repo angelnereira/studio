@@ -325,21 +325,36 @@ export function MetricsSection({ metrics: metricsData }: { metrics: Metric[] }) 
             </p>
           </div>
         </AnimatedDiv>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto border-t border-b border-white/5 py-12 divide-y lg:divide-y-0 lg:divide-x divide-white/5">
-          {metricsData.map((metric, index) => (
-            <AnimatedDiv key={metric.label} delay={0.1 * index} className="flex flex-col items-center text-center px-4">
-              <div className="w-12 h-12 mb-4 bg-primary/5 rounded-full flex items-center justify-center text-primary transform transition-transform duration-500 hover:scale-110">
-                {React.createElement(metricIcons[index % metricIcons.length].icon, { className: "w-6 h-6" })}
-              </div>
-              <div className="text-4xl md:text-5xl font-bold text-foreground mb-2 tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50">
-                {metric.value}
-              </div>
-              <div className="text-sm font-bold uppercase tracking-widest text-primary mb-2 opacity-80">{metric.label}</div>
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-[200px]">
-                {metric.description}
-              </p>
-            </AnimatedDiv>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 max-w-6xl mx-auto py-12">
+          {metricsData.map((metric, index) => {
+            // Dynamic spans for bento grid effect
+            const colSpan = index === 0 || index === 3 ? "lg:col-span-4" : "lg:col-span-2";
+            const gradient = index === 0 ? "bg-gradient-to-br from-primary/10 via-background to-background" :
+              index === 3 ? "bg-gradient-to-tl from-primary/10 via-background to-background" :
+                "bg-secondary/20";
+
+            return (
+              <AnimatedDiv key={metric.label} delay={0.1 * index} className={`${colSpan} group relative overflow-hidden rounded-2xl border border-white/10 p-8 ${gradient} hover:border-primary/30 transition-all duration-500`}>
+                <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]" />
+                <div className="relative z-10 flex flex-col items-start h-full justify-between">
+                  <div className="flex items-center justify-between w-full mb-6">
+                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-300">
+                      {React.createElement(metricIcons[index % metricIcons.length].icon, { className: "w-6 h-6" })}
+                    </div>
+                    <div className="text-4xl md:text-5xl font-bold tracking-tighter text-foreground group-hover:text-primary transition-colors duration-300">
+                      {metric.value}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold uppercase tracking-widest text-primary mb-2 opacity-80">{metric.label}</div>
+                    <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
+                      {metric.description}
+                    </p>
+                  </div>
+                </div>
+              </AnimatedDiv>
+            );
+          })}
         </div>
       </div>
     </section>

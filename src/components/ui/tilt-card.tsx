@@ -9,7 +9,7 @@ interface TiltCardProps {
     rotationIntensity?: number; // How much it rotates
 }
 
-export function TiltCard({ children, className = "", rotationIntensity = 20 }: TiltCardProps) {
+export function TiltCard({ children, className = "", rotationIntensity = 10 }: TiltCardProps) { // Reduced intensity
     const ref = useRef<HTMLDivElement>(null);
 
     const x = useMotionValue(0);
@@ -18,7 +18,7 @@ export function TiltCard({ children, className = "", rotationIntensity = 20 }: T
     const rotateX = useTransform(y, [-0.5, 0.5], [rotationIntensity, -rotationIntensity]);
     const rotateY = useTransform(x, [-0.5, 0.5], [-rotationIntensity, rotationIntensity]);
 
-    const scale = useSpring(1, { stiffness: 150, damping: 20 });
+    // Removed scale spring to prevent blurriness
     const springRotateX = useSpring(rotateX, { stiffness: 150, damping: 20 });
     const springRotateY = useSpring(rotateY, { stiffness: 150, damping: 20 });
 
@@ -52,14 +52,11 @@ export function TiltCard({ children, className = "", rotationIntensity = 20 }: T
 
         x.set(xPct);
         y.set(yPct);
-        // Minimal scale for desktop to avoid blurriness
-        scale.set(1.02);
     }
 
     function handleMouseLeave() {
         x.set(0);
         y.set(0);
-        scale.set(1);
     }
 
     return (
@@ -71,13 +68,16 @@ export function TiltCard({ children, className = "", rotationIntensity = 20 }: T
             style={{
                 rotateX: isHoverable ? springRotateX : 0,
                 rotateY: isHoverable ? springRotateY : 0,
-                scale: scale,
                 transformStyle: "preserve-3d",
             }}
-            // Force hardware acceleration
-            className={`relative transition-colors duration-200 ease-out will-change-transform ${className}`}
+            // Hardware acceleration hints for crisp text
+            className={`relative transition-colors duration-200 ease-out will-change-transform backface-hidden ${className}`}
         >
-            <div style={{ transform: isHoverable ? "translateZ(30px)" : "none", transformStyle: "preserve-3d" }}>
+            <div style={{
+                transform: isHoverable ? "translateZ(30px)" : "none",
+                transformStyle: "preserve-3d",
+                backfaceVisibility: "hidden" // Critical for text sharpness
+            }}>
                 {children}
             </div>
         </motion.div>
