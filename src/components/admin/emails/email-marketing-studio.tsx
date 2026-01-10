@@ -394,12 +394,11 @@ export function EmailMarketingStudio({ identities, templates, campaigns }: Email
                             <Button onClick={handleNext}>Next Step <ArrowRight className="w-4 h-4 ml-2" /></Button>
                         ) : (
                             <Button className="bg-yellow-400 text-black hover:bg-yellow-500" onClick={handleSend} disabled={isSending}>
-                                <Button className="bg-yellow-400 text-black hover:bg-yellow-500" onClick={handleSend} disabled={isSending}>
-                                    {isSending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : (draft.scheduledAt ? <Calendar className="w-4 h-4 mr-2" /> : <Send className="w-4 h-4 mr-2" />)}
-                                    {draft.scheduledAt ? "Schedule Campaign" : "Send Campaign"}
-                                </Button>
+                                {isSending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : (draft.scheduledAt ? <Calendar className="w-4 h-4 mr-2" /> : <Send className="w-4 h-4 mr-2" />)}
+                                {draft.scheduledAt ? "Schedule Campaign" : "Send Campaign"}
+                            </Button>
                         )}
-                            </CardFooter>
+                    </CardFooter>
                 </Card>
             </TabsContent>
 
