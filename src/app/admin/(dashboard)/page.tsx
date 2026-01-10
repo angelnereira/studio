@@ -1,16 +1,9 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Users, Eye, MousePointerClick, TrendingUp } from "lucide-react"
-import { auth } from "@/auth"
-import { redirect } from "next/navigation"
 
+// Note: Authentication is handled by the (dashboard) layout
 export default async function AdminDashboard() {
-  const session = await auth()
-
-  if (!session) {
-    redirect('/admin/login')
-  }
-
   return (
     <div className="space-y-8">
       <div>
