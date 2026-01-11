@@ -12,6 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { SpotlightCard } from "./spotlight-card";
 import { Badge } from "@/components/ui/badge";
 import { HackerText } from "@/components/ui/hacker-text";
+import { GradientFlowText } from "@/components/ui/gradient-flow-text";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { FAQSection } from "@/components/home/faq-section";
 
@@ -103,9 +104,15 @@ export default function HomePageClient() {
                   <span className="block text-muted-foreground text-xl sm:text-2xl font-normal mb-2">
                     {t('hero.greeting')}
                   </span>
-                  <span className="block text-gradient">
-                    <HackerText text={t('hero.name') || "Ángel Nereira"} />
+                  {/* PC Version - Gradient Flow */}
+                  <span className="hidden lg:block text-gradient">
+                    <GradientFlowText text={t('hero.name') || "Ángel Nereira"} />
                   </span>
+                  {/* Mobile Version - Static or Standard Gradient to save battery/perf on weak phones if needed, keeping simple for now */}
+                  <span className="block lg:hidden text-gradient bg-clip-text text-transparent bg-gradient-to-r from-primary to-emerald-400">
+                    {t('hero.name') || "Ángel Nereira"}
+                  </span>
+
                   <span className="block text-primary mt-2 text-3xl sm:text-4xl md:text-5xl">{t('hero.title')}</span>
                 </h1>
 

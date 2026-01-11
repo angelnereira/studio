@@ -2,7 +2,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Users, Eye, MousePointerClick, TrendingUp, Plus, Send, FileText } from "lucide-react"
+import { Users, Eye, MousePointerClick, TrendingUp, Plus, Send, FileText, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { motion } from "framer-motion"
