@@ -84,6 +84,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     verifyRequest: '/admin/verify-request',
     error: '/admin/login', // Redirect errors back to login page
   },
+  session: {
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
+  },
   debug: process.env.NODE_ENV === "development",
 })
 

@@ -7,7 +7,7 @@ interface EmailData {
   data: any;
 }
 
-// Base email template with professional styling
+// Base email template with professional, open styling
 function wrapInEmailTemplate(content: string, title: string, accentColor: string = '#7c3aed'): string {
   return `
 <!DOCTYPE html>
@@ -18,37 +18,34 @@ function wrapInEmailTemplate(content: string, title: string, accentColor: string
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>${title}</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f0f23; color: #e2e8f0;">
-  <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #0f0f23;">
+<body style="margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #000000; color: #e2e8f0; -webkit-font-smoothing: antialiased;">
+  <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #000000;">
     <tr>
       <td align="center" style="padding: 40px 20px;">
-        <table role="presentation" style="width: 100%; max-width: 600px; border-collapse: collapse; background-color: #1a1a2e; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);">
+        <table role="presentation" style="width: 100%; max-width: 600px; border-collapse: collapse;">
           <!-- Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, ${accentColor} 0%, #5b21b6 100%); padding: 32px 40px; text-align: center;">
-              <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">
+            <td style="padding-bottom: 32px; text-align: left; border-bottom: 1px solid #333333;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #888888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;">
                 ${title}
               </h1>
-              <p style="margin: 8px 0 0; color: rgba(255, 255, 255, 0.8); font-size: 14px;">
+              <p style="margin: 8px 0 0; color: #888888; font-size: 14px;">
                 angelnereira.com • ${new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
               </p>
             </td>
           </tr>
           <!-- Content -->
           <tr>
-            <td style="padding: 32px 40px;">
+            <td style="padding: 32px 0;">
               ${content}
             </td>
           </tr>
           <!-- Footer -->
           <tr>
-            <td style="background-color: #16162a; padding: 24px 40px; text-align: center; border-top: 1px solid #2d2d4a;">
-              <p style="margin: 0; color: #64748b; font-size: 12px;">
+            <td style="padding-top: 32px; text-align: left; border-top: 1px solid #333333;">
+              <p style="margin: 0; color: #666666; font-size: 12px;">
                 Este mensaje fue enviado desde el formulario de contacto de
                 <a href="https://angelnereira.com" style="color: ${accentColor}; text-decoration: none;">angelnereira.com</a>
-              </p>
-              <p style="margin: 8px 0 0; color: #475569; font-size: 11px;">
-                © ${new Date().getFullYear()} Ángel Nereira. Todos los derechos reservados.
               </p>
             </td>
           </tr>
@@ -63,14 +60,14 @@ function wrapInEmailTemplate(content: string, title: string, accentColor: string
 // Helper to create styled info rows
 function infoRow(label: string, value: string, isLink: boolean = false): string {
   const displayValue = isLink
-    ? `<a href="${value}" style="color: #a78bfa; text-decoration: none; word-break: break-all;">${value}</a>`
-    : `<span style="color: #f1f5f9;">${value}</span>`;
+    ? `<a href="${value}" style="color: #a78bfa; text-decoration: none; border-bottom: 1px solid #a78bfa;">${value}</a>`
+    : `<span style="color: #ffffff;">${value}</span>`;
 
   return `
     <tr>
-      <td style="padding: 12px 0; border-bottom: 1px solid #2d2d4a;">
-        <span style="color: #94a3b8; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px;">${label}</span>
-        ${displayValue}
+      <td style="padding: 8px 0;">
+        <p style="margin: 0; font-size: 13px; color: #888888; margin-bottom: 4px;">${label}</p>
+        <p style="margin: 0; font-size: 16px; font-weight: 500;">${displayValue}</p>
       </td>
     </tr>`;
 }
@@ -78,9 +75,9 @@ function infoRow(label: string, value: string, isLink: boolean = false): string 
 // Helper to create message section
 function messageSection(title: string, content: string): string {
   return `
-    <div style="margin-top: 24px; padding: 20px; background-color: #16162a; border-radius: 12px; border-left: 4px solid #7c3aed;">
-      <h3 style="margin: 0 0 12px; color: #e2e8f0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">${title}</h3>
-      <p style="margin: 0; color: #cbd5e1; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">${content}</p>
+    <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #333333;">
+      <h3 style="margin: 0 0 16px; color: #ffffff; font-size: 18px; font-weight: 600;">${title}</h3>
+      <div style="color: #cccccc; font-size: 16px; line-height: 1.6; white-space: pre-wrap;">${content}</div>
     </div>`;
 }
 

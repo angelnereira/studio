@@ -1,15 +1,12 @@
-import { getPostBySlug, getAllPostSlugs, getRelatedPosts } from '@/lib/blog';
+import { getPostBySlug, getRelatedPosts, getAllPostSlugs } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { AnimatedDiv } from '@/components/animated-div';
 import { SpotlightCard } from '@/components/spotlight-card';
 import { CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { ModernPostLayout } from '@/components/blog/ModernPostLayout';
 
 export async function generateStaticParams() {
   const slugs = getAllPostSlugs();
@@ -68,120 +65,104 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const relatedPosts = getRelatedPosts(slug, 3);
 
   return (
-    <AnimatedDiv>
-      <article className="max-w-4xl mx-auto">
-        <header className="mb-8 text-center">
-          <div className="mb-4 flex justify-center gap-2 flex-wrap">
-            {post.tags.map(tag => (
-              <Badge key={tag} variant="secondary">{tag}</Badge>
+    <ModernPostLayout
+      title={post.title}
+      excerpt={post.excerpt}
+      date={post.date}
+      readingTime={post.readingTime}
+      author={post.author}
+      tags={post.tags}
+      coverImage={post.coverImage}
+    >
+      {/* Contenido del artículo con ReactMarkdown */}
+      <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-headline prose-p:font-sans prose-img:rounded-xl prose-img:border prose-img:border-primary/10">
+        <ReactMarkdown
+          components={{
+            // Sintaxis highlighting para código
+            code({ node, inline, className, children, ...props }) {
+              const match = /language-(\w+)/.exec(className || '');
+              return !inline && match ? (
+                <SyntaxHighlighter
+                  style={oneDark}
+                  language={match[1]}
+                  PreTag="div"
+                  {...props}
+                >
+                  {String(children).replace(/\n$/, '')}
+                </SyntaxHighlighter>
+              ) : (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              );
+            },
+            // Links externos con target blank
+            a({ node, href, children, ...props }) {
+              const isExternal = href?.startsWith('http');
+              return (
+                <a
+                  href={href}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  className="text-primary hover:underline underline-offset-4 decoration-primary/50"
+                  {...props}
+                >
+                  {children}
+                </a>
+              );
+            }
+          }}
+        >
+          {post.content}
+        </ReactMarkdown>
+      </div>
+
+      {/* CTA al final */}
+      <div className="mt-16 p-8 bg-secondary/10 rounded-2xl border border-primary/20 backdrop-blur-sm">
+        <h3 className="text-2xl font-bold mb-3 font-headline">¿Te interesa implementar algo similar?</h3>
+        <p className="text-muted-foreground mb-6 text-lg">
+          Ayudo a empresas a construir soluciones web de alto impacto. Hablemos sobre tu próximo proyecto.
+        </p>
+        <Link
+          href="/contact"
+          className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-full hover:bg-primary/90 transition-all hover:scale-105 shadow-lg shadow-primary/25"
+        >
+          Iniciar Conversación
+        </Link>
+      </div>
+
+      {/* Posts relacionados */}
+      {relatedPosts.length > 0 && (
+        <div className="mt-24">
+          <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
+            <span className="w-8 h-1 bg-primary rounded-full inline-block"></span>
+            Seguir Leyendo
+          </h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            {relatedPosts.map((relatedPost) => (
+              <Link
+                key={relatedPost.slug}
+                href={`/blog/${relatedPost.slug}`}
+                className="group block"
+              >
+                <SpotlightCard className="h-full hover:border-primary/50 transition-all bg-card/50">
+                  <CardHeader>
+                    <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
+                      {relatedPost.title}
+                    </CardTitle>
+                    <CardDescription className="line-clamp-2 mt-2">
+                      {relatedPost.excerpt}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardFooter className="text-xs text-muted-foreground mt-auto pt-4 border-t border-white/5">
+                    {relatedPost.readingTime}
+                  </CardFooter>
+                </SpotlightCard>
+              </Link>
             ))}
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tighter sm:text-4xl md:text-5xl font-headline">
-            {post.title}
-          </h1>
-          <div className="mt-6 flex items-center justify-center gap-4 text-sm text-muted-foreground flex-wrap">
-            <div className="flex items-center gap-2">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src="https://picsum.photos/seed/profile/100/100" alt={post.author} />
-                <AvatarFallback>{post.author.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <span>{post.author}</span>
-            </div>
-            <Separator orientation="vertical" className="h-4" />
-            <time dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString('es-PA', { year: 'numeric', month: 'long', day: 'numeric' })}
-            </time>
-            <Separator orientation="vertical" className="h-4" />
-            <span>{post.readingTime}</span>
-          </div>
-        </header>
-
-        {/* Contenido del artículo con ReactMarkdown */}
-        <div className="prose prose-lg prose-slate dark:prose-invert max-w-none">
-          <ReactMarkdown
-            components={{
-              // Sintaxis highlighting para código
-              code({ node, inline, className, children, ...props }) {
-                const match = /language-(\w+)/.exec(className || '');
-                return !inline && match ? (
-                  <SyntaxHighlighter
-                    style={oneDark}
-                    language={match[1]}
-                    PreTag="div"
-                    {...props}
-                  >
-                    {String(children).replace(/\n$/, '')}
-                  </SyntaxHighlighter>
-                ) : (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                );
-              },
-              // Links externos con target blank
-              a({ node, href, children, ...props }) {
-                const isExternal = href?.startsWith('http');
-                return (
-                  <a
-                    href={href}
-                    target={isExternal ? '_blank' : undefined}
-                    rel={isExternal ? 'noopener noreferrer' : undefined}
-                    {...props}
-                  >
-                    {children}
-                  </a>
-                );
-              }
-            }}
-          >
-            {post.content}
-          </ReactMarkdown>
         </div>
-
-        {/* CTA al final */}
-        <div className="mt-12 p-8 bg-primary/10 rounded-lg border border-primary/20">
-          <h3 className="text-2xl font-bold mb-2">¿Necesitas un proyecto similar?</h3>
-          <p className="text-muted-foreground mb-4">
-            Desarrollo soluciones web personalizadas con Next.js, TypeScript y PostgreSQL.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors"
-          >
-            Contáctame
-          </Link>
-        </div>
-
-        {/* Posts relacionados */}
-        {relatedPosts.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold mb-6">Artículos Relacionados</h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              {relatedPosts.map((relatedPost) => (
-                <Link
-                  key={relatedPost.slug}
-                  href={`/blog/${relatedPost.slug}`}
-                  className="group block"
-                >
-                  <SpotlightCard className="h-full hover:border-primary/50 transition-all">
-                    <CardHeader>
-                      <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                        {relatedPost.title}
-                      </CardTitle>
-                      <CardDescription className="line-clamp-2">
-                        {relatedPost.excerpt}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardFooter className="text-xs text-muted-foreground">
-                      {relatedPost.readingTime}
-                    </CardFooter>
-                  </SpotlightCard>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-      </article>
-    </AnimatedDiv>
+      )}
+    </ModernPostLayout>
   );
 }

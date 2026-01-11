@@ -4,6 +4,8 @@ import { auth } from "@/auth"
 import { Resend } from "resend"
 import { prisma } from "@/lib/prisma"
 import { z } from "zod"
+import { WelcomeEmail, ServiceInquiryEmail, NewsletterEmail, ProjectCompleteEmail } from "@/emails/index"
+import * as React from 'react'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -14,12 +16,32 @@ const EmailSchema = z.object({
     message: z.string().min(1, "Message is required"),
 })
 
+const TemplateEmailSchema = z.object({
+    specificEmail: z.string().email(),
+    templateId: z.string(),
+    templateData: z.string() // JSON string
+})
+
 export type EmailState = {
     success?: boolean
     message?: string | null
     errors?: {
-        [K in keyof z.infer<typeof EmailSchema>]?: string[]
+        [key: string]: string[]
     }
+}
+
+const TEMPLATE_MAP: Record<string, any> = {
+    "welcome": WelcomeEmail,
+    "proposal": ProjectCompleteEmail, // Using ProjectComplete as base for Proposal for now
+    "service-inquiry": ServiceInquiryEmail,
+    "newsletter": NewsletterEmail
+}
+
+const TEMPLATE_SUBJECTS: Record<string, string> = {
+    "welcome": "Welcome to Angel Nereira Studio",
+    "proposal": "Project Proposal & Next Steps",
+    "service-inquiry": "Re: Your Service Inquiry",
+    "newsletter": "Latest Updates from Angel Nereira"
 }
 
 export async function sendEmailAction(prevState: EmailState, formData: FormData) {
@@ -38,7 +60,7 @@ export async function sendEmailAction(prevState: EmailState, formData: FormData)
     if (!validated.success) {
         return {
             success: false,
-            errors: validated.error.flatten().fieldErrors,
+            errors: validated.error.flatten().fieldErrors as any,
             message: "Validation Error",
         }
     }
@@ -71,10 +93,6 @@ export async function sendEmailAction(prevState: EmailState, formData: FormData)
             return { success: false, message: "No recipients found for this selection." }
         }
 
-        // Send Emails (Batching logic is ideal for production, but simple loop works for small lists)
-        // For Resend, we can send to multiple 'to' or 'bcc' if it's a broadcast.
-        // Using BCC is better for privacy in broadcasts.
-
         if (recipients.length === 1) {
             await resend.emails.send({
                 from: "Ángel Nereira <contact@angelnereira.com>",
@@ -83,8 +101,6 @@ export async function sendEmailAction(prevState: EmailState, formData: FormData)
                 html: `<div style="font-family: sans-serif; white-space: pre-wrap;">${message}</div>`,
             })
         } else {
-            // Broadcast via BCC to hide recipients from each other
-            // Limit to 50 per batch usually, but Resend handles reasonable arrays.
             await resend.emails.send({
                 from: "Ángel Nereira <contact@angelnereira.com>",
                 to: "contact@angelnereira.com", // Send to self
@@ -99,5 +115,48 @@ export async function sendEmailAction(prevState: EmailState, formData: FormData)
     } catch (error) {
         console.error("Email Error:", error)
         return { success: false, message: "Failed to send email via Resend API." }
+    }
+}
+
+export async function sendTemplateEmailAction(prevState: EmailState, formData: FormData) {
+    const session = await auth()
+    if (!session?.user) return { success: false, message: "Unauthorized" }
+
+    const rawData = {
+        specificEmail: formData.get("specificEmail"),
+        templateId: formData.get("templateId"),
+        templateData: formData.get("templateData"),
+    }
+
+    const validated = TemplateEmailSchema.safeParse(rawData)
+
+    if (!validated.success) {
+        return { success: false, message: "Invalid template data" }
+    }
+
+    const { specificEmail, templateId, templateData } = validated.data
+
+    try {
+        const data = JSON.parse(templateData)
+        const TemplateComponent = TEMPLATE_MAP[templateId]
+
+        if (!TemplateComponent) {
+            return { success: false, message: "Invalid Template ID" }
+        }
+
+        const subject = TEMPLATE_SUBJECTS[templateId] || "Update from Angel Nereira"
+
+        await resend.emails.send({
+            from: "Ángel Nereira <contact@angelnereira.com>",
+            to: specificEmail,
+            subject: subject,
+            react: React.createElement(TemplateComponent, data)
+        })
+
+        return { success: true, message: "Template email sent successfully!" }
+
+    } catch (error) {
+        console.error("Template Send Error:", error)
+        return { success: false, message: "Failed to send template email." }
     }
 }
