@@ -9,7 +9,7 @@ import { motion } from "framer-motion"
 interface StatData {
     title: string;
     value: string;
-    icon: any;
+    icon: string;
     change: string;
     color: string;
 }
@@ -131,7 +131,15 @@ export function DashboardClient({ stats, activities, userName = "Chief" }: Dashb
     )
 }
 
-function StatCard({ title, value, icon: Icon, change, color }: any) {
+const iconMap: any = {
+    "eye": Eye,
+    "users": Users,
+    "mouse-pointer": MousePointerClick,
+    "trending-up": TrendingUp
+}
+
+function StatCard({ title, value, icon, change, color }: any) {
+    const Icon = iconMap[icon] || TrendingUp
     return (
         <Card className="bg-black/40 border-white/10 backdrop-blur-sm hover:translate-y-[-4px] transition-transform duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

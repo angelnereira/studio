@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
-import { Users, Eye, MousePointerClick, TrendingUp } from "lucide-react"
+import { } from "lucide-react"
 import { DashboardClient } from "./dashboard-client"
 
 // Helper to format time ago
@@ -41,10 +41,10 @@ export default async function AdminDashboard() {
 
   // Process Stats
   const stats = [
-    { title: "Total Posts", value: postsCount.toString(), icon: Eye, change: "Published Content", color: "text-blue-400" },
-    { title: "Active Leads", value: leadsCount.toString(), icon: Users, change: "New prospects", color: "text-emerald-400" },
-    { title: "Campaigns", value: campaignsCount.toString(), icon: MousePointerClick, change: "Emails Sent", color: "text-purple-400" },
-    { title: "System Health", value: "99.9%", icon: TrendingUp, change: "All systems operational", color: "text-pink-400" },
+    { title: "Total Posts", value: postsCount.toString(), icon: "eye", change: "Published Content", color: "text-blue-400" },
+    { title: "Active Leads", value: leadsCount.toString(), icon: "users", change: "New prospects", color: "text-emerald-400" },
+    { title: "Campaigns", value: campaignsCount.toString(), icon: "mouse-pointer", change: "Emails Sent", color: "text-purple-400" },
+    { title: "System Health", value: "99.9%", icon: "trending-up", change: "All systems operational", color: "text-pink-400" },
   ]
 
   // Process Activities
