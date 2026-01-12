@@ -57,7 +57,7 @@ export default async function DashboardLayout({
     )
 
     return (
-        <div className="flex h-screen bg-black/95 text-foreground overflow-hidden font-sans">
+        <div className="flex h-screen bg-black text-foreground overflow-hidden font-sans">
             {/* Desktop Sidebar */}
             <aside className="w-64 border-r border-white/10 bg-background/50 backdrop-blur-xl hidden md:flex flex-col">
                 <SidebarContent />

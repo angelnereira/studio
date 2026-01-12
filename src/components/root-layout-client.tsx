@@ -1,5 +1,7 @@
 "use client";
 
+import { usePathname } from 'next/navigation';
+
 import { Providers } from '@/components/providers';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
@@ -17,6 +19,20 @@ export function RootLayoutClient({
             console.log(metric);
         }
     });
+
+    const pathname = usePathname();
+    const isAdminPage = pathname?.startsWith("/admin");
+
+    if (isAdminPage) {
+        return (
+            <body className="font-body antialiased min-h-screen flex flex-col" suppressHydrationWarning>
+                <Providers>
+                    {children}
+                    <Toaster />
+                </Providers>
+            </body>
+        )
+    }
 
     return (
         <body className="font-body antialiased min-h-screen flex flex-col" suppressHydrationWarning>

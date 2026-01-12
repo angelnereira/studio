@@ -11,8 +11,10 @@ import { cn } from "@/lib/utils";
 import * as React from "react";
 import { LanguageToggle } from "@/components/language-toggle";
 import { useLanguage } from "@/lib/language-context";
+import { useSession } from "next-auth/react";
 
 export function SiteHeader() {
+  const { data: session } = useSession();
   const [isSheetOpen, setSheetOpen] = React.useState(false);
   const pathname = usePathname();
   const { setTheme, theme } = useTheme();
@@ -26,7 +28,8 @@ export function SiteHeader() {
     { href: "/skills", label: t('skills.title'), icon: <Code2 className="h-4 w-4" /> },
     { href: "/blog", label: "Blog", icon: <FileText className="h-4 w-4" /> },
     { href: "/contact", label: t('nav.contact'), icon: <Mail className="h-4 w-4" /> },
-  ], [t]);
+    ...(session?.user ? [{ href: "/admin", label: "Admin", icon: <BrainCircuit className="h-4 w-4 text-primary" /> }] : []),
+  ], [t, session]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b glass">
