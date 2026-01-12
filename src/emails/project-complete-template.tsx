@@ -49,8 +49,8 @@ export default function ProjectCompleteEmail({
             <Head />
             <Preview>{previewText}</Preview>
             <Tailwind config={{ theme: { extend: { colors: { primary: brandColors.primary, background: brandColors.background, secondary: brandColors.secondary } } } }}>
-                <Body style={{ backgroundColor: brandColors.background, color: brandColors.textPrimary, fontFamily: "sans-serif", margin: "0 auto", padding: "8px" }}>
-                    <Container style={{ border: `1px solid ${brandColors.border}`, borderRadius: "12px", padding: "32px", margin: "32px auto", maxWidth: "520px", backgroundColor: "rgba(13, 20, 16, 0.5)" }}>
+                <Body style={{ backgroundColor: brandColors.background, color: brandColors.textPrimary, fontFamily: "sans-serif", margin: "0 auto", padding: "0" }}>
+                    <Container style={{ padding: "20px", margin: "0 auto", maxWidth: "600px", width: "100%" }}>
                         <Section style={{ textAlign: "center" as const, marginTop: "32px" }}>
                             <div style={{ width: "48px", height: "48px", backgroundColor: brandColors.primary, borderRadius: "8px", margin: "0 auto", color: "#000", fontWeight: "bold", fontSize: "20px" }}>AN</div>
                         </Section>

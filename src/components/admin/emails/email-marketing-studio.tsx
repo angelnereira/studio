@@ -40,14 +40,16 @@ type Campaign = {
     statsOpened: number;
     sender: Identity;
 }
+type Contact = { id: string; name: string; email: string }
 
 interface EmailMarketingStudioProps {
     identities: Identity[]
     templates: Template[]
     campaigns: Campaign[]
+    contacts: Contact[]
 }
 
-export function EmailMarketingStudio({ identities, templates, campaigns }: EmailMarketingStudioProps) {
+export function EmailMarketingStudio({ identities, templates, campaigns, contacts }: EmailMarketingStudioProps) {
     const { toast } = useToast()
     const router = useRouter()
 
@@ -79,6 +81,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns }: Email
         attachments: [] as { filename: string, content: string }[]
     })
     const [isSending, setIsSending] = useState(false)
+    const [selectedContactId, setSelectedContactId] = useState<string>("") // State for dropdown
 
     // Helper to read file as base64
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,6 +117,24 @@ export function EmailMarketingStudio({ identities, templates, campaigns }: Email
                 newAttachments.push(await promise)
             }
             setDraft(prev => ({ ...prev, attachments: [...prev.attachments, ...newAttachments] }))
+        }
+    }
+
+    // Auto-fill form when contact is selected
+    const handleContactSelect = (contactId: string) => {
+        const contact = contacts.find(c => c.id === contactId)
+        if (contact) {
+            setSelectedContactId(contactId)
+            setDraft({
+                ...draft,
+                specificEmail: contact.email,
+                // We can also auto-fill other template variables if we had them in a separate state,
+                // but for now we effectively just fill the email. 
+                // If there was a 'templateData' state, we would fill it here.
+                // Assuming 'content' might be a template that needs filling?
+                // For now, just email is the request "fill or places like in a form".
+            })
+            toast({ title: "Contact Selected", description: `Auto-filled email for ${contact.name}` })
         }
     }
 
@@ -256,13 +277,28 @@ export function EmailMarketingStudio({ identities, templates, campaigns }: Email
                                     </div>
 
                                     {draft.recipientType === "individual" && (
-                                        <div className="space-y-2">
-                                            <Label>Recipient Email</Label>
-                                            <Input
-                                                placeholder="client@example.com"
-                                                value={draft.specificEmail}
-                                                onChange={(e) => setDraft({ ...draft, specificEmail: e.target.value })}
-                                            />
+                                        <div className="space-y-4">
+                                            <div className="space-y-2">
+                                                <Label>Select Contact (Auto-fill)</Label>
+                                                <Select onValueChange={handleContactSelect} value={selectedContactId}>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Search or select contact..." />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {contacts.map(c => (
+                                                            <SelectItem key={c.id} value={c.id}>{c.name} ({c.email})</SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label>Recipient Email</Label>
+                                                <Input
+                                                    placeholder="client@example.com"
+                                                    value={draft.specificEmail}
+                                                    onChange={(e) => setDraft({ ...draft, specificEmail: e.target.value })}
+                                                />
+                                            </div>
                                         </div>
                                     )}
                                 </div>

@@ -42,8 +42,8 @@ export default function WelcomeEmail({
                     },
                 }}
             >
-                <Body className="bg-background text-white font-sans antialiased my-auto mx-auto px-2">
-                    <Container className="border border-white/10 rounded-lg p-8 my-8 mx-auto max-w-[465px] bg-zinc-950/50 backdrop-blur-sm shadow-2xl">
+                <Body className="bg-background text-white font-sans antialiased my-auto mx-auto px-0">
+                    <Container className="p-5 my-0 mx-auto max-w-[600px] w-full">
                         <Section className="mt-8">
                             {/* Logo Placeholder - You would replace this with your actual logo URL */}
                             <div className="w-12 h-12 bg-primary rounded-lg mx-auto flex items-center justify-center text-black font-bold text-xl">

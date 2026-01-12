@@ -129,6 +129,25 @@ export async function sendCampaign(campaignId: string) {
 
     if (filter.recipientType === 'individual' && filter.specificEmail) {
         recipients = [filter.specificEmail]
+
+        // Auto-save Contact if sending to individual
+        // Check if contact exists, if not create.
+        // We might not have a name, so use email part or "New Contact"
+        try {
+            const existing = await prisma.contact.findFirst({ where: { email: filter.specificEmail } })
+            if (!existing) {
+                await prisma.contact.create({
+                    data: {
+                        email: filter.specificEmail,
+                        name: filter.specificEmail.split('@')[0], // Fallback name
+                        formType: 'manual_entry'
+                    }
+                })
+            }
+        } catch (e) {
+            console.error("Failed to auto-save contact", e)
+            // Non-blocking
+        }
     } else {
         const whereClause: any = {}
         if (filter.recipientType === 'clients') whereClause.formType = 'client'
@@ -243,5 +262,14 @@ export async function getCampaigns() {
     return await prisma.emailCampaign.findMany({
         orderBy: { createdAt: 'desc' },
         include: { sender: true }
+    })
+}
+
+export async function getContacts() {
+    const session = await auth()
+    if (!session?.user) return []
+    return await prisma.contact.findMany({
+        orderBy: { createdAt: 'desc' },
+        select: { id: true, name: true, email: true }
     })
 }

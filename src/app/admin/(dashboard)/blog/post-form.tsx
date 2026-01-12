@@ -30,6 +30,9 @@ import {
 } from "@/components/ui/form"
 import { createPost, updatePost } from "./actions"
 import { Loader2, Save, ArrowLeft, Image as ImageIcon, Trash2 } from "lucide-react"
+import dynamic from "next/dynamic"
+
+const EditorToolbar = dynamic(() => import("./editor-toolbar").then((mod) => mod.EditorToolbar), { ssr: false })
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 
@@ -88,7 +91,7 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
         content: post?.content || "",
         editorProps: {
             attributes: {
-                class: "prose prose-invert max-w-none min-h-[400px] p-4 bg-muted/20 rounded-md border border-white/10 focus:outline-none",
+                class: "prose prose-invert max-w-none min-h-[400px] p-4 focus:outline-none",
             },
         },
         onUpdate: ({ editor }) => {
@@ -169,7 +172,10 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
 
                         <div className="space-y-2">
                             <FormLabel>Content</FormLabel>
-                            <EditorContent editor={editor} />
+                            <div className="border border-input rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 bg-background">
+                                <EditorToolbar editor={editor} />
+                                <EditorContent editor={editor} />
+                            </div>
                         </div>
 
                         <FormField

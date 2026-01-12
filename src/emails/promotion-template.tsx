@@ -67,14 +67,12 @@ export default function PromotionEmail({
                     },
                 }}
             >
-                <Body style={{ backgroundColor: brandColors.background, color: brandColors.textPrimary, fontFamily: "'Inter', 'Helvetica', sans-serif", margin: "0 auto", padding: "8px" }}>
+                <Body style={{ backgroundColor: brandColors.background, color: brandColors.textPrimary, fontFamily: "'Inter', 'Helvetica', sans-serif", margin: "0 auto", padding: "0" }}>
                     <Container style={{
-                        border: `1px solid ${brandColors.border}`,
-                        borderRadius: "12px",
-                        padding: "32px",
-                        margin: "32px auto",
-                        maxWidth: "500px",
-                        backgroundColor: "rgba(13, 20, 16, 0.5)",
+                        padding: "20px",
+                        margin: "0 auto",
+                        maxWidth: "600px",
+                        width: "100%",
                     }}>
                         {/* Logo */}
                         <Section style={{ textAlign: "center" as const, marginTop: "32px" }}>

@@ -92,14 +92,12 @@ export default function NewsletterEmail({
                     },
                 }}
             >
-                <Body style={{ backgroundColor: brandColors.background, color: brandColors.textPrimary, fontFamily: "'Inter', 'Helvetica', sans-serif", margin: "0 auto", padding: "8px" }}>
+                <Body style={{ backgroundColor: brandColors.background, color: brandColors.textPrimary, fontFamily: "'Inter', 'Helvetica', sans-serif", margin: "0 auto", padding: "0" }}>
                     <Container style={{
-                        border: `1px solid ${brandColors.border}`,
-                        borderRadius: "12px",
-                        padding: "32px",
-                        margin: "32px auto",
-                        maxWidth: "560px",
-                        backgroundColor: "rgba(13, 20, 16, 0.5)",
+                        padding: "20px",
+                        margin: "0 auto",
+                        maxWidth: "600px",
+                        width: "100%",
                     }}>
                         {/* Header */}
                         <Section style={{ textAlign: "center" as const, marginTop: "16px" }}>

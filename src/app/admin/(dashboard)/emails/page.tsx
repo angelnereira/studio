@@ -1,6 +1,6 @@
 
 import { EmailMarketingStudio } from "@/components/admin/emails/email-marketing-studio"
-import { getSenderIdentities, getTemplates, getCampaigns } from "./marketing-actions"
+import { getSenderIdentities, getTemplates, getCampaigns, getContacts } from "./marketing-actions"
 
 export const metadata = {
     title: "Email Marketing Studio | Admin",
@@ -10,6 +10,7 @@ export default async function EmailsPage() {
     const identities = await getSenderIdentities()
     const templates = await getTemplates() // Assuming this exists or returns []
     const campaigns = await getCampaigns()
+    const contacts = await getContacts()
 
     return (
         <div className="space-y-8">
@@ -26,6 +27,7 @@ export default async function EmailsPage() {
                 identities={identities}
                 templates={templates}
                 campaigns={JSON.parse(JSON.stringify(campaigns))}
+                contacts={JSON.parse(JSON.stringify(contacts))}
             />
         </div>
     )
