@@ -66,10 +66,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   // Get comments
-  const comments = await prisma.comment.findMany({
-    where: { postId: slug },
-    orderBy: { createdAt: 'desc' },
-  });
+  let comments = [];
+  try {
+    comments = await prisma.comment.findMany({
+      where: { postId: slug },
+      orderBy: { createdAt: 'desc' },
+    });
+  } catch (error) {
+    console.error("Failed to fetch comments:", error);
+    // Don't crash the page if comments fail (e.g. database connection or migration issue)
+    comments = [];
+  }
 
   // Serialize comments (dates to strings if needed for client component, but Next.js Server Actions usually handle Date serialization fine if passed directly to client components? 
   // Actually, passing Date objects to client components warns in Next.js. Better to serialize.)
