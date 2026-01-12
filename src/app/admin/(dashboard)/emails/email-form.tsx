@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Send, Users, Loader2, Sparkles, FileJson } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { WelcomeEmail, ServiceInquiryEmail, NewsletterEmail, ProjectCompleteEmail } from "@/emails/index"
 
 function SubmitButton({ label = "Send Email" }) {
     const { pending } = useFormStatus()
@@ -200,25 +201,31 @@ export function EmailForm() {
                                     </div>
                                 </div>
 
-                                {/* Right Col: Preview (Mock) */}
+                                {/* Right Col: Live Preview */}
                                 <div className="space-y-2">
-                                    <Label>Live Preview (Data Check)</Label>
-                                    <Card className="h-full bg-black border-white/10 min-h-[400px] overflow-hidden">
-                                        <ScrollArea className="h-[500px] w-full p-4">
-                                            <div className="prose prose-invert max-w-none">
-                                                <pre className="text-xs text-muted-foreground whitespace-pre-wrap">
-                                                    {JSON.stringify({ template: selectedTemplate, data: templateData }, null, 2)}
-                                                </pre>
-                                                {/* In a real app, we would render the React Email component here if possible, 
-                                                    but server components in client is tricky without a dedicated preview endpoint. 
-                                                    For now, JSON data check is sufficient for the MVP generator. */}
-                                                <div className="mt-8 p-4 border border-dashed border-white/20 rounded text-center text-muted-foreground">
-                                                    Preview rendering happens on send. <br />
-                                                    Ensure all fields on the left are filled.
+                                    <Label>Live Preview</Label>
+                                    <Card className="h-full bg-zinc-900 border-white/10 min-h-[500px] overflow-hidden flex flex-col">
+                                        <div className="bg-zinc-800 p-2 border-b border-white/10 flex justify-end">
+                                            <Label className="text-xs text-muted-foreground mr-2">Rendering: {TEMPLATES.find(t => t.id === selectedTemplate)?.name}</Label>
+                                        </div>
+                                        <ScrollArea className="flex-1 bg-white h-full relative">
+                                            <div className="min-h-full w-full bg-white text-black p-0">
+                                                {/* Render selected template with current data */}
+                                                <div className="origin-top scale-[0.6] sm:scale-[0.7] md:scale-[0.8] lg:scale-[0.9] xl:scale-100 w-full h-full transform-gpu transition-all p-4 flex justify-center">
+                                                    <div className="shadow-2xl">
+                                                        {selectedTemplate === "welcome" && <WelcomeEmail {...templateData} />}
+                                                        {selectedTemplate === "newsletter" && <NewsletterEmail {...templateData} />}
+                                                        {selectedTemplate === "service-inquiry" && <ServiceInquiryEmail {...templateData} />}
+                                                        {selectedTemplate === "proposal" && <ProjectCompleteEmail {...templateData} />}
+                                                        {!selectedTemplate && <div className="p-8 text-center text-gray-500">Select a template to preview</div>}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </ScrollArea>
                                     </Card>
+                                    <div className="text-xs text-muted-foreground text-center pt-2">
+                                        Preview is scaled to fit. Actual email will be responsive.
+                                    </div>
                                 </div>
                             </div>
 

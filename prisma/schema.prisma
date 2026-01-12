@@ -241,8 +241,8 @@ model CampaignRecipient {
 model ActivityLog {
   id          String   @id @default(cuid())
   
-  contactId   String
-  contact     Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  contactId   String?
+  contact     Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
   
   type        String   // "email_sent", "status_change", "note", "email_opened", "email_clicked"
   title       String   // Short description: "Welcome email sent", "Status → Contacted"

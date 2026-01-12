@@ -110,6 +110,20 @@ export async function sendEmailAction(prevState: EmailState, formData: FormData)
             })
         }
 
+        // Log Activity
+        await prisma.activityLog.create({
+            data: {
+                type: "email_sent",
+                title: `Sent "${subject}"`,
+                contactId: recipients.length === 1 ? (await prisma.contact.findFirst({ where: { email: recipients[0] } }))?.id : undefined,
+                metadata: {
+                    subject,
+                    recipientCount: recipients.length,
+                    recipientType
+                }
+            }
+        })
+
         return { success: true, message: `Email sent successfully to ${recipients.length} recipients.` }
 
     } catch (error) {
@@ -151,6 +165,20 @@ export async function sendTemplateEmailAction(prevState: EmailState, formData: F
             to: specificEmail,
             subject: subject,
             react: React.createElement(TemplateComponent, data)
+        })
+
+        // Log Activity
+        await prisma.activityLog.create({
+            data: {
+                type: "template_sent",
+                title: `Sent Template "${TEMPLATE_SUBJECTS[templateId]}"`,
+                contactId: (await prisma.contact.findFirst({ where: { email: specificEmail } }))?.id,
+                metadata: {
+                    templateId,
+                    subject,
+                    recipient: specificEmail
+                }
+            }
         })
 
         return { success: true, message: "Template email sent successfully!" }
