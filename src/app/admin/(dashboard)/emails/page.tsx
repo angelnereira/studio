@@ -25,7 +25,7 @@ export default async function EmailsPage() {
             <EmailMarketingStudio
                 identities={identities}
                 templates={templates}
-                campaigns={campaigns as any} // Cast safely as types align closely
+                campaigns={JSON.parse(JSON.stringify(campaigns))}
             />
         </div>
     )

@@ -51,7 +51,7 @@ export default async function CRMPage() {
                 <StatCard title="Emails Today" value={emailsSentToday} icon={Mail} color="text-cyan-400" />
             </div>
 
-            <CRMClient initialContacts={contacts} availableTags={allTags} />
+            <CRMClient initialContacts={JSON.parse(JSON.stringify(contacts))} availableTags={allTags} />
         </div>
     )
 }
