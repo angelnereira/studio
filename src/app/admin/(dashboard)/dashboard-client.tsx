@@ -123,6 +123,14 @@ export function DashboardClient({ stats, activities, userName = "Chief" }: Dashb
                                     Write Article
                                 </Link>
                             </Button>
+                            <Button variant="outline" className="w-full justify-start h-12 text-lg font-light hover:bg-white/5 hover:text-emerald-400 hover:border-emerald-500/50 transition-all group" asChild>
+                                <Link href="/admin/crm">
+                                    <div className="p-2 rounded-full bg-emerald-500/10 mr-3 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                                        <Users className="h-4 w-4" />
+                                    </div>
+                                    Add Client
+                                </Link>
+                            </Button>
                         </CardContent>
                     </Card>
                 </motion.div>
