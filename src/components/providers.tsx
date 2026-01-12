@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/lib/language-context";
+import { SessionProvider } from "next-auth/react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (
@@ -11,9 +12,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
             enableSystem
             disableTransitionOnChange
         >
-            <LanguageProvider>
-                {children}
-            </LanguageProvider>
+            <SessionProvider>
+                <LanguageProvider>
+                    {children}
+                </LanguageProvider>
+            </SessionProvider>
         </ThemeProvider>
     );
 }
