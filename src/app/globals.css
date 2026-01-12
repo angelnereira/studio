@@ -123,4 +123,25 @@
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-emerald-400 to-teal-300;
   }
+
+  /* Performance-optimized gradient animation */
+  @keyframes gradient-flow {
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  .animate-gradient-flow {
+    animation: gradient-flow 3s linear infinite;
+  }
+
+  /* Reduce motion for accessibility and performance */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-gradient-flow {
+      animation: none;
+    }
+  }
 }

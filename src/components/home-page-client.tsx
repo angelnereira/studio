@@ -41,16 +41,16 @@ const coreTechnologies = [
 export default function HomePageClient() {
   const { t } = useLanguage();
 
-  // Stats actualizados con métricas técnicas
-  const stats = [
+  // Stats actualizados con métricas técnicas - Memoized to prevent recalculation
+  const stats = React.useMemo(() => [
     { value: "5+", label: t('hero.stats.years'), icon: TrendingUp },
     { value: "10K+", label: t('hero.stats.facturas'), icon: CheckCircle2 },
     { value: "99.9%", label: t('hero.stats.uptime'), icon: Shield },
     { value: "< 200ms", label: "Response Time", icon: Zap },
-  ];
+  ], [t]);
 
-  // Solution categories - enfocado en arquitectura técnica
-  const solutionCards = [
+  // Solution categories - enfocado en arquitectura técnica - Memoized
+  const solutionCards = React.useMemo(() => [
     {
       title: t('solutions.enterprise.title'),
       desc: t('solutions.enterprise.desc'),
@@ -75,9 +75,10 @@ export default function HomePageClient() {
       gradient: "from-teal-500/20 to-cyan-500/20",
       stats: t('solutions.consulting.stats'),
     },
-  ];
+  ], [t]);
 
   const [hoveredCard, setHoveredCard] = React.useState<number | null>(null);
+
 
   return (
     <div className="flex flex-col gap-12 md:gap-24 lg:gap-32">
@@ -163,6 +164,7 @@ export default function HomePageClient() {
                   fill
                   className="object-contain drop-shadow-[0_0_40px_rgba(223,255,0,0.2)]"
                   priority
+                  fetchPriority="high"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>

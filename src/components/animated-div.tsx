@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, memo } from "react";
+import { cn } from "@/lib/utils";
 
 interface AnimatedDivProps {
   children: React.ReactNode;
@@ -9,30 +9,40 @@ interface AnimatedDivProps {
   delay?: number;
 }
 
-export function AnimatedDiv({ children, className, delay = 0 }: AnimatedDivProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-  const mainControls = useAnimation();
+export const AnimatedDiv = memo(function AnimatedDiv({ children, className, delay = 0 }: AnimatedDivProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (isInView) {
-      mainControls.start("visible");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
     }
-  }, [isInView, mainControls]);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div ref={ref} className={className}>
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0 },
-        }}
-        initial="hidden"
-        animate={mainControls}
-        transition={{ duration: 0.5, delay: delay }}
-      >
-        {children}
-      </motion.div>
+    <div
+      ref={ref}
+      className={cn(className)}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+        transition: `opacity 0.5s ease-out ${delay}s, transform 0.5s ease-out ${delay}s`,
+        willChange: isVisible ? 'auto' : 'opacity, transform',
+      }}
+    >
+      {children}
     </div>
   );
-}
+});
