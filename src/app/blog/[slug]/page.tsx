@@ -1,3 +1,4 @@
+
 import { getPostBySlug, getRelatedPosts, getAllPostSlugs } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -7,6 +8,9 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { ModernPostLayout } from '@/components/blog/ModernPostLayout';
+import { ShareButtons } from '@/components/blog/ShareButtons';
+import { CommentsSection } from '@/components/blog/CommentsSection';
+import { prisma } from '@/lib/prisma';
 
 export async function generateStaticParams() {
   const slugs = getAllPostSlugs();
@@ -60,6 +64,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   } catch (error) {
     notFound();
   }
+
+  // Get comments
+  const comments = await prisma.comment.findMany({
+    where: { postId: slug },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  // Serialize comments (dates to strings if needed for client component, but Next.js Server Actions usually handle Date serialization fine if passed directly to client components? 
+  // Actually, passing Date objects to client components warns in Next.js. Better to serialize.)
+  const serializedComments = comments.map(c => ({
+    ...c,
+    createdAt: c.createdAt.toISOString(),
+  }));
 
   // Obtener posts relacionados
   const relatedPosts = getRelatedPosts(slug, 3);
@@ -117,6 +134,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </ReactMarkdown>
       </div>
 
+      <ShareButtons title={post.title} slug={slug} />
+
       {/* CTA al final */}
       <div className="mt-16 p-8 bg-secondary/10 rounded-2xl border border-primary/20 backdrop-blur-sm">
         <h3 className="text-2xl font-bold mb-3 font-headline">¿Te interesa implementar algo similar?</h3>
@@ -130,6 +149,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           Iniciar Conversación
         </Link>
       </div>
+
+      <CommentsSection postId={slug} initialComments={serializedComments} />
 
       {/* Posts relacionados */}
       {relatedPosts.length > 0 && (
@@ -166,3 +187,4 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     </ModernPostLayout>
   );
 }
+

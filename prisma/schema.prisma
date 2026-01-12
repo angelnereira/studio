@@ -255,3 +255,28 @@ model ActivityLog {
   @@map("activity_logs")
 }
 
+// Blog Interaction System
+model Comment {
+  id          String   @id @default(cuid())
+  content     String   @db.Text
+  postId      String
+  authorName  String?
+  authorEmail String
+  isVerified  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([postId])
+  @@map("comments")
+}
+
+model Subscriber {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  isVerified Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("subscribers")
+}
+
