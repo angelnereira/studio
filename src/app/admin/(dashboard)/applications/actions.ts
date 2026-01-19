@@ -20,9 +20,10 @@ const captureVacancySchema = z.object({
 });
 
 const generateApplicationSchema = z.object({
-    vacancyId: z.string(),
-    profileId: z.string(),
-    language: z.enum(["en", "es"]).default("es"),
+    vacancyId: z.string().min(1),
+    profileId: z.string().min(1),
+    language: z.string().optional(),
+    model: z.string().optional(),
     recipientName: z.string().optional(),
     recipientEmail: z.string().email().optional(),
 });
@@ -205,9 +206,9 @@ export async function generateApplication(
 ): Promise<GenerateApplicationState> {
     try {
         const parsed = generateApplicationSchema.safeParse({
-            vacancyId: formData.get("vacancyId"),
             profileId: formData.get("profileId"),
             language: formData.get("language") || "es",
+            model: formData.get("model") || "gemini",
             recipientName: formData.get("recipientName") || undefined,
             recipientEmail: formData.get("recipientEmail") || undefined,
         });
@@ -219,7 +220,7 @@ export async function generateApplication(
             };
         }
 
-        const { vacancyId, profileId, language, recipientName, recipientEmail } = parsed.data;
+        const { vacancyId, profileId, language, model, recipientName, recipientEmail } = parsed.data;
 
         // Fetch vacancy and profile
         const [vacancy, profile] = await Promise.all([

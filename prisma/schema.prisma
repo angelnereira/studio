@@ -291,6 +291,8 @@ model ProfileBase {
   email     String
   phone     String?
   location  String?
+  documentId String?   // Cédula / ID document
+  citizenship String?  // Nationality
   
   // Core professional content
   summary      String   @db.Text    // Professional summary/bio
@@ -298,7 +300,7 @@ model ProfileBase {
   skills       Json                  // Categorized skills with proficiency levels
   education    Json                  // Degrees and certifications
   projects     Json?                 // Portfolio projects
-  languages    Json?                 // Language proficiencies
+  languages    Json?                 // Languages spoken
   socialLinks  Json?                 // LinkedIn, GitHub, Portfolio URLs
   
   isActive     Boolean  @default(true)

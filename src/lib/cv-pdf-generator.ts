@@ -6,6 +6,8 @@ interface CVData {
     email: string;
     phone?: string;
     location?: string;
+    documentId?: string;
+    citizenship?: string;
     summary: string;
 
     // Content sections
@@ -37,7 +39,32 @@ interface CVGenerationOptions {
     companyName?: string;
     positionTitle?: string;
     template?: 'modern' | 'traditional' | 'minimal';
+    language?: 'en' | 'es';
 }
+
+const getLabels = (lang: 'en' | 'es' = 'en') => {
+    return lang === 'es' ? {
+        summary: 'Perfil Profesional',
+        skills: 'Habilidades Clave',
+        experience: 'Experiencia Profesional',
+        education: 'Educación',
+        languages: 'Idiomas',
+        applicationFor: 'Aplicación para:',
+        at: 'en',
+        page: 'Página',
+        of: 'de'
+    } : {
+        summary: 'Professional Summary',
+        skills: 'Key Skills',
+        experience: 'Professional Experience',
+        education: 'Education',
+        languages: 'Languages',
+        applicationFor: 'Application for:',
+        at: 'at',
+        page: 'Page',
+        of: 'of'
+    };
+};
 
 /**
  * Generate a professional CV PDF from structured CV data
@@ -47,7 +74,8 @@ export function generateCVPDF(
     options: CVGenerationOptions = {}
 ): void {
     const doc = new jsPDF();
-    const { companyName, positionTitle, template = 'modern' } = options;
+    const { companyName, positionTitle, template = 'modern', language = 'en' } = options;
+    const labels = getLabels(language);
 
     // Page settings
     const pageWidth = doc.internal.pageSize.getWidth();
@@ -89,6 +117,8 @@ export function generateCVPDF(
         cvData.email,
         cvData.phone,
         cvData.location,
+        cvData.documentId && `ID: ${cvData.documentId}`,
+        cvData.citizenship,
     ].filter(Boolean).join(' • ');
     doc.text(contactInfo, margin, y);
 
@@ -115,7 +145,7 @@ export function generateCVPDF(
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(...brandPrimary);
         doc.text(
-            `Application for: ${positionTitle} at ${companyName}`,
+            `${labels.applicationFor} ${positionTitle} ${labels.at} ${companyName}`,
             margin + 5,
             y + 8
         );
@@ -127,7 +157,7 @@ export function generateCVPDF(
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(...brandPrimary);
-    doc.text('Professional Summary', margin, y);
+    doc.text(labels.summary, margin, y);
     y += 8;
 
     doc.setFontSize(10);
@@ -146,7 +176,7 @@ export function generateCVPDF(
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(...brandPrimary);
-    doc.text('Key Skills', margin, y);
+    doc.text(labels.skills, margin, y);
     y += 8;
 
     // Display skills as tags
@@ -180,7 +210,7 @@ export function generateCVPDF(
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(...brandPrimary);
-    doc.text('Professional Experience', margin, y);
+    doc.text(labels.experience, margin, y);
     y += 8;
 
     // Sort by relevance if available
@@ -232,7 +262,7 @@ export function generateCVPDF(
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(...brandPrimary);
-        doc.text('Education', margin, y);
+        doc.text(labels.education, margin, y);
         y += 8;
 
         cvData.education.forEach((edu) => {
@@ -256,7 +286,7 @@ export function generateCVPDF(
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(...brandPrimary);
-        doc.text('Languages', margin, y);
+        doc.text(labels.languages, margin, y);
         y += 8;
 
         doc.setFontSize(10);
@@ -280,7 +310,7 @@ export function generateCVPDF(
         const footerWidth = doc.getTextWidth(footerText);
         doc.text(footerText, (pageWidth - footerWidth) / 2, pageHeight - 10);
 
-        const pageNumText = `Page ${i} of ${pageCount}`;
+        const pageNumText = `${labels.page} ${i} ${labels.of} ${pageCount}`;
         doc.text(pageNumText, pageWidth - margin - doc.getTextWidth(pageNumText), pageHeight - 10);
 
         const dateText = new Date().toLocaleDateString('en-US', {

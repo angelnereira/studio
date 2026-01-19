@@ -50,6 +50,9 @@ export default function NewApplicationWizard() {
     // State
     const [currentStep, setCurrentStep] = useState(1);
     const [sourceType, setSourceType] = useState<SourceType>("text");
+    const [language, setLanguage] = useState("English");
+    const [model, setModel] = useState("gemini");
+    const [vacancyId, setVacancyId] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -408,7 +411,7 @@ export default function NewApplicationWizard() {
                         </CardHeader>
                         <CardContent>
                             <form
-                                onSubmit={(e) => {
+                                onSubmit={async (e) => {
                                     e.preventDefault();
                                     setIsSubmitting(true);
                                     const formData = new FormData(e.currentTarget);
@@ -435,15 +438,28 @@ export default function NewApplicationWizard() {
                                     </div>
                                     <div className="space-y-2">
                                         <Label htmlFor="language">Language</Label>
-                                        <select
-                                            id="language"
-                                            name="language"
-                                            className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
-                                            defaultValue="es"
-                                        >
-                                            <option value="es">Spanish (Español)</option>
-                                            <option value="en">English</option>
-                                        </select>
+                                        <Select value={language} onValueChange={setLanguage}>
+                                            <SelectTrigger id="language" className="w-[180px]">
+                                                <SelectValue placeholder="Select language" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="English">English</SelectItem>
+                                                <SelectItem value="Spanish">Spanish</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="model">AI Model</Label>
+                                        <Select value={model} onValueChange={setModel}>
+                                            <SelectTrigger id="model" className="w-[200px]">
+                                                <SelectValue placeholder="Select Model" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="gemini">Gemini 2.5 Flash</SelectItem>
+                                                <SelectItem value="claude">Claude 3.5 Sonnet</SelectItem>
+                                                <SelectItem value="gpt4o">GPT-4o</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                     </div>
                                 </div>
 

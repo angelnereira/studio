@@ -9,6 +9,8 @@ interface ProfileData {
     email: string;
     phone?: string;
     location?: string;
+    documentId?: string;
+    citizenship?: string;
     summary: string;
     experience: any[];
     skills: any[];
@@ -29,6 +31,8 @@ export async function saveProfile(data: ProfileData): Promise<{ success: boolean
                     email: data.email,
                     phone: data.phone,
                     location: data.location,
+                    documentId: data.documentId,
+                    citizenship: data.citizenship,
                     summary: data.summary,
                     experience: data.experience,
                     skills: data.skills,
@@ -46,6 +50,8 @@ export async function saveProfile(data: ProfileData): Promise<{ success: boolean
                     email: data.email,
                     phone: data.phone,
                     location: data.location,
+                    documentId: data.documentId,
+                    citizenship: data.citizenship,
                     summary: data.summary,
                     experience: data.experience,
                     skills: data.skills,

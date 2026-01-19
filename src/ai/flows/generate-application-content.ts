@@ -65,6 +65,7 @@ const GenerateApplicationContentInputSchema = z.object({
     vacancy: VacancyContextSchema,
     recipientName: z.string().optional().describe('Name of the recruiter/hiring manager'),
     language: z.enum(['en', 'es']).default('es').describe('Output language'),
+    model: z.string().optional().describe('AI Model to use (gemini, claude, gpt4o)'),
 });
 export type GenerateApplicationContentInput = z.infer<typeof GenerateApplicationContentInputSchema>;
 
@@ -191,7 +192,22 @@ const generateApplicationContentFlow = ai.defineFlow(
         outputSchema: GenerateApplicationContentOutputSchema,
     },
     async (input) => {
-        const { output } = await generateApplicationContentPrompt(input);
+        let modelName = 'googleai/gemini-2.5-flash';
+
+        switch (input.model) {
+            case 'claude':
+                modelName = 'anthropic/claude-3-5-sonnet';
+                break;
+            case 'gpt4o':
+                modelName = 'openai/gpt-4o';
+                break;
+            default:
+                modelName = 'googleai/gemini-2.5-flash';
+        }
+
+        const { output } = await generateApplicationContentPrompt(input, {
+            model: modelName
+        });
         return output!;
     }
 );

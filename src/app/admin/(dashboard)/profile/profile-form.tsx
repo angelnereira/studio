@@ -48,10 +48,13 @@ export function ProfileForm({ profile }: ProfileFormProps) {
     const [email, setEmail] = useState(profile.email);
     const [phone, setPhone] = useState(profile.phone || "");
     const [location, setLocation] = useState(profile.location || "");
+    const [documentId, setDocumentId] = useState(profile.documentId || "");
+    const [citizenship, setCitizenship] = useState(profile.citizenship || "");
+    const [socialLinks, setSocialLinks] = useState(profile.socialLinks as any || {});
     const [summary, setSummary] = useState(profile.summary);
-    const [experience, setExperience] = useState<Experience[]>(profile.experience || []);
-    const [skills, setSkills] = useState<SkillCategory[]>(profile.skills || []);
-    const [education, setEducation] = useState<Education[]>(profile.education || []);
+    const [experience, setExperience] = useState<Experience[]>(profile.experience as any || []);
+    const [skills, setSkills] = useState<SkillCategory[]>(profile.skills as any || []);
+    const [education, setEducation] = useState<Education[]>(profile.education as any || []);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -62,12 +65,14 @@ export function ProfileForm({ profile }: ProfileFormProps) {
                 email,
                 phone: phone || undefined,
                 location: location || undefined,
+                documentId: documentId || undefined,
+                citizenship: citizenship || undefined,
+                socialLinks: socialLinks,
                 summary,
                 experience,
                 skills,
                 education,
-                languages: profile.languages,
-                socialLinks: profile.socialLinks,
+                languages: profile.languages, // Keep existing if not edited
             });
 
             if (result.success) {
@@ -139,6 +144,58 @@ export function ProfileForm({ profile }: ProfileFormProps) {
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
                     />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="documentId">ID / Cédula</Label>
+                    <Input
+                        id="documentId"
+                        placeholder="8-888-888"
+                        value={documentId}
+                        onChange={(e) => setDocumentId(e.target.value)}
+                    />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="citizenship">Citizenship</Label>
+                    <Input
+                        id="citizenship"
+                        placeholder="Panamanian"
+                        value={citizenship}
+                        onChange={(e) => setCitizenship(e.target.value)}
+                    />
+                </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="space-y-2">
+                <Label>Social Links</Label>
+                <div className="grid sm:grid-cols-3 gap-4">
+                    <div className="space-y-1">
+                        <Label htmlFor="linkedin" className="text-xs text-muted-foreground">LinkedIn URL</Label>
+                        <Input
+                            id="linkedin"
+                            placeholder="linkedin.com/in/..."
+                            value={socialLinks.linkedin || ""}
+                            onChange={(e) => setSocialLinks({ ...socialLinks, linkedin: e.target.value })}
+                        />
+                    </div>
+                    <div className="space-y-1">
+                        <Label htmlFor="github" className="text-xs text-muted-foreground">GitHub URL</Label>
+                        <Input
+                            id="github"
+                            placeholder="github.com/..."
+                            value={socialLinks.github || ""}
+                            onChange={(e) => setSocialLinks({ ...socialLinks, github: e.target.value })}
+                        />
+                    </div>
+                    <div className="space-y-1">
+                        <Label htmlFor="portfolio" className="text-xs text-muted-foreground">Portfolio URL</Label>
+                        <Input
+                            id="portfolio"
+                            placeholder="yourwebsite.com"
+                            value={socialLinks.portfolio || ""}
+                            onChange={(e) => setSocialLinks({ ...socialLinks, portfolio: e.target.value })}
+                        />
+                    </div>
                 </div>
             </div>
 
