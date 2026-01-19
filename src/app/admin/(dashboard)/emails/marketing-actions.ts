@@ -149,7 +149,7 @@ export async function sendCampaign(campaignId: string) {
             // Non-blocking
         }
     } else {
-        const whereClause: any = {}
+        const whereClause: import("@prisma/client").Prisma.ContactWhereInput = {}
         if (filter.recipientType === 'clients') whereClause.formType = 'client'
         if (filter.recipientType === 'employers') whereClause.formType = 'employer'
         // 'all' implies no filter (or just all contacts)
@@ -212,7 +212,6 @@ export async function sendCampaign(campaignId: string) {
                 to: email,
                 subject: campaign.subject,
                 html: campaign.content,
-                html: campaign.content,
                 tags: [{ name: 'campaignId', value: campaign.id }],
                 scheduledAt: scheduledAtISO, // Pass to Resend
                 attachments: campaign.attachments ? (campaign.attachments as any[]) : undefined
@@ -240,9 +239,6 @@ export async function sendCampaign(campaignId: string) {
 
         revalidatePath('/admin/emails')
         return { success: true, message: isScheduled ? `Scheduled for ${campaign.scheduledAt?.toLocaleString()}` : `Sent to ${recipients.length} recipients` }
-
-        revalidatePath('/admin/emails')
-        return { success: true, message: `Sent to ${recipients.length} recipients` }
 
     } catch (e) {
         console.error(e)

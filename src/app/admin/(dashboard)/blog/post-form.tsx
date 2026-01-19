@@ -53,7 +53,7 @@ const PostSchema = z.object({
 type PostFormValues = z.infer<typeof PostSchema>
 
 interface PostFormProps {
-    post?: any // Type strictly with Prisma type later
+    post?: Partial<PostFormValues> & { id?: string }
     isEditing?: boolean
 }
 
@@ -264,7 +264,6 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                                                     <CldUploadWidget
                                                         uploadPreset="studio_preset"
                                                         onSuccess={(result: any) => {
-                                                            console.log("Upload Result:", result);
                                                             if (result?.info?.secure_url) {
                                                                 field.onChange(result.info.secure_url)
                                                             }

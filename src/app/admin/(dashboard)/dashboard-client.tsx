@@ -139,14 +139,16 @@ export function DashboardClient({ stats, activities, userName = "Chief" }: Dashb
     )
 }
 
-const iconMap: any = {
+const iconMap: Record<string, React.ElementType> = {
     "eye": Eye,
     "users": Users,
     "mouse-pointer": MousePointerClick,
     "trending-up": TrendingUp
 }
 
-function StatCard({ title, value, icon, change, color }: any) {
+interface StatCardProps extends StatData { }
+
+function StatCard({ title, value, icon, change, color }: StatCardProps) {
     const Icon = iconMap[icon] || TrendingUp
     return (
         <Card className="bg-black/40 border-white/10 backdrop-blur-sm hover:translate-y-[-4px] transition-transform duration-300">
