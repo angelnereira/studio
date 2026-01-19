@@ -280,3 +280,129 @@ model Subscriber {
   @@map("subscribers")
 }
 
+// ============================================
+// Job Application System Models
+// ============================================
+
+// Professional Profile - Source of truth for all applications
+model ProfileBase {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  location  String?
+  
+  // Core professional content
+  summary      String   @db.Text    // Professional summary/bio
+  experience   Json                  // Array of work experiences
+  skills       Json                  // Categorized skills with proficiency levels
+  education    Json                  // Degrees and certifications
+  projects     Json?                 // Portfolio projects
+  languages    Json?                 // Language proficiencies
+  socialLinks  Json?                 // LinkedIn, GitHub, Portfolio URLs
+  
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  applications Application[]
+
+  @@map("profile_bases")
+}
+
+// Job Vacancy with AI Analysis Results
+model JobVacancy {
+  id        String   @id @default(cuid())
+  
+  // Source data (original input)
+  sourceType    String                  // "screenshot" | "text" | "url"
+  sourceContent String   @db.Text       // Original text content or URL
+  sourceImage   String?  @db.Text       // Base64 encoded image for screenshots
+  
+  // Extracted company/job info
+  company       String?
+  position      String?
+  location      String?
+  workMode      String?                 // "remote" | "hybrid" | "onsite"
+  salaryRange   String?
+  
+  // AI Analysis results
+  analysis           Json?              // Full structured analysis from AI
+  requirements       Json?              // { required: [], preferred: [] }
+  keywords           String[]           // Important keywords extracted
+  compatibilityScore Int?               // 0-100 matching score
+  suggestions        String?  @db.Text  // AI suggestions for this vacancy
+  
+  status        String   @default("pending") // "pending" | "analyzed" | "applied" | "archived"
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  applications Application[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("job_vacancies")
+}
+
+// Application Record - Full history of each job application
+model Application {
+  id        String   @id @default(cuid())
+  
+  // Relations
+  vacancyId    String
+  vacancy      JobVacancy @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+  
+  profileId    String
+  profile      ProfileBase @relation(fields: [profileId], references: [id])
+  
+  // Generated CV content
+  cvContent    Json                    // Personalized CV data structure
+  cvPdfUrl     String?                 // Vercel Blob storage URL
+  cvFileName   String?                 // Original filename
+  
+  // Generated email content
+  emailSubject String
+  emailHtml    String   @db.Text
+  emailText    String   @db.Text
+  
+  // Sending details
+  recipientEmail String?
+  recipientName  String?
+  sentAt         DateTime?
+  resendId       String?               // Resend message ID for tracking
+  
+  // Tracking & follow-up
+  status         String   @default("draft") // "draft" | "ready" | "sent" | "opened" | "replied" | "interview" | "rejected" | "accepted"
+  notes          String?  @db.Text
+  followUpDate   DateTime?
+  responseAt     DateTime?
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([status])
+  @@index([vacancyId])
+  @@index([createdAt])
+  @@map("applications")
+}
+
+// CV Templates - Reusable CV layout configurations
+model CVTemplate {
+  id        String   @id @default(cuid())
+  name      String
+  description String?
+  
+  // Template configuration
+  structure Json                       // Section order and layout config
+  styles    Json                       // Colors, fonts, spacing
+  
+  isDefault Boolean  @default(false)
+  isActive  Boolean  @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cv_templates")
+}
+

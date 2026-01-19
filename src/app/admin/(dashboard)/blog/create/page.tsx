@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic"
 
 const PostForm = dynamic(() => import("../post-form").then(mod => mod.PostForm), {

@@ -1,6 +1,6 @@
 
 import Link from "next/link"
-import { LayoutDashboard, FileText, Mail, Users, Settings, LogOut, ExternalLink, Menu } from "lucide-react"
+import { LayoutDashboard, FileText, Mail, Users, Settings, LogOut, ExternalLink, Menu, Briefcase, User } from "lucide-react"
 import { auth, signOut } from "@/auth"
 import { Button } from "@/components/ui/button"
 import { redirect } from "next/navigation"
@@ -30,6 +30,8 @@ export default async function DashboardLayout({
 
             <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
                 <SidebarItem href="/admin" icon={LayoutDashboard} label="Dashboard" />
+                <SidebarItem href="/admin/applications" icon={Briefcase} label="Applications" />
+                <SidebarItem href="/admin/profile" icon={User} label="Profile" />
                 <SidebarItem href="/admin/blog" icon={FileText} label="Blog & CMS" />
                 <SidebarItem href="/admin/emails" icon={Mail} label="Email Marketing" />
                 <SidebarItem href="/admin/crm" icon={Users} label="CRM & Leads" />
