@@ -19,7 +19,12 @@ import {
     Heading3,
     Link as LinkIcon,
     Image as ImageIcon,
-    Minus
+    Minus,
+    Palette,
+    Highlighter,
+    LayoutTemplate,
+    MessageSquare,
+    Youtube
 } from "lucide-react"
 import { Toggle } from "@/components/ui/toggle"
 import { Button } from "@/components/ui/button"
@@ -28,9 +33,18 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { CldUploadWidget } from 'next-cloudinary';
+import { BLOG_TEMPLATES } from "./templates"
 
 interface EditorToolbarProps {
     editor: Editor | null
@@ -38,6 +52,7 @@ interface EditorToolbarProps {
 
 export function EditorToolbar({ editor }: EditorToolbarProps) {
     const [linkUrl, setLinkUrl] = useState("")
+    const [youtubeUrl, setYoutubeUrl] = useState("")
 
     if (!editor) {
         return null
@@ -50,14 +65,53 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
         }
     }
 
+    const addYoutube = () => {
+        if (youtubeUrl) {
+            editor.commands.setYoutubeVideo({ src: youtubeUrl })
+            setYoutubeUrl("")
+        }
+    }
+
     const addImage = (url: string) => {
         if (url) {
             editor.chain().focus().setImage({ src: url }).run()
         }
     }
 
+    const insertTemplate = (content: string) => {
+        editor.chain().focus().insertContent(content).run()
+    }
+
+    const insertCard = (type: 'info' | 'success' | 'warning' | 'danger') => {
+        editor.chain().focus().setNode('infoCard', { type }).run()
+    }
+
     return (
-        <div className="border border-input bg-transparent rounded-t-md p-2 flex flex-wrap gap-1 items-center">
+        <div className="border border-input bg-transparent rounded-t-md p-2 flex flex-wrap gap-1 items-center sticky top-0 bg-background/95 backdrop-blur z-10">
+            {/* Templates */}
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="gap-2 mr-2">
+                        <LayoutTemplate className="h-4 w-4" />
+                        Templates
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                    <DropdownMenuLabel>Choose a Template</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {BLOG_TEMPLATES.map((template) => (
+                        <DropdownMenuItem key={template.name} onClick={() => insertTemplate(template.content)}>
+                            <div className="flex flex-col gap-1">
+                                <span className="font-medium">{template.name}</span>
+                                <span className="text-xs text-muted-foreground">{template.description}</span>
+                            </div>
+                        </DropdownMenuItem>
+                    ))}
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            <div className="w-px h-6 bg-border mx-1" />
+
             {/* Headings */}
             <Toggle
                 size="sm"
@@ -106,6 +160,62 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
                 <Strikethrough className="h-4 w-4" />
             </Toggle>
 
+            {/* Style & Alignment */}
+            <div className="w-px h-6 bg-border mx-1" />
+
+            <Toggle
+                size="sm"
+                pressed={editor.isActive({ textAlign: 'left' })}
+                onPressedChange={() => editor.chain().focus().setTextAlign('left').run()}
+            >
+                <AlignLeft className="h-4 w-4" />
+            </Toggle>
+            <Toggle
+                size="sm"
+                pressed={editor.isActive({ textAlign: 'center' })}
+                onPressedChange={() => editor.chain().focus().setTextAlign('center').run()}
+            >
+                <AlignCenter className="h-4 w-4" />
+            </Toggle>
+            <Toggle
+                size="sm"
+                pressed={editor.isActive({ textAlign: 'right' })}
+                onPressedChange={() => editor.chain().focus().setTextAlign('right').run()}
+            >
+                <AlignRight className="h-4 w-4" />
+            </Toggle>
+
+            <div className="w-px h-6 bg-border mx-1" />
+
+            {/* Colors & Highlight */}
+            <Popover>
+                <PopoverTrigger asChild>
+                    <Toggle size="sm" pressed={false}>
+                        <Palette className="h-4 w-4" style={{ color: editor.getAttributes('textStyle').color }} />
+                    </Toggle>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-2">
+                    <div className="grid grid-cols-5 gap-1">
+                        {['#000000', '#444444', '#888888', '#ffffff', '#ef4444', '#f97316', '#f59e0b', '#84cc16', '#22c55e', '#06b6d4', '#3b82f6', '#6366f1', '#8b5cf6', '#d946ef', '#f43f5e'].map(color => (
+                            <button
+                                key={color}
+                                className="w-6 h-6 rounded-full border border-gray-200"
+                                style={{ backgroundColor: color }}
+                                onClick={() => editor.chain().focus().setColor(color).run()}
+                            />
+                        ))}
+                    </div>
+                </PopoverContent>
+            </Popover>
+
+            <Toggle
+                size="sm"
+                pressed={editor.isActive('highlight')}
+                onPressedChange={() => editor.chain().focus().toggleHighlight().run()}
+            >
+                <Highlighter className="h-4 w-4" />
+            </Toggle>
+
             <div className="w-px h-6 bg-border mx-1" />
 
             {/* Lists */}
@@ -123,10 +233,6 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
             >
                 <ListOrdered className="h-4 w-4" />
             </Toggle>
-
-            <div className="w-px h-6 bg-border mx-1" />
-
-            {/* Blocks */}
             <Toggle
                 size="sm"
                 pressed={editor.isActive("blockquote")}
@@ -134,24 +240,25 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
             >
                 <Quote className="h-4 w-4" />
             </Toggle>
-            <Toggle
-                size="sm"
-                pressed={editor.isActive("codeBlock")}
-                onPressedChange={() => editor.chain().focus().toggleCodeBlock().run()}
-            >
-                <Code className="h-4 w-4" />
-            </Toggle>
-            <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => editor.chain().focus().setHorizontalRule().run()}
-            >
-                <Minus className="h-4 w-4" />
-            </Button>
 
             <div className="w-px h-6 bg-border mx-1" />
 
-            {/* Link */}
+            {/* Inserts */}
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="h-9 w-9 p-0">
+                        <MessageSquare className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuLabel>Insert Card</DropdownMenuLabel>
+                    <DropdownMenuItem onClick={() => insertCard('info')}>Information</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => insertCard('success')}>Success</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => insertCard('warning')}>Warning</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => insertCard('danger')}>Danger</DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
             <Popover>
                 <PopoverTrigger asChild>
                     <Toggle size="sm" pressed={editor.isActive("link")}>
@@ -170,7 +277,24 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
                 </PopoverContent>
             </Popover>
 
-            {/* Image Upload */}
+            <Popover>
+                <PopoverTrigger asChild>
+                    <Toggle size="sm" pressed={editor.isActive("youtube")}>
+                        <Youtube className="h-4 w-4" />
+                    </Toggle>
+                </PopoverTrigger>
+                <PopoverContent className="w-80 p-3">
+                    <div className="flex gap-2">
+                        <Input
+                            placeholder="https://youtube.com/watch?v=..."
+                            value={youtubeUrl}
+                            onChange={(e) => setYoutubeUrl(e.target.value)}
+                        />
+                        <Button size="sm" onClick={addYoutube}>Add</Button>
+                    </div>
+                </PopoverContent>
+            </Popover>
+
             <CldUploadWidget
                 uploadPreset="studio_preset"
                 onSuccess={(result: any) => {
@@ -214,3 +338,4 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
         </div>
     )
 }
+

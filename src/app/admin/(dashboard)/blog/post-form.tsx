@@ -8,6 +8,13 @@ import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import LinkExtension from "@tiptap/extension-link"
 import ImageExtension from "@tiptap/extension-image"
+import { Color } from '@tiptap/extension-color'
+import TextStyle from '@tiptap/extension-text-style'
+import Highlight from '@tiptap/extension-highlight'
+import Underline from '@tiptap/extension-underline'
+import TextAlign from '@tiptap/extension-text-align'
+import Youtube from '@tiptap/extension-youtube'
+import { InfoCard } from './extension-card'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -85,13 +92,33 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
             StarterKit,
             LinkExtension.configure({
                 openOnClick: false,
+                HTMLAttributes: {
+                    class: 'text-primary underline underline-offset-4',
+                },
             }),
-            ImageExtension,
+            ImageExtension.configure({
+                HTMLAttributes: {
+                    class: 'rounded-lg border border-border shadow-sm',
+                },
+            }),
+            TextStyle,
+            Color,
+            Highlight.configure({
+                multicolor: true,
+            }),
+            Underline,
+            TextAlign.configure({
+                types: ['heading', 'paragraph'],
+            }),
+            Youtube.configure({
+                controls: false,
+            }),
+            InfoCard,
         ],
         content: post?.content || "",
         editorProps: {
             attributes: {
-                class: "prose prose-invert max-w-none min-h-[400px] p-4 focus:outline-none",
+                class: "prose prose-sm sm:prose-base dark:prose-invert max-w-none min-h-[400px] p-4 focus:outline-none",
             },
         },
         onUpdate: ({ editor }) => {

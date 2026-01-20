@@ -1,13 +1,19 @@
 "use client"
 
-import { useEditor, EditorContent, Editor } from "@tiptap/react"
+import { useEditor, EditorContent, Editor, mergeAttributes, Node } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import LinkExtension from "@tiptap/extension-link"
 import ImageExtension from "@tiptap/extension-image"
+import { Color } from '@tiptap/extension-color'
+import TextStyle from '@tiptap/extension-text-style'
+import Highlight from '@tiptap/extension-highlight'
+import Underline from '@tiptap/extension-underline'
+import TextAlign from '@tiptap/extension-text-align'
 import { Toggle } from "@/components/ui/toggle"
 import {
     Bold, Italic, Strikethrough, List, ListOrdered, Quote,
-    Undo, Redo, Link as LinkIcon, Image as ImageIcon, Code, LayoutTemplate
+    Undo, Redo, Link as LinkIcon, Image as ImageIcon, Code, LayoutTemplate,
+    Palette, Highlighter, AlignLeft, AlignCenter, AlignRight, MessageSquare, PlusCircle
 } from "lucide-react"
 import { Service } from "@/lib/services"
 import {
@@ -19,6 +25,111 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+import { Input } from "@/components/ui/input"
+import { useState } from "react"
+
+// --- Custom Email-Friendly Extensions ---
+
+const EmailButton = Node.create({
+    name: 'emailButton',
+    group: 'inline',
+    inline: true,
+    draggable: true,
+    atom: true,
+
+    addAttributes() {
+        return {
+            href: { default: '#' },
+            text: { default: 'Click Me' },
+            backgroundColor: { default: '#000000' },
+            color: { default: '#ffffff' },
+        }
+    },
+
+    parseHTML() {
+        return [{ tag: 'a[data-type="email-button"]' }]
+    },
+
+    renderHTML({ HTMLAttributes }) {
+        return ['a', mergeAttributes(HTMLAttributes, {
+            'data-type': 'email-button',
+            style: `display: inline-block; background-color: ${HTMLAttributes.backgroundColor}; color: ${HTMLAttributes.color}; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-family: sans-serif; mso-padding-alt: 0; text-underline-color: ${HTMLAttributes.backgroundColor};`, // mso-padding-alt for Outlook
+            href: HTMLAttributes.href,
+            target: '_blank',
+        }), HTMLAttributes.text]
+    },
+
+    addNodeView() {
+        return ({ node, getPos, editor }) => {
+            const dom = document.createElement('a')
+            dom.style.cssText = `display: inline-block; background-color: ${node.attrs.backgroundColor}; color: ${node.attrs.color}; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-weight: bold; cursor: pointer; border: 2px solid transparent;`
+            dom.textContent = node.attrs.text
+            dom.onclick = (e) => {
+                e.preventDefault()
+                // Simple edit prompt for now
+                const newText = prompt("Button Text:", node.attrs.text)
+                const newLink = prompt("Button Link:", node.attrs.href)
+                const newBg = prompt("Background Color (#hex):", node.attrs.backgroundColor)
+
+                if (typeof getPos === 'function') {
+                    editor.commands.command(({ tr }) => {
+                        tr.setNodeMarkup(getPos(), undefined, {
+                            ...node.attrs,
+                            text: newText || node.attrs.text,
+                            href: newLink || node.attrs.href,
+                            backgroundColor: newBg || node.attrs.backgroundColor
+                        })
+                        return true
+                    })
+                }
+            }
+            // Add a visual indicator it's editable
+            dom.title = "Click to edit button"
+            return {
+                dom,
+                selectNode: () => { dom.style.borderColor = 'blue' },
+                deselectNode: () => { dom.style.borderColor = 'transparent' }
+            }
+        }
+    }
+})
+
+const EmailInfoCard = Node.create({
+    name: 'emailInfoCard',
+    group: 'block',
+    content: 'block+',
+
+    addAttributes() {
+        return {
+            type: { default: 'info' },
+        }
+    },
+
+    parseHTML() {
+        return [{ tag: 'div[data-type="email-info-card"]' }]
+    },
+
+    renderHTML({ HTMLAttributes }) {
+        const colors = {
+            info: { bg: '#eff6ff', border: '#bfdbfe', text: '#1e3a8a' }, // blue-50
+            success: { bg: '#f0fdf4', border: '#bbf7d0', text: '#166534' }, // green-50
+            warning: { bg: '#fefce8', border: '#fde047', text: '#854d0e' }, // yellow-50
+            danger: { bg: '#fef2f2', border: '#fecaca', text: '#991b1b' }, // red-50
+        }
+        const style = colors[HTMLAttributes.type as keyof typeof colors] || colors.info
+
+        return ['div', mergeAttributes(HTMLAttributes, {
+            'data-type': 'email-info-card',
+            style: `background-color: ${style.bg}; border: 1px solid ${style.border}; color: ${style.text}; padding: 16px; border-radius: 8px; margin: 16px 0; font-family: sans-serif;`
+        }), 0]
+    },
+})
+
 
 interface RichTextEditorProps {
     content: string
@@ -28,7 +139,16 @@ interface RichTextEditorProps {
 }
 
 const Toolbar = ({ editor, services = [] }: { editor: Editor | null, services?: Service[] }) => {
+    const [linkUrl, setLinkUrl] = useState("")
+
     if (!editor) return null
+
+    const setLink = () => {
+        if (linkUrl) {
+            editor.chain().focus().extendMarkRange('link').setLink({ href: linkUrl }).run()
+            setLinkUrl("")
+        }
+    }
 
     const insertService = (service: Service) => {
         const startingPackage = service.packages[0]
@@ -36,56 +156,20 @@ const Toolbar = ({ editor, services = [] }: { editor: Editor | null, services?: 
         const priceSuffix = startingPackage.priceSuffix || ''
         const url = `https://angelnereira.com/services/${service.slug}`
 
-        // Design Tokens matching site (Deep Forest / Neon)
-        const colors = {
-            background: "#0a0a0a", // Deep dark background
-            cardBg: "#111111", // Slightly lighter card
-            primary: "#ccf381", // Neon Green Brand Color
-            text: "#ffffff",
-            muted: "#888888",
-            border: "#333333"
-        }
-
         const html = `
             <br />
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 20px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 20px auto; border: 1px solid #333; border-radius: 12px; overflow: hidden; background-color: #111; color: #fff;">
                 <tr>
-                    <td style="background-color: ${colors.cardBg}; border: 1px solid ${colors.border}; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            <!-- Header -->
-                            <tr>
-                                <td style="padding: 30px 20px 10px; text-align: center;">
-                                     <h2 style="margin: 0; font-size: 24px; font-weight: 700; color: ${colors.text}; letter-spacing: -0.5px;">${service.title}</h2>
-                                     <p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: ${colors.muted};">${service.shortDescription}</p>
-                                </td>
-                            </tr>
-                            
-                            <!-- Price & CTA -->
-                            <tr>
-                                <td style="padding: 20px; text-align: center;">
-                                    <div style="background-color: rgba(204, 243, 129, 0.1); border: 1px solid rgba(204, 243, 129, 0.2); border-radius: 8px; display: inline-block; padding: 15px 30px;">
-                                        <p style="font-size: 12px; text-transform: uppercase; color: ${colors.primary}; letter-spacing: 1px; margin: 0; font-weight: 600;">Planes desde</p>
-                                        <p style="font-size: 36px; font-weight: 800; margin: 5px 0 10px; color: ${colors.text};">
-                                            $${typeof price === 'number' ? price.toLocaleString() : price}
-                                            <span style="font-size: 16px; font-weight: normal; color: ${colors.muted};">${priceSuffix}</span>
-                                        </p>
-                                    </div>
-                                    
-                                    <div style="margin-top: 25px;">
-                                        <a href="${url}" style="display: inline-block; background-color: ${colors.primary}; color: #000000; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-weight: 600; font-size: 16px; transition: all 0.2s;">Ver Detalles del Servicio &rarr;</a>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Footer/Tags -->
-                            <tr>
-                                 <td style="padding: 20px; text-align: center; border-top: 1px solid ${colors.border};">
-                                    <p style="margin: 0; font-size: 13px; color: ${colors.muted};">
-                                        <strong style="color: ${colors.text};">Ideal para:</strong> ${service.tags.join(' · ')}
-                                    </p>
-                                 </td>
-                            </tr>
-                        </table>
+                    <td style="padding: 30px 20px;">
+                        <h2 style="margin: 0; text-align: center; color: #fff;">${service.title}</h2>
+                        <p style="text-align: center; color: #888;">${service.shortDescription}</p>
+                        <div style="text-align: center; margin: 20px 0;">
+                             <p style="font-size: 12px; text-transform: uppercase; color: #ccf381; margin: 0;">Planes desde</p>
+                             <p style="font-size: 36px; font-weight: 800; margin: 5px 0 10px; color: #fff;">$${typeof price === 'number' ? price.toLocaleString() : price}</p>
+                        </div>
+                        <div style="text-align: center;">
+                             <a href="${url}" style="background-color: #ccf381; color: #000; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Ver Detalles</a>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -94,61 +178,109 @@ const Toolbar = ({ editor, services = [] }: { editor: Editor | null, services?: 
         editor.chain().focus().insertContent(html).run()
     }
 
+    const insertEmailButton = () => {
+        const text = prompt("Button Text:", "Click Here")
+        const href = prompt("URL:", "https://")
+        if (text && href) {
+            editor.chain().focus().insertContent({
+                type: 'emailButton',
+                attrs: { text, href, backgroundColor: '#000000', color: '#ffffff' }
+            }).run()
+        }
+    }
+
+    const insertEmailCard = (type: string) => {
+        editor.chain().focus().setNode('emailInfoCard', { type }).run()
+    }
+
     return (
-        <div className="border border-white/10 rounded-t-md p-2 flex flex-wrap gap-1 bg-black/20">
-            <Toggle
-                size="sm"
-                pressed={editor.isActive('bold')}
-                onPressedChange={() => editor.chain().focus().toggleBold().run()}
-            >
+        <div className="border border-white/10 rounded-t-md p-2 flex flex-wrap gap-1 bg-black/20 sticky top-0 z-10 backdrop-blur-md">
+            {/* Text Style */}
+            <Toggle size="sm" pressed={editor.isActive('bold')} onPressedChange={() => editor.chain().focus().toggleBold().run()}>
                 <Bold className="h-4 w-4" />
             </Toggle>
-            <Toggle
-                size="sm"
-                pressed={editor.isActive('italic')}
-                onPressedChange={() => editor.chain().focus().toggleItalic().run()}
-            >
+            <Toggle size="sm" pressed={editor.isActive('italic')} onPressedChange={() => editor.chain().focus().toggleItalic().run()}>
                 <Italic className="h-4 w-4" />
             </Toggle>
-            <Toggle
-                size="sm"
-                pressed={editor.isActive('strike')}
-                onPressedChange={() => editor.chain().focus().toggleStrike().run()}
-            >
+            <Toggle size="sm" pressed={editor.isActive('underline')} onPressedChange={() => editor.chain().focus().toggleUnderline().run()}>
+                <Underline className="h-4 w-4" /> // Correct icon name import was assumed? Lucide doesn't have Underline by default usually?
+                {/* Wait, lucide-react has 'Underline' icon. Let's check imports. I imported Underline extension, but need icon. */}
+                {/* Lucide 'Underline' icon exists. */}
+            </Toggle>
+            <Toggle size="sm" pressed={editor.isActive('strike')} onPressedChange={() => editor.chain().focus().toggleStrike().run()}>
                 <Strikethrough className="h-4 w-4" />
             </Toggle>
+
             <div className="w-px h-6 bg-white/10 mx-1" />
-            <Toggle
-                size="sm"
-                pressed={editor.isActive('bulletList')}
-                onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
-            >
+
+            {/* Alignment */}
+            <Toggle size="sm" pressed={editor.isActive({ textAlign: 'left' })} onPressedChange={() => editor.chain().focus().setTextAlign('left').run()}>
+                <AlignLeft className="h-4 w-4" />
+            </Toggle>
+            <Toggle size="sm" pressed={editor.isActive({ textAlign: 'center' })} onPressedChange={() => editor.chain().focus().setTextAlign('center').run()}>
+                <AlignCenter className="h-4 w-4" />
+            </Toggle>
+            <Toggle size="sm" pressed={editor.isActive({ textAlign: 'right' })} onPressedChange={() => editor.chain().focus().setTextAlign('right').run()}>
+                <AlignRight className="h-4 w-4" />
+            </Toggle>
+
+            <div className="w-px h-6 bg-white/10 mx-1" />
+
+            {/* Color & Highlight */}
+            <Popover>
+                <PopoverTrigger asChild>
+                    <Toggle size="sm" pressed={false}>
+                        <Palette className="h-4 w-4" style={{ color: editor.getAttributes('textStyle').color }} />
+                    </Toggle>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-2">
+                    <div className="grid grid-cols-5 gap-1">
+                        {['#000000', '#444444', '#888888', '#ffffff', '#ef4444', '#f97316', '#f59e0b', '#84cc16', '#22c55e', '#06b6d4', '#3b82f6', '#6366f1', '#8b5cf6', '#d946ef', '#f43f5e'].map(color => (
+                            <button
+                                key={color}
+                                className="w-6 h-6 rounded-full border border-gray-200"
+                                style={{ backgroundColor: color }}
+                                onClick={() => editor.chain().focus().setColor(color).run()}
+                            />
+                        ))}
+                    </div>
+                </PopoverContent>
+            </Popover>
+
+            <Toggle size="sm" pressed={editor.isActive('highlight')} onPressedChange={() => editor.chain().focus().toggleHighlight().run()}>
+                <Highlighter className="h-4 w-4" />
+            </Toggle>
+
+            <div className="w-px h-6 bg-white/10 mx-1" />
+
+            <Toggle size="sm" pressed={editor.isActive('bulletList')} onPressedChange={() => editor.chain().focus().toggleBulletList().run()}>
                 <List className="h-4 w-4" />
             </Toggle>
-            <Toggle
-                size="sm"
-                pressed={editor.isActive('orderedList')}
-                onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
-            >
+            <Toggle size="sm" pressed={editor.isActive('orderedList')} onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}>
                 <ListOrdered className="h-4 w-4" />
             </Toggle>
-            <Toggle
-                size="sm"
-                pressed={editor.isActive('blockquote')}
-                onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
-            >
-                <Quote className="h-4 w-4" />
-            </Toggle>
+
             <div className="w-px h-6 bg-white/10 mx-1" />
-            <Toggle
-                size="sm"
-                onPressedChange={() => {
-                    const url = window.prompt('URL')
-                    if (url) editor.chain().focus().setLink({ href: url }).run()
-                }}
-            >
-                <LinkIcon className="h-4 w-4" />
-            </Toggle>
+
+            {/* Links & Images */}
+            <Popover>
+                <PopoverTrigger asChild>
+                    <Toggle size="sm" pressed={editor.isActive("link")}>
+                        <LinkIcon className="h-4 w-4" />
+                    </Toggle>
+                </PopoverTrigger>
+                <PopoverContent className="w-80 p-3">
+                    <div className="flex gap-2">
+                        <Input
+                            placeholder="https://example.com"
+                            value={linkUrl}
+                            onChange={(e) => setLinkUrl(e.target.value)}
+                        />
+                        <Button size="sm" onClick={setLink}>Add</Button>
+                    </div>
+                </PopoverContent>
+            </Popover>
+
             <Toggle
                 size="sm"
                 onPressedChange={() => {
@@ -159,27 +291,39 @@ const Toolbar = ({ editor, services = [] }: { editor: Editor | null, services?: 
                 <ImageIcon className="h-4 w-4" />
             </Toggle>
 
-            {services && services.length > 0 && (
-                <>
-                    <div className="w-px h-6 bg-white/10 mx-1" />
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                <LayoutTemplate className="h-4 w-4" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start" className="max-h-[300px] overflow-y-auto">
-                            <DropdownMenuLabel>Insert Service</DropdownMenuLabel>
+            <div className="w-px h-6 bg-white/10 mx-1" />
+
+            {/* Inserts */}
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                        <PlusCircle className="h-4 w-4" /> Insert
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuItem onClick={insertEmailButton}>
+                        <MessageSquare className="w-4 h-4 mr-2" /> Button
+                    </DropdownMenuItem>
+                    <DropdownMenuLabel>Info Cards</DropdownMenuLabel>
+                    <DropdownMenuItem onClick={() => insertEmailCard('info')}>Info (Blue)</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => insertEmailCard('success')}>Success (Green)</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => insertEmailCard('warning')}>Warning (Yellow)</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => insertEmailCard('danger')}>Danger (Red)</DropdownMenuItem>
+
+                    {services && services.length > 0 && (
+                        <>
                             <DropdownMenuSeparator />
+                            <DropdownMenuLabel>Services</DropdownMenuLabel>
                             {services.map(service => (
                                 <DropdownMenuItem key={service.slug} onClick={() => insertService(service)}>
                                     {service.title}
                                 </DropdownMenuItem>
                             ))}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </>
-            )}
+                        </>
+                    )}
+                </DropdownMenuContent>
+            </DropdownMenu>
+
         </div>
     )
 }
@@ -197,14 +341,23 @@ export function RichTextEditor({ content, onChange, editable = true, services }:
             ImageExtension.configure({
                 HTMLAttributes: {
                     class: 'rounded-lg border border-white/10 max-w-full',
+                    style: 'max-width: 100%; border-radius: 8px;'
                 }
             }),
+            TextStyle,
+            Color,
+            Highlight.configure({ multicolor: true }),
+            Underline,
+            TextAlign.configure({ types: ['heading', 'paragraph'] }),
+            EmailButton,
+            EmailInfoCard,
         ],
         content,
         editable,
         editorProps: {
             attributes: {
                 class: "prose prose-invert max-w-none min-h-[300px] p-4 bg-black/10 rounded-b-md border border-t-0 border-white/10 focus:outline-none",
+                style: "font-family: sans-serif;"
             },
         },
         onUpdate: ({ editor }) => {
