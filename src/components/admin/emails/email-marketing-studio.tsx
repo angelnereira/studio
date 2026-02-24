@@ -27,7 +27,7 @@ import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { VisualEmailComposer } from "@/components/admin/emails/visual-email-composer"
 import { services } from "@/lib/services"
 import { systemTemplates, type SystemTemplate } from "@/lib/system-email-templates"
-import { createSenderIdentity, createTemplate, sendCampaign, saveCampaignDraft, deleteSenderIdentity, deleteCampaign, duplicateCampaign } from "@/app/admin/(dashboard)/emails/marketing-actions"
+import { createSenderIdentity, createTemplate, sendCampaign, saveCampaignDraft, deleteSenderIdentity, deleteCampaign, duplicateCampaign, sendQuickEmail } from "@/app/admin/(dashboard)/emails/marketing-actions"
 
 // Types
 type Identity = { id: string; name: string; email: string; verified: boolean }
@@ -68,22 +68,18 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
         ...templates.map(t => ({ ...t, isSystem: false, category: 'custom', description: '' }))
     ]
 
-    // --- Compose State ---
-    const [step, setStep] = useState(1)
+    // --- Compose State (Gmail-like) ---
     const [draft, setDraft] = useState({
-        name: "",
+        to: "",
         subject: "",
         content: "",
         senderId: identities[0]?.id || "",
-        recipientType: "individual",
-        specificEmail: "",
-        audienceFilter: {} as any,
-        scheduledAt: undefined as Date | undefined,
         attachments: [] as { filename: string, content: string }[]
     })
     const [isSending, setIsSending] = useState(false)
     const [selectedContactId, setSelectedContactId] = useState<string>("")
-    const [editorMode, setEditorMode] = useState<'visual' | 'code'>('visual') // State for dropdown
+    const [editorMode, setEditorMode] = useState<'visual' | 'code'>('visual')
+    const [showPreview, setShowPreview] = useState(false)
 
     // Helper to read file as base64
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +88,6 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
             const newAttachments: { filename: string, content: string }[] = []
 
             for (const file of files) {
-                // Limit size: 4MB (Server actions/Vercel limit safety)
                 if (file.size > 4 * 1024 * 1024) {
                     toast({ title: "File too large", description: `${file.name} exceeds 4MB limit.`, variant: "destructive" })
                     continue
@@ -102,15 +97,6 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                 const promise = new Promise<{ filename: string, content: string }>((resolve) => {
                     reader.onload = (re) => {
                         const base64 = re.target?.result as string
-                        // Remove data URL prefix for cleaner backend handling or keep it if Resend likes it?
-                        // Resend works well with Buffer, string path, or base64.
-                        // Ideally we send just the Base64 content? 
-                        // Resend 'content' expects Buffer or string. If string, it's just raw content. 
-                        // Actually Resend Node SDK handles base64 string well if it's the raw content?
-                        // Or we can leave the data URI prefix? 
-                        // Docs say: content: '...base64...' (without prefix usually)
-                        // But let's verify. Actually, sending the full data URI is often easier for some libs, but Resend Node might treat it as text.
-                        // Let's strip the prefix.
                         const content = base64.split(',')[1] || base64
                         resolve({ filename: file.name, content })
                     }
@@ -122,68 +108,41 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
         }
     }
 
-    // Auto-fill form when contact is selected
+    // Auto-fill from contact select
     const handleContactSelect = (contactId: string) => {
         const contact = contacts.find(c => c.id === contactId)
         if (contact) {
             setSelectedContactId(contactId)
-            setDraft({
-                ...draft,
-                specificEmail: contact.email,
-                // We can also auto-fill other template variables if we had them in a separate state,
-                // but for now we effectively just fill the email. 
-                // If there was a 'templateData' state, we would fill it here.
-                // Assuming 'content' might be a template that needs filling?
-                // For now, just email is the request "fill or places like in a form".
-            })
+            setDraft({ ...draft, to: contact.email })
             toast({ title: "Contact Selected", description: `Auto-filled email for ${contact.name}` })
         }
     }
 
-    // --- Actions ---
+    // --- Quick Send (Gmail-like) ---
+    const handleQuickSend = async () => {
+        if (!draft.to) { toast({ title: "Missing recipient", description: "Enter a To email address.", variant: "destructive" }); return }
+        if (!draft.subject) { toast({ title: "Missing subject", description: "Enter a subject line.", variant: "destructive" }); return }
+        if (!draft.content) { toast({ title: "Missing content", description: "Add some email content.", variant: "destructive" }); return }
+        if (!draft.senderId) { toast({ title: "No sender", description: "Select a sender identity or add one in Settings.", variant: "destructive" }); return }
 
-    const handleNext = () => setStep(s => s + 1)
-    const handleBack = () => setStep(s => s - 1)
-
-    const handleSend = async () => {
         setIsSending(true)
         try {
-            // 1. Save Draft (Create or Update)
-            // Ideally we'd pass an ID if we were editing, but for this 'compose new' flow we might not have it yet.
-            const saved = await saveCampaignDraft({
-                name: draft.name || draft.subject || "Untitled Campaign",
+            const result = await sendQuickEmail({
+                to: draft.to,
                 subject: draft.subject,
-                content: draft.content,
+                html: draft.content,
                 senderId: draft.senderId,
-                audienceFilter: { recipientType: draft.recipientType, specificEmail: draft.specificEmail },
-                scheduledAt: draft.scheduledAt,
-                attachments: draft.attachments
+                attachments: draft.attachments.length > 0 ? draft.attachments : undefined
             })
 
-            // Ensure we got an ID back
-            if (!saved.success || !saved.id) {
-                throw new Error(saved.message || "Failed to save draft logic")
-            }
-
-            // 2. Send the Campaign using the ID
-            const result = await sendCampaign(saved.id)
-
             if (result.success) {
-                toast({ title: "Campaign Sent!", description: result.message })
-
-                // Reset form and go back to step 1
-                setStep(1)
-                setDraft({
-                    name: "", subject: "", content: "",
-                    senderId: draft.senderId,
-                    recipientType: "individual", specificEmail: "", audienceFilter: {},
-                    scheduledAt: undefined, attachments: []
-                })
+                toast({ title: "✅ Sent!", description: result.message })
+                setDraft({ to: "", subject: "", content: "", senderId: draft.senderId, attachments: [] })
+                setSelectedContactId("")
                 router.refresh()
             } else {
-                throw new Error(result.message)
+                throw new Error(result.message || "Failed to send")
             }
-
         } catch (error) {
             const msg = error instanceof Error ? error.message : "Failed to send."
             toast({ title: "Error", description: msg, variant: "destructive" })
@@ -201,295 +160,193 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                 <TabsTrigger value="settings" className="gap-2"><Settings className="w-4 h-4" /> Settings</TabsTrigger>
             </TabsList>
 
-            {/* --- COMPOSE TAB --- */}
-            <TabsContent value="compose" className="space-y-6">
+            {/* --- COMPOSE TAB (Gmail-like) --- */}
+            <TabsContent value="compose" className="space-y-4">
                 <Card className="border-white/10 bg-black/40 backdrop-blur-xl">
-                    <CardHeader>
-                        <CardTitle className="flex items-center justify-between">
-                            <span>Smart Composer</span>
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span className={step >= 1 ? "text-primary font-bold" : ""}>1. Setup</span>
-                                <ChevronRight className="w-4 h-4" />
-                                <span className={step >= 2 ? "text-primary font-bold" : ""}>2. Design</span>
-                                <ChevronRight className="w-4 h-4" />
-                                <span className={step >= 3 ? "text-primary font-bold" : ""}>3. Review</span>
-                            </div>
+                    <CardHeader className="pb-4">
+                        <CardTitle className="flex items-center gap-2">
+                            <Mail className="w-5 h-5" /> Quick Compose
                         </CardTitle>
-                        <CardDescription>Create beautiful, high-converting emails.</CardDescription>
+                        <CardDescription>Send professional HTML emails directly — just like Gmail but beautiful.</CardDescription>
                     </CardHeader>
-                    <CardContent>
-
-                        {/* STEP 1: SETUP */}
-                        {step === 1 && (
-                            <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <Label>Internal Campaign Name</Label>
-                                        <Input
-                                            placeholder="e.g. Summer Sale 2026"
-                                            value={draft.name}
-                                            onChange={(e) => setDraft({ ...draft, name: e.target.value })}
-                                        />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label>Sender Identity</Label>
-                                        <Select
-                                            value={draft.senderId}
-                                            onValueChange={(v) => setDraft({ ...draft, senderId: v })}
-                                        >
-                                            <SelectTrigger><SelectValue placeholder="Select Sender" /></SelectTrigger>
-                                            <SelectContent>
-                                                {identities.map(id => (
-                                                    <SelectItem key={id.id} value={id.id}>
-                                                        {id.name} ({id.email})
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        {identities.length === 0 && (
-                                            <p className="text-xs text-red-400">Please add a sender identity in Settings first.</p>
-                                        )}
-                                    </div>
+                    <CardContent className="space-y-4">
+                        {/* To / From row */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label className="text-xs text-muted-foreground">To</Label>
+                                <div className="flex gap-2">
+                                    <Input
+                                        placeholder="recipient@email.com"
+                                        type="email"
+                                        value={draft.to}
+                                        onChange={(e) => setDraft({ ...draft, to: e.target.value })}
+                                        className="flex-1"
+                                    />
+                                    <Select onValueChange={handleContactSelect} value={selectedContactId}>
+                                        <SelectTrigger className="w-[140px]">
+                                            <SelectValue placeholder="Contacts" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {contacts.map(c => (
+                                                <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                 </div>
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-xs text-muted-foreground">From</Label>
+                                <Select
+                                    value={draft.senderId}
+                                    onValueChange={(v) => setDraft({ ...draft, senderId: v })}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select Sender" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {identities.map(id => (
+                                            <SelectItem key={id.id} value={id.id}>
+                                                {id.name} ({id.email})
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {identities.length === 0 && (
+                                    <p className="text-xs text-red-400">Add a sender identity in Settings first.</p>
+                                )}
+                            </div>
+                        </div>
 
-                                <Separator className="bg-white/10" />
+                        {/* Subject */}
+                        <div className="space-y-2">
+                            <Label className="text-xs text-muted-foreground">Subject</Label>
+                            <Input
+                                placeholder="Your email subject..."
+                                value={draft.subject}
+                                onChange={(e) => setDraft({ ...draft, subject: e.target.value })}
+                                className="text-base font-medium"
+                            />
+                        </div>
 
-                                <div className="space-y-4">
-                                    <Label>Audience</Label>
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                        {[
-                                            { id: 'individual', label: 'Individual', icon: Users },
-                                            { id: 'clients', label: 'Clients', icon: Users },
-                                            { id: 'employers', label: 'Employers', icon: Users },
-                                            { id: 'all', label: 'All Leads', icon: Users },
-                                        ].map(type => (
-                                            <div
-                                                key={type.id}
-                                                className={`cursor-pointer rounded-lg border p-4 flex flex-col items-center gap-2 hover:bg-white/5 transition-colors ${draft.recipientType === type.id ? 'border-primary bg-primary/10' : 'border-white/10'}`}
-                                                onClick={() => setDraft({ ...draft, recipientType: type.id })}
-                                            >
-                                                <type.icon className="w-6 h-6" />
-                                                <span className="text-sm font-medium">{type.label}</span>
-                                            </div>
+                        <Separator className="bg-white/10" />
+
+                        {/* Editor mode toggle + Template loader */}
+                        <div className="flex items-center justify-between">
+                            <div className="flex gap-0.5 p-0.5 bg-black/40 rounded border border-white/10">
+                                <button
+                                    onClick={() => setEditorMode('visual')}
+                                    className={cn(
+                                        'text-xs px-3 py-1.5 rounded transition-colors',
+                                        editorMode === 'visual' ? 'bg-[#DFFF00]/20 text-[#DFFF00]' : 'text-muted-foreground hover:text-white'
+                                    )}
+                                >
+                                    🎨 Visual Editor
+                                </button>
+                                <button
+                                    onClick={() => setEditorMode('code')}
+                                    className={cn(
+                                        'text-xs px-3 py-1.5 rounded transition-colors',
+                                        editorMode === 'code' ? 'bg-white/10 text-white' : 'text-muted-foreground hover:text-white'
+                                    )}
+                                >
+                                    &lt;/&gt; HTML
+                                </button>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Select onValueChange={(v) => {
+                                    const t = allTemplates.find(t => t.id === v)
+                                    if (t) {
+                                        setDraft({ ...draft, content: t.content, subject: draft.subject || t.subject || "" })
+                                        toast({ title: "Template Loaded", description: `"${t.name}" applied.` })
+                                    }
+                                }}>
+                                    <SelectTrigger className="w-[180px] h-8 text-xs">
+                                        <SelectValue placeholder="📦 Load Template..." />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">📦 System Templates</div>
+                                        {allTemplates.filter(t => t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                                        {templates.length > 0 && (
+                                            <>
+                                                <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground border-t border-white/10 mt-1 pt-2">📝 My Templates</div>
+                                                {allTemplates.filter(t => !t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                                            </>
+                                        )}
+                                    </SelectContent>
+                                </Select>
+                                <Button variant="outline" size="sm" className="h-8 text-xs gap-1" onClick={() => setShowPreview(!showPreview)}>
+                                    {showPreview ? '✏️ Edit' : '👁️ Preview'}
+                                </Button>
+                            </div>
+                        </div>
+
+                        {/* Content: Visual / Code / Preview */}
+                        {showPreview ? (
+                            <div className="rounded-xl border border-white/10 bg-white overflow-hidden">
+                                <div className="bg-gray-100 px-4 py-2 border-b flex items-center gap-2">
+                                    <div className="flex gap-1.5">
+                                        <div className="w-3 h-3 rounded-full bg-red-400" />
+                                        <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                                        <div className="w-3 h-3 rounded-full bg-green-400" />
+                                    </div>
+                                    <span className="text-xs text-gray-500 ml-2">Email Preview</span>
+                                </div>
+                                <div className="p-0 min-h-[400px] max-h-[600px] overflow-y-auto">
+                                    <div dangerouslySetInnerHTML={{ __html: draft.content || '<div style="padding: 40px; text-align: center; color: #999;">No content yet — switch to Edit and start composing.</div>' }} />
+                                </div>
+                            </div>
+                        ) : editorMode === 'visual' ? (
+                            <VisualEmailComposer
+                                onChange={(html) => setDraft({ ...draft, content: html })}
+                            />
+                        ) : (
+                            <RichTextEditor
+                                content={draft.content}
+                                onChange={(html) => setDraft({ ...draft, content: html })}
+                                services={services}
+                            />
+                        )}
+
+                        {/* Attachments */}
+                        <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                            <div className="flex items-center gap-3">
+                                <Label htmlFor="quick-file-upload" className="cursor-pointer text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded transition-colors flex items-center gap-1.5">
+                                    <Paperclip className="w-3.5 h-3.5" /> Attach File
+                                </Label>
+                                <Input
+                                    id="quick-file-upload"
+                                    type="file"
+                                    multiple
+                                    className="hidden"
+                                    onChange={handleFileSelect}
+                                />
+                                {draft.attachments.length > 0 && (
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {draft.attachments.map((file, idx) => (
+                                            <Badge key={idx} variant="secondary" className="gap-1.5 pl-2 pr-1 py-0.5 text-xs">
+                                                <span className="truncate max-w-[120px]">{file.filename}</span>
+                                                <Trash2
+                                                    className="w-3 h-3 cursor-pointer hover:text-red-400"
+                                                    onClick={() => setDraft({
+                                                        ...draft,
+                                                        attachments: draft.attachments.filter((_, i) => i !== idx)
+                                                    })}
+                                                />
+                                            </Badge>
                                         ))}
                                     </div>
-
-                                    {draft.recipientType === "individual" && (
-                                        <div className="space-y-4">
-                                            <div className="space-y-2">
-                                                <Label>Select Contact (Auto-fill)</Label>
-                                                <Select onValueChange={handleContactSelect} value={selectedContactId}>
-                                                    <SelectTrigger>
-                                                        <SelectValue placeholder="Search or select contact..." />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {contacts.map(c => (
-                                                            <SelectItem key={c.id} value={c.id}>{c.name} ({c.email})</SelectItem>
-                                                        ))}
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label>Recipient Email</Label>
-                                                <Input
-                                                    placeholder="client@example.com"
-                                                    value={draft.specificEmail}
-                                                    onChange={(e) => setDraft({ ...draft, specificEmail: e.target.value })}
-                                                />
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                                )}
                             </div>
-                        )}
-
-                        {/* STEP 2: DESIGN */}
-                        {step === 2 && (
-                            <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                                <div className="space-y-2">
-                                    <Label>Subject Line</Label>
-                                    <Input
-                                        placeholder="Grab their attention..."
-                                        value={draft.subject}
-                                        onChange={(e) => setDraft({ ...draft, subject: e.target.value })}
-                                        className="text-lg font-medium"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <div className="flex justify-between items-center">
-                                        <Label>Email Content</Label>
-                                        <div className="flex items-center gap-2">
-                                            {/* Editor mode toggle */}
-                                            <div className="flex gap-0.5 p-0.5 bg-black/40 rounded border border-white/10">
-                                                <button
-                                                    onClick={() => setEditorMode('visual')}
-                                                    className={cn(
-                                                        'text-xs px-2.5 py-1 rounded transition-colors',
-                                                        editorMode === 'visual' ? 'bg-[#DFFF00]/20 text-[#DFFF00]' : 'text-muted-foreground hover:text-white'
-                                                    )}
-                                                >
-                                                    🎨 Visual
-                                                </button>
-                                                <button
-                                                    onClick={() => setEditorMode('code')}
-                                                    className={cn(
-                                                        'text-xs px-2.5 py-1 rounded transition-colors',
-                                                        editorMode === 'code' ? 'bg-white/10 text-white' : 'text-muted-foreground hover:text-white'
-                                                    )}
-                                                >
-                                                    &lt;/&gt; Code
-                                                </button>
-                                            </div>
-                                            <Select onValueChange={(v) => {
-                                                const t = allTemplates.find(t => t.id === v)
-                                                if (t) {
-                                                    setDraft({ ...draft, content: t.content, subject: draft.subject || t.subject || "" })
-                                                    toast({ title: "Template Loaded", description: `"${t.name}" applied.` })
-                                                }
-                                            }}>
-                                                <SelectTrigger className="w-[200px] h-8 text-xs">
-                                                    <SelectValue placeholder="Load Template..." />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">📦 System Templates</div>
-                                                    {allTemplates.filter(t => t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
-                                                    {templates.length > 0 && (
-                                                        <>
-                                                            <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground border-t border-white/10 mt-1 pt-2">📝 My Templates</div>
-                                                            {allTemplates.filter(t => !t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
-                                                        </>
-                                                    )}
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
-                                    </div>
-
-                                    {editorMode === 'visual' ? (
-                                        <VisualEmailComposer
-                                            onChange={(html) => setDraft({ ...draft, content: html })}
-                                        />
-                                    ) : (
-                                        <RichTextEditor
-                                            content={draft.content}
-                                            onChange={(html) => setDraft({ ...draft, content: html })}
-                                            services={services}
-                                        />
-                                    )}
-
-                                    {/* Attachments UI */}
-                                    <div className="space-y-2 pt-4 border-t border-white/10">
-                                        <div className="flex items-center justify-between">
-                                            <Label className="flex items-center gap-2"><Paperclip className="w-4 h-4" /> Attachments</Label>
-                                            <Label htmlFor="file-upload" className="cursor-pointer text-xs bg-white/10 hover:bg-white/20 px-2 py-1 rounded transition-colors">
-                                                + Add File
-                                            </Label>
-                                            <Input
-                                                id="file-upload"
-                                                type="file"
-                                                multiple
-                                                className="hidden"
-                                                onChange={handleFileSelect}
-                                            />
-                                        </div>
-                                        {draft.attachments.length > 0 && (
-                                            <div className="flex flex-wrap gap-2">
-                                                {draft.attachments.map((file, idx) => (
-                                                    <Badge key={idx} variant="secondary" className="gap-2 pl-2 pr-1 py-1">
-                                                        <span className="truncate max-w-[150px]">{file.filename}</span>
-                                                        <Trash2
-                                                            className="w-3 h-3 cursor-pointer hover:text-red-400"
-                                                            onClick={() => setDraft({
-                                                                ...draft,
-                                                                attachments: draft.attachments.filter((_, i) => i !== idx)
-                                                            })}
-                                                        />
-                                                    </Badge>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* STEP 3: REVIEW */}
-                        {step === 3 && (
-                            <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                                <div className="grid gap-4 p-4 border border-white/10 rounded-lg bg-black/20">
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <Label className="text-muted-foreground text-xs">Subject</Label>
-                                            <p className="font-medium">{draft.subject}</p>
-                                        </div>
-                                        <div>
-                                            <Label className="text-muted-foreground text-xs">Sender</Label>
-                                            <p className="font-medium">
-                                                {identities.find(i => i.id === draft.senderId)?.email || "Unknown"}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <Label className="text-muted-foreground text-xs">Recipient</Label>
-                                            <p className="font-medium capitalize">{draft.recipientType} {draft.specificEmail && `(${draft.specificEmail})`}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="rounded-lg border border-white/10 p-4 min-h-[200px] bg-white text-black prose max-w-none">
-                                    <div dangerouslySetInnerHTML={{ __html: draft.content }} />
-                                </div>
-
-                                <div className="p-4 border border-white/10 rounded-lg bg-black/20 flex items-center justify-between">
-                                    <div className="flex items-center gap-2">
-                                        <CalendarIcon className="w-5 h-5 text-muted-foreground" />
-                                        <div>
-                                            <p className="font-medium">Schedule for later</p>
-                                            <p className="text-xs text-muted-foreground">Pick a date to send this campaign automatically.</p>
-                                        </div>
-                                    </div>
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <Button
-                                                variant={"outline"}
-                                                className={cn(
-                                                    "w-[240px] justify-start text-left font-normal",
-                                                    !draft.scheduledAt && "text-muted-foreground"
-                                                )}
-                                            >
-                                                <CalendarIcon className="mr-2 h-4 w-4" />
-                                                {draft.scheduledAt ? format(draft.scheduledAt, "PPP") : <span>Pick a date</span>}
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                            <Calendar
-                                                mode="single"
-                                                selected={draft.scheduledAt}
-                                                onSelect={(date) => setDraft({ ...draft, scheduledAt: date })}
-                                                initialFocus
-                                                disabled={(date) => date < new Date()}
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
-                                </div>
-                            </div>
-                        )}
-
-                    </CardContent>
-                    <CardFooter className="flex justify-between border-t border-white/10 pt-6">
-                        {step > 1 ? (
-                            <Button variant="outline" onClick={handleBack}>Back</Button>
-                        ) : (
-                            <div /> // Spacer
-                        )}
-
-                        {step < 3 ? (
-                            <Button onClick={handleNext}>Next Step <ArrowRight className="w-4 h-4 ml-2" /></Button>
-                        ) : (
-                            <Button className="bg-yellow-400 text-black hover:bg-yellow-500" onClick={handleSend} disabled={isSending}>
-                                {isSending ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : (draft.scheduledAt ? <CalendarIcon className="w-4 h-4 mr-2" /> : <Send className="w-4 h-4 mr-2" />)}
-                                {draft.scheduledAt ? "Schedule Campaign" : "Send Campaign"}
+                            <Button
+                                className="bg-[#DFFF00] text-black hover:bg-[#c8e600] font-bold px-6 gap-2"
+                                onClick={handleQuickSend}
+                                disabled={isSending || !draft.to || !draft.subject}
+                            >
+                                {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                                {isSending ? "Sending..." : "Send Email"}
                             </Button>
-                        )}
-                    </CardFooter>
+                        </div>
+                    </CardContent>
                 </Card>
             </TabsContent>
 
@@ -526,7 +383,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                             ))}
                         </div>
 
-                        {/* Add new identity simple form (inline or dialog) */}
+                        {/* Add new identity */}
                         <div className="pt-4 border-t border-white/10">
                             <h4 className="text-sm font-medium mb-3">Add New Sender</h4>
                             <form action={async (formData) => {
@@ -561,42 +418,33 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                             ) : campaigns.map(c => {
                                 const openRate = c.statsSent > 0 ? Math.round((c.statsOpened / c.statsSent) * 100) : 0
                                 return (
-                                    <div key={c.id} className="p-4 rounded-lg border border-white/10 bg-black/20 hover:bg-white/5 transition-colors space-y-3">
+                                    <div key={c.id} className="p-4 rounded-lg border border-white/10 bg-black/20 space-y-3">
                                         <div className="flex items-center justify-between">
                                             <div>
-                                                <h4 className="font-bold">{c.name}</h4>
+                                                <h4 className="font-medium">{c.name}</h4>
                                                 <p className="text-xs text-muted-foreground">
-                                                    {c.createdAt ? format(new Date(c.createdAt), 'MMM d, yyyy') : 'Draft'}
-                                                    {c.sender && ` · via ${c.sender.email}`}
+                                                    {format(new Date(c.createdAt), 'MMM d, yyyy')} · via {c.sender?.email || 'Unknown'}
                                                 </p>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <Badge variant={c.status === 'completed' ? 'default' : c.status === 'failed' ? 'destructive' : 'secondary'} className="capitalize">
-                                                    {c.status}
-                                                </Badge>
+                                                <Badge className={cn(
+                                                    c.status === 'completed' && 'bg-green-500/10 text-green-400',
+                                                    c.status === 'draft' && 'bg-blue-500/10 text-blue-400',
+                                                    c.status === 'failed' && 'bg-red-500/10 text-red-400',
+                                                    c.status === 'sending' && 'bg-yellow-500/10 text-yellow-400',
+                                                )}>{c.status}</Badge>
                                                 <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:text-white" onClick={async () => {
-                                                    const result = await duplicateCampaign(c.id)
-                                                    if (result.success) {
-                                                        toast({ title: "Duplicated", description: "Campaign cloned as draft." })
-                                                        router.refresh()
-                                                    }
-                                                }}>
-                                                    <Copy className="w-3.5 h-3.5" />
-                                                </Button>
-                                                <Button size="icon" variant="ghost" className="h-7 w-7 text-red-400 hover:text-red-300 hover:bg-red-950/20" onClick={async () => {
-                                                    if (confirm('Delete this campaign?')) {
-                                                        const result = await deleteCampaign(c.id)
-                                                        if (result.success) {
-                                                            toast({ title: "Deleted" })
-                                                            router.refresh()
-                                                        }
-                                                    }
-                                                }}>
-                                                    <Trash2 className="w-3.5 h-3.5" />
-                                                </Button>
+                                                    const r = await duplicateCampaign(c.id)
+                                                    toast({ title: r.success ? "Duplicated" : "Error", description: r.message })
+                                                    router.refresh()
+                                                }}><Copy className="w-3.5 h-3.5" /></Button>
+                                                <Button size="icon" variant="ghost" className="h-7 w-7 text-red-400 hover:text-red-300" onClick={async () => {
+                                                    const r = await deleteCampaign(c.id)
+                                                    toast({ title: r.success ? "Deleted" : "Error", description: r.message })
+                                                    router.refresh()
+                                                }}><Trash2 className="w-3.5 h-3.5" /></Button>
                                             </div>
                                         </div>
-                                        {/* Stats bar */}
                                         <div className="grid grid-cols-4 gap-3">
                                             <div className="bg-black/30 rounded-lg p-2.5 text-center border border-white/5">
                                                 <p className="text-lg font-bold">{c.statsSent}</p>
@@ -698,3 +546,4 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
         </Tabs>
     )
 }
+

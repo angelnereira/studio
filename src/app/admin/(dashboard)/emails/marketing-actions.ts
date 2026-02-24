@@ -4,6 +4,7 @@ import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { Resend } from "resend"
 import { revalidatePath } from "next/cache"
+import { z } from "zod"
 import {
     SenderIdentitySchema,
     TemplateSchema,
@@ -368,3 +369,81 @@ export async function getCampaignStats(campaignId: string) {
         failed: recipients.filter(r => r.status === 'failed' || r.status === 'bounced').length,
     }
 }
+
+// ═══════════════════════════════════════
+// QUICK SEND — Gmail-like direct send
+// ═══════════════════════════════════════
+
+const QuickSendSchema = z.object({
+    to: z.string().email("Invalid email address"),
+    subject: z.string().min(1, "Subject is required"),
+    html: z.string().min(1, "Email content is required"),
+    senderId: z.string().min(1, "Sender is required"),
+    attachments: z.array(z.object({
+        filename: z.string(),
+        content: z.string()
+    })).optional(),
+})
+
+export async function sendQuickEmail(data: {
+    to: string
+    subject: string
+    html: string
+    senderId: string
+    attachments?: { filename: string; content: string }[]
+}) {
+    const session = await auth()
+    if (!session?.user) return { success: false, message: "Unauthorized" }
+
+    const validated = QuickSendSchema.safeParse(data)
+    if (!validated.success) {
+        const errors = validated.error.flatten().fieldErrors
+        const firstError = Object.values(errors).flat()[0] || "Invalid data"
+        return { success: false, message: firstError }
+    }
+
+    const { to, subject, html, senderId, attachments } = validated.data
+
+    try {
+        // Get sender identity
+        const sender = await prisma.senderIdentity.findUnique({ where: { id: senderId } })
+        if (!sender) return { success: false, message: "Sender identity not found. Add one in Settings." }
+
+        const from = `${sender.name} <${sender.email}>`
+
+        // Send via Resend
+        await resend.emails.send({
+            from,
+            to,
+            subject,
+            html,
+            attachments: attachments?.map((a: { filename: string; content: string }) => ({
+                filename: a.filename,
+                content: Buffer.from(a.content, 'base64')
+            })),
+        })
+
+        // Log to CRM activity
+        try {
+            const contact = await prisma.contact.findFirst({ where: { email: to } })
+            await prisma.activityLog.create({
+                data: {
+                    type: 'email_sent',
+                    title: `📧 Quick: "${subject.slice(0, 60)}${subject.length > 60 ? '...' : ''}"`,
+                    contactId: contact?.id,
+                    metadata: { to, subject, sender: sender.email },
+                }
+            })
+        } catch (logError) {
+            console.error('Failed to log email activity:', logError)
+        }
+
+        revalidatePath('/admin/emails')
+        return { success: true, message: `Email sent to ${to}` }
+    } catch (error) {
+        const msg = error instanceof Error ? error.message : "Send failed"
+        console.error('Quick send error:', error)
+        return { success: false, message: msg }
+    }
+}
+
