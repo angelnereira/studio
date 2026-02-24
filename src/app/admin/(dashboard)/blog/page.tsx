@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Plus, Edit, Trash2, Globe, FileText, Calendar } from "lucide-react"
+import { Plus, Edit, Trash2, Globe, FileText, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { deletePost } from "./actions"
 
@@ -11,11 +11,24 @@ export const metadata = {
     title: "Blog CMS | Admin Studio",
 }
 
-export default async function BlogPage() {
-    const posts = await prisma.post.findMany({
-        orderBy: { createdAt: "desc" },
-        include: { author: { select: { name: true } } }
-    })
+const POSTS_PER_PAGE = 10
+
+export default async function BlogPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+    const params = await searchParams
+    const page = Math.max(1, parseInt(params.page || '1', 10))
+    const skip = (page - 1) * POSTS_PER_PAGE
+
+    const [posts, totalCount] = await Promise.all([
+        prisma.post.findMany({
+            orderBy: { createdAt: "desc" },
+            include: { author: { select: { name: true } } },
+            skip,
+            take: POSTS_PER_PAGE,
+        }),
+        prisma.post.count(),
+    ])
+
+    const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE)
 
     return (
         <div className="space-y-6">
@@ -32,7 +45,7 @@ export default async function BlogPage() {
             </div>
 
             <div className="grid gap-6">
-                {posts.length === 0 ? (
+                {posts.length === 0 && page === 1 ? (
                     <Card className="border-dashed bg-black/20">
                         <CardContent className="flex flex-col items-center justify-center py-10 text-center">
                             <div className="rounded-full bg-primary/10 p-4 mb-4">
@@ -113,9 +126,35 @@ export default async function BlogPage() {
                                 </tbody>
                             </table>
                         </div>
+
+                        {/* Pagination */}
+                        {totalPages > 1 && (
+                            <div className="flex items-center justify-between px-4 py-3 border-t border-white/10">
+                                <p className="text-xs text-muted-foreground">
+                                    Showing {skip + 1}–{Math.min(skip + POSTS_PER_PAGE, totalCount)} of {totalCount} posts
+                                </p>
+                                <div className="flex gap-2">
+                                    {page > 1 && (
+                                        <Link href={`/admin/blog?page=${page - 1}`}>
+                                            <Button variant="outline" size="sm" className="h-8 text-xs gap-1">
+                                                <ChevronLeft className="w-3 h-3" /> Prev
+                                            </Button>
+                                        </Link>
+                                    )}
+                                    {page < totalPages && (
+                                        <Link href={`/admin/blog?page=${page + 1}`}>
+                                            <Button variant="outline" size="sm" className="h-8 text-xs gap-1">
+                                                Next <ChevronRight className="w-3 h-3" />
+                                            </Button>
+                                        </Link>
+                                    )}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
         </div>
     )
 }
+

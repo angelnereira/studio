@@ -15,6 +15,16 @@ import {
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+interface AudienceFilter {
+    recipientType?: 'individual' | 'clients' | 'employers' | 'all';
+    specificEmail?: string;
+}
+
+interface EmailAttachment {
+    filename: string;
+    content: string; // base64
+}
+
 // --- Sender Identity Actions ---
 
 export async function getSenderIdentities() {
@@ -121,10 +131,11 @@ export async function sendCampaign(campaignId: string) {
 
     if (!campaign) return { success: false, message: "Campaign not found" }
     if (campaign.status === 'completed') return { success: false, message: "Campaign already sent" }
+    if (!campaign.sender.verified) return { success: false, message: "Sender identity is not verified. Please verify it in your Resend Dashboard before sending." }
 
     // 1. Fetch Audience
     // audienceFilter logic: { recipientType: 'clients' } or similar
-    const filter = campaign.audienceFilter as any || {}
+    const filter = (campaign.audienceFilter as unknown as AudienceFilter) || {}
     let recipients: string[] = []
 
     if (filter.recipientType === 'individual' && filter.specificEmail) {
@@ -214,10 +225,31 @@ export async function sendCampaign(campaignId: string) {
                 html: campaign.content,
                 tags: [{ name: 'campaignId', value: campaign.id }],
                 scheduledAt: scheduledAtISO, // Pass to Resend
-                attachments: campaign.attachments ? (campaign.attachments as any[]) : undefined
+                attachments: campaign.attachments ? (campaign.attachments as unknown as EmailAttachment[]) : undefined
             }))
 
             await resend.batch.send(emailBatch)
+
+            // CRM Traceability: Log email sent activity for matching contacts
+            try {
+                const matchingContacts = await prisma.contact.findMany({
+                    where: { email: { in: batch } },
+                    select: { id: true, email: true }
+                })
+                for (const contact of matchingContacts) {
+                    await prisma.activityLog.create({
+                        data: {
+                            contactId: contact.id,
+                            type: 'email_sent',
+                            title: `📧 Campaign: "${campaign.subject.slice(0, 50)}${campaign.subject.length > 50 ? '...' : ''}"`,
+                            metadata: { campaignId: campaign.id, subject: campaign.subject },
+                        }
+                    })
+                }
+            } catch (logError) {
+                console.error('Failed to log campaign activity:', logError)
+                // Non-blocking: email was already sent
+            }
         }
 
         // Update status end

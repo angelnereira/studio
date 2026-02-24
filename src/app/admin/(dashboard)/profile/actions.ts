@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import type { WorkExperience, SkillCategory, Education, LanguageEntry, SocialLinks, ProjectEntry } from "@/types/profile";
 
 interface ProfileData {
     id?: string;
@@ -12,12 +13,12 @@ interface ProfileData {
     documentId?: string;
     citizenship?: string;
     summary: string;
-    experience: any[];
-    skills: any[];
-    education: any[];
-    languages?: any[];
-    socialLinks?: any;
-    projects?: any[];
+    experience: WorkExperience[];
+    skills: SkillCategory[];
+    education: Education[];
+    languages?: LanguageEntry[];
+    socialLinks?: SocialLinks;
+    projects?: ProjectEntry[];
 }
 
 export async function saveProfile(data: ProfileData): Promise<{ success: boolean; message: string }> {
@@ -34,12 +35,12 @@ export async function saveProfile(data: ProfileData): Promise<{ success: boolean
                     documentId: data.documentId,
                     citizenship: data.citizenship,
                     summary: data.summary,
-                    experience: data.experience,
-                    skills: data.skills,
-                    education: data.education,
-                    languages: data.languages,
+                    experience: JSON.parse(JSON.stringify(data.experience)),
+                    skills: JSON.parse(JSON.stringify(data.skills)),
+                    education: JSON.parse(JSON.stringify(data.education)),
+                    languages: data.languages ? JSON.parse(JSON.stringify(data.languages)) : undefined,
                     socialLinks: data.socialLinks,
-                    projects: data.projects,
+                    projects: data.projects ? JSON.parse(JSON.stringify(data.projects)) : undefined,
                 },
             });
         } else {
@@ -53,12 +54,12 @@ export async function saveProfile(data: ProfileData): Promise<{ success: boolean
                     documentId: data.documentId,
                     citizenship: data.citizenship,
                     summary: data.summary,
-                    experience: data.experience,
-                    skills: data.skills,
-                    education: data.education,
-                    languages: data.languages,
+                    experience: JSON.parse(JSON.stringify(data.experience)),
+                    skills: JSON.parse(JSON.stringify(data.skills)),
+                    education: JSON.parse(JSON.stringify(data.education)),
+                    languages: data.languages ? JSON.parse(JSON.stringify(data.languages)) : undefined,
                     socialLinks: data.socialLinks,
-                    projects: data.projects,
+                    projects: data.projects ? JSON.parse(JSON.stringify(data.projects)) : undefined,
                     isActive: true,
                 },
             });
@@ -83,6 +84,21 @@ export async function importProfileFromWebsite(): Promise<{ success: boolean; me
     try {
         const es = translations.es;
 
+        // Group skills by category for the Profile format
+        const _groupedSkills: { category: 'core' | 'data' | 'infrastructure'; items: string[] }[] = [];
+        const categoryKeys = ['core', 'data', 'infrastructure'] as const;
+        const categories = { core: "Core" as const, data: "Data" as const, infrastructure: "Infrastructure" as const };
+
+        skillsData.forEach(skill => {
+            const catKey = skill.category as 'core' | 'data' | 'infrastructure';
+            const existing = _groupedSkills.find(g => g.category === catKey);
+            if (existing) {
+                existing.items.push(skill.name);
+            } else {
+                _groupedSkills.push({ category: catKey, items: [skill.name] });
+            }
+        });
+
         // Construct profile data from website source of truth
         const newData = {
             name: es['hero.name'],
@@ -100,13 +116,8 @@ export async function importProfileFromWebsite(): Promise<{ success: boolean; me
                 ]
             })),
 
-            // Map Skills
-            skills: skillsData.map(s => ({
-                category: s.category,
-                items: [s.name] // Grouping will be handled by UI or we map individually?
-                // Actually ProfileBase stores `skills` as Json. UI expects `[{ category: "Core", items: ["Next.js", ...] }]`
-                // But skillsData is flat array. We need to group it.
-            })),
+            // Grouped skills
+            skills: _groupedSkills as unknown as SkillCategory[],
 
             projects: projectsData, // Store raw projects data too
 
@@ -120,22 +131,6 @@ export async function importProfileFromWebsite(): Promise<{ success: boolean; me
             }
         };
 
-        // Group skills by category for the Profile format
-        const groupedSkills: { category: string, items: string[] }[] = [];
-        const categories = { core: "Core", data: "Data", infrastructure: "Infrastructure" };
-
-        skillsData.forEach(skill => {
-            const catName = categories[skill.category];
-            const existing = groupedSkills.find(g => g.category === catName);
-            if (existing) {
-                existing.items.push(skill.name);
-            } else {
-                groupedSkills.push({ category: catName, items: [skill.name] });
-            }
-        });
-
-        newData.skills = groupedSkills;
-
         // Upsert logic
         // We need to find the existing profile to update, or create one.
         // For simplicity, we assume there's one active profile or we pick the first one.
@@ -144,8 +139,9 @@ export async function importProfileFromWebsite(): Promise<{ success: boolean; me
         if (existingProfile) {
             await prisma.profileBase.update({
                 where: { id: existingProfile.id },
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 data: {
-                    ...newData,
+                    ...(newData as any),
                     // Preserve existing manual fields if they exist and we don't have overrides
                     documentId: existingProfile.documentId || undefined,
                     citizenship: existingProfile.citizenship || undefined,
@@ -155,8 +151,9 @@ export async function importProfileFromWebsite(): Promise<{ success: boolean; me
             });
         } else {
             await prisma.profileBase.create({
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 data: {
-                    ...newData,
+                    ...(newData as any),
                     isActive: true
                 }
             });

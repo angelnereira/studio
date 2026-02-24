@@ -1,6 +1,21 @@
 // System Email Templates - Pre-defined templates for the Email Marketing Studio
 // These templates are available by default without needing to create them in the database
 
+// Centralized configuration - edit once, applies to all templates
+export const EMAIL_CONFIG = {
+    SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://angelnereira.com',
+    BRAND_NAME: 'Ángel Nereira',
+    BRAND_INITIALS: 'AN',
+    BRAND_COLOR: '#DFFF00',
+    BRAND_ACCENT: '#136D56',
+    TAGLINE: 'Ingeniero de Software Full Stack',
+    LOCATION: 'Panamá',
+    SOCIAL: {
+        GITHUB: 'https://github.com/angelnereira',
+        LINKEDIN: 'https://linkedin.com/in/angelnereira',
+    }
+} as const
+
 export interface SystemTemplate {
     id: string;
     name: string;

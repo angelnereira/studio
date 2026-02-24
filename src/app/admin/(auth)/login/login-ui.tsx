@@ -137,7 +137,7 @@ function SubmitButton() {
     )
 }
 
-function NotificationCard({ icon: Icon, title, time, message, censored = false }: { icon: any, title: string, time: string, message: string, censored?: boolean }) {
+function NotificationCard({ icon: Icon, title, time, message, censored = false }: { icon: React.ElementType, title: string, time: string, message: string, censored?: boolean }) {
     return (
         <div className="flex gap-4 p-4 rounded-2xl bg-zinc-900/40 border border-white/5 backdrop-blur-md items-start group hover:bg-zinc-900/60 transition-colors cursor-default select-none">
             <div className="mt-1 p-2 bg-white/5 rounded-xl text-primary/80 group-hover:text-primary transition-colors">

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, type Control } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useEditor, EditorContent } from "@tiptap/react"
@@ -9,9 +9,9 @@ import StarterKit from "@tiptap/starter-kit"
 import LinkExtension from "@tiptap/extension-link"
 import ImageExtension from "@tiptap/extension-image"
 import { Color } from '@tiptap/extension-color'
-import TextStyle from '@tiptap/extension-text-style'
+import { TextStyle } from '@tiptap/extension-text-style'
 import Highlight from '@tiptap/extension-highlight'
-import Underline from '@tiptap/extension-underline'
+import UnderlineExt from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import Youtube from '@tiptap/extension-youtube'
 import { InfoCard } from './extension-card'
@@ -50,8 +50,8 @@ const PostSchema = z.object({
     content: z.string().optional(),
     excerpt: z.string().optional(),
     coverImage: z.string().optional(),
-    published: z.boolean().default(false),
-    featured: z.boolean().default(false),
+    published: z.boolean(),
+    featured: z.boolean(),
     seoTitle: z.string().optional(),
     seoDescription: z.string().optional(),
     keywords: z.string().optional(),
@@ -78,13 +78,16 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
             content: post?.content || "",
             excerpt: post?.excerpt || "",
             coverImage: post?.coverImage || "",
-            published: post?.published || false,
-            featured: post?.featured || false,
+            published: post?.published ?? false,
+            featured: post?.featured ?? false,
             seoTitle: post?.seoTitle || "",
             seoDescription: post?.seoDescription || "",
             keywords: post?.keywords || "",
         },
     })
+
+    // Type alias to avoid react-hook-form Control TFieldValues generic mismatch
+    const typedControl = form.control as unknown as Control<PostFormValues>;
 
     // Initialize Tiptap
     const editor = useEditor({
@@ -106,7 +109,7 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
             Highlight.configure({
                 multicolor: true,
             }),
-            Underline,
+            UnderlineExt,
             TextAlign.configure({
                 types: ['heading', 'paragraph'],
             }),
@@ -184,7 +187,7 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                     {/* Main Content */}
                     <div className="lg:col-span-2 space-y-6">
                         <FormField
-                            control={form.control}
+                            control={typedControl}
                             name="title"
                             render={({ field }) => (
                                 <FormItem>
@@ -206,7 +209,7 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                         </div>
 
                         <FormField
-                            control={form.control}
+                            control={typedControl}
                             name="excerpt"
                             render={({ field }) => (
                                 <FormItem>
@@ -228,7 +231,7 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <FormField
-                                    control={form.control}
+                                    control={typedControl}
                                     name="published"
                                     render={({ field }) => (
                                         <FormItem className="flex flex-row items-start space-x-3 space-y-0">
@@ -243,7 +246,7 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                                     )}
                                 />
                                 <FormField
-                                    control={form.control}
+                                    control={typedControl}
                                     name="featured"
                                     render={({ field }) => (
                                         <FormItem className="flex flex-row items-start space-x-3 space-y-0">
@@ -266,7 +269,7 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <FormField
-                                    control={form.control}
+                                    control={typedControl}
                                     name="slug"
                                     render={({ field }) => (
                                         <FormItem>
@@ -281,7 +284,7 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                                 />
 
                                 <FormField
-                                    control={form.control}
+                                    control={typedControl}
                                     name="coverImage"
                                     render={({ field }) => (
                                         <FormItem>
@@ -345,7 +348,7 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                                 />
 
                                 <FormField
-                                    control={form.control}
+                                    control={typedControl}
                                     name="seoTitle"
                                     render={({ field }) => (
                                         <FormItem>

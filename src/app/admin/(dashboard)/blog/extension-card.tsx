@@ -1,6 +1,6 @@
 
 import { Node, mergeAttributes } from '@tiptap/core'
-import { ReactNodeViewRenderer } from '@tiptap/react'
+import { ReactNodeViewRenderer, type ReactNodeViewProps } from '@tiptap/react'
 import { InfoCardComponent } from './info-card-component'
 
 export const InfoCard = Node.create({
@@ -37,6 +37,6 @@ export const InfoCard = Node.create({
     },
 
     addNodeView() {
-        return ReactNodeViewRenderer(InfoCardComponent)
+        return ReactNodeViewRenderer(InfoCardComponent as unknown as React.ComponentType<ReactNodeViewProps<HTMLElement>>)
     },
 })

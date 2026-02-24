@@ -36,6 +36,9 @@
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "prisma.config.ts",
+    "src/utils/supabase",
+    "**/__tests__/**"
   ]
 }

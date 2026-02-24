@@ -24,6 +24,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils"
 
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
+import { VisualEmailComposer } from "@/components/admin/emails/visual-email-composer"
 import { services } from "@/lib/services"
 import { systemTemplates, type SystemTemplate } from "@/lib/system-email-templates"
 import { createSenderIdentity, createTemplate, sendCampaign, saveCampaignDraft, deleteSenderIdentity } from "@/app/admin/(dashboard)/emails/marketing-actions"
@@ -81,7 +82,8 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
         attachments: [] as { filename: string, content: string }[]
     })
     const [isSending, setIsSending] = useState(false)
-    const [selectedContactId, setSelectedContactId] = useState<string>("") // State for dropdown
+    const [selectedContactId, setSelectedContactId] = useState<string>("")
+    const [editorMode, setEditorMode] = useState<'visual' | 'code'>('visual') // State for dropdown
 
     // Helper to read file as base64
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,12 +155,8 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                 subject: draft.subject,
                 content: draft.content,
                 senderId: draft.senderId,
-                content: draft.content,
-                senderId: draft.senderId,
-                content: draft.content,
-                senderId: draft.senderId,
                 audienceFilter: { recipientType: draft.recipientType, specificEmail: draft.specificEmail },
-                scheduledAt: draft.scheduledAt, // Save the scheduled date
+                scheduledAt: draft.scheduledAt,
                 attachments: draft.attachments
             })
 
@@ -320,30 +318,62 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                 <div className="space-y-2">
                                     <div className="flex justify-between items-center">
                                         <Label>Email Content</Label>
-                                        <Select onValueChange={(v) => {
-                                            const t = allTemplates.find(t => t.id === v)
-                                            if (t) setDraft({ ...draft, content: t.content, subject: draft.subject || t.subject || "" })
-                                        }}>
-                                            <SelectTrigger className="w-[200px] h-8 text-xs">
-                                                <SelectValue placeholder="Load Template..." />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">📦 Templates del Sistema</div>
-                                                {allTemplates.filter(t => t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
-                                                {templates.length > 0 && (
-                                                    <>
-                                                        <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground border-t border-white/10 mt-1 pt-2">📝 Mis Templates</div>
-                                                        {allTemplates.filter(t => !t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
-                                                    </>
-                                                )}
-                                            </SelectContent>
-                                        </Select>
+                                        <div className="flex items-center gap-2">
+                                            {/* Editor mode toggle */}
+                                            <div className="flex gap-0.5 p-0.5 bg-black/40 rounded border border-white/10">
+                                                <button
+                                                    onClick={() => setEditorMode('visual')}
+                                                    className={cn(
+                                                        'text-xs px-2.5 py-1 rounded transition-colors',
+                                                        editorMode === 'visual' ? 'bg-[#DFFF00]/20 text-[#DFFF00]' : 'text-muted-foreground hover:text-white'
+                                                    )}
+                                                >
+                                                    🎨 Visual
+                                                </button>
+                                                <button
+                                                    onClick={() => setEditorMode('code')}
+                                                    className={cn(
+                                                        'text-xs px-2.5 py-1 rounded transition-colors',
+                                                        editorMode === 'code' ? 'bg-white/10 text-white' : 'text-muted-foreground hover:text-white'
+                                                    )}
+                                                >
+                                                    &lt;/&gt; Code
+                                                </button>
+                                            </div>
+                                            {editorMode === 'code' && (
+                                                <Select onValueChange={(v) => {
+                                                    const t = allTemplates.find(t => t.id === v)
+                                                    if (t) setDraft({ ...draft, content: t.content, subject: draft.subject || t.subject || "" })
+                                                }}>
+                                                    <SelectTrigger className="w-[200px] h-8 text-xs">
+                                                        <SelectValue placeholder="Load Template..." />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">📦 System Templates</div>
+                                                        {allTemplates.filter(t => t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                                                        {templates.length > 0 && (
+                                                            <>
+                                                                <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground border-t border-white/10 mt-1 pt-2">📝 My Templates</div>
+                                                                {allTemplates.filter(t => !t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                                                            </>
+                                                        )}
+                                                    </SelectContent>
+                                                </Select>
+                                            )}
+                                        </div>
                                     </div>
-                                    <RichTextEditor
-                                        content={draft.content}
-                                        onChange={(html) => setDraft({ ...draft, content: html })}
-                                        services={services}
-                                    />
+
+                                    {editorMode === 'visual' ? (
+                                        <VisualEmailComposer
+                                            onChange={(html) => setDraft({ ...draft, content: html })}
+                                        />
+                                    ) : (
+                                        <RichTextEditor
+                                            content={draft.content}
+                                            onChange={(html) => setDraft({ ...draft, content: html })}
+                                            services={services}
+                                        />
+                                    )}
 
                                     {/* Attachments UI */}
                                     <div className="space-y-2 pt-4 border-t border-white/10">

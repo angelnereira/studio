@@ -1,7 +1,12 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
-import { } from "lucide-react"
 import { DashboardClient } from "./dashboard-client"
+
+interface ActivityLogMetadata {
+  subject?: string;
+  oldStatus?: string;
+  newStatus?: string;
+}
 
 // Helper to format time ago
 function timeAgo(date: Date) {
@@ -27,11 +32,15 @@ export default async function AdminDashboard() {
     leadsCount,
     postsCount,
     campaignsCount,
+    applicationsCount,
+    vacanciesCount,
     recentActivity
   ] = await Promise.all([
     prisma.contact.count({ where: { status: 'new' } }),
     prisma.post.count({ where: { published: true } }),
     prisma.emailCampaign.count({}),
+    prisma.application.count({}),
+    prisma.jobVacancy.count({}),
     prisma.activityLog.findMany({
       take: 5,
       orderBy: { createdAt: 'desc' },
@@ -41,10 +50,10 @@ export default async function AdminDashboard() {
 
   // Process Stats
   const stats = [
-    { title: "Total Posts", value: postsCount.toString(), icon: "eye", change: "Published Content", color: "text-blue-400" },
+    { title: "Published Posts", value: postsCount.toString(), icon: "eye", change: "Blog content", color: "text-blue-400" },
     { title: "Active Leads", value: leadsCount.toString(), icon: "users", change: "New prospects", color: "text-emerald-400" },
-    { title: "Campaigns", value: campaignsCount.toString(), icon: "mouse-pointer", change: "Emails Sent", color: "text-purple-400" },
-    { title: "System Health", value: "99.9%", icon: "trending-up", change: "All systems operational", color: "text-pink-400" },
+    { title: "Campaigns", value: campaignsCount.toString(), icon: "mouse-pointer", change: "Emails sent", color: "text-purple-400" },
+    { title: "Applications", value: applicationsCount.toString(), icon: "briefcase", change: `${vacanciesCount} vacancies tracked`, color: "text-orange-400" },
   ]
 
   // Process Activities
@@ -53,7 +62,12 @@ export default async function AdminDashboard() {
     type: log.type,
     title: log.title,
     time: timeAgo(log.createdAt),
-    description: (log.metadata as any)?.subject || (log.metadata as any)?.oldStatus ? `${(log.metadata as any)?.oldStatus} -> ${(log.metadata as any)?.newStatus}` : log.contact?.email || "System Event"
+    description: (() => {
+      const meta = log.metadata as unknown as ActivityLogMetadata | null;
+      if (meta?.subject) return meta.subject;
+      if (meta?.oldStatus) return `${meta.oldStatus} -> ${meta.newStatus}`;
+      return log.contact?.email || "System Event";
+    })()
   }))
 
   return (

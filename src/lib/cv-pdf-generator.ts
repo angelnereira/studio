@@ -85,10 +85,10 @@ export function generateCVPDF(
     let y = 20;
 
     // Brand colors
-    const brandPrimary = [223, 255, 0]; // Acid Lime
-    const brandDark = [8, 12, 10]; // Deep Forest
-    const textPrimary = [255, 255, 255];
-    const textSecondary = [156, 163, 175];
+    const brandPrimary: [number, number, number] = [223, 255, 0]; // Acid Lime
+    const brandDark: [number, number, number] = [8, 12, 10]; // Deep Forest
+    const textPrimary: [number, number, number] = [255, 255, 255];
+    const textSecondary: [number, number, number] = [156, 163, 175];
 
     // Helper to check if we need a new page
     const checkPageBreak = (neededSpace: number) => {

@@ -1,10 +1,11 @@
 import { Resend } from 'resend';
+import type { ClientFormData, EmployerFormData, CollaboratorFormData, InvitationFormData } from '@/types/profile';
 
 type FormType = 'client' | 'employer' | 'collaborator' | 'invitation';
 
 interface EmailData {
   formType: FormType;
-  data: any;
+  data: ClientFormData | EmployerFormData | CollaboratorFormData | InvitationFormData;
 }
 
 // Base email template with professional, open styling
@@ -113,7 +114,7 @@ const industryNames: Record<string, string> = {
   'other': 'Otro',
 };
 
-function formatClientEmail(data: any): string {
+function formatClientEmail(data: ClientFormData): string {
   const serviceName = serviceNames[data.service] || data.service;
   const budgetName = budgetNames[data.budget] || data.budget;
   const industryName = data.industry ? (industryNames[data.industry] || data.industry) : null;
@@ -139,7 +140,7 @@ function formatClientEmail(data: any): string {
   return wrapInEmailTemplate(content, '👤 Nuevo Cliente Potencial', '#7c3aed');
 }
 
-function formatEmployerEmail(data: any): string {
+function formatEmployerEmail(data: EmployerFormData): string {
   const industryName = data.industry ? (industryNames[data.industry] || data.industry) : null;
 
   const content = `
@@ -164,7 +165,7 @@ function formatEmployerEmail(data: any): string {
   return wrapInEmailTemplate(content, '💼 Nueva Oportunidad Laboral', '#059669');
 }
 
-function formatCollaboratorEmail(data: any): string {
+function formatCollaboratorEmail(data: CollaboratorFormData): string {
   const content = `
     <table role="presentation" style="width: 100%; border-collapse: collapse;">
       ${infoRow('Nombre', data.name)}
@@ -185,7 +186,7 @@ function formatCollaboratorEmail(data: any): string {
   return wrapInEmailTemplate(content, '🤝 Nueva Propuesta de Colaboración', '#0891b2');
 }
 
-function formatInvitationEmail(data: any): string {
+function formatInvitationEmail(data: InvitationFormData): string {
   const eventDate = new Date(data.eventDate).toLocaleDateString('es-ES', {
     weekday: 'long',
     year: 'numeric',
@@ -245,14 +246,15 @@ export async function sendContactEmail({ formType, data }: EmailData): Promise<{
       return { success: false, error: 'Tipo de formulario no válido' };
     }
 
-    const htmlContent = formatter(data);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const htmlContent = (formatter as (data: any) => string)(data);
 
     const result = await resend.emails.send({
       from: 'Portfolio Contact <contact@angelnereira.com>',
       to: 'contact@angelnereira.com',
       subject: subject,
       html: htmlContent,
-      reply_to: data.email,
+      replyTo: (data as { email: string }).email,
       headers: {
         'X-Entity-Ref-ID': `portfolio-${formType}-${Date.now()}`,
       },

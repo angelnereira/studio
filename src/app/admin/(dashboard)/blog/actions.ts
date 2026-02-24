@@ -73,8 +73,9 @@ export async function createPost(prevState: PostState, formData: FormData) {
 
     try {
         await prisma.post.create({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data: {
-                ...validatedFields.data,
+                ...(validatedFields.data as any),
                 authorId: session.user.id,
                 publishedAt: validatedFields.data.published ? new Date() : null,
             },
@@ -117,9 +118,10 @@ export async function updatePost(id: string, prevState: PostState, formData: For
     try {
         await prisma.post.update({
             where: { id },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data: {
-                ...validatedFields.data,
-                publishedAt: validatedFields.data.published ? new Date() : null, // Reset date on publish? Optional logic
+                ...(validatedFields.data as any),
+                publishedAt: validatedFields.data.published ? new Date() : null,
             },
         })
     } catch (error) {

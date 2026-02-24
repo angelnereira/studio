@@ -66,5 +66,17 @@ export default function EditPostPage() {
         );
     }
 
-    return <PostForm post={post} isEditing />;
+    return <PostForm post={{
+        id: post.id,
+        title: post.title,
+        slug: post.slug,
+        content: post.content ?? undefined,
+        excerpt: post.excerpt ?? undefined,
+        coverImage: post.coverImage ?? undefined,
+        published: post.published,
+        featured: post.featured,
+        seoTitle: post.seoTitle ?? undefined,
+        seoDescription: post.seoDescription ?? undefined,
+        keywords: post.keywords ?? undefined,
+    }} isEditing />;
 }

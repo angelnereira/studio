@@ -66,7 +66,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   // Get comments
-  let comments = [];
+  let comments: Awaited<ReturnType<typeof prisma.comment.findMany>> = [];
   try {
     comments = await prisma.comment.findMany({
       where: { postId: slug },
@@ -103,14 +103,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <ReactMarkdown
           components={{
             // Sintaxis highlighting para código
-            code({ node, inline, className, children, ...props }) {
+            code({ node, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || '');
-              return !inline && match ? (
+              const isInline = !match && !String(children).includes('\n');
+              return !isInline && match ? (
                 <SyntaxHighlighter
                   style={oneDark}
                   language={match[1]}
                   PreTag="div"
-                  {...props}
                 >
                   {String(children).replace(/\n$/, '')}
                 </SyntaxHighlighter>

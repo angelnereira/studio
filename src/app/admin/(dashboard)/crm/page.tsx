@@ -56,7 +56,7 @@ export default async function CRMPage() {
     )
 }
 
-function StatCard({ title, value, icon: Icon, color }: { title: string; value: number; icon: any; color: string }) {
+function StatCard({ title, value, icon: Icon, color }: { title: string; value: number; icon: React.ElementType; color: string }) {
     return (
         <Card className="bg-black/40 border-white/10 backdrop-blur-sm">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

@@ -41,11 +41,10 @@ export function ClientForm() {
       toast({
         title: "¡Mensaje Enviado!",
         description: state.message,
-        "data-testid": "success-toast",
       });
       formRef.current?.reset();
     } else if (state.status === 'error' && state.formType === 'client' && state.message && !state.issues) {
-       toast({
+      toast({
         variant: "destructive",
         title: "Error al enviar",
         description: state.message,
@@ -91,7 +90,7 @@ export function ClientForm() {
             </SelectTrigger>
             <SelectContent>
               {services.filter(s => s.published).map(service => (
-                  <SelectItem key={service.slug} value={service.slug}>{service.title}</SelectItem>
+                <SelectItem key={service.slug} value={service.slug}>{service.title}</SelectItem>
               ))}
               <SelectItem value="other">Otro</SelectItem>
             </SelectContent>

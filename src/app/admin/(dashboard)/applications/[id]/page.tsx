@@ -11,6 +11,19 @@ import { es } from "date-fns/locale";
 
 export const dynamic = 'force-dynamic';
 
+interface CVContentExperience {
+    position: string;
+    company: string;
+    period?: string;
+    responsibilities?: string[];
+}
+
+interface CVContent {
+    summary?: string;
+    skillsHighlighted?: string[];
+    experience?: CVContentExperience[];
+}
+
 const statusColors: Record<string, string> = {
     draft: "bg-gray-500/20 text-gray-400",
     ready: "bg-blue-500/20 text-blue-400",
@@ -41,7 +54,7 @@ export default async function ApplicationDetailPage({ params }: PageProps) {
         notFound();
     }
 
-    const cvContent = application.cvContent as any;
+    const cvContent = application.cvContent as unknown as CVContent | null;
 
     return (
         <div className="max-w-5xl mx-auto space-y-8">
@@ -192,7 +205,7 @@ export default async function ApplicationDetailPage({ params }: PageProps) {
                                 <div>
                                     <p className="text-xs text-muted-foreground mb-2">Experience Highlighted</p>
                                     <div className="space-y-2">
-                                        {cvContent.experience.slice(0, 3).map((exp: any, i: number) => (
+                                        {cvContent.experience.slice(0, 3).map((exp: CVContentExperience, i: number) => (
                                             <div key={i} className="text-xs">
                                                 <p className="font-medium">{exp.position}</p>
                                                 <p className="text-muted-foreground">{exp.company}</p>
@@ -251,7 +264,7 @@ export default async function ApplicationDetailPage({ params }: PageProps) {
     );
 }
 
-function InfoItem({ icon: Icon, label, value }: { icon: any; label: string; value: string }) {
+function InfoItem({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string }) {
     return (
         <div className="flex items-start gap-2">
             <Icon className="h-4 w-4 mt-0.5 text-muted-foreground" />
@@ -271,7 +284,7 @@ function TimelineItem({
 }: {
     label: string;
     date: Date;
-    icon: any;
+    icon: React.ElementType;
     highlight?: boolean;
 }) {
     return (

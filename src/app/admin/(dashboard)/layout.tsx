@@ -1,10 +1,11 @@
 
 import Link from "next/link"
-import { LayoutDashboard, FileText, Mail, Users, Settings, LogOut, ExternalLink, Menu, Briefcase, User } from "lucide-react"
+import { LayoutDashboard, FileText, Mail, Users, Settings, LogOut, ExternalLink, Briefcase, User, FileSignature, Search, Bell } from "lucide-react"
 import { auth, signOut } from "@/auth"
 import { Button } from "@/components/ui/button"
 import { redirect } from "next/navigation"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { AdminBreadcrumb } from "@/components/admin/admin-breadcrumb"
+import { MobileSidebar } from "@/components/admin/mobile-sidebar"
 
 export default async function DashboardLayout({
     children,
@@ -28,13 +29,16 @@ export default async function DashboardLayout({
                 </Link>
             </div>
 
-            <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+            <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
                 <SidebarItem href="/admin" icon={LayoutDashboard} label="Dashboard" />
                 <SidebarItem href="/admin/applications" icon={Briefcase} label="Applications" />
                 <SidebarItem href="/admin/profile" icon={User} label="Profile" />
                 <SidebarItem href="/admin/blog" icon={FileText} label="Blog & CMS" />
+                <SidebarItem href="/admin/cover-letter" icon={FileSignature} label="Cover Letters" />
+                <SidebarItem href="/admin/job-analysis" icon={Search} label="Job Analysis" />
                 <SidebarItem href="/admin/emails" icon={Mail} label="Email Marketing" />
                 <SidebarItem href="/admin/crm" icon={Users} label="CRM & Leads" />
+                <SidebarItem href="/admin/subscribers" icon={Bell} label="Subscribers" />
                 <SidebarItem href="/admin/settings" icon={Settings} label="System Config" />
             </nav>
 
@@ -70,21 +74,9 @@ export default async function DashboardLayout({
                 <div className="absolute inset-0 bg-grid-white/[0.02] -z-10" />
                 <header className="h-16 border-b border-white/5 flex items-center justify-between px-4 md:px-6 bg-background/50 backdrop-blur-sm sticky top-0 z-10">
                     <div className="flex items-center gap-4">
-                        {/* Mobile Menu Trigger */}
-                        <div className="md:hidden">
-                            <Sheet>
-                                <SheetTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="shrink-0">
-                                        <Menu className="h-5 w-5" />
-                                        <span className="sr-only">Toggle menu</span>
-                                    </Button>
-                                </SheetTrigger>
-                                <SheetContent side="left" className="p-0 border-r border-white/10 w-64">
-                                    <SidebarContent />
-                                </SheetContent>
-                            </Sheet>
-                        </div>
-                        <h1 className="font-semibold text-lg hidden sm:block">Command Center</h1>
+                        {/* Mobile Menu — client component for auto-close on navigate */}
+                        <MobileSidebar userName={session.user?.name} userEmail={session.user?.email} />
+                        <div className="hidden sm:block"><AdminBreadcrumb /></div>
                     </div>
 
                     <Button variant="outline" size="sm" asChild>
@@ -101,7 +93,7 @@ export default async function DashboardLayout({
     )
 }
 
-function SidebarItem({ href, icon: Icon, label }: { href: string, icon: any, label: string }) {
+function SidebarItem({ href, icon: Icon, label }: { href: string, icon: React.ElementType, label: string }) {
     return (
         <Button variant="ghost" asChild className="w-full justify-start text-muted-foreground hover:text-primary hover:bg-primary/5">
             <Link href={href}>

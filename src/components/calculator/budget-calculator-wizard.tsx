@@ -162,11 +162,8 @@ export function BudgetCalculatorWizard() {
     }
   };
 
-  const handleSendEmail = () => {
-    // TODO: Implement email sending
-    console.log('Send email', result);
-    alert('Funcionalidad de enviar email próximamente');
-  };
+  // Email sending is handled directly by StepResults via EmailDialog component
+  const handleSendEmail = () => { };
 
   const handleReset = () => {
     setCurrentStep(1);

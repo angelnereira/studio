@@ -290,8 +290,8 @@ export default function HomePageClient() {
 
       {/* Dynamic Sections - Services, Projects, Metrics */}
       <DynamicServicesSection />
-      <DynamicProjectsSection projects={projectsData} />
-      <DynamicMetricsSection metrics={metricsData} />
+      <DynamicProjectsSection />
+      <DynamicMetricsSection />
 
       {/* FAQ Section for AI/SEO */}
       <FAQSection />

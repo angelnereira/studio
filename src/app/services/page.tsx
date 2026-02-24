@@ -47,7 +47,7 @@ export default function ServicesPage() {
               "item": {
                 "@type": "Service",
                 "name": service.title,
-                "description": service.description,
+                "description": service.shortDescription,
                 "url": `https://angelnereira.com/services/${service.slug}`,
                 "provider": {
                   "@type": "ProfessionalService",
@@ -114,7 +114,7 @@ export default function ServicesPage() {
                     </Button>
                     <MagneticWrapper className="w-full">
                       <Button asChild className="w-full">
-                        <Link href={`/calculator?service=${service.slug}`}>
+                        <Link href={`/calculadora?service=${service.slug}`}>
                           <span className="hidden sm:inline">Cotización Rápida</span>
                           <span className="sm:hidden">Cotizar</span>
                           <ArrowRight className="ml-2 h-4 w-4" />

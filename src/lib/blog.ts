@@ -15,6 +15,7 @@ export interface Post {
   coverImage: string;
   content: string;
   readingTime: string;
+  htmlContent?: string;
 }
 
 /**

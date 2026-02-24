@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { ProfileForm } from "./profile-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { User, Briefcase, Award, Languages, Globe } from "lucide-react";
+import type { WorkExperience, SkillCategory, LanguageEntry, ProjectEntry } from "@/types/profile";
 
 export const dynamic = 'force-dynamic';
 
@@ -56,22 +57,22 @@ export default async function ProfilePage() {
                 <StatCard
                     icon={Briefcase}
                     label="Experience"
-                    value={(profile?.experience as any[])?.length || 0}
+                    value={(profile?.experience as unknown as WorkExperience[])?.length || 0}
                 />
                 <StatCard
                     icon={Award}
                     label="Skills"
-                    value={(profile?.skills as any[])?.reduce((acc: number, s: any) => acc + (s.items?.length || 0), 0) || 0}
+                    value={(profile?.skills as unknown as SkillCategory[])?.reduce((acc: number, s: SkillCategory) => acc + (s.items?.length || 0), 0) || 0}
                 />
                 <StatCard
                     icon={Languages}
                     label="Languages"
-                    value={(profile?.languages as any[])?.length || 0}
+                    value={(profile?.languages as unknown as LanguageEntry[])?.length || 0}
                 />
                 <StatCard
                     icon={Globe}
                     label="Projects"
-                    value={(profile?.projects as any[])?.length || 0}
+                    value={(profile?.projects as ProjectEntry[])?.length || 0}
                 />
             </div>
 
@@ -84,7 +85,7 @@ export default async function ProfilePage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <ProfileForm profile={profile || defaultProfile as any} />
+                    <ProfileForm profile={(profile || defaultProfile) as Parameters<typeof ProfileForm>[0]['profile']} />
                 </CardContent>
             </Card>
         </div>
@@ -97,7 +98,7 @@ function StatCard({
     value,
     className = "",
 }: {
-    icon: any;
+    icon: React.ElementType;
     label: string;
     value: string | number;
     className?: string;

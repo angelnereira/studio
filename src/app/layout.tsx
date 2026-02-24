@@ -75,9 +75,7 @@ export const metadata: Metadata = {
     },
   },
   category: 'technology',
-  verification: {
-    google: 'verification_token',
-  },
+  // verification: { google: 'REAL_TOKEN_HERE' },
 };
 
 export const viewport: Viewport = {
@@ -149,7 +147,6 @@ export default function RootLayout({
                   addressCountry: 'PA',
                   addressLocality: 'Panama City'
                 },
-                telephone: '+50760000000', // Update with real generic contact if available
                 openingHoursSpecification: {
                   '@type': 'OpeningHoursSpecification',
                   dayOfWeek: [
@@ -198,11 +195,7 @@ export default function RootLayout({
                 publisher: {
                   '@id': 'https://angelnereira.com/#person'
                 },
-                potentialAction: {
-                  '@type': 'SearchAction',
-                  target: 'https://angelnereira.com/search?q={search_term_string}',
-                  'query-input': 'required name=search_term_string'
-                }
+
               }
             ]),
           }}

@@ -61,7 +61,7 @@ const PackageCard = ({ pkg, serviceSlug }: { pkg: ServicePackage, serviceSlug: s
     </CardContent>
     <CardFooter>
       <Button asChild className="w-full" variant={pkg.name === 'Profesional' ? 'default' : 'outline'}>
-        <Link href={`/calculator?service=${serviceSlug}&plan=${pkg.name.toLowerCase()}`}>
+        <Link href={`/calculadora?service=${serviceSlug}&plan=${pkg.name.toLowerCase()}`}>
           {pkg.cta} <ArrowRight className="ml-2" />
         </Link>
       </Button>

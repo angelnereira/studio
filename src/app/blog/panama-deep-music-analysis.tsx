@@ -28,8 +28,8 @@ const PanamaDeepMusicAnalysis: React.FC = () => {
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Seleccionar Artista
           </label>
-          <select 
-            value={selectedArtist} 
+          <select
+            value={selectedArtist}
             onChange={(e) => setSelectedArtist(e.target.value)}
             className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
           >
@@ -44,8 +44,8 @@ const PanamaDeepMusicAnalysis: React.FC = () => {
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Período de Análisis
           </label>
-          <select 
-            value={timeRange} 
+          <select
+            value={timeRange}
             onChange={(e) => setTimeRange(e.target.value)}
             className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
           >
@@ -59,8 +59,8 @@ const PanamaDeepMusicAnalysis: React.FC = () => {
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Métrica Principal
           </label>
-          <select 
-            value={selectedMetric} 
+          <select
+            value={selectedMetric}
             onChange={(e) => setSelectedMetric(e.target.value)}
             className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-900 dark:text-white"
           >
@@ -78,19 +78,19 @@ const PanamaDeepMusicAnalysis: React.FC = () => {
           <p className="text-3xl font-bold">{(currentData.currentMonthlyListeners / 1000000).toFixed(1)}M</p>
           <p className="text-sm opacity-80">Pico: {(currentData.peakListeners / 1000000).toFixed(1)}M</p>
         </div>
-        
+
         <div className="bg-gradient-to-r from-green-500 to-teal-600 p-6 rounded-xl text-white">
           <h3 className="text-sm font-semibold opacity-90">Total Streams</h3>
           <p className="text-3xl font-bold">{(currentData.totalStreams / 1000000000).toFixed(1)}B</p>
           <p className="text-sm opacity-80">Acumulado histórico</p>
         </div>
-        
+
         <div className="bg-gradient-to-r from-orange-500 to-red-600 p-6 rounded-xl text-white">
           <h3 className="text-sm font-semibold opacity-90">Plataforma Líder</h3>
           <p className="text-3xl font-bold">Spotify</p>
           <p className="text-sm opacity-80">{(Math.max(...Object.values(currentData.platforms)) / 1000000).toFixed(1)}M seguidores</p>
         </div>
-        
+
         <div className="bg-gradient-to-r from-purple-500 to-pink-600 p-6 rounded-xl text-white">
           <h3 className="text-sm font-semibold opacity-90">Demografía Principal</h3>
           <p className="text-3xl font-bold">18-24</p>
@@ -109,28 +109,28 @@ const PanamaDeepMusicAnalysis: React.FC = () => {
             <XAxis dataKey="year" tick={{ fill: '#a0aec0' }} />
             <YAxis yAxisId="left" tick={{ fill: '#a0aec0' }} />
             <YAxis yAxisId="right" orientation="right" tick={{ fill: '#a0aec0' }} />
-            <Tooltip 
+            <Tooltip
               contentStyle={{ backgroundColor: '#1a202c', border: '1px solid #4a5568' }}
-              formatter={(value: any, name: string) => {
+              formatter={(value: number, name: string) => {
                 if (name === 'listeners') return [`${(value / 1000000).toFixed(1)}M`, 'Monthly Listeners'];
                 if (name === 'streams') return [`${(value / 1000000).toFixed(0)}M`, 'Streams Anuales'];
                 return [value, name];
               }}
             />
             <Legend />
-            <Line 
-              yAxisId="left" 
-              type="monotone" 
-              dataKey="listeners" 
-              stroke="#667eea" 
+            <Line
+              yAxisId="left"
+              type="monotone"
+              dataKey="listeners"
+              stroke="#667eea"
               strokeWidth={3}
               name="Monthly Listeners"
             />
-            <Line 
-              yAxisId="right" 
-              type="monotone" 
-              dataKey="streams" 
-              stroke="#764ba2" 
+            <Line
+              yAxisId="right"
+              type="monotone"
+              dataKey="streams"
+              stroke="#764ba2"
               strokeWidth={3}
               name="Streams Anuales"
             />
@@ -166,7 +166,7 @@ const PanamaDeepMusicAnalysis: React.FC = () => {
                   <Cell key={`cell-${index}`} fill={color} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ backgroundColor: '#1a202c', border: '1px solid #4a5568' }}/>
+              <Tooltip contentStyle={{ backgroundColor: '#1a202c', border: '1px solid #4a5568' }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -185,9 +185,9 @@ const PanamaDeepMusicAnalysis: React.FC = () => {
               <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
               <XAxis dataKey="platform" tick={{ fill: '#a0aec0' }} />
               <YAxis tick={{ fill: '#a0aec0' }} />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{ backgroundColor: '#1a202c', border: '1px solid #4a5568' }}
-                formatter={(value: any) => [`${value.toFixed(1)}M`, 'Seguidores']} />
+                formatter={(value: number) => [`${value.toFixed(1)}M`, 'Seguidores']} />
               <Bar dataKey="followers" fill="#667eea" />
             </BarChart>
           </ResponsiveContainer>
@@ -204,9 +204,9 @@ const PanamaDeepMusicAnalysis: React.FC = () => {
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
             <XAxis dataKey="genre" tick={{ fill: '#a0aec0' }} />
             <YAxis tick={{ fill: '#a0aec0' }} />
-            <Tooltip 
+            <Tooltip
               contentStyle={{ backgroundColor: '#1a202c', border: '1px solid #4a5568' }}
-              formatter={(value: any) => [`${value}%`, 'Market Share']} />
+              formatter={(value: number) => [`${value}%`, 'Market Share']} />
             <Legend />
             <Bar dataKey="2019" stackId="a" fill="#ff7c7c" />
             <Bar dataKey="2020" stackId="a" fill="#ffd93d" />
@@ -224,13 +224,13 @@ const PanamaDeepMusicAnalysis: React.FC = () => {
           Crecimiento de Usuarios por Plataforma en Panamá
         </h2>
         <ResponsiveContainer width="100%" height={400}>
-           <LineChart data={platformGrowth}>
+          <LineChart data={platformGrowth}>
             <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
             <XAxis dataKey="platform" tick={{ fill: '#a0aec0' }} />
-            <YAxis tick={{ fill: '#a0aec0' }}/>
-            <Tooltip 
+            <YAxis tick={{ fill: '#a0aec0' }} />
+            <Tooltip
               contentStyle={{ backgroundColor: '#1a202c', border: '1px solid #4a5568' }}
-              formatter={(value: any) => [`${(value / 1000000).toFixed(1)}M`, 'Usuarios']}
+              formatter={(value: number) => [`${(value / 1000000).toFixed(1)}M`, 'Usuarios']}
             />
             <Legend />
             <Line type="monotone" dataKey="2019" stroke="#ff7c7c" />
@@ -252,8 +252,8 @@ const PanamaDeepMusicAnalysis: React.FC = () => {
               {typeof metric.value === 'number' && metric.value >= 1000000000
                 ? `${(metric.value / 1000000000).toFixed(1)}B`
                 : typeof metric.value === 'number' && metric.value >= 1000000
-                ? `${(metric.value / 1000000).toFixed(1)}M`
-                : metric.value + (typeof metric.value === 'number' ? '%' : '')}
+                  ? `${(metric.value / 1000000).toFixed(1)}M`
+                  : metric.value + (typeof metric.value === 'number' ? '%' : '')}
             </p>
             <p className="text-sm text-green-600 font-semibold">{metric.change}</p>
           </div>

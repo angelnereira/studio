@@ -17,9 +17,7 @@ const nextConfig = {
   },
   outputFileTracingRoot: __dirname,
   transpilePackages: ['react-icons'],
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // TypeScript errors are now enforced at build time
 
   // Performance optimizations
   compiler: {

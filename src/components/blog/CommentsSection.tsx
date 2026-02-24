@@ -21,7 +21,7 @@ const commentSchema = z.object({
 
 interface Comment {
     id: string
-    authorName: string
+    authorName: string | null
     createdAt: string
     content: string
 }
@@ -52,7 +52,13 @@ export function CommentsSection({ postId, initialComments }: CommentsSectionProp
             const result = await submitComment(postId, data)
 
             if (result.success) {
-                setComments([result.comment, ...comments])
+                if (result.comment) {
+                    setComments([{
+                        ...result.comment,
+                        authorName: result.comment.authorName ?? null,
+                        createdAt: result.comment.createdAt.toISOString(),
+                    }, ...comments])
+                }
                 form.reset()
                 toast({ title: "Comentario publicado", description: "Tu comentario ha sido añadido." })
             } else if (result.error === "unverified_email") {
@@ -164,12 +170,12 @@ export function CommentsSection({ postId, initialComments }: CommentsSectionProp
                         <div key={comment.id} className="flex gap-4">
                             <Avatar className="w-10 h-10 border border-primary/20">
                                 <AvatarFallback className="bg-primary/10 text-primary font-bold">
-                                    {comment.authorName.substring(0, 2).toUpperCase()}
+                                    {(comment.authorName ?? 'AN').substring(0, 2).toUpperCase()}
                                 </AvatarFallback>
                             </Avatar>
                             <div className="flex-1 space-y-1">
                                 <div className="flex items-center justify-between">
-                                    <span className="font-semibold text-foreground">{comment.authorName}</span>
+                                    <span className="font-semibold text-foreground">{comment.authorName ?? 'Anonymous'}</span>
                                     <span className="text-xs text-muted-foreground">
                                         {new Date(comment.createdAt).toLocaleDateString()}
                                     </span>

@@ -109,7 +109,7 @@ export async function onContactSubmit(
   }
 
   try {
-    const contactData: any = {
+    const contactData: Record<string, unknown> = {
       ...parsed.data,
       formType,
       status: 'new'
@@ -119,12 +119,12 @@ export async function onContactSubmit(
     if (contactData.portfolio === '') contactData.portfolio = null;
 
     if (contactData.eventDate) {
-      contactData.eventDate = new Date(contactData.eventDate);
+      contactData.eventDate = new Date(contactData.eventDate as string);
     }
 
     try {
       await prisma.contact.create({
-        data: contactData,
+        data: contactData as Parameters<typeof prisma.contact.create>[0]['data'],
       });
     } catch (dbError) {
       console.warn("Advertencia: No se pudo guardar en la base de datos (CRM), pero se enviará el email.", dbError);
@@ -145,7 +145,7 @@ export async function onContactSubmit(
     }
 
     if (parsed.data.email && ['client', 'employer', 'collaborator'].includes(formType)) {
-      const name = parsed.data.name || parsed.data.recruiterName || "Visitante";
+      const name = ('name' in parsed.data ? parsed.data.name : 'recruiterName' in parsed.data ? parsed.data.recruiterName : undefined) || "Visitante";
       sendWelcomeEmail(parsed.data.email, name).catch(console.error);
     }
 

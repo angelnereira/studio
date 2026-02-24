@@ -53,6 +53,7 @@ export const SpotlightCard = memo(function SpotlightCard({ className, children, 
     }
   }, []);
 
+
   return (
     <Comp
       ref={divRef}
@@ -72,7 +73,7 @@ export const SpotlightCard = memo(function SpotlightCard({ className, children, 
         }}
       />
       {Comp === 'div' ? (
-        <Card className={cn("h-full w-full rounded-[var(--radius)] border-white/5", props.className)} {...props}>
+        <Card className={cn("h-full w-full rounded-[var(--radius)] border-white/5", className)} {...props}>
           {children}
         </Card>
       ) : (

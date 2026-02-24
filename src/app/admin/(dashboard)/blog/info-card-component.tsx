@@ -2,7 +2,7 @@
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/react'
 import React from 'react'
 import { Info, CheckCircle, AlertTriangle, AlertOctagon } from 'lucide-react'
-import { cn } from '@/utils/cn' // Assuming utils/cn exists, otherwise I'll check or use simple join
+// cn is defined locally below via clsx + tailwind-merge
 
 interface InfoCardComponentProps {
     node: {

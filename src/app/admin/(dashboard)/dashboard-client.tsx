@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Users, Eye, MousePointerClick, TrendingUp, Plus, Mail, FileText } from "lucide-react"
+import { Users, Eye, MousePointerClick, TrendingUp, Plus, Mail, FileText, Briefcase, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -62,7 +62,7 @@ export function DashboardClient({ stats, activities, userName = "Chief" }: Dashb
                 </div>
                 <div className="flex gap-2">
                     <Button asChild className="bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 transition-all hover:scale-105">
-                        <Link href="/admin/blog/new">
+                        <Link href="/admin/blog/create">
                             <Plus className="mr-2 h-4 w-4" /> New Post
                         </Link>
                     </Button>
@@ -106,29 +106,45 @@ export function DashboardClient({ stats, activities, userName = "Chief" }: Dashb
                             <CardTitle>Quick Actions</CardTitle>
                             <CardDescription>Fast track your workflow</CardDescription>
                         </CardHeader>
-                        <CardContent className="grid gap-4">
-                            <Button variant="outline" className="w-full justify-start h-12 text-lg font-light hover:bg-white/5 hover:text-primary hover:border-primary/50 transition-all group" asChild>
+                        <CardContent className="grid gap-3">
+                            <Button variant="outline" className="w-full justify-start h-11 font-light hover:bg-white/5 hover:text-primary hover:border-primary/50 transition-all group" asChild>
                                 <Link href="/admin/emails">
-                                    <div className="p-2 rounded-full bg-primary/10 mr-3 group-hover:bg-primary group-hover:text-white transition-colors">
+                                    <div className="p-1.5 rounded-full bg-primary/10 mr-3 group-hover:bg-primary group-hover:text-white transition-colors">
                                         <Mail className="h-4 w-4" />
                                     </div>
                                     Send Proposal
                                 </Link>
                             </Button>
-                            <Button variant="outline" className="w-full justify-start h-12 text-lg font-light hover:bg-white/5 hover:text-purple-400 hover:border-purple-500/50 transition-all group" asChild>
-                                <Link href="/admin/blog/new">
-                                    <div className="p-2 rounded-full bg-purple-500/10 mr-3 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                            <Button variant="outline" className="w-full justify-start h-11 font-light hover:bg-white/5 hover:text-purple-400 hover:border-purple-500/50 transition-all group" asChild>
+                                <Link href="/admin/blog/create">
+                                    <div className="p-1.5 rounded-full bg-purple-500/10 mr-3 group-hover:bg-purple-500 group-hover:text-white transition-colors">
                                         <FileText className="h-4 w-4" />
                                     </div>
                                     Write Article
                                 </Link>
                             </Button>
-                            <Button variant="outline" className="w-full justify-start h-12 text-lg font-light hover:bg-white/5 hover:text-emerald-400 hover:border-emerald-500/50 transition-all group" asChild>
+                            <Button variant="outline" className="w-full justify-start h-11 font-light hover:bg-white/5 hover:text-emerald-400 hover:border-emerald-500/50 transition-all group" asChild>
                                 <Link href="/admin/crm">
-                                    <div className="p-2 rounded-full bg-emerald-500/10 mr-3 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                                    <div className="p-1.5 rounded-full bg-emerald-500/10 mr-3 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
                                         <Users className="h-4 w-4" />
                                     </div>
                                     Add Client
+                                </Link>
+                            </Button>
+                            <Button variant="outline" className="w-full justify-start h-11 font-light hover:bg-white/5 hover:text-orange-400 hover:border-orange-500/50 transition-all group" asChild>
+                                <Link href="/admin/applications/new">
+                                    <div className="p-1.5 rounded-full bg-orange-500/10 mr-3 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                                        <Briefcase className="h-4 w-4" />
+                                    </div>
+                                    New Application
+                                </Link>
+                            </Button>
+                            <Button variant="outline" className="w-full justify-start h-11 font-light hover:bg-white/5 hover:text-cyan-400 hover:border-cyan-500/50 transition-all group" asChild>
+                                <Link href="/admin/job-analysis">
+                                    <div className="p-1.5 rounded-full bg-cyan-500/10 mr-3 group-hover:bg-cyan-500 group-hover:text-white transition-colors">
+                                        <Search className="h-4 w-4" />
+                                    </div>
+                                    AI Job Analysis
                                 </Link>
                             </Button>
                         </CardContent>
@@ -143,7 +159,8 @@ const iconMap: Record<string, React.ElementType> = {
     "eye": Eye,
     "users": Users,
     "mouse-pointer": MousePointerClick,
-    "trending-up": TrendingUp
+    "trending-up": TrendingUp,
+    "briefcase": Briefcase,
 }
 
 interface StatCardProps extends StatData { }

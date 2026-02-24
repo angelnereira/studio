@@ -14,6 +14,7 @@ import { Send, Users, Loader2, Sparkles, FileJson } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { WelcomeEmail, ServiceInquiryEmail, NewsletterEmail, ProjectCompleteEmail } from "@/emails/index"
+import type { TemplateData } from "@/types/profile"
 
 function SubmitButton({ label = "Send Email" }) {
     const { pending } = useFormStatus()
@@ -39,7 +40,7 @@ export function EmailForm() {
 
     // Template State
     const [selectedTemplate, setSelectedTemplate] = useState("welcome")
-    const [templateData, setTemplateData] = useState<any>({ name: "", previewText: "Welcome to our platform!" })
+    const [templateData, setTemplateData] = useState<TemplateData>({ name: "", previewText: "Welcome to our platform!" })
     const [jsonInput, setJsonInput] = useState("")
 
     // Manual form handling wrapper to use toast
@@ -77,7 +78,7 @@ export function EmailForm() {
     }
 
     const updateField = (key: string, value: string) => {
-        setTemplateData((prev: any) => ({ ...prev, [key]: value }))
+        setTemplateData((prev: TemplateData) => ({ ...prev, [key]: value }))
     }
 
     const currentTemplateFields = TEMPLATES.find(t => t.id === selectedTemplate)?.fields || []

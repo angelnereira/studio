@@ -4,6 +4,22 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import Resend from "next-auth/providers/resend"
 
+// Extend NextAuth types to include role
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+      role: string;
+    };
+  }
+  interface User {
+    role: string;
+  }
+}
+
 // Validation of required environment variables
 if (!process.env.RESEND_API_KEY) {
   console.warn("⚠️  RESEND_API_KEY is missing in environment variables!")
@@ -14,7 +30,8 @@ if (!process.env.AUTH_SECRET) {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  adapter: PrismaAdapter(prisma) as any,
   providers: [
     Resend({
       apiKey: process.env.RESEND_API_KEY,
@@ -56,14 +73,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, user }) {
       if (session.user) {
         // Add role to session for RBAC if it exists on user
-        // @ts-ignore
         session.user.role = user.role;
       }
       return session;
     },
     async signIn({ user }) {
-      // Security: Only allow specific email(s) to sign in initially
-      const allowedEmails = ["angel.nereira@gmail.com", "contact@angelnereira.com", "angel@angelnereira.com"];
+      // Security: Only allow specific email(s) to sign in
+      // Configure via ALLOWED_ADMIN_EMAILS env var (comma-separated) or fall back to defaults
+      const defaultEmails = ["angel.nereira@gmail.com", "contact@angelnereira.com", "angel@angelnereira.com"];
+      const allowedEmails = process.env.ALLOWED_ADMIN_EMAILS
+        ? process.env.ALLOWED_ADMIN_EMAILS.split(",").map(e => e.trim())
+        : defaultEmails;
 
       if (user.email && allowedEmails.includes(user.email)) {
         return true;

@@ -8,6 +8,7 @@ import { generateApplicationContent, GenerateApplicationContentOutput } from "@/
 import { Resend } from "resend";
 import { revalidatePath } from "next/cache";
 import { load } from "cheerio";
+import type { WorkExperience, SkillCategory, VacancyRequirements, VacancyAnalysis } from "@/types/profile";
 
 // ============================================
 // Schemas
@@ -148,9 +149,9 @@ export async function captureVacancy(
             ? {
                 name: profile.name,
                 summary: profile.summary,
-                skills: profile.skills as any[],
-                experience: profile.experience as any[],
-                yearsOfExperience: (profile.experience as any[])?.length * 2 || 5,
+                skills: profile.skills as unknown as SkillCategory[],
+                experience: profile.experience as unknown as WorkExperience[],
+                yearsOfExperience: (profile.experience as unknown as WorkExperience[])?.length * 2 || 5,
             }
             : undefined;
 
@@ -171,8 +172,8 @@ export async function captureVacancy(
                 location: analysis.location,
                 workMode: analysis.workMode === "unknown" ? null : analysis.workMode,
                 salaryRange: analysis.salaryRange,
-                analysis: analysis as any,
-                requirements: analysis.requirements as any,
+                analysis: JSON.parse(JSON.stringify(analysis)),
+                requirements: JSON.parse(JSON.stringify(analysis.requirements)),
                 keywords: analysis.keywords,
                 compatibilityScore: analysis.compatibilityScore,
                 suggestions: analysis.suggestions,
@@ -243,25 +244,25 @@ export async function generateApplication(
                 phone: profile.phone || undefined,
                 location: profile.location || undefined,
                 summary: profile.summary,
-                experience: profile.experience as any[],
-                skills: profile.skills as any[],
-                education: profile.education as any[],
-                languages: profile.languages as any[] || undefined,
-                socialLinks: profile.socialLinks as any || undefined,
+                experience: profile.experience as unknown as WorkExperience[],
+                skills: profile.skills as unknown as SkillCategory[],
+                education: (profile.education as unknown as Array<{ institution: string; degree: string; year?: string }>),
+                languages: (profile.languages as unknown as Array<{ language: string; level: string }>) || undefined,
+                socialLinks: profile.socialLinks as Record<string, string> || undefined,
             },
             vacancy: {
                 company: vacancy.company,
                 position: vacancy.position,
                 requirements: {
-                    technical: (vacancy.requirements as any)?.technical?.map((r: any) => r.skill) || [],
-                    softSkills: (vacancy.requirements as any)?.softSkills || [],
+                    technical: (vacancy.requirements as VacancyRequirements)?.technical?.map((r) => r.skill) || [],
+                    softSkills: (vacancy.requirements as VacancyRequirements)?.softSkills || [],
                 },
                 keywords: vacancy.keywords,
-                industryDomain: (vacancy.analysis as any)?.industryDomain || null,
-                cultureFit: (vacancy.analysis as any)?.cultureFit || null,
+                industryDomain: (vacancy.analysis as VacancyAnalysis)?.industryDomain || null,
+                cultureFit: (vacancy.analysis as VacancyAnalysis)?.cultureFit || null,
             },
             recipientName,
-            language,
+            language: (language === 'es' ? 'es' : 'en') as 'en' | 'es',
         });
 
         // Create application record
@@ -269,7 +270,7 @@ export async function generateApplication(
             data: {
                 vacancyId,
                 profileId,
-                cvContent: content.cv as any,
+                cvContent: JSON.parse(JSON.stringify(content.cv)),
                 emailSubject: content.email.subject,
                 emailHtml: `${content.email.greeting}\n\n${content.email.opening}\n\n${content.email.body}\n\n${content.email.closing}\n\n${content.email.signature}`,
                 emailText: `${content.email.greeting}\n\n${content.email.opening}\n\n${content.email.body}\n\n${content.email.closing}\n\n${content.email.signature}`,
@@ -322,8 +323,119 @@ export async function sendApplication(
 
         const resend = new Resend(process.env.RESEND_API_KEY);
 
-        // TODO: Generate PDF and attach
-        // For now, send email without attachment
+        // Generate PDF attachment from CV content
+        let attachments: { filename: string; content: Buffer }[] = [];
+        try {
+            const cvContent = application.cvContent as Record<string, unknown>;
+            if (cvContent) {
+                const { default: jsPDF } = await import('jspdf');
+                const doc = new jsPDF();
+                const profile = application.profile;
+                const vacancy = application.vacancy;
+
+                // Simple but professional CV PDF
+                const pageWidth = doc.internal.pageSize.getWidth();
+                const margin = 20;
+                const contentWidth = pageWidth - 2 * margin;
+                let y = 20;
+
+                // Header
+                doc.setFillColor(223, 255, 0);
+                doc.rect(0, 0, pageWidth, 50, 'F');
+                doc.setTextColor(0, 0, 0);
+                doc.setFontSize(24);
+                doc.setFont('helvetica', 'bold');
+                doc.text(profile.name, margin, y + 12);
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                doc.text([profile.email, profile.phone, profile.location].filter(Boolean).join(' · '), margin, y + 22);
+
+                y = 60;
+                doc.setTextColor(255, 255, 255);
+
+                // Target position
+                if (vacancy.position && vacancy.company) {
+                    doc.setFillColor(30, 30, 30);
+                    doc.roundedRect(margin, y, contentWidth, 12, 3, 3, 'F');
+                    doc.setFontSize(9);
+                    doc.setTextColor(223, 255, 0);
+                    doc.text(`Application for: ${vacancy.position} at ${vacancy.company}`, margin + 5, y + 8);
+                    y += 20;
+                }
+
+                // Summary
+                const summary = (cvContent.summary as string) || profile.summary;
+                if (summary) {
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(223, 255, 0);
+                    doc.text('Professional Summary', margin, y);
+                    y += 7;
+                    doc.setFontSize(9);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(180, 180, 180);
+                    const lines = doc.splitTextToSize(summary, contentWidth);
+                    lines.forEach((line: string) => { doc.text(line, margin, y); y += 4.5; });
+                    y += 5;
+                }
+
+                // Skills
+                const skills = (cvContent.skillsHighlighted as string[]) || [];
+                if (skills.length > 0) {
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(223, 255, 0);
+                    doc.text('Key Skills', margin, y);
+                    y += 7;
+                    doc.setFontSize(9);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(255, 255, 255);
+                    doc.text(skills.slice(0, 15).join(' · '), margin, y);
+                    y += 10;
+                }
+
+                // Experience
+                const experience = (cvContent.experience as Record<string, unknown>[]) || [];
+                if (experience.length > 0) {
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(223, 255, 0);
+                    doc.text('Professional Experience', margin, y);
+                    y += 7;
+                    experience.slice(0, 5).forEach((exp) => {
+                        if (y > 270) { doc.addPage(); y = 20; }
+                        doc.setFontSize(10);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(255, 255, 255);
+                        doc.text(String(exp.position || ''), margin, y);
+                        doc.setFontSize(9);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(156, 163, 175);
+                        doc.text(`${exp.company || ''} · ${exp.period || ''}`, margin, y + 5);
+                        y += 12;
+                        const highlights = (exp.highlights as string[]) || [];
+                        highlights.slice(0, 3).forEach((h: string) => {
+                            const hLines = doc.splitTextToSize(`• ${h}`, contentWidth - 5);
+                            hLines.forEach((line: string) => { doc.text(line, margin + 3, y); y += 4; });
+                        });
+                        y += 3;
+                    });
+                }
+
+                // Generate buffer
+                const pdfBuffer = Buffer.from(doc.output('arraybuffer'));
+                const safeName = profile.name.replace(/\s+/g, '_');
+                const safeCompany = (vacancy.company || 'General').replace(/\s+/g, '_');
+                attachments = [{
+                    filename: `${safeName}_CV_${safeCompany}.pdf`,
+                    content: pdfBuffer,
+                }];
+            }
+        } catch (pdfError) {
+            console.error('PDF generation failed, sending without attachment:', pdfError);
+            // Continue without attachment
+        }
+
         const result = await resend.emails.send({
             from: `${application.profile.name} <contact@angelnereira.com>`,
             to: [application.recipientEmail],
@@ -331,6 +443,7 @@ export async function sendApplication(
             html: application.emailHtml,
             text: application.emailText,
             replyTo: application.profile.email,
+            ...(attachments.length > 0 && { attachments }),
         });
 
         if (result.error) {

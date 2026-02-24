@@ -25,7 +25,7 @@ export async function POST(req: Request) {
         const payload = await req.json()
         const { type, data } = payload
 
-        console.log("Resend Webhook:", type, data)
+        // Log webhook events for debugging/audit (only type, not full data)
 
         if (!data || !type) {
             return new NextResponse("Invalid Payload", { status: 400 })
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
         // Extract Metadata (Tags)
         // Tags come as array: [{ name: 'key', value: 'val' }]
         const tags = data.tags || []
-        const campaignIdTag = tags.find((t: any) => t.name === 'campaignId')
+        const campaignIdTag = tags.find((t: { name: string; value: string }) => t.name === 'campaignId')
         const campaignId = campaignIdTag ? campaignIdTag.value : null
 
         // If we don't have a campaign ID, we can't associate metrics easily unless we rely on 'to' address and time

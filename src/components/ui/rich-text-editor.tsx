@@ -5,13 +5,13 @@ import StarterKit from "@tiptap/starter-kit"
 import LinkExtension from "@tiptap/extension-link"
 import ImageExtension from "@tiptap/extension-image"
 import { Color } from '@tiptap/extension-color'
-import TextStyle from '@tiptap/extension-text-style'
+import { TextStyle } from '@tiptap/extension-text-style'
 import Highlight from '@tiptap/extension-highlight'
-import Underline from '@tiptap/extension-underline'
+import UnderlineExt from '@tiptap/extension-underline'
 import TextAlign from '@tiptap/extension-text-align'
 import { Toggle } from "@/components/ui/toggle"
 import {
-    Bold, Italic, Strikethrough, List, ListOrdered, Quote,
+    Bold, Italic, Strikethrough, Underline, List, ListOrdered, Quote,
     Undo, Redo, Link as LinkIcon, Image as ImageIcon, Code, LayoutTemplate,
     Palette, Highlighter, AlignLeft, AlignCenter, AlignRight, MessageSquare, PlusCircle
 } from "lucide-react"
@@ -203,9 +203,7 @@ const Toolbar = ({ editor, services = [] }: { editor: Editor | null, services?: 
                 <Italic className="h-4 w-4" />
             </Toggle>
             <Toggle size="sm" pressed={editor.isActive('underline')} onPressedChange={() => editor.chain().focus().toggleUnderline().run()}>
-                <Underline className="h-4 w-4" /> // Correct icon name import was assumed? Lucide doesn't have Underline by default usually?
-                {/* Wait, lucide-react has 'Underline' icon. Let's check imports. I imported Underline extension, but need icon. */}
-                {/* Lucide 'Underline' icon exists. */}
+                <Underline className="h-4 w-4" />
             </Toggle>
             <Toggle size="sm" pressed={editor.isActive('strike')} onPressedChange={() => editor.chain().focus().toggleStrike().run()}>
                 <Strikethrough className="h-4 w-4" />
@@ -347,7 +345,7 @@ export function RichTextEditor({ content, onChange, editable = true, services }:
             TextStyle,
             Color,
             Highlight.configure({ multicolor: true }),
-            Underline,
+            UnderlineExt,
             TextAlign.configure({ types: ['heading', 'paragraph'] }),
             EmailButton,
             EmailInfoCard,
