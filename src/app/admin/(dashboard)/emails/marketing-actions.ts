@@ -301,3 +301,70 @@ export async function getContacts() {
         select: { id: true, name: true, email: true }
     })
 }
+
+export async function deleteCampaign(campaignId: string) {
+    const session = await auth()
+    if (!session?.user) return { success: false, message: "Unauthorized" }
+    try {
+        await prisma.campaignRecipient.deleteMany({ where: { campaignId } })
+        await prisma.emailCampaign.delete({ where: { id: campaignId } })
+        revalidatePath('/admin/emails')
+        return { success: true, message: "Campaign deleted" }
+    } catch (error) {
+        return { success: false, message: error instanceof Error ? error.message : "Delete failed" }
+    }
+}
+
+export async function duplicateCampaign(campaignId: string) {
+    const session = await auth()
+    if (!session?.user) return { success: false, message: "Unauthorized" }
+    try {
+        const original = await prisma.emailCampaign.findUnique({ where: { id: campaignId } })
+        if (!original) return { success: false, message: "Campaign not found" }
+        const copy = await prisma.emailCampaign.create({
+            data: {
+                name: `${original.name} (copy)`,
+                subject: original.subject,
+                content: original.content,
+                senderId: original.senderId,
+                audienceFilter: original.audienceFilter || {},
+                status: 'draft',
+            }
+        })
+        revalidatePath('/admin/emails')
+        return { success: true, message: "Campaign duplicated", id: copy.id }
+    } catch (error) {
+        return { success: false, message: error instanceof Error ? error.message : "Duplicate failed" }
+    }
+}
+
+export async function getCampaignStats(campaignId: string) {
+    const session = await auth()
+    if (!session?.user) return null
+    const campaign = await prisma.emailCampaign.findUnique({
+        where: { id: campaignId },
+        include: {
+            sender: true,
+            recipients: {
+                select: { status: true, email: true }
+            }
+        }
+    })
+    if (!campaign) return null
+    const recipients = campaign.recipients || []
+    return {
+        id: campaign.id,
+        name: campaign.name,
+        subject: campaign.subject,
+        status: campaign.status,
+        createdAt: campaign.createdAt,
+        senderName: campaign.sender?.name || 'Unknown',
+        senderEmail: campaign.sender?.email || '',
+        total: recipients.length,
+        sent: recipients.filter(r => r.status === 'sent' || r.status === 'delivered' || r.status === 'opened' || r.status === 'clicked').length,
+        delivered: recipients.filter(r => r.status === 'delivered' || r.status === 'opened' || r.status === 'clicked').length,
+        opened: recipients.filter(r => r.status === 'opened' || r.status === 'clicked').length,
+        clicked: recipients.filter(r => r.status === 'clicked').length,
+        failed: recipients.filter(r => r.status === 'failed' || r.status === 'bounced').length,
+    }
+}

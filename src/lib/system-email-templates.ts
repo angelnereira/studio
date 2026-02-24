@@ -305,4 +305,125 @@ export const systemTemplates: SystemTemplate[] = [
 </div>
         `.trim(),
     },
+    {
+        id: "sys-project-proposal",
+        name: "🤝 Propuesta de Proyecto",
+        category: "sales",
+        subject: "Propuesta: {{projectName}} — Ángel Nereira",
+        description: "Propuesta profesional de proyecto con alcance y precio",
+        content: `
+<div style="font-family: 'Inter', sans-serif; background-color: #080c0a; color: #fff; padding: 32px;">
+    <div style="max-width: 560px; margin: 0 auto; background: rgba(13,20,16,0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 32px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <div style="width: 48px; height: 48px; background-color: #DFFF00; border-radius: 8px; margin: 0 auto; display: inline-flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 20px;">AN</div>
+        </div>
+        <h1 style="color: #fff; font-size: 24px; text-align: center; margin: 0 0 8px 0;">Propuesta de Proyecto</h1>
+        <p style="color: #DFFF00; font-size: 14px; text-align: center; margin: 0 0 24px 0; font-weight: 600;">{{projectName}}</p>
+        <p style="color: #9ca3af; font-size: 14px; line-height: 24px;">Hola {{clientName}},</p>
+        <p style="color: #9ca3af; font-size: 14px; line-height: 24px;">Gracias por tu interés. He preparado la siguiente propuesta basada en nuestra conversación:</p>
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0;">
+
+        <p style="color: #DFFF00; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px 0;">📋 Alcance del Proyecto</p>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+            <p style="color: #fff; font-size: 14px; line-height: 22px; margin: 0;">{{scope}}</p>
+        </div>
+
+        <p style="color: #DFFF00; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px 0;">⏱️ Tiempo Estimado</p>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+            <p style="color: #fff; font-size: 14px; margin: 0;">{{timeline}}</p>
+        </div>
+
+        <p style="color: #DFFF00; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px 0;">💰 Inversión</p>
+        <div style="background: linear-gradient(135deg, rgba(19,109,86,0.2), rgba(223,255,0,0.1)); border: 2px solid #DFFF00; border-radius: 12px; padding: 24px; text-align: center;">
+            <p style="color: #DFFF00; font-size: 32px; font-weight: bold; margin: 0 0 4px 0;">{{price}}</p>
+            <p style="color: #9ca3af; font-size: 13px; margin: 0;">{{paymentTerms}}</p>
+        </div>
+
+        <div style="text-align: center; margin: 32px 0;">
+            <a href="https://angelnereira.com/contact" style="background-color: #DFFF00; color: #000; padding: 14px 32px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">Aceptar Propuesta</a>
+        </div>
+
+        <p style="color: #9ca3af; font-size: 14px; line-height: 24px;">¿Tienes preguntas? Responde directamente a este correo.<br><strong style="color: #fff;">— Ángel Nereira</strong></p>
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0;">
+        <p style="color: #6b7280; font-size: 12px; text-align: center;">Ángel Nereira · Ingeniero de Software Full Stack · <a href="https://angelnereira.com" style="color: #DFFF00;">angelnereira.com</a></p>
+    </div>
+</div>
+        `.trim(),
+    },
+    {
+        id: "sys-monthly-report",
+        name: "📊 Reporte Mensual",
+        category: "transactional",
+        subject: "Reporte {{month}} — Progreso de tu proyecto",
+        description: "Resumen mensual de entregables y progreso para clientes",
+        content: `
+<div style="font-family: 'Inter', sans-serif; background-color: #080c0a; color: #fff; padding: 32px;">
+    <div style="max-width: 560px; margin: 0 auto; background: rgba(13,20,16,0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 32px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <div style="width: 48px; height: 48px; background-color: #DFFF00; border-radius: 8px; margin: 0 auto; display: inline-flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 20px;">AN</div>
+        </div>
+        <h1 style="color: #fff; font-size: 24px; text-align: center; margin: 0 0 8px 0;">📊 Reporte del Mes</h1>
+        <p style="color: #DFFF00; font-size: 14px; text-align: center; margin: 0 0 24px 0;">{{month}} — {{projectName}}</p>
+        <p style="color: #9ca3af; font-size: 14px; line-height: 24px;">Hola {{clientName}},</p>
+        <p style="color: #9ca3af; font-size: 14px; line-height: 24px;">Aquí tienes el resumen de lo logrado este mes en tu proyecto:</p>
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0;">
+
+        <p style="color: #DFFF00; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px 0;">✅ Completado</p>
+        <div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+            <p style="color: #10b981; font-size: 14px; line-height: 22px; margin: 0;">{{completedItems}}</p>
+        </div>
+
+        <p style="color: #DFFF00; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px 0;">🔄 En Progreso</p>
+        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+            <p style="color: #3b82f6; font-size: 14px; line-height: 22px; margin: 0;">{{inProgressItems}}</p>
+        </div>
+
+        <p style="color: #DFFF00; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px 0;">📅 Próximo Mes</p>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+            <p style="color: #9ca3af; font-size: 14px; line-height: 22px; margin: 0;">{{nextMonthPlan}}</p>
+        </div>
+
+        <div style="background: rgba(223,255,0,0.08); border: 1px solid rgba(223,255,0,0.2); border-radius: 8px; padding: 16px; text-align: center; margin-top: 24px;">
+            <p style="color: #9ca3af; font-size: 12px; margin: 0 0 4px 0;">Progreso General</p>
+            <p style="color: #DFFF00; font-size: 28px; font-weight: bold; margin: 0;">{{progressPercent}}%</p>
+        </div>
+
+        <p style="color: #9ca3af; font-size: 14px; line-height: 24px; margin-top: 24px;">Si tienes feedback o preguntas, no dudes en responder.<br><strong style="color: #fff;">— Ángel</strong></p>
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0;">
+        <p style="color: #6b7280; font-size: 12px; text-align: center;">Ángel Nereira · <a href="https://angelnereira.com" style="color: #DFFF00;">angelnereira.com</a></p>
+    </div>
+</div>
+        `.trim(),
+    },
+    {
+        id: "sys-holiday",
+        name: "🎄 Saludo Festivo",
+        category: "engagement",
+        subject: "🎉 ¡Felices Fiestas de parte de Ángel Nereira!",
+        description: "Mensaje de gratitud y saludos para fechas festivas",
+        content: `
+<div style="font-family: 'Inter', sans-serif; background-color: #080c0a; color: #fff; padding: 32px;">
+    <div style="max-width: 500px; margin: 0 auto; background: rgba(13,20,16,0.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 40px 32px; text-align: center;">
+        <div style="font-size: 48px; margin-bottom: 16px;">🎉</div>
+        <h1 style="color: #fff; font-size: 28px; margin: 0 0 8px 0;">¡Felices Fiestas!</h1>
+        <p style="color: #DFFF00; font-size: 14px; margin: 0 0 24px 0;">De parte de Ángel Nereira</p>
+        <div style="background: linear-gradient(135deg, rgba(223,255,0,0.08), rgba(19,109,86,0.15)); border: 1px solid rgba(223,255,0,0.15); border-radius: 12px; padding: 24px; text-align: left;">
+            <p style="color: #9ca3af; font-size: 14px; line-height: 24px; margin: 0 0 16px 0;">Hola {{name}},</p>
+            <p style="color: #9ca3af; font-size: 14px; line-height: 24px; margin: 0 0 16px 0;">Quiero agradecerte por la confianza que has depositado en mi trabajo este año. Ha sido un placer colaborar contigo y ver tus proyectos crecer.</p>
+            <p style="color: #9ca3af; font-size: 14px; line-height: 24px; margin: 0;">Te deseo unas <strong style="color: #DFFF00;">fiestas llenas de éxitos, descanso y nuevas ideas</strong>. ¡Nos vemos el próximo año con toda la energía!</p>
+        </div>
+        <div style="margin: 32px 0;">
+            <a href="https://angelnereira.com" style="background-color: #DFFF00; color: #000; padding: 12px 28px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">Visitar Mi Portafolio</a>
+        </div>
+        <p style="color: #fff; font-size: 16px; margin: 0;">Con gratitud,<br><strong style="color: #DFFF00;">Ángel Nereira</strong></p>
+        <p style="color: #6b7280; font-size: 12px; margin-top: 24px;">Ingeniero de Software Full Stack · Panamá</p>
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0;">
+        <div>
+            <a href="https://github.com/angelnereira" style="color: #9ca3af; font-size: 12px; margin-right: 16px;">GitHub</a>
+            <a href="https://linkedin.com/in/angelnereira" style="color: #9ca3af; font-size: 12px;">LinkedIn</a>
+        </div>
+    </div>
+</div>
+        `.trim(),
+    },
 ];

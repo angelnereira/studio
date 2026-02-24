@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { format } from "date-fns"
 import {
     Send, LayoutTemplate, Users, Settings, Plus,
-    ArrowRight, ChevronRight, Check, Calendar as CalendarIcon,
+    ArrowRight, ChevronRight, Check, Calendar as CalendarIcon, Copy, BarChart3,
     FileText, Save, Loader2, Trash2, Mail, Paperclip
 } from "lucide-react"
 
@@ -27,7 +27,7 @@ import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { VisualEmailComposer } from "@/components/admin/emails/visual-email-composer"
 import { services } from "@/lib/services"
 import { systemTemplates, type SystemTemplate } from "@/lib/system-email-templates"
-import { createSenderIdentity, createTemplate, sendCampaign, saveCampaignDraft, deleteSenderIdentity } from "@/app/admin/(dashboard)/emails/marketing-actions"
+import { createSenderIdentity, createTemplate, sendCampaign, saveCampaignDraft, deleteSenderIdentity, deleteCampaign, duplicateCampaign } from "@/app/admin/(dashboard)/emails/marketing-actions"
 
 // Types
 type Identity = { id: string; name: string; email: string; verified: boolean }
@@ -340,26 +340,27 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                                     &lt;/&gt; Code
                                                 </button>
                                             </div>
-                                            {editorMode === 'code' && (
-                                                <Select onValueChange={(v) => {
-                                                    const t = allTemplates.find(t => t.id === v)
-                                                    if (t) setDraft({ ...draft, content: t.content, subject: draft.subject || t.subject || "" })
-                                                }}>
-                                                    <SelectTrigger className="w-[200px] h-8 text-xs">
-                                                        <SelectValue placeholder="Load Template..." />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">📦 System Templates</div>
-                                                        {allTemplates.filter(t => t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
-                                                        {templates.length > 0 && (
-                                                            <>
-                                                                <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground border-t border-white/10 mt-1 pt-2">📝 My Templates</div>
-                                                                {allTemplates.filter(t => !t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
-                                                            </>
-                                                        )}
-                                                    </SelectContent>
-                                                </Select>
-                                            )}
+                                            <Select onValueChange={(v) => {
+                                                const t = allTemplates.find(t => t.id === v)
+                                                if (t) {
+                                                    setDraft({ ...draft, content: t.content, subject: draft.subject || t.subject || "" })
+                                                    toast({ title: "Template Loaded", description: `"${t.name}" applied.` })
+                                                }
+                                            }}>
+                                                <SelectTrigger className="w-[200px] h-8 text-xs">
+                                                    <SelectValue placeholder="Load Template..." />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">📦 System Templates</div>
+                                                    {allTemplates.filter(t => t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                                                    {templates.length > 0 && (
+                                                        <>
+                                                            <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground border-t border-white/10 mt-1 pt-2">📝 My Templates</div>
+                                                            {allTemplates.filter(t => !t.isSystem).map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                                                        </>
+                                                    )}
+                                                </SelectContent>
+                                            </Select>
                                         </div>
                                     </div>
 
@@ -513,7 +514,11 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                         ) : (
                                             <Badge variant="outline">Unverified</Badge>
                                         )}
-                                        <Button size="icon" variant="ghost" className="text-red-400 hover:text-red-300 hover:bg-red-950/20">
+                                        <Button size="icon" variant="ghost" className="text-red-400 hover:text-red-300 hover:bg-red-950/20" onClick={async () => {
+                                            await deleteSenderIdentity(identity.id)
+                                            toast({ title: "Deleted", description: "Sender identity removed." })
+                                            router.refresh()
+                                        }}>
                                             <Trash2 className="w-4 h-4" />
                                         </Button>
                                     </div>
@@ -541,32 +546,82 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
             {/* --- CAMPAIGNS TAB --- */}
             <TabsContent value="campaigns">
                 <Card className="bg-black/40 border-white/10">
-                    <CardHeader><CardTitle>Past Campaigns</CardTitle></CardHeader>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2"><BarChart3 className="w-5 h-5" /> Campaign Results</CardTitle>
+                        <CardDescription>Track performance and manage your sent campaigns.</CardDescription>
+                    </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
                             {campaigns.length === 0 ? (
-                                <p className="text-muted-foreground text-center py-8">No campaigns yet.</p>
-                            ) : campaigns.map(c => (
-                                <div key={c.id} className="flex items-center justify-between p-4 rounded-lg border border-white/10 bg-black/20 hover:bg-white/5 transition-colors">
-                                    <div>
-                                        <h4 className="font-bold">{c.name}</h4>
-                                        <p className="text-xs text-muted-foreground">Sent on {c.createdAt ? format(new Date(c.createdAt), 'MMM d, yyyy') : 'Draft'}</p>
-                                    </div>
-                                    <div className="flex items-center gap-6">
-                                        <div className="text-center">
-                                            <p className="text-xl font-bold">{c.statsSent}</p>
-                                            <p className="text-[10px] text-muted-foreground uppercase">Sent</p>
-                                        </div>
-                                        <div className="text-center">
-                                            <p className="text-xl font-bold text-blue-400">{c.statsOpened}</p>
-                                            <p className="text-[10px] text-muted-foreground uppercase">Opened</p>
-                                        </div>
-                                        <Badge variant={c.status === 'completed' ? 'default' : 'secondary'} className="capitalize">
-                                            {c.status}
-                                        </Badge>
-                                    </div>
+                                <div className="text-center py-12">
+                                    <Send className="w-12 h-12 mx-auto mb-4 text-muted-foreground opacity-40" />
+                                    <p className="text-muted-foreground">No campaigns sent yet.</p>
+                                    <p className="text-xs text-muted-foreground mt-1">Go to the Compose tab to create your first campaign.</p>
                                 </div>
-                            ))}
+                            ) : campaigns.map(c => {
+                                const openRate = c.statsSent > 0 ? Math.round((c.statsOpened / c.statsSent) * 100) : 0
+                                return (
+                                    <div key={c.id} className="p-4 rounded-lg border border-white/10 bg-black/20 hover:bg-white/5 transition-colors space-y-3">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <h4 className="font-bold">{c.name}</h4>
+                                                <p className="text-xs text-muted-foreground">
+                                                    {c.createdAt ? format(new Date(c.createdAt), 'MMM d, yyyy') : 'Draft'}
+                                                    {c.sender && ` · via ${c.sender.email}`}
+                                                </p>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <Badge variant={c.status === 'completed' ? 'default' : c.status === 'failed' ? 'destructive' : 'secondary'} className="capitalize">
+                                                    {c.status}
+                                                </Badge>
+                                                <Button size="icon" variant="ghost" className="h-7 w-7 text-muted-foreground hover:text-white" onClick={async () => {
+                                                    const result = await duplicateCampaign(c.id)
+                                                    if (result.success) {
+                                                        toast({ title: "Duplicated", description: "Campaign cloned as draft." })
+                                                        router.refresh()
+                                                    }
+                                                }}>
+                                                    <Copy className="w-3.5 h-3.5" />
+                                                </Button>
+                                                <Button size="icon" variant="ghost" className="h-7 w-7 text-red-400 hover:text-red-300 hover:bg-red-950/20" onClick={async () => {
+                                                    if (confirm('Delete this campaign?')) {
+                                                        const result = await deleteCampaign(c.id)
+                                                        if (result.success) {
+                                                            toast({ title: "Deleted" })
+                                                            router.refresh()
+                                                        }
+                                                    }
+                                                }}>
+                                                    <Trash2 className="w-3.5 h-3.5" />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                        {/* Stats bar */}
+                                        <div className="grid grid-cols-4 gap-3">
+                                            <div className="bg-black/30 rounded-lg p-2.5 text-center border border-white/5">
+                                                <p className="text-lg font-bold">{c.statsSent}</p>
+                                                <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Sent</p>
+                                            </div>
+                                            <div className="bg-black/30 rounded-lg p-2.5 text-center border border-white/5">
+                                                <p className="text-lg font-bold text-blue-400">{c.statsOpened}</p>
+                                                <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Opened</p>
+                                            </div>
+                                            <div className="bg-black/30 rounded-lg p-2.5 text-center border border-white/5">
+                                                <p className="text-lg font-bold text-green-400">{openRate}%</p>
+                                                <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Open Rate</p>
+                                            </div>
+                                            <div className="bg-black/30 rounded-lg p-2.5 text-center border border-white/5">
+                                                <p className="text-lg font-bold text-yellow-400">{c.statsSent > 0 ? c.statsSent - c.statsOpened : 0}</p>
+                                                <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Pending</p>
+                                            </div>
+                                        </div>
+                                        {/* Open rate bar */}
+                                        <div className="w-full bg-white/5 rounded-full h-1.5">
+                                            <div className="h-full rounded-full bg-gradient-to-r from-primary to-green-400 transition-all" style={{ width: `${openRate}%` }} />
+                                        </div>
+                                    </div>
+                                )
+                            })}
                         </div>
                     </CardContent>
                 </Card>

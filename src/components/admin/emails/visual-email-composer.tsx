@@ -4,7 +4,7 @@ import { useState, useCallback } from "react"
 import {
     Type, Image, MousePointerClick, Minus, MoveVertical,
     Columns2, Share2, FileDown, Plus, Trash2, ChevronUp,
-    ChevronDown, Palette, Eye, Pencil, Copy, Heading1, AlignLeft
+    ChevronDown, Palette, Eye, Pencil, Copy, Heading1, AlignLeft, MessageSquare
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils"
 // TYPES
 // ═══════════════════════════════════════
 
-export type BlockType = 'header' | 'text' | 'image' | 'button' | 'divider' | 'spacer' | 'social' | 'footer'
+export type BlockType = 'header' | 'text' | 'image' | 'button' | 'divider' | 'spacer' | 'columns' | 'testimonial' | 'social' | 'footer'
 
 export interface EmailBlock {
     id: string;
@@ -48,6 +48,8 @@ function createBlock(type: BlockType): EmailBlock {
         button: { text: 'Take Action', href: 'https://angelnereira.com', bgColor: BRAND, textColor: '#000000', borderRadius: '6', align: 'center', fullWidth: false },
         divider: { color: 'rgba(255,255,255,0.1)', thickness: '1', style: 'solid' },
         spacer: { height: '24' },
+        columns: { left: 'Left column content here.', right: 'Right column content here.', textColor: '#9ca3af', gap: '16' },
+        testimonial: { quote: '"Working with Ángel was an incredible experience. The results exceeded our expectations."', author: 'Client Name', role: 'CEO, Company', avatar: '', accentColor: BRAND },
         social: { linkedin: 'https://linkedin.com/in/angelnereira', github: 'https://github.com/angelnereira', twitter: '', website: 'https://angelnereira.com' },
         footer: { text: 'Ángel Nereira · Ingeniero de Software Full Stack · Panamá', textColor: '#6b7280', unsubscribeText: '', bgColor: 'transparent' },
     }
@@ -99,6 +101,28 @@ function blockToHtml(block: EmailBlock): string {
         case 'spacer':
             return `<div style="height: ${p.height}px;"></div>`
 
+        case 'columns':
+            return `<div style="padding: 16px 24px;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+    <td style="width: 48%; vertical-align: top; padding-right: ${Number(p.gap) / 2}px;"><p style="color: ${p.textColor}; font-size: 14px; line-height: 22px; margin: 0; font-family: 'Inter', sans-serif;">${p.left}</p></td>
+    <td style="width: 48%; vertical-align: top; padding-left: ${Number(p.gap) / 2}px;"><p style="color: ${p.textColor}; font-size: 14px; line-height: 22px; margin: 0; font-family: 'Inter', sans-serif;">${p.right}</p></td>
+  </tr></table>
+</div>`
+
+        case 'testimonial':
+            return `<div style="padding: 16px 24px;">
+  <div style="border-left: 3px solid ${p.accentColor}; padding: 16px 20px; background: rgba(255,255,255,0.03); border-radius: 0 8px 8px 0;">
+    <p style="color: #e5e7eb; font-size: 15px; line-height: 24px; font-style: italic; margin: 0 0 16px 0; font-family: 'Inter', sans-serif;">${p.quote}</p>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      ${p.avatar ? `<img src="${p.avatar}" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" />` : `<div style="width: 36px; height: 36px; border-radius: 50%; background: ${p.accentColor}20; display: flex; align-items: center; justify-content: center; color: ${p.accentColor}; font-weight: bold; font-size: 14px;">${String(p.author).charAt(0)}</div>`}
+      <div>
+        <p style="color: #fff; font-size: 13px; font-weight: 600; margin: 0;">${p.author}</p>
+        <p style="color: #6b7280; font-size: 11px; margin: 0;">${p.role}</p>
+      </div>
+    </div>
+  </div>
+</div>`
+
         case 'social': {
             const icons: [string, string, string][] = [
                 ['linkedin', String(p.linkedin), '🔗'],
@@ -141,6 +165,8 @@ const PALETTE: { type: BlockType; label: string; icon: React.ElementType; descri
     { type: 'text', label: 'Text', icon: Type, description: 'Paragraph content' },
     { type: 'image', label: 'Image', icon: Image, description: 'Photo or banner' },
     { type: 'button', label: 'Button', icon: MousePointerClick, description: 'Call-to-action' },
+    { type: 'columns', label: 'Columns', icon: Columns2, description: 'Two-column layout' },
+    { type: 'testimonial', label: 'Testimonial', icon: MessageSquare, description: 'Client quote' },
     { type: 'divider', label: 'Divider', icon: Minus, description: 'Horizontal line' },
     { type: 'spacer', label: 'Spacer', icon: MoveVertical, description: 'Vertical space' },
     { type: 'social', label: 'Social', icon: Share2, description: 'Social links' },
@@ -251,6 +277,29 @@ function BlockEditor({ block, onChange }: { block: EmailBlock; onChange: (props:
         case 'spacer':
             return (
                 <div><Label className="text-xs text-muted-foreground">Height (px)</Label><Input type="range" min="8" max="64" value={String(p.height)} onChange={e => set('height', e.target.value)} className="w-full" /><span className="text-xs text-muted-foreground">{p.height}px</span></div>
+            )
+
+        case 'columns':
+            return (
+                <div className="space-y-3">
+                    <div><Label className="text-xs text-muted-foreground">Left Column</Label><Textarea value={String(p.left)} onChange={e => set('left', e.target.value)} rows={3} className="text-sm" /></div>
+                    <div><Label className="text-xs text-muted-foreground">Right Column</Label><Textarea value={String(p.right)} onChange={e => set('right', e.target.value)} rows={3} className="text-sm" /></div>
+                    <div><Label className="text-xs text-muted-foreground">Gap (px)</Label><Input type="number" value={String(p.gap)} onChange={e => set('gap', e.target.value)} className="h-8 text-xs" min="0" max="32" /></div>
+                    <ColorInput label="Text Color" propKey="textColor" />
+                </div>
+            )
+
+        case 'testimonial':
+            return (
+                <div className="space-y-3">
+                    <div><Label className="text-xs text-muted-foreground">Quote</Label><Textarea value={String(p.quote)} onChange={e => set('quote', e.target.value)} rows={3} className="text-sm" /></div>
+                    <div className="grid grid-cols-2 gap-2">
+                        <div><Label className="text-xs text-muted-foreground">Author</Label><Input value={String(p.author)} onChange={e => set('author', e.target.value)} className="h-8 text-xs" /></div>
+                        <div><Label className="text-xs text-muted-foreground">Role</Label><Input value={String(p.role)} onChange={e => set('role', e.target.value)} className="h-8 text-xs" /></div>
+                    </div>
+                    <div><Label className="text-xs text-muted-foreground">Avatar URL</Label><Input value={String(p.avatar)} onChange={e => set('avatar', e.target.value)} className="h-8 text-xs" placeholder="Optional photo URL" /></div>
+                    <ColorInput label="Accent Color" propKey="accentColor" />
+                </div>
             )
 
         case 'social':
