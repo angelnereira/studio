@@ -6,7 +6,7 @@ import { format } from "date-fns"
 import {
     Send, LayoutTemplate, Users, Settings, Plus,
     ArrowRight, ChevronRight, Check, Calendar as CalendarIcon, Copy, BarChart3,
-    FileText, Save, Loader2, Trash2, Mail, Paperclip
+    FileText, Save, Loader2, Trash2, Mail, Paperclip, Code2, Upload, ShieldCheck, AlertTriangle
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -78,8 +78,103 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
     })
     const [isSending, setIsSending] = useState(false)
     const [selectedContactId, setSelectedContactId] = useState<string>("")
-    const [editorMode, setEditorMode] = useState<'visual' | 'code'>('visual')
+    const [editorMode, setEditorMode] = useState<'visual' | 'code' | 'html'>('visual')
     const [showPreview, setShowPreview] = useState(false)
+    const [rawHtmlInput, setRawHtmlInput] = useState('')
+    const [spamWarnings, setSpamWarnings] = useState<string[]>([])
+
+    // Anti-spam HTML sanitizer
+    const sanitizeEmailHtml = (html: string): { clean: string; warnings: string[] } => {
+        const warnings: string[] = []
+        let clean = html
+
+        // Remove <script> tags
+        const scriptCount = (clean.match(/<script[\s\S]*?<\/script>/gi) || []).length
+        if (scriptCount > 0) { warnings.push(`Removed ${scriptCount} <script> tag(s) — blocked by email clients`); clean = clean.replace(/<script[\s\S]*?<\/script>/gi, '') }
+
+        // Remove <iframe> tags
+        const iframeCount = (clean.match(/<iframe[\s\S]*?<\/iframe>/gi) || []).length + (clean.match(/<iframe[^>]*\/>/gi) || []).length
+        if (iframeCount > 0) { warnings.push(`Removed ${iframeCount} <iframe> tag(s) — spam trigger`); clean = clean.replace(/<iframe[\s\S]*?(<\/iframe>|\/>)/gi, '') }
+
+        // Remove <form> tags
+        if (/<form/i.test(clean)) { warnings.push('Removed <form> tags — most clients block forms'); clean = clean.replace(/<\/?form[^>]*>/gi, '') }
+
+        // Remove <embed>, <object>, <applet>
+        clean = clean.replace(/<(embed|object|applet)[\s\S]*?(<\/(embed|object|applet)>|\/>)/gi, (m) => { warnings.push('Removed embedded objects'); return '' })
+
+        // Remove javascript: URLs
+        if (/javascript:/i.test(clean)) { warnings.push('Removed javascript: URLs — security risk'); clean = clean.replace(/javascript:[^"']*/gi, '#') }
+
+        // Remove on* event handlers (onclick, onload, etc.)
+        const eventCount = (clean.match(/\son\w+\s*=/gi) || []).length
+        if (eventCount > 0) { warnings.push(`Removed ${eventCount} event handler(s) (onclick, onload, etc.)`); clean = clean.replace(/\son\w+\s*=\s*["'][^"']*["']/gi, '') }
+
+        // Remove <style> blocks with @import or expression()
+        if (/@import/i.test(clean) || /expression\s*\(/i.test(clean)) {
+            warnings.push('Removed @import / expression() in CSS — spam trigger')
+            clean = clean.replace(/@import[^;]+;/gi, '')
+            clean = clean.replace(/expression\s*\([^)]*\)/gi, '')
+        }
+
+        // Warn about position: fixed/absolute (strip them)
+        if (/position\s*:\s*(fixed|absolute)/i.test(clean)) {
+            warnings.push('Removed position:fixed/absolute — breaks email layout')
+            clean = clean.replace(/position\s*:\s*(fixed|absolute)/gi, 'position:relative')
+        }
+
+        // Check for excessive links (>20)
+        const linkCount = (clean.match(/<a\s/gi) || []).length
+        if (linkCount > 20) warnings.push(`${linkCount} links detected — too many links trigger spam filters`)
+
+        // Check missing alt on images
+        const imgNoAlt = (clean.match(/<img(?![^>]*alt=)[^>]*>/gi) || []).length
+        if (imgNoAlt > 0) warnings.push(`${imgNoAlt} image(s) missing alt text — add alt for better deliverability`)
+
+        // Warn about all-caps text
+        const capsWords = clean.replace(/<[^>]*>/g, '').match(/\b[A-Z]{5,}\b/g) || []
+        if (capsWords.length > 3) warnings.push('Excessive ALL CAPS text detected — triggers spam filters')
+
+        return { clean, warnings }
+    }
+
+    // Handle raw HTML upload from file
+    const handleHtmlFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+        if (!file.name.endsWith('.html') && !file.name.endsWith('.htm')) {
+            toast({ title: 'Invalid file', description: 'Please upload an .html or .htm file', variant: 'destructive' })
+            return
+        }
+        const reader = new FileReader()
+        reader.onload = (ev) => {
+            const html = ev.target?.result as string
+            const { clean, warnings } = sanitizeEmailHtml(html)
+            setRawHtmlInput(clean)
+            setDraft({ ...draft, content: clean })
+            setSpamWarnings(warnings)
+            toast({
+                title: '✅ HTML Loaded & Sanitized',
+                description: warnings.length > 0 ? `${warnings.length} issue(s) auto-fixed` : 'Clean HTML — no issues found'
+            })
+        }
+        reader.readAsText(file)
+    }
+
+    // Apply raw HTML with sanitization
+    const applyRawHtml = () => {
+        if (!rawHtmlInput.trim()) {
+            toast({ title: 'Empty', description: 'Paste some HTML code first', variant: 'destructive' })
+            return
+        }
+        const { clean, warnings } = sanitizeEmailHtml(rawHtmlInput)
+        setRawHtmlInput(clean)
+        setDraft({ ...draft, content: clean })
+        setSpamWarnings(warnings)
+        toast({
+            title: '✅ HTML Applied',
+            description: warnings.length > 0 ? `${warnings.length} spam trigger(s) removed` : 'Clean HTML inserted'
+        })
+    }
 
     // Helper to read file as base64
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -240,7 +335,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                         editorMode === 'visual' ? 'bg-[#DFFF00]/20 text-[#DFFF00]' : 'text-muted-foreground hover:text-white'
                                     )}
                                 >
-                                    🎨 Visual Editor
+                                    🎨 Visual
                                 </button>
                                 <button
                                     onClick={() => setEditorMode('code')}
@@ -249,7 +344,16 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                         editorMode === 'code' ? 'bg-white/10 text-white' : 'text-muted-foreground hover:text-white'
                                     )}
                                 >
-                                    &lt;/&gt; HTML
+                                    &lt;/&gt; Editor
+                                </button>
+                                <button
+                                    onClick={() => { setEditorMode('html'); setRawHtmlInput(draft.content) }}
+                                    className={cn(
+                                        'text-xs px-3 py-1.5 rounded transition-colors flex items-center gap-1',
+                                        editorMode === 'html' ? 'bg-orange-500/20 text-orange-400' : 'text-muted-foreground hover:text-white'
+                                    )}
+                                >
+                                    <Code2 className="w-3 h-3" /> Raw HTML
                                 </button>
                             </div>
                             <div className="flex items-center gap-2">
@@ -299,6 +403,69 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                             <VisualEmailComposer
                                 onChange={(html) => setDraft({ ...draft, content: html })}
                             />
+                        ) : editorMode === 'html' ? (
+                            <div className="space-y-3">
+                                {/* Raw HTML Editor */}
+                                <div className="rounded-xl border border-orange-500/20 bg-black/60 overflow-hidden">
+                                    <div className="flex items-center justify-between px-3 py-2 bg-orange-500/10 border-b border-orange-500/20">
+                                        <div className="flex items-center gap-2">
+                                            <Code2 className="w-4 h-4 text-orange-400" />
+                                            <span className="text-xs font-medium text-orange-400">Raw HTML Code</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <Label htmlFor="html-file-upload" className="cursor-pointer text-xs bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded transition-colors flex items-center gap-1">
+                                                <Upload className="w-3 h-3" /> Upload .html
+                                            </Label>
+                                            <Input
+                                                id="html-file-upload"
+                                                type="file"
+                                                accept=".html,.htm"
+                                                className="hidden"
+                                                onChange={handleHtmlFileUpload}
+                                            />
+                                            <Button size="sm" className="h-7 text-xs bg-orange-500 hover:bg-orange-600 text-white gap-1" onClick={applyRawHtml}>
+                                                <ShieldCheck className="w-3 h-3" /> Sanitize & Apply
+                                            </Button>
+                                        </div>
+                                    </div>
+                                    <textarea
+                                        value={rawHtmlInput}
+                                        onChange={(e) => setRawHtmlInput(e.target.value)}
+                                        className="w-full min-h-[350px] bg-transparent text-green-300 font-mono text-xs p-4 focus:outline-none resize-y leading-relaxed"
+                                        placeholder={'<!-- Paste your HTML email code here -->\n<div style="font-family: Arial, sans-serif;">\n  <h1>Your Email</h1>\n  <p>Content goes here...</p>\n</div>'}
+                                        spellCheck={false}
+                                    />
+                                </div>
+
+                                {/* Spam warnings */}
+                                {spamWarnings.length > 0 && (
+                                    <div className="rounded-lg border border-yellow-500/20 bg-yellow-500/5 p-3 space-y-1.5">
+                                        <div className="flex items-center gap-2 text-yellow-400 text-xs font-semibold">
+                                            <AlertTriangle className="w-3.5 h-3.5" /> {spamWarnings.length} issue(s) auto-fixed
+                                        </div>
+                                        {spamWarnings.map((w, i) => (
+                                            <p key={i} className="text-xs text-yellow-300/70 pl-5">• {w}</p>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Anti-spam tips */}
+                                <div className="rounded-lg border border-white/5 bg-black/30 p-3">
+                                    <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground mb-2">
+                                        <ShieldCheck className="w-3.5 h-3.5" /> Anti-Spam Best Practices
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[10px] text-muted-foreground">
+                                        <p>✅ Use inline styles, not &lt;style&gt; blocks</p>
+                                        <p>✅ Add alt text to all images</p>
+                                        <p>✅ Keep image-to-text ratio balanced</p>
+                                        <p>✅ Include unsubscribe link</p>
+                                        <p>❌ No JavaScript or event handlers</p>
+                                        <p>❌ No iframes, forms, or embeds</p>
+                                        <p>❌ Avoid ALL CAPS or spammy words</p>
+                                        <p>❌ No excessive links (&gt;20)</p>
+                                    </div>
+                                </div>
+                            </div>
                         ) : (
                             <RichTextEditor
                                 content={draft.content}
