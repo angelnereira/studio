@@ -4,9 +4,11 @@ import { prisma } from "@/lib/prisma"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CheckCircle2, AlertTriangle, XCircle, Server, Database, Cloud, Key, Shield } from "lucide-react"
+import { getSenderIdentities } from "@/app/admin/(dashboard)/emails/marketing-actions"
+import { SenderIdentitiesManager } from "@/components/admin/sender-identities-manager"
 
 export const metadata = {
-    title: "System Config | Admin Studio",
+    title: "Settings | Admin Studio",
 }
 
 interface HealthCheck {
@@ -66,7 +68,10 @@ const statusConfig = {
 
 export default async function SettingsPage() {
     const session = await auth()
-    const checks = await getHealthChecks()
+    const [checks, identities] = await Promise.all([
+        getHealthChecks(),
+        getSenderIdentities(),
+    ])
 
     const okCount = checks.filter(c => c.status === 'ok').length
     const totalCount = checks.length
@@ -79,8 +84,8 @@ export default async function SettingsPage() {
     return (
         <div className="space-y-8">
             <div>
-                <h2 className="text-3xl font-bold tracking-tight">System Configuration</h2>
-                <p className="text-muted-foreground">Real-time health monitoring and integration status.</p>
+                <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
+                <p className="text-muted-foreground">System health, integrations, and configuration.</p>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2">
@@ -155,6 +160,10 @@ export default async function SettingsPage() {
                     </CardContent>
                 </Card>
             </div>
+
+            {/* Sender Identities — moved from Email Marketing Studio */}
+            <SenderIdentitiesManager identities={identities} />
         </div>
     )
 }
+

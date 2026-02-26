@@ -3,67 +3,14 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
-import {
-    LayoutDashboard, FileText, Mail, Users, Settings, LogOut, ExternalLink,
-    Menu, Briefcase, User, FileSignature, Search, Bell
-} from "lucide-react"
+import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { SidebarNav } from "@/components/admin/sidebar-nav"
 
 interface MobileSidebarProps {
     userName?: string | null
     userEmail?: string | null
-}
-
-const NAV_ITEMS = [
-    { href: "/admin", icon: LayoutDashboard, label: "Dashboard", exact: true },
-    { href: "/admin/applications", icon: Briefcase, label: "Applications" },
-    { href: "/admin/profile", icon: User, label: "Profile" },
-    { href: "/admin/blog", icon: FileText, label: "Blog & CMS" },
-    { href: "/admin/cover-letter", icon: FileSignature, label: "Cover Letters" },
-    { href: "/admin/job-analysis", icon: Search, label: "Job Analysis" },
-    { href: "/admin/emails", icon: Mail, label: "Email Marketing" },
-    { href: "/admin/crm", icon: Users, label: "CRM & Leads" },
-    { href: "/admin/subscribers", icon: Bell, label: "Subscribers" },
-    { href: "/admin/settings", icon: Settings, label: "System Config" },
-]
-
-function NavLink({ href, icon: Icon, label, exact, onClick }: {
-    href: string
-    icon: React.ElementType
-    label: string
-    exact?: boolean
-    onClick?: () => void
-}) {
-    const pathname = usePathname()
-    const isActive = exact ? pathname === href : pathname.startsWith(href)
-
-    return (
-        <Button
-            variant="ghost"
-            asChild
-            className={`w-full justify-start transition-all ${isActive
-                ? "text-primary bg-primary/10 hover:bg-primary/15"
-                : "text-muted-foreground hover:text-primary hover:bg-primary/5"
-                }`}
-            onClick={onClick}
-        >
-            <Link href={href}>
-                <Icon className="mr-2 h-4 w-4" />
-                {label}
-            </Link>
-        </Button>
-    )
-}
-
-function SidebarNav({ onClick }: { onClick?: () => void }) {
-    return (
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-            {NAV_ITEMS.map((item) => (
-                <NavLink key={item.href} {...item} onClick={onClick} />
-            ))}
-        </nav>
-    )
 }
 
 export function MobileSidebar({ userName, userEmail }: MobileSidebarProps) {
@@ -106,3 +53,4 @@ export function MobileSidebar({ userName, userEmail }: MobileSidebarProps) {
         </Sheet>
     )
 }
+

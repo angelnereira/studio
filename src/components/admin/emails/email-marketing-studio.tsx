@@ -83,6 +83,12 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
     const [rawHtmlInput, setRawHtmlInput] = useState('')
     const [spamWarnings, setSpamWarnings] = useState<string[]>([])
 
+    // --- Create Template Dialog State ---
+    const [showCreateTemplate, setShowCreateTemplate] = useState(false)
+    const [newTemplateName, setNewTemplateName] = useState('')
+    const [isCreatingTemplate, setIsCreatingTemplate] = useState(false)
+    const [activeTab, setActiveTab] = useState('compose')
+
     // Anti-spam HTML sanitizer
     const sanitizeEmailHtml = (html: string): { clean: string; warnings: string[] } => {
         const warnings: string[] = []
@@ -247,12 +253,11 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
     }
 
     return (
-        <Tabs defaultValue="compose" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
             <TabsList className="bg-black/40 border border-white/10 p-1">
                 <TabsTrigger value="compose" className="gap-2"><Send className="w-4 h-4" /> Compose</TabsTrigger>
                 <TabsTrigger value="campaigns" className="gap-2"><LayoutTemplate className="w-4 h-4" /> Campaigns</TabsTrigger>
                 <TabsTrigger value="templates" className="gap-2"><FileText className="w-4 h-4" /> Templates</TabsTrigger>
-                <TabsTrigger value="settings" className="gap-2"><Settings className="w-4 h-4" /> Settings</TabsTrigger>
             </TabsList>
 
             {/* --- COMPOSE TAB (Gmail-like) --- */}
@@ -517,55 +522,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                 </Card>
             </TabsContent>
 
-            {/* --- SETTINGS TAB (Identities) --- */}
-            <TabsContent value="settings">
-                <Card className="bg-black/40 border-white/10">
-                    <CardHeader>
-                        <CardTitle>Sender Identities</CardTitle>
-                        <CardDescription>Manage the email addresses you send from.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                        <div className="space-y-4">
-                            {identities.map(identity => (
-                                <div key={identity.id} className="flex items-center justify-between p-4 rounded-lg border border-white/10 bg-black/20">
-                                    <div>
-                                        <p className="font-medium">{identity.name}</p>
-                                        <p className="text-sm text-muted-foreground">{identity.email}</p>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        {identity.verified ? (
-                                            <Badge className="bg-green-500/10 text-green-500 hover:bg-green-500/20">Verified</Badge>
-                                        ) : (
-                                            <Badge variant="outline">Unverified</Badge>
-                                        )}
-                                        <Button size="icon" variant="ghost" className="text-red-400 hover:text-red-300 hover:bg-red-950/20" onClick={async () => {
-                                            await deleteSenderIdentity(identity.id)
-                                            toast({ title: "Deleted", description: "Sender identity removed." })
-                                            router.refresh()
-                                        }}>
-                                            <Trash2 className="w-4 h-4" />
-                                        </Button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
 
-                        {/* Add new identity */}
-                        <div className="pt-4 border-t border-white/10">
-                            <h4 className="text-sm font-medium mb-3">Add New Sender</h4>
-                            <form action={async (formData) => {
-                                await createSenderIdentity({ name: formData.get('name') as string, email: formData.get('email') as string })
-                                toast({ title: "Identity Added", description: "Verify it in your Resend Dashboard." })
-                                router.refresh()
-                            }} className="flex gap-4">
-                                <Input name="name" placeholder="Display Name (e.g. Angel)" className="flex-1" required />
-                                <Input name="email" placeholder="email@domain.com" className="flex-1" required />
-                                <Button type="submit">Add Sender</Button>
-                            </form>
-                        </div>
-                    </CardContent>
-                </Card>
-            </TabsContent>
 
             {/* --- CAMPAIGNS TAB --- */}
             <TabsContent value="campaigns">
@@ -696,16 +653,70 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                                     </CardContent>
                                     <CardFooter>
-                                        <Button variant="secondary" className="w-full opacity-0 group-hover:opacity-100 transition-opacity">Edit Template</Button>
+                                        <Button variant="secondary" className="w-full opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => {
+                                            setDraft({ ...draft, content: t.content, subject: t.subject || '' })
+                                            setActiveTab('compose')
+                                            toast({ title: 'Template Loaded', description: `"${t.name}" loaded into Compose for editing.` })
+                                        }}>Edit Template</Button>
                                     </CardFooter>
                                 </Card>
                             ))}
-                            <Card className="bg-black/20 border-white/10 border-dashed flex items-center justify-center min-h-[250px] hover:bg-black/30 cursor-pointer">
-                                <div className="text-center">
-                                    <Plus className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                                    <p className="font-medium">Create Template</p>
-                                </div>
-                            </Card>
+
+                            {/* Create Template Dialog */}
+                            <Dialog open={showCreateTemplate} onOpenChange={setShowCreateTemplate}>
+                                <DialogTrigger asChild>
+                                    <Card className="bg-black/20 border-white/10 border-dashed flex items-center justify-center min-h-[250px] hover:bg-black/30 cursor-pointer transition-colors" onClick={() => setShowCreateTemplate(true)}>
+                                        <div className="text-center">
+                                            <Plus className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                                            <p className="font-medium">Create Template</p>
+                                            <p className="text-xs text-muted-foreground mt-1">Save current compose content</p>
+                                        </div>
+                                    </Card>
+                                </DialogTrigger>
+                                <DialogContent>
+                                    <DialogHeader>
+                                        <DialogTitle>Save as Template</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="space-y-4 pt-2">
+                                        <div className="space-y-2">
+                                            <Label>Template Name</Label>
+                                            <Input
+                                                placeholder="e.g. Monthly Newsletter"
+                                                value={newTemplateName}
+                                                onChange={(e) => setNewTemplateName(e.target.value)}
+                                            />
+                                        </div>
+                                        {!draft.content && (
+                                            <p className="text-xs text-yellow-400">⚠️ No content in Compose tab. Go to Compose first and create your email content.</p>
+                                        )}
+                                        <Button
+                                            className="w-full"
+                                            disabled={!newTemplateName.trim() || !draft.content || isCreatingTemplate}
+                                            onClick={async () => {
+                                                setIsCreatingTemplate(true)
+                                                try {
+                                                    await createTemplate({
+                                                        name: newTemplateName,
+                                                        content: draft.content,
+                                                        subject: draft.subject || '',
+                                                    })
+                                                    toast({ title: '✅ Template Saved', description: `"${newTemplateName}" created successfully.` })
+                                                    setNewTemplateName('')
+                                                    setShowCreateTemplate(false)
+                                                    router.refresh()
+                                                } catch {
+                                                    toast({ title: 'Error', description: 'Failed to save template.', variant: 'destructive' })
+                                                } finally {
+                                                    setIsCreatingTemplate(false)
+                                                }
+                                            }}
+                                        >
+                                            {isCreatingTemplate ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                                            {isCreatingTemplate ? 'Saving...' : 'Save Template'}
+                                        </Button>
+                                    </div>
+                                </DialogContent>
+                            </Dialog>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Users, Eye, MousePointerClick, TrendingUp, Plus, Mail, FileText, Briefcase, Search } from "lucide-react"
+import { StatCard } from "@/components/admin/stat-card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -71,7 +72,7 @@ export function DashboardClient({ stats, activities, userName = "Chief" }: Dashb
 
             <motion.div variants={item} className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {stats.map((stat, i) => (
-                    <StatCard key={i} {...stat} />
+                    <DashboardStatCard key={i} {...stat} />
                 ))}
             </motion.div>
 
@@ -112,7 +113,7 @@ export function DashboardClient({ stats, activities, userName = "Chief" }: Dashb
                                     <div className="p-1.5 rounded-full bg-primary/10 mr-3 group-hover:bg-primary group-hover:text-white transition-colors">
                                         <Mail className="h-4 w-4" />
                                     </div>
-                                    Send Proposal
+                                    Compose Email
                                 </Link>
                             </Button>
                             <Button variant="outline" className="w-full justify-start h-11 font-light hover:bg-white/5 hover:text-purple-400 hover:border-purple-500/50 transition-all group" asChild>
@@ -163,24 +164,7 @@ const iconMap: Record<string, React.ElementType> = {
     "briefcase": Briefcase,
 }
 
-interface StatCardProps extends StatData { }
-
-function StatCard({ title, value, icon, change, color }: StatCardProps) {
+function DashboardStatCard({ title, value, icon, change, color }: StatData) {
     const Icon = iconMap[icon] || TrendingUp
-    return (
-        <Card className="bg-black/40 border-white/10 backdrop-blur-sm hover:translate-y-[-4px] transition-transform duration-300">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                    {title}
-                </CardTitle>
-                <Icon className={`h-4 w-4 ${color}`} />
-            </CardHeader>
-            <CardContent>
-                <div className="text-2xl font-bold text-white">{value}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                    {change}
-                </p>
-            </CardContent>
-        </Card>
-    )
+    return <StatCard title={title} value={value} icon={Icon} color={color} change={change} />
 }
