@@ -6,7 +6,7 @@ import { format } from "date-fns"
 import {
     Send, LayoutTemplate, Users, Settings, Plus,
     ArrowRight, ChevronRight, Check, Calendar as CalendarIcon, Copy, BarChart3,
-    FileText, Save, Loader2, Trash2, Mail, Paperclip, Code2, Upload, ShieldCheck, AlertTriangle
+    FileText, Save, Loader2, Trash2, Mail, Paperclip, Code2, Upload, ShieldCheck, AlertTriangle, Sparkles
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -28,6 +28,7 @@ import { VisualEmailComposer } from "@/components/admin/emails/visual-email-comp
 import { services } from "@/lib/services"
 import { systemTemplates, type SystemTemplate } from "@/lib/system-email-templates"
 import { createSenderIdentity, createTemplate, sendCampaign, saveCampaignDraft, deleteSenderIdentity, deleteCampaign, duplicateCampaign, sendQuickEmail } from "@/app/admin/(dashboard)/emails/marketing-actions"
+import { generateEmailWithAI } from "@/app/admin/(dashboard)/emails/ai-actions"
 
 // Types
 type Identity = { id: string; name: string; email: string; verified: boolean }
@@ -88,6 +89,45 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
     const [newTemplateName, setNewTemplateName] = useState('')
     const [isCreatingTemplate, setIsCreatingTemplate] = useState(false)
     const [activeTab, setActiveTab] = useState('compose')
+
+    // --- AI Assistant State ---
+    const [showAiDialog, setShowAiDialog] = useState(false)
+    const [aiPrompt, setAiPrompt] = useState("")
+    const [aiAction, setAiAction] = useState<"generate" | "improve" | "shorten" | "professional">("generate")
+    const [isGeneratingAi, setIsGeneratingAi] = useState(false)
+
+    // --- AI Assistant Handler ---
+    const handleAiGenerate = async () => {
+        if (!aiPrompt && aiAction === "generate") {
+            toast({ title: "Prompt needed", description: "Please enter what you want to write about.", variant: "destructive" })
+            return
+        }
+        setIsGeneratingAi(true)
+        try {
+            const res = await generateEmailWithAI({
+                prompt: aiPrompt,
+                action: aiAction,
+                currentSubject: draft.subject,
+                currentBody: draft.content
+            })
+            if (res.success && res.data) {
+                setDraft(prev => ({
+                    ...prev,
+                    subject: res.data.subject || prev.subject,
+                    content: res.data.htmlBody || prev.content
+                }))
+                toast({ title: "✨ AI Magic Applied", description: "Your email has been updated." })
+                setShowAiDialog(false)
+                setAiPrompt("")
+            } else {
+                toast({ title: "AI Error", description: res.message || "Failed to generate.", variant: "destructive" })
+            }
+        } catch (error) {
+            toast({ title: "AI Error", description: "An unexpected error occurred.", variant: "destructive" })
+        } finally {
+            setIsGeneratingAi(false)
+        }
+    }
 
     // Anti-spam HTML sanitizer
     const sanitizeEmailHtml = (html: string): { clean: string; warnings: string[] } => {
@@ -386,6 +426,56 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                 <Button variant="outline" size="sm" className="h-8 text-xs gap-1" onClick={() => setShowPreview(!showPreview)}>
                                     {showPreview ? '✏️ Edit' : '👁️ Preview'}
                                 </Button>
+                                <Dialog open={showAiDialog} onOpenChange={setShowAiDialog}>
+                                    <DialogTrigger asChild>
+                                        <Button size="sm" className="h-8 text-xs gap-1.5 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white border-0">
+                                            <Sparkles className="w-3.5 h-3.5" /> AI Assistant
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[425px]">
+                                        <DialogHeader>
+                                            <DialogTitle className="flex items-center gap-2">
+                                                <Sparkles className="w-5 h-5 text-purple-400" /> AI Email Assistant
+                                            </DialogTitle>
+                                            <DialogDescription>
+                                                Let Gemini AI write or improve your email.
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <div className="space-y-4 py-2">
+                                            <div className="space-y-2">
+                                                <Label>Action</Label>
+                                                <Select value={aiAction} onValueChange={(val: any) => setAiAction(val)}>
+                                                    <SelectTrigger>
+                                                        <SelectValue />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectItem value="generate">✒️ Generate from scratch</SelectItem>
+                                                        <SelectItem value="improve">✨ Improve current text</SelectItem>
+                                                        <SelectItem value="shorten">🔪 Make it shorter</SelectItem>
+                                                        <SelectItem value="professional">👔 Make it professional</SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label>Instructions (Prompt)</Label>
+                                                <textarea
+                                                    className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[100px] resize-y"
+                                                    placeholder={aiAction === "generate" ? "E.g. Write an email announcing our new summer sale with 50% off..." : "Optional: Add specific instructions like 'Mention the deadline is Friday'"}
+                                                    value={aiPrompt}
+                                                    onChange={(e) => setAiPrompt(e.target.value)}
+                                                />
+                                            </div>
+                                            <Button
+                                                className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white"
+                                                onClick={handleAiGenerate}
+                                                disabled={isGeneratingAi || (!aiPrompt && aiAction === "generate")}
+                                            >
+                                                {isGeneratingAi ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Sparkles className="w-4 h-4 mr-2" />}
+                                                {isGeneratingAi ? "Generating Magic..." : (aiAction === "generate" ? "Generate Email" : "Apply Magic")}
+                                            </Button>
+                                        </div>
+                                    </DialogContent>
+                                </Dialog>
                             </div>
                         </div>
 

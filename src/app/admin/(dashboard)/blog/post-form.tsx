@@ -36,12 +36,21 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { createPost, updatePost } from "./actions"
-import { Loader2, Save, ArrowLeft, Image as ImageIcon, Trash2 } from "lucide-react"
+import { Loader2, Save, ArrowLeft, Image as ImageIcon, Trash2, Sparkles } from "lucide-react"
 import dynamic from "next/dynamic"
 
 const EditorToolbar = dynamic(() => import("./editor-toolbar").then((mod) => mod.EditorToolbar), { ssr: false })
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
+import { generateBlogWithAI } from "./ai-actions"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 
 const PostSchema = z.object({
     title: z.string().min(1, "Title is required"),
@@ -68,6 +77,9 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
     const router = useRouter()
     const { toast } = useToast()
     const [isPending, setIsPending] = useState(false)
+    const [isGeneratingAi, setIsGeneratingAi] = useState(false)
+    const [aiPrompt, setAiPrompt] = useState("")
+    const [showAiDialog, setShowAiDialog] = useState(false)
 
     // Initialize Form
     const form = useForm<PostFormValues>({
@@ -164,6 +176,34 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
         }
     }
 
+    const handleGenerateAi = async () => {
+        if (!aiPrompt) return
+        setIsGeneratingAi(true)
+        try {
+            const res = await generateBlogWithAI({ prompt: aiPrompt })
+            if (res.success && res.data) {
+                form.setValue("title", res.data.title || "")
+                form.setValue("slug", res.data.slug || "")
+                form.setValue("excerpt", res.data.excerpt || "")
+                form.setValue("seoTitle", res.data.seoTitle || "")
+                form.setValue("seoDescription", res.data.seoDescription || "")
+                form.setValue("keywords", res.data.keywords || "")
+
+                editor?.commands.setContent(res.data.content || "")
+
+                toast({ title: "✨ Blog generated", description: "Review the content and make adjustments." })
+                setShowAiDialog(false)
+                setAiPrompt("")
+            } else {
+                toast({ title: "Error", description: res.message || "Failed to generate.", variant: "destructive" })
+            }
+        } catch (e) {
+            toast({ title: "Error", description: "Unexpected error.", variant: "destructive" })
+        } finally {
+            setIsGeneratingAi(false)
+        }
+    }
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -175,6 +215,44 @@ export function PostForm({ post, isEditing = false }: PostFormProps) {
                         <h1 className="text-2xl font-bold">{isEditing ? "Edit Post" : "New Post"}</h1>
                     </div>
                     <div className="flex gap-2">
+                        <Dialog open={showAiDialog} onOpenChange={setShowAiDialog}>
+                            <DialogTrigger asChild>
+                                <Button type="button" variant="secondary" className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white border-0">
+                                    <Sparkles className="w-4 h-4 mr-2" /> AI Draft Generator
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[500px]">
+                                <DialogHeader>
+                                    <DialogTitle className="flex items-center gap-2">
+                                        <Sparkles className="w-5 h-5 text-purple-400" /> Generate Blog Post
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                        Gemini will generate a full draft including title, content, excerpt, and SEO metadata.
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <div className="space-y-4 py-2">
+                                    <div className="space-y-2">
+                                        <FormLabel>Topic & Instructions</FormLabel>
+                                        <Textarea
+                                            placeholder="What do you want to write about? Mention target audience or key points..."
+                                            value={aiPrompt}
+                                            onChange={(e) => setAiPrompt(e.target.value)}
+                                            className="min-h-[120px]"
+                                        />
+                                    </div>
+                                    <Button
+                                        type="button"
+                                        className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white"
+                                        onClick={handleGenerateAi}
+                                        disabled={isGeneratingAi || !aiPrompt}
+                                    >
+                                        {isGeneratingAi ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Sparkles className="w-4 h-4 mr-2" />}
+                                        {isGeneratingAi ? "Generating Draft..." : "Generate Magic Draft"}
+                                    </Button>
+                                </div>
+                            </DialogContent>
+                        </Dialog>
+
                         <Button type="submit" disabled={isPending}>
                             {isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                             <Save className="w-4 h-4 mr-2" />

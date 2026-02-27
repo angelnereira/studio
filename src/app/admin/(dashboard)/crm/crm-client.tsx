@@ -53,12 +53,13 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
     MoreHorizontal, Search, Trash2, Mail, User, Briefcase, UserPlus, Calendar,
-    Send, MessageSquare, Clock, CheckCircle2, Eye, MousePointer, Loader2, Plus, Tag, X
+    Send, MessageSquare, Clock, CheckCircle2, Eye, MousePointer, Loader2, Plus, Tag, X, Sparkles
 } from "lucide-react"
 import {
     updateContactStatus, deleteContact, addContactNote, getContactWithHistory,
     createContact, updateContactTags, type CreateContactInput
 } from "./actions"
+import { extractContactWithAI } from "./ai-actions"
 import { useToast } from "@/hooks/use-toast"
 import { format, formatDistanceToNow } from "date-fns"
 import { es } from "date-fns/locale"
@@ -106,6 +107,8 @@ export function CRMClient({ initialContacts, availableTags }: CRMClientProps) {
     })
     const [isCreating, startCreateContact] = useTransition()
     const [newTagInput, setNewTagInput] = useState("")
+    const [magicPasteText, setMagicPasteText] = useState("")
+    const [isExtracting, setIsExtracting] = useState(false)
     const { toast } = useToast()
 
     // Combine available tags with suggestions
@@ -150,6 +153,31 @@ export function CRMClient({ initialContacts, availableTags }: CRMClientProps) {
                 toast({ title: "Error", description: result.message, variant: "destructive" })
             }
         })
+    }
+
+    const handleMagicPaste = async () => {
+        if (!magicPasteText.trim()) return
+        setIsExtracting(true)
+        try {
+            const res = await extractContactWithAI({ text: magicPasteText })
+            if (res.success && res.data) {
+                setNewContactData(prev => ({
+                    ...prev,
+                    name: res.data.name || prev.name,
+                    email: res.data.email || prev.email,
+                    phone: res.data.phone || prev.phone,
+                    company: res.data.company || prev.company,
+                }))
+                toast({ title: "✨ Data extracted successfully" })
+                setMagicPasteText("")
+            } else {
+                toast({ title: "Error", description: res.message || "Failed to extract data.", variant: "destructive" })
+            }
+        } catch (e) {
+            toast({ title: "Error", description: "Unexpected error.", variant: "destructive" })
+        } finally {
+            setIsExtracting(false)
+        }
     }
 
     // Optimistic Update Helpers
@@ -316,9 +344,30 @@ export function CRMClient({ initialContacts, availableTags }: CRMClientProps) {
                         <DialogContent className="sm:max-w-[500px] bg-black/95 border-white/10">
                             <DialogHeader>
                                 <DialogTitle>Add New Contact</DialogTitle>
-                                <DialogDescription>Create a new lead or contact manually.</DialogDescription>
+                                <DialogDescription>Create a new lead or contact manually or using ✨ Magic Paste.</DialogDescription>
                             </DialogHeader>
                             <div className="grid gap-4 py-4">
+                                <div className="space-y-2 pb-4 border-b border-white/10">
+                                    <Label className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-purple-400" /> Magic Paste</Label>
+                                    <div className="flex gap-2">
+                                        <Textarea
+                                            placeholder="Paste signature or text here (e.g. 'John Doe, Manager at Acme, john@acme.com')"
+                                            className="min-h-[60px] text-sm"
+                                            value={magicPasteText}
+                                            onChange={(e) => setMagicPasteText(e.target.value)}
+                                        />
+                                    </div>
+                                    <Button
+                                        type="button"
+                                        size="sm"
+                                        className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 border-0 text-white mt-2"
+                                        disabled={isExtracting || !magicPasteText}
+                                        onClick={handleMagicPaste}
+                                    >
+                                        {isExtracting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Sparkles className="w-4 h-4 mr-2" />}
+                                        Extract Info
+                                    </Button>
+                                </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
                                         <Label>Name *</Label>
