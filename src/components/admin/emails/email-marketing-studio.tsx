@@ -18,7 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { useToast } from "@/hooks/use-toast"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
@@ -676,6 +676,9 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                 <DialogContent>
                                     <DialogHeader>
                                         <DialogTitle>Save as Template</DialogTitle>
+                                        <DialogDescription className="sr-only">
+                                            Guardar el contenido del email actual como un template personalizado.
+                                        </DialogDescription>
                                     </DialogHeader>
                                     <div className="space-y-4 pt-2">
                                         <div className="space-y-2">

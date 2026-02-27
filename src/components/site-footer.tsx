@@ -23,13 +23,13 @@ export function SiteFooter() {
             </Link>
           </Button>
           <Button variant="ghost" size="icon" asChild className="text-muted-foreground transition-colors hover:text-primary">
-            <Link href="https://twitter.com" target="_blank" rel="noreferrer">
+            <Link href="https://x.com/angelnereira" target="_blank" rel="noreferrer">
               <Twitter className="h-5 w-5" />
               <span className="sr-only">Twitter</span>
             </Link>
           </Button>
           <Button variant="ghost" size="icon" asChild className="text-muted-foreground transition-colors hover:text-primary">
-            <Link href="https://linkedin.com" target="_blank" rel="noreferrer">
+            <Link href="https://www.linkedin.com/in/angel-nereira-software-ingineer/" target="_blank" rel="noreferrer">
               <Linkedin className="h-5 w-5" />
               <span className="sr-only">LinkedIn</span>
             </Link>
