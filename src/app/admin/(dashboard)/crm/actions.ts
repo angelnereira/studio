@@ -16,6 +16,7 @@ const CreateContactSchema = z.object({
     service: z.string().optional(),
     message: z.string().optional(),
     tags: z.array(z.string()).optional(),
+    phone: z.string().optional(),
 })
 
 export type CreateContactInput = z.infer<typeof CreateContactSchema>
@@ -209,6 +210,7 @@ export async function createContact(data: CreateContactInput) {
                 email: parsed.data.email,
                 formType: parsed.data.formType,
                 company: parsed.data.company,
+                phone: parsed.data.phone,
                 service: parsed.data.service,
                 message: parsed.data.message,
                 tags: parsed.data.tags || [],

@@ -101,6 +101,7 @@ export function CRMClient({ initialContacts, availableTags }: CRMClientProps) {
         email: "",
         formType: "client",
         company: "",
+        phone: "",
         service: "",
         message: "",
         tags: [],
@@ -146,7 +147,7 @@ export function CRMClient({ initialContacts, availableTags }: CRMClientProps) {
                 toast({ title: "Contact Created", description: result.message })
                 setIsAddContactOpen(false)
                 setNewContactData({
-                    name: "", email: "", formType: "client", company: "", service: "", message: "", tags: []
+                    name: "", email: "", formType: "client", company: "", phone: "", service: "", message: "", tags: []
                 })
                 router.refresh()
             } else {
@@ -414,13 +415,23 @@ export function CRMClient({ initialContacts, availableTags }: CRMClientProps) {
                                         />
                                     </div>
                                 </div>
-                                <div className="space-y-2">
-                                    <Label>Service Interest</Label>
-                                    <Input
-                                        placeholder="Web Development, E-commerce..."
-                                        value={newContactData.service || ""}
-                                        onChange={(e) => setNewContactData(prev => ({ ...prev, service: e.target.value }))}
-                                    />
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <Label>Phone</Label>
+                                        <Input
+                                            placeholder="+1 234 567 890"
+                                            value={newContactData.phone || ""}
+                                            onChange={(e) => setNewContactData(prev => ({ ...prev, phone: e.target.value }))}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label>Service Interest</Label>
+                                        <Input
+                                            placeholder="Web Development..."
+                                            value={newContactData.service || ""}
+                                            onChange={(e) => setNewContactData(prev => ({ ...prev, service: e.target.value }))}
+                                        />
+                                    </div>
                                 </div>
                                 <div className="space-y-2">
                                     <Label>Notes / Message</Label>
@@ -590,6 +601,12 @@ export function CRMClient({ initialContacts, availableTags }: CRMClientProps) {
                                                                     <span className="text-muted-foreground block text-xs uppercase tracking-wider mb-1">Email</span>
                                                                     <a href={`mailto:${contact.email}`} className="text-primary hover:underline">{contact.email}</a>
                                                                 </div>
+                                                                {contact.phone && (
+                                                                    <div>
+                                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider mb-1">Phone</span>
+                                                                        <a href={`tel:${contact.phone}`} className="text-primary hover:underline">{contact.phone}</a>
+                                                                    </div>
+                                                                )}
                                                                 {contact.country && (
                                                                     <div>
                                                                         <span className="text-muted-foreground block text-xs uppercase tracking-wider mb-1">Country</span>

@@ -23,6 +23,7 @@ model Contact {
 
   // Campos comunes
   name      String?
+  phone     String?
   message   String?
   country   String?
   industry  String?
