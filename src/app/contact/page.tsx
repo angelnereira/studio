@@ -10,6 +10,12 @@ import { CollaboratorForm } from './collaborator-form';
 import { SpotlightCard } from '@/components/spotlight-card';
 import { InvitationForm } from './invitation-form';
 import { TiltCard } from '@/components/ui/tilt-card';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contacto | Desarrollador de Software en Panamá',
+  description: '¿Buscas un desarrollador Full Stack en Panamá? Contáctame para proyectos, consultorías o desarrollo de Software a la medida.',
+};
 
 function ContactCard({ icon, title, description, children }: { icon: React.ReactNode, title: string, description: string, children: React.ReactNode }) {
   return (

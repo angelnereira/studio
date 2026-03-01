@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     'Experto Next.js Panamá',
     'PWA Offline-First Developer',
     'Integración Facturación Electrónica DGI API',
+    'Desarrollador Web Freelance Panamá',
+    'Software de Facturación Panamá',
+    'Servicios de desarrollo web Panamá',
     'Desarrollador PostgreSQL Prisma',
     'React Developer',
     'Sago One',
@@ -141,6 +144,8 @@ export default function RootLayout({
                 url: 'https://angelnereira.com',
                 logo: 'https://angelnereira.com/logo.png',
                 image: 'https://angelnereira.com/og-image.png',
+                areaServed: { '@type': 'Country', name: 'Panama' },
+                geo: { '@type': 'GeoCoordinates', latitude: '9.0888', longitude: '-79.4441' },
                 priceRange: '$$$',
                 address: {
                   '@type': 'PostalAddress',
