@@ -5,13 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Languages } from "lucide-react";
 
 import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "@/lib/routing";
+import { useTransition } from "react";
 
 export function LanguageToggle() {
     const [mounted, setMounted] = React.useState(false);
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
+    const [isPending, startTransition] = useTransition();
 
     React.useEffect(() => {
         setMounted(true);
@@ -19,16 +21,9 @@ export function LanguageToggle() {
 
     const toggleLanguage = () => {
         const nextLocale = locale === 'es' ? 'en' : 'es';
-
-        let newPath = pathname;
-        if (nextLocale === 'en') {
-            newPath = `/en${pathname === '/' ? '' : pathname}`;
-        } else {
-            newPath = pathname.replace(/^\/en/, '') || '/';
-        }
-
-        // document.documentElement.lang is updated by NextIntl rendering
-        router.push(newPath);
+        startTransition(() => {
+            router.replace(pathname, { locale: nextLocale });
+        });
     };
 
     if (!mounted) {

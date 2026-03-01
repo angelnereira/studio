@@ -25,27 +25,24 @@ export function RootLayoutClient({
 
     if (isAdminPage) {
         return (
-            <body className="font-body antialiased min-h-screen flex flex-col" suppressHydrationWarning>
-                <Providers>
-                    {children}
-                    <Toaster />
-                </Providers>
-            </body>
+            <Providers>
+                {children}
+                <Toaster />
+            </Providers>
         )
     }
 
     return (
-        <body className="font-body antialiased min-h-screen flex flex-col" suppressHydrationWarning>
-            <Providers>
-                <SiteHeader />
-                <main className="flex-1">
-                    <div className="container max-w-5xl mx-auto px-4 py-12 md:py-24 lg:py-32">
-                        {children}
-                    </div>
-                </main>
-                <SiteFooter />
-                <Toaster />
-            </Providers>
-        </body>
+        <Providers>
+            <SiteHeader />
+            <main className="flex-1">
+                <div className="container max-w-5xl mx-auto px-4 py-12 md:py-24 lg:py-32">
+                    {children}
+                </div>
+            </main>
+            <SiteFooter />
+            <Toaster />
+        </Providers>
     );
 }
+

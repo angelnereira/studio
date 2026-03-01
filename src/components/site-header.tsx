@@ -20,6 +20,9 @@ export function SiteHeader() {
   const { setTheme, theme } = useTheme();
   const t = useTranslations();
 
+  // Strip locale prefix (/en/services -> /services) for active state comparison
+  const normalizedPathname = pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
+
   const navItems = React.useMemo(() => [
     { href: "/", label: t('nav.home'), icon: <Home className="h-4 w-4" /> },
     { href: "/services", label: t('nav.services'), icon: <Briefcase className="h-4 w-4" /> },
@@ -52,7 +55,7 @@ export function SiteHeader() {
               href={item.href}
               className={cn(
                 "flex items-center gap-2 rounded-md px-3 py-2 transition-all duration-300 ease-geist hover:bg-accent hover:text-accent-foreground hover:-translate-y-0.5",
-                pathname === item.href ? "bg-secondary text-secondary-foreground" : "text-foreground/70"
+                normalizedPathname === item.href ? "bg-secondary text-secondary-foreground" : "text-foreground/70"
               )}
             >
               {item.icon}
@@ -98,7 +101,7 @@ export function SiteHeader() {
                       onClick={() => setSheetOpen(false)}
                       className={cn(
                         "flex items-center gap-3 rounded-md p-3 text-lg font-medium transition-colors hover:bg-accent",
-                        pathname === item.href ? "bg-secondary text-secondary-foreground" : "text-foreground/70"
+                        normalizedPathname === item.href ? "bg-secondary text-secondary-foreground" : "text-foreground/70"
                       )}
                     >
                       {item.icon}
