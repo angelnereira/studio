@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState, Suspense } from "react"
-import { confirmVerification } from "@/app/blog/actions"
+import { confirmVerification } from "@/app/[locale]/blog/actions"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react"
 import Link from "next/link"

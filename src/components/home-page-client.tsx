@@ -16,6 +16,7 @@ import { PremiumText } from "@/components/premium-text";
 import { GradientFlowText } from "@/components/ui/gradient-flow-text";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { FAQSection } from "@/components/home/faq-section";
+import { CVDownloadButton } from "@/features/cv/components/CVDownloadButton";
 
 const DynamicServicesSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ServicesSection), {
   loading: () => <Skeleton className="h-96 w-full" />,
@@ -27,7 +28,7 @@ const DynamicMetricsSection = dynamic(() => import('@/components/home-sections')
   loading: () => <Skeleton className="h-64 w-full" />,
 });
 
-import { useLanguage } from "@/lib/language-context";
+import { useTranslations } from "next-intl";
 
 // Core Stack - Solo tecnologías de Sago One y Plenty Market
 const coreTechnologies = [
@@ -39,7 +40,7 @@ const coreTechnologies = [
 ];
 
 export default function HomePageClient() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   // Stats actualizados con métricas técnicas - Memoized to prevent recalculation
   const stats = React.useMemo(() => [
@@ -148,6 +149,9 @@ export default function HomePageClient() {
                         {t('hero.cta.services')}
                       </Link>
                     </Button>
+                  </MagneticWrapper>
+                  <MagneticWrapper>
+                    <CVDownloadButton className="rounded-full h-12 px-8 text-base border-white/10 hover:bg-secondary/50 transition-all hover:scale-105" variant="outline" />
                   </MagneticWrapper>
                 </div>
               </div>
@@ -276,6 +280,10 @@ export default function HomePageClient() {
                     {t('about.current.text')}
                   </p>
                 </div>
+              </div>
+
+              <div className="text-center mt-12 flex justify-center">
+                <CVDownloadButton variant="default" className="rounded-full shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all hover:scale-105 px-8 h-12 text-base" />
               </div>
 
               <div className="text-center mt-8">

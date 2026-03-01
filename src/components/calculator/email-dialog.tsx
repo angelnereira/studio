@@ -32,7 +32,7 @@ export function EmailDialog({ result, open, onOpenChange }: EmailDialogProps) {
     setIsSending(true);
 
     try {
-      const { sendBudgetEmail } = await import('@/app/calculadora/actions');
+      const { sendBudgetEmail } = await import('@/app/[locale]/calculadora/actions');
       const emailResult = await sendBudgetEmail({
         result,
         recipientEmail: email,

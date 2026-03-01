@@ -2,7 +2,7 @@
 
 import { Post } from '@/lib/blog';
 import Image from 'next/image';
-import PanamaDeepMusicAnalysis from '@/app/blog/panama-deep-music-analysis';
+import PanamaDeepMusicAnalysis from '@/app/[locale]/blog/panama-deep-music-analysis';
 import { MusicArtistComparison } from './music-artist-comparison';
 
 interface BlogPostRendererProps {

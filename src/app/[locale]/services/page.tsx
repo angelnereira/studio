@@ -9,12 +9,12 @@ import { Badge } from "@/components/ui/badge";
 import { services, Service } from "@/lib/services";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
-import { useLanguage } from "@/lib/language-context";
+import { useTranslations } from "next-intl";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { TiltCard } from "@/components/ui/tilt-card";
 
 export default function ServicesPage() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <>

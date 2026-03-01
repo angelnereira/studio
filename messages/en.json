@@ -1,0 +1,194 @@
+{
+    "hero": {
+        "greeting": "Hi, I'm",
+        "name": "Ángel Nereira",
+        "title": "Full Stack Software Engineer",
+        "subtitle": "FinTech Developer & Modern Web Apps",
+        "description": "Engineer specialized in FinTech, GovTech, and SaaS platforms. I build modern applications that work on any device, ensuring security and scalability.",
+        "cta": {
+            "services": "View Projects",
+            "contact": "Technical Consulting"
+        },
+        "badge": "Creator of Sago One · ERP SaaS",
+        "stats": {
+            "years": "Years of Experience",
+            "projects": "Projects Delivered",
+            "facturas": "Invoices Processed",
+            "uptime": "SaaS Uptime"
+        }
+    },
+    "solutions": {
+        "title": "Solutions that Scale",
+        "subtitle": "High-level software engineering for products that need performance, security and availability.",
+        "enterprise": {
+            "title": "FinTech & Compliance",
+            "desc": "Electronic invoicing systems, government integrations (DGI, PAC) and bank-grade security.",
+            "stats": "AES-256 Encryption"
+        },
+        "digital": {
+            "title": "PWA Offline-First",
+            "desc": "Progressive applications that work without internet. Service Workers, strategic caching and smart sync.",
+            "stats": "100% Offline Capable"
+        },
+        "consulting": {
+            "title": "SaaS Development",
+            "desc": "Multi-tenant systems, horizontal scalability and PostgreSQL database optimization.",
+            "stats": "Multi-Tenant Ready"
+        },
+        "explore": "View Details"
+    },
+    "about": {
+        "title": "About Me",
+        "description": "Full Stack Software Engineer specialized in FinTech and GovTech. I design and build scalable SaaS systems that process thousands of daily transactions.",
+        "background": {
+            "title": "Technical Focus",
+            "text": "My specialty is building Offline-First PWA applications and high-availability systems. I work with Next.js, TypeScript and PostgreSQL to create robust products that solve real business problems."
+        },
+        "current": {
+            "title": "Current Projects",
+            "text": "Currently leading the development of Sago One (Enterprise ERP SaaS) and Plenty Market (E-commerce PWA). Both systems handle critical data with AES-256 encryption and advanced multi-tenant schemas."
+        },
+        "philosophy": {
+            "title": "My Philosophy",
+            "text": "Clean code, scalable solutions, clear documentation"
+        }
+    },
+    "skills": {
+        "title": "Tech Stack",
+        "description": "The tools I use to build Sago One and Plenty Market.",
+        "cta": "View Full Stack",
+        "category": {
+            "core": "Core",
+            "data": "Data",
+            "infrastructure": "Infrastructure"
+        }
+    },
+    "services": {
+        "title": "Services",
+        "description": "Software solutions for products that need to scale.",
+        "cta": "View all services",
+        "page_title": "Enterprise Software Solutions",
+        "page_subtitle": "I develop complete systems: from Offline-First PWAs to complex government API integrations. Specialized in FinTech SaaS."
+    },
+    "projects": {
+        "title": "Projects in Production",
+        "description": "Real systems processing transactions. The engineering behind each solution.",
+        "page_title": "Success Stories",
+        "page_subtitle": "FinTech and E-commerce systems in production. The engineering behind each solution.",
+        "challenge": "The Technical Challenge",
+        "tech_highlights": "Technical Highlights"
+    },
+    "metrics": {
+        "title": "Production Metrics",
+        "subtitle": "Real numbers from production systems."
+    },
+    "cta": {
+        "title": "Need high-level development?",
+        "subtitle": "Let's build systems that scale. Available for FinTech, E-commerce and SaaS projects.",
+        "button": "Book Consulting"
+    },
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "services": "Services",
+        "projects": "Projects",
+        "skills": "Stack",
+        "contact": "Contact",
+        "calculator": "Calculator",
+        "blog": "Blog"
+    },
+    "footer": {
+        "rights": "All rights reserved.",
+        "built": "Developed with",
+        "quote": "\"Clean code, scalable solutions.\"",
+        "builtBy": "Built by Ángel Nereira."
+    },
+    "general": {
+        "learnMore": "Learn more",
+        "viewAll": "View all",
+        "viewCode": "View Code",
+        "viewLive": "View Live"
+    },
+    "admin": {
+        "title": "Admin Panel",
+        "dashboard": "Dashboard",
+        "job_analysis": "Job Analysis",
+        "cover_letters": "Cover Letters",
+        "back_to_site": "Back to Site"
+    },
+    "project": {
+        "sago_one": {
+            "title": "Sago One",
+            "label": "All-in-One ERP SaaS | POS & FinTech | Next.js 15",
+            "subtitle": "Enterprise ERP and Electronic Invoicing Platform",
+            "description": "All-in-One Enterprise Platform for businesses in Panama. Starting as a DGI-certified electronic invoicing PWA, it now integrates real-time Pro Inventory, an agile touch Point of Sale (POS), and Legal Payroll management. Its offline-first architecture ensures uninterrupted operation in low-connectivity areas.",
+            "challenge": "The challenge was to keep invoicing operational without internet. The solution was implementing an aggressive caching strategy with Service Workers and background synchronization upon reconnection. This allows merchants in rural or unstable areas to continue invoicing without interruptions.",
+            "highlight": {
+                "security": {
+                    "title": "Bank-Grade Security",
+                    "desc": "AES-256 encryption for PAC/DGI credentials, robust authentication, and secure handling of sensitive fiscal data."
+                },
+                "database": {
+                    "title": "Modular Ecosystem (ERP)",
+                    "desc": "Seamless integration between Invoicing v2.0, fast Point of Sale (POS), inventory management with tracking, and legal payroll."
+                },
+                "performance": {
+                    "title": "Extreme Performance",
+                    "desc": "99.9% Uptime. React Server Components for optimal rendering and minimal bundle size."
+                }
+            }
+        },
+        "plenty_market": {
+            "title": "Plenty Market",
+            "label": "International E-commerce | PWA | Complex Logistics",
+            "subtitle": "PWA E-commerce with Partner Program and Inventory Management",
+            "description": "Complete modernization from a static site to a high-performance PWA built in Next.js 14 and TypeScript. Integrates a complex logistics system (Partner Program) with real-time inventory management, product variants, and tax-free zones.",
+            "challenge": "The challenge was migrating a static site to a full e-commerce platform while maintaining fluid UX. We implemented a Partner Program allowing vendors to manage inventory with differentiated tax zones and real-time stock sync.",
+            "highlight": {
+                "state": {
+                    "title": "Optimized State Management",
+                    "desc": "Zustand for lightweight global cart and session handling. State persistence between sessions without overhead."
+                },
+                "media": {
+                    "title": "Media Optimization",
+                    "desc": "Integration with Cloudinary for on-the-fly transformation (WebP/AVIF) and smart Lazy loading."
+                },
+                "migration": {
+                    "title": "Database Migration",
+                    "desc": "Migration to PostgreSQL (Neon) via Prisma ORM for complex relational data integrity."
+                }
+            }
+        }
+    },
+    "metric": {
+        "facturas": {
+            "label": "Invoices Processed",
+            "desc": "Electronic invoices issued through Sago One with DGI compliance."
+        },
+        "uptime": {
+            "label": "Guaranteed Uptime",
+            "desc": "Availability of production services with serverless architecture."
+        },
+        "latency": {
+            "label": "Response Time",
+            "desc": "Average API latency in critical invoicing operations."
+        },
+        "offline": {
+            "label": "Offline Capable",
+            "desc": "Full offline functionality thanks to Service Workers and PWA."
+        }
+    },
+    "cv": {
+        "download": {
+            "button": {
+                "label": "Download CV",
+                "loading": "Preparing PDF...",
+                "success": "Download started!"
+            },
+            "error": {
+                "ratelimit": "Too many downloads. Try again in 1 hour.",
+                "generic": "Download failed. Please try again."
+            }
+        }
+    }
+}

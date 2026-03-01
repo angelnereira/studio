@@ -135,6 +135,13 @@ export const translations: Record<Language, Record<string, string>> = {
         'metric.latency.desc': 'Latencia promedio de API en operaciones críticas de facturación.',
         'metric.offline.label': 'Offline Capable',
         'metric.offline.desc': 'Funcionalidad completa sin conexión gracias a Service Workers y PWA.',
+
+        // CV Download
+        'cv.download.button.label': 'Descargar CV',
+        'cv.download.button.loading': 'Preparando PDF...',
+        'cv.download.button.success': '¡Descarga iniciada!',
+        'cv.download.error.ratelimit': 'Demasiadas descargas. Intenta en 1 hora.',
+        'cv.download.error.generic': 'Error al descargar. Intenta de nuevo.',
     },
     en: {
         // Hero - Full Stack Software Engineer (not Architect)
@@ -270,5 +277,12 @@ export const translations: Record<Language, Record<string, string>> = {
         'admin.job_analysis': 'Job Analysis',
         'admin.cover_letters': 'Cover Letters',
         'admin.back_to_site': 'Back to Site',
+
+        // CV Download
+        'cv.download.button.label': 'Download CV',
+        'cv.download.button.loading': 'Preparing PDF...',
+        'cv.download.button.success': 'Download started!',
+        'cv.download.error.ratelimit': 'Too many downloads. Try again in 1 hour.',
+        'cv.download.error.generic': 'Download failed. Please try again.',
     },
 };

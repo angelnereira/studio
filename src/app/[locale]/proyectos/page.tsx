@@ -7,11 +7,11 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
-import { useLanguage } from "@/lib/language-context";
+import { useTranslations } from "next-intl";
 import { TiltCard } from "@/components/ui/tilt-card";
 
 export default function ProyectosPage() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   const projects = [
     {

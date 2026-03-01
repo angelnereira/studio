@@ -3,10 +3,11 @@
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useLanguage } from "@/lib/language-context";
+import { useTranslations } from "next-intl";
+import { LanguageToggle } from "./language-toggle";
 
 export function SiteFooter() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <footer className="w-full border-t bg-background/50 backdrop-blur-sm">
@@ -16,6 +17,7 @@ export function SiteFooter() {
           <p>{t('footer.builtBy')} © {new Date().getFullYear()} {t('footer.rights')}</p>
         </div>
         <div className="flex items-center gap-2">
+          <LanguageToggle />
           <Button variant="ghost" size="icon" asChild className="text-muted-foreground transition-colors hover:text-primary">
             <Link href="https://github.com/angelnereira" target="_blank" rel="noreferrer">
               <Github className="h-5 w-5" />
@@ -29,7 +31,7 @@ export function SiteFooter() {
             </Link>
           </Button>
           <Button variant="ghost" size="icon" asChild className="text-muted-foreground transition-colors hover:text-primary">
-            <Link href="https://www.linkedin.com/in/angel-nereira-software-ingineer/" target="_blank" rel="noreferrer">
+            <Link href="https://www.linkedin.com/in/angel-nereira-software-ingineer-and-devops/" target="_blank" rel="noreferrer">
               <Linkedin className="h-5 w-5" />
               <span className="sr-only">LinkedIn</span>
             </Link>

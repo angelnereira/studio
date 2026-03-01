@@ -9,16 +9,16 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import * as React from "react";
-import { LanguageToggle } from "@/components/language-toggle";
-import { useLanguage } from "@/lib/language-context";
+import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
+import { LanguageToggle } from "./language-toggle";
 
 export function SiteHeader() {
   const { data: session } = useSession();
   const [isSheetOpen, setSheetOpen] = React.useState(false);
   const pathname = usePathname();
   const { setTheme, theme } = useTheme();
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   const navItems = React.useMemo(() => [
     { href: "/", label: t('nav.home'), icon: <Home className="h-4 w-4" /> },

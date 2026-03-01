@@ -14,7 +14,7 @@ import { CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from 
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ServicesCarousel } from './services-carousel';
-import { useLanguage } from '@/lib/language-context';
+import { useTranslations } from "next-intl";
 
 // Project Icons
 const SagoOneIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -49,7 +49,7 @@ const highlightIcons: { [key: string]: React.ElementType } = {
 };
 
 export function SkillsSection() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <TooltipProvider>
@@ -118,7 +118,7 @@ export function SkillsSection() {
 
 export function ProjectsSection() {
   const [isClient, setIsClient] = useState(false);
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   useEffect(() => {
     setIsClient(true);
@@ -331,7 +331,7 @@ export function ProjectsSection() {
 
 // NUEVO: Metrics Section (reemplaza Testimonials)
 export function MetricsSection() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   const metricsData = [
     { value: "10,000+", label: t('metric.facturas.label'), description: t('metric.facturas.desc') },
@@ -401,7 +401,7 @@ export function TestimonialsSection({ testimonials: testimonialsData }: { testim
 }
 
 export function ServicesSection() {
-  const { t } = useLanguage();
+  const t = useTranslations();
 
   return (
     <section id="services" className="w-full">

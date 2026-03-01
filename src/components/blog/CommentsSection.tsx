@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Loader2, Send } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
-import { verifySubscriber, submitComment } from "@/app/blog/actions"
+import { verifySubscriber, submitComment } from "@/app/[locale]/blog/actions"
 
 const commentSchema = z.object({
     name: z.string().min(2, "El nombre es requerido"),

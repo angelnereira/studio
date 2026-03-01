@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from 'next';
-import './globals.css';
+import '../globals.css';
 import { RootLayoutClient } from '@/components/root-layout-client';
 import { BackgroundAnimation } from '@/components/ui/background-animation';
 import { GlobalEasterEggs } from '@/components/global-easter-eggs';
 import { AdminBar } from '@/components/admin/admin-bar';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 // SEO Metadata optimizada para Ingeniero de Software Full Stack FinTech
 export const metadata: Metadata = {
@@ -90,13 +93,24 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+
+  if (!['en', 'es'].includes(locale)) {
+    notFound();
+  }
+
+  setRequestLocale(locale);
+  const messages = await getMessages();
+
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -206,12 +220,16 @@ export default function RootLayout({
           }}
         />
       </head>
-      <RootLayoutClient>
-        <GlobalEasterEggs />
-        <BackgroundAnimation />
-        <AdminBar />
-        {children}
-      </RootLayoutClient>
+      <body className="antialiased min-h-screen">
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          <RootLayoutClient>
+            <GlobalEasterEggs />
+            <BackgroundAnimation />
+            <AdminBar />
+            {children}
+          </RootLayoutClient>
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }
