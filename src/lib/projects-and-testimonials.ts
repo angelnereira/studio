@@ -26,8 +26,8 @@ export const projectsData: Project[] = [
   {
     title: "Sago One",
     id: "sago-one-fintech-saas",
-    label: "FinTech SaaS | Compliance | Next.js 15",
-    description: "Plataforma SaaS de facturación electrónica certificada por la DGI. Construida sobre Next.js 15 para aprovechar el Server-Side Rendering y velocidad extrema. Implementa una arquitectura PWA (Progressive Web App) que garantiza operatividad offline-first mediante Service Workers, crucial para la estabilidad comercial en zonas con baja conectividad.",
+    label: "ERP SaaS Todo-en-Uno | POS & FinTech | Next.js 15",
+    description: "Plataforma Enterprise Todo-en-Uno para negocios en Panamá. Comenzando como un sistema PWA de facturación electrónica certificada por la DGI, ahora integra Inventario Pro en tiempo real, un Punto de Venta (POS) táctil ágil y gestión de Nómina Legal. Su arquitectura offline-first garantiza operatividad ininterrumpida en zonas con baja conectividad.",
     technologies: ["Next.js 15", "TypeScript", "Prisma ORM", "Neon PostgreSQL", "PWA", "Service Workers", "AES-256", "Vercel"],
     techHighlights: [
       {
@@ -35,8 +35,8 @@ export const projectsData: Project[] = [
         description: "Encriptación AES-256 para credenciales PAC/DGI. Autenticación robusta y manejo seguro de datos fiscales sensibles."
       },
       {
-        title: "Base de Datos Multi-Tenant",
-        description: "PostgreSQL optimizado para multi-tenancy, permitiendo gestión de múltiples sucursales y empresas con aislamiento de datos."
+        title: "Ecosistema Modular (ERP)",
+        description: "Integración fluida entre Facturación v2.0, Punto de Venta (POS) rápido, gestión de inventario con tracking de lotes y planillas legales."
       },
       {
         title: "Performance Extremo",
