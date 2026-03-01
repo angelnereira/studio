@@ -19,6 +19,7 @@ export default async function DashboardLayout({
         redirect("/admin/login")
     }
 
+
     return (
         <div className="flex h-screen bg-black text-foreground overflow-hidden font-sans">
             {/* Desktop Sidebar */}

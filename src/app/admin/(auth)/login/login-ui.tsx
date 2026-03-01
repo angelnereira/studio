@@ -8,8 +8,31 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Zap, Bell, Lock, Activity, Loader2 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { loginAction } from "./actions"
+import { useSearchParams } from "next/navigation"
+import { useToast } from "@/hooks/use-toast"
+import { useEffect } from "react"
 
 export function LoginUI() {
+    const searchParams = useSearchParams()
+    const { toast } = useToast()
+
+    useEffect(() => {
+        const error = searchParams.get("error")
+        if (error === "AccessDenied") {
+            toast({
+                title: "Acceso Denegado",
+                description: "No tienes permisos para acceder con este correo.",
+                variant: "destructive",
+            })
+        } else if (error) {
+            toast({
+                title: "Error de Autenticación",
+                description: "Ocurrió un error al intentar iniciar sesión.",
+                variant: "destructive",
+            })
+        }
+    }, [searchParams, toast])
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-black relative overflow-hidden font-sans selection:bg-primary/20">
             {/* Background Effects */}
