@@ -229,7 +229,12 @@ export async function sendCampaign(campaignId: string) {
                 attachments: campaign.attachments ? (campaign.attachments as unknown as EmailAttachment[]) : undefined
             }))
 
-            await resend.batch.send(emailBatch)
+            const { error: batchError } = await resend.batch.send(emailBatch)
+
+            if (batchError) {
+                console.error('Resend Batch API error:', batchError)
+                throw new Error(`Resend Error: ${batchError.message}`)
+            }
 
             // CRM Traceability: Log email sent activity for matching contacts
             try {
@@ -412,7 +417,7 @@ export async function sendQuickEmail(data: {
         const from = `${sender.name} <${sender.email}>`
 
         // Send via Resend
-        await resend.emails.send({
+        const { data: resendData, error: resendError } = await resend.emails.send({
             from,
             to,
             subject,
@@ -422,6 +427,11 @@ export async function sendQuickEmail(data: {
                 content: Buffer.from(a.content, 'base64')
             })),
         })
+
+        if (resendError) {
+            console.error('Resend API Error:', resendError)
+            return { success: false, message: `Resend Error: ${resendError.message}` }
+        }
 
         // Log to CRM activity
         try {
