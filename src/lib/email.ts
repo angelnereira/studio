@@ -250,7 +250,7 @@ export async function sendContactEmail({ formType, data }: EmailData): Promise<{
     const htmlContent = (formatter as (data: any) => string)(data);
 
     const result = await resend.emails.send({
-      from: 'Portfolio Contact <contact@angelnereira.com>',
+      from: '"Portfolio Contact" <contact@angelnereira.com>',
       to: 'contact@angelnereira.com',
       subject: subject,
       html: htmlContent,

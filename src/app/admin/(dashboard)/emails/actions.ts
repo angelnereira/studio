@@ -7,7 +7,12 @@ import { z } from "zod"
 import { WelcomeEmail, ServiceInquiryEmail, NewsletterEmail, ProjectCompleteEmail } from "@/emails/index"
 import * as React from 'react'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy Resend initialization
+function getResendClient() {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) throw new Error("RESEND_API_KEY is not configured");
+    return new Resend(apiKey);
+}
 
 const EmailSchema = z.object({
     recipientType: z.enum(["individual", "all", "clients", "employers"]),
@@ -93,16 +98,17 @@ export async function sendEmailAction(prevState: EmailState, formData: FormData)
             return { success: false, message: "No recipients found for this selection." }
         }
 
+        const resend = getResendClient();
         if (recipients.length === 1) {
             await resend.emails.send({
-                from: "Ángel Nereira <contact@angelnereira.com>",
+                from: "\"Ángel Nereira\" <contact@angelnereira.com>",
                 to: recipients[0],
                 subject: subject,
                 html: `<div style="font-family: sans-serif; white-space: pre-wrap;">${message}</div>`,
             })
         } else {
             await resend.emails.send({
-                from: "Ángel Nereira <contact@angelnereira.com>",
+                from: "\"Ángel Nereira\" <contact@angelnereira.com>",
                 to: "contact@angelnereira.com", // Send to self
                 bcc: recipients,
                 subject: subject,
@@ -160,8 +166,9 @@ export async function sendTemplateEmailAction(prevState: EmailState, formData: F
 
         const subject = TEMPLATE_SUBJECTS[templateId] || "Update from Angel Nereira"
 
+        const resend = getResendClient();
         await resend.emails.send({
-            from: "Ángel Nereira <contact@angelnereira.com>",
+            from: "\"Ángel Nereira\" <contact@angelnereira.com>",
             to: specificEmail,
             subject: subject,
             react: React.createElement(TemplateComponent, data)

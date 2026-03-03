@@ -14,7 +14,14 @@ import {
     type CampaignInput
 } from "./schemas"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Initialize Resend lazily to ensure environment variables are loaded
+function getResendClient() {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+        throw new Error("RESEND_API_KEY is not configured in environment variables");
+    }
+    return new Resend(apiKey);
+}
 
 interface AudienceFilter {
     recipientType?: 'individual' | 'clients' | 'employers' | 'all';
@@ -132,7 +139,9 @@ export async function sendCampaign(campaignId: string) {
 
     if (!campaign) return { success: false, message: "Campaign not found" }
     if (campaign.status === 'completed') return { success: false, message: "Campaign already sent" }
-    if (!campaign.sender.verified) return { success: false, message: "Sender identity is not verified. Please verify it in your Resend Dashboard before sending." }
+    if (!campaign.sender.verified && !campaign.sender.email.endsWith('@resend.dev')) {
+        return { success: false, message: "Sender identity is not verified. Please verify it in your Resend Dashboard or use a verified domain." }
+    }
 
     // 1. Fetch Audience
     // audienceFilter logic: { recipientType: 'clients' } or similar
@@ -192,7 +201,8 @@ export async function sendCampaign(campaignId: string) {
     })
 
     try {
-        const from = `${campaign.sender.name} <${campaign.sender.email}>`
+        const resend = getResendClient();
+        const from = `"${campaign.sender.name}" <${campaign.sender.email}>`
 
         // Simple loop for now (Robust queue recommended for production > 1000)
         // For broadcast, we can use BCC to self to save API calls? 
@@ -226,14 +236,19 @@ export async function sendCampaign(campaignId: string) {
                 html: campaign.content,
                 tags: [{ name: 'campaignId', value: campaign.id }],
                 scheduledAt: scheduledAtISO, // Pass to Resend
-                attachments: campaign.attachments ? (campaign.attachments as unknown as EmailAttachment[]) : undefined
+                attachments: campaign.attachments
+                    ? (campaign.attachments as unknown as EmailAttachment[]).map(a => ({
+                        filename: a.filename,
+                        content: Buffer.from(a.content, 'base64')
+                    }))
+                    : undefined
             }))
 
             const { error: batchError } = await resend.batch.send(emailBatch)
 
             if (batchError) {
                 console.error('Resend Batch API error:', batchError)
-                throw new Error(`Resend Error: ${batchError.message}`)
+                return { success: false, message: `Resend Error: ${batchError.message}` }
             }
 
             // CRM Traceability: Log email sent activity for matching contacts
@@ -410,11 +425,12 @@ export async function sendQuickEmail(data: {
     const { to, subject, html, senderId, attachments } = validated.data
 
     try {
+        const resend = getResendClient();
         // Get sender identity
         const sender = await prisma.senderIdentity.findUnique({ where: { id: senderId } })
         if (!sender) return { success: false, message: "Sender identity not found. Add one in Settings." }
 
-        const from = `${sender.name} <${sender.email}>`
+        const from = `"${sender.name}" <${sender.email}>`
 
         // Send via Resend
         const { data: resendData, error: resendError } = await resend.emails.send({
