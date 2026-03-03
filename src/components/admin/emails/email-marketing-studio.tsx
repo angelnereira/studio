@@ -196,7 +196,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
             const html = ev.target?.result as string
             const { clean, warnings } = sanitizeEmailHtml(html)
             setRawHtmlInput(clean)
-            setDraft({ ...draft, content: clean })
+            setDraft(prev => ({ ...prev, content: clean }))
             setSpamWarnings(warnings)
             toast({
                 title: '✅ HTML Loaded & Sanitized',
@@ -212,14 +212,19 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
             toast({ title: 'Empty', description: 'Paste some HTML code first', variant: 'destructive' })
             return
         }
-        const { clean, warnings } = sanitizeEmailHtml(rawHtmlInput)
-        setRawHtmlInput(clean)
-        setDraft({ ...draft, content: clean })
-        setSpamWarnings(warnings)
-        toast({
-            title: '✅ HTML Applied',
-            description: warnings.length > 0 ? `${warnings.length} spam trigger(s) removed` : 'Clean HTML inserted'
-        })
+        try {
+            const { clean, warnings } = sanitizeEmailHtml(rawHtmlInput)
+            setRawHtmlInput(clean)
+            setDraft(prev => ({ ...prev, content: clean }))
+            setSpamWarnings(warnings)
+            toast({
+                title: '✅ HTML Applied',
+                description: warnings.length > 0 ? `${warnings.length} spam trigger(s) removed` : 'Clean HTML inserted'
+            })
+        } catch (error) {
+            console.error('Sanitize error:', error)
+            toast({ title: 'Error', description: 'Failed to sanitize HTML. Check the code.', variant: 'destructive' })
+        }
     }
 
     // Helper to read file as base64
@@ -254,7 +259,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
         const contact = contacts.find(c => c.id === contactId)
         if (contact) {
             setSelectedContactId(contactId)
-            setDraft({ ...draft, to: contact.email })
+            setDraft(prev => ({ ...prev, to: contact.email }))
             toast({ title: "Contact Selected", description: `Auto-filled email for ${contact.name}` })
         }
     }
@@ -263,7 +268,16 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
     const handleQuickSend = async () => {
         if (!draft.to) { toast({ title: "Missing recipient", description: "Enter a To email address.", variant: "destructive" }); return }
         if (!draft.subject) { toast({ title: "Missing subject", description: "Enter a subject line.", variant: "destructive" }); return }
-        if (!draft.content) { toast({ title: "Missing content", description: "Add some email content.", variant: "destructive" }); return }
+
+        // Final sync of content if in HTML mode to avoid silent data loss
+        let currentContent = draft.content
+        if (editorMode === 'html' && rawHtmlInput) {
+            const { clean } = sanitizeEmailHtml(rawHtmlInput)
+            currentContent = clean
+            setDraft(prev => ({ ...prev, content: clean }))
+        }
+
+        if (!currentContent) { toast({ title: "Missing content", description: "Add some email content.", variant: "destructive" }); return }
         if (!draft.senderId) { toast({ title: "No sender", description: "Select a sender identity or add one in Settings.", variant: "destructive" }); return }
 
         setIsSending(true)
@@ -271,7 +285,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
             const result = await sendQuickEmail({
                 to: draft.to,
                 subject: draft.subject,
-                html: draft.content,
+                html: currentContent,
                 senderId: draft.senderId,
                 attachments: draft.attachments.length > 0 ? draft.attachments : undefined
             })
@@ -279,12 +293,15 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
             if (result.success) {
                 toast({ title: "✅ Sent!", description: result.message })
                 setDraft({ to: "", subject: "", content: "", senderId: draft.senderId, attachments: [] })
+                setRawHtmlInput("")
                 setSelectedContactId("")
                 router.refresh()
             } else {
+                console.error('Send error:', result.message)
                 throw new Error(result.message || "Failed to send")
             }
         } catch (error) {
+            console.error('Catch Quick send error:', error)
             const msg = error instanceof Error ? error.message : "Failed to send."
             toast({ title: "Error", description: msg, variant: "destructive" })
         } finally {
@@ -405,7 +422,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                 <Select onValueChange={(v) => {
                                     const t = allTemplates.find(t => t.id === v)
                                     if (t) {
-                                        setDraft({ ...draft, content: t.content, subject: draft.subject || t.subject || "" })
+                                        setDraft(prev => ({ ...prev, content: t.content, subject: prev.subject || t.subject || "" }))
                                         toast({ title: "Template Loaded", description: `"${t.name}" applied.` })
                                     }
                                 }}>
@@ -496,7 +513,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                             </div>
                         ) : editorMode === 'visual' ? (
                             <VisualEmailComposer
-                                onChange={(html) => setDraft({ ...draft, content: html })}
+                                onChange={(html) => setDraft(prev => ({ ...prev, content: html }))}
                             />
                         ) : editorMode === 'html' ? (
                             <div className="space-y-3">
@@ -564,7 +581,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                         ) : (
                             <RichTextEditor
                                 content={draft.content}
-                                onChange={(html) => setDraft({ ...draft, content: html })}
+                                onChange={(html) => setDraft(prev => ({ ...prev, content: html }))}
                                 services={services}
                             />
                         )}
@@ -714,7 +731,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                             variant="secondary"
                                             className="w-full opacity-0 group-hover:opacity-100 transition-opacity text-xs"
                                             onClick={() => {
-                                                setDraft({ ...draft, content: t.content, subject: t.subject || "" })
+                                                setDraft(prev => ({ ...prev, content: t.content, subject: prev.subject || t.subject || "" }))
                                                 toast({ title: "Template Cargado", description: `"${t.name}" listo para usar en Compose.` })
                                             }}
                                         >
@@ -744,7 +761,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                     </CardContent>
                                     <CardFooter>
                                         <Button variant="secondary" className="w-full opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => {
-                                            setDraft({ ...draft, content: t.content, subject: t.subject || '' })
+                                            setDraft(prev => ({ ...prev, content: t.content, subject: prev.subject || t.subject || '' }))
                                             setActiveTab('compose')
                                             toast({ title: 'Template Loaded', description: `"${t.name}" loaded into Compose for editing.` })
                                         }}>Edit Template</Button>
