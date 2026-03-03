@@ -99,21 +99,21 @@ export async function sendEmailAction(prevState: EmailState, formData: FormData)
         }
 
         const resend = getResendClient();
-        if (recipients.length === 1) {
-            await resend.emails.send({
-                from: "\"Ángel Nereira\" <contact@angelnereira.com>",
-                to: recipients[0],
-                subject: subject,
-                html: `<div style="font-family: sans-serif; white-space: pre-wrap;">${message}</div>`,
-            })
-        } else {
-            await resend.emails.send({
-                from: "\"Ángel Nereira\" <contact@angelnereira.com>",
-                to: "contact@angelnereira.com", // Send to self
-                bcc: recipients,
-                subject: subject,
-                html: `<div style="font-family: sans-serif; white-space: pre-wrap;">${message}</div>`,
-            })
+
+        // Consistent from format: Name <email@domain.com>
+        const from = "Ángel Nereira <contact@angelnereira.com>"
+
+        const { data: resendData, error: resendError } = await resend.emails.send({
+            from,
+            to: recipients.length === 1 ? recipients[0] : "contact@angelnereira.com",
+            bcc: recipients.length > 1 ? recipients : undefined,
+            subject: subject,
+            html: `<div style="font-family: sans-serif; white-space: pre-wrap;">${message}</div>`,
+        })
+
+        if (resendError) {
+            console.error("Resend SDK Error:", resendError)
+            return { success: false, message: resendError.message }
         }
 
         // Log Activity
@@ -167,12 +167,19 @@ export async function sendTemplateEmailAction(prevState: EmailState, formData: F
         const subject = TEMPLATE_SUBJECTS[templateId] || "Update from Angel Nereira"
 
         const resend = getResendClient();
-        await resend.emails.send({
-            from: "\"Ángel Nereira\" <contact@angelnereira.com>",
+        const from = "Ángel Nereira <contact@angelnereira.com>"
+
+        const { data: resendData, error: resendError } = await resend.emails.send({
+            from,
             to: specificEmail,
             subject: subject,
-            react: React.createElement(TemplateComponent, data)
+            react: TemplateComponent(data)
         })
+
+        if (resendError) {
+            console.error("Template SDK Error:", resendError)
+            return { success: false, message: resendError.message }
+        }
 
         // Log Activity
         await prisma.activityLog.create({
