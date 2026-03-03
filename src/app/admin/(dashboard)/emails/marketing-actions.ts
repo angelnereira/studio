@@ -412,19 +412,19 @@ export async function sendQuickEmail(data: {
     senderId: string
     attachments?: { filename: string; content: string }[]
 }) {
-    const session = await auth()
-    if (!session?.user) return { success: false, message: "Unauthorized" }
-
-    const validated = QuickSendSchema.safeParse(data)
-    if (!validated.success) {
-        const errors = validated.error.flatten().fieldErrors
-        const firstError = Object.values(errors).flat()[0] || "Invalid data"
-        return { success: false, message: firstError }
-    }
-
-    const { to, subject, html, senderId, attachments } = validated.data
-
     try {
+        const session = await auth()
+        if (!session?.user) return { success: false, message: "Unauthorized" }
+
+        const validated = QuickSendSchema.safeParse(data)
+        if (!validated.success) {
+            const errors = validated.error.flatten().fieldErrors
+            const firstError = Object.values(errors).flat()[0] || "Invalid data"
+            return { success: false, message: firstError }
+        }
+
+        const { to, subject, html, senderId, attachments } = validated.data
+
         const resend = getResendClient();
         // Get sender identity
         const sender = await prisma.senderIdentity.findUnique({ where: { id: senderId } })
@@ -467,8 +467,8 @@ export async function sendQuickEmail(data: {
         revalidatePath('/admin/emails')
         return { success: true, message: `Email sent to ${to}` }
     } catch (error) {
-        const msg = error instanceof Error ? error.message : "Send failed"
-        console.error('Quick send error:', error)
+        const msg = error instanceof Error ? error.message : "Internal Server Error"
+        console.error('Fatal Quick send error:', error)
         return { success: false, message: msg }
     }
 }

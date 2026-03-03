@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,55 +7,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Modelo para Contactos - Migrado desde Firebase Firestore
-// Modelo para Contactos - CRM
 model Contact {
-  id        String   @id @default(cuid())
-  formType  String   // "client" | "employer" | "collaborator" | "invitation"
-  email     String
-  status    String   @default("new") // "new", "contacted", "closed", "spam"
-  tags      String[] @default([])    // Custom labels: ["vip", "hot-lead", "follow-up", etc.]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Campos comunes
-  name      String?
-  phone     String?
-  message   String?
-  country   String?
-  industry  String?
-
-  // Campos específicos de Cliente (formType: "client")
-  company   String?
-  service   String?
-  budget    String?
-
-  // Campos específicos de Empleador (formType: "employer")
-  recruiterName   String?
-  companyName     String?
-  jobTitle        String?
-  jobDescription  String?
-  salaryOffer     String?
-  contractType    String?
-
-  // Campos específicos de Colaborador (formType: "collaborator")
-  linkedin   String?
-  portfolio  String?
-  expertise  String?
-  subject    String?
-
-  // Campos específicos de Invitación (formType: "invitation")
-  inviterName      String?
-  eventName        String?
-  eventType        String?
-  proposedRole     String?
-  eventDate        DateTime?
-  eventTime        String?
-  eventLocation    String?
-  invitationReason String?
-
-  campaignRecipients CampaignRecipient[]
+  id                 String              @id @default(cuid())
+  formType           String
+  email              String
+  status             String              @default("new")
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  name               String?
+  message            String?
+  country            String?
+  industry           String?
+  company            String?
+  service            String?
+  budget             String?
+  recruiterName      String?
+  companyName        String?
+  jobTitle           String?
+  jobDescription     String?
+  salaryOffer        String?
+  contractType       String?
+  linkedin           String?
+  portfolio          String?
+  expertise          String?
+  subject            String?
+  inviterName        String?
+  eventName          String?
+  eventType          String?
+  proposedRole       String?
+  eventDate          DateTime?
+  eventTime          String?
+  eventLocation      String?
+  invitationReason   String?
+  tags               String[]            @default([])
+  phone              String?
   activityLogs       ActivityLog[]
+  campaignRecipients CampaignRecipient[]
 
   @@index([formType])
   @@index([email])
@@ -67,22 +51,20 @@ model Contact {
   @@map("contacts")
 }
 
-// NextAuth Models
 model Account {
   id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -104,10 +86,10 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  role          String    @default("user") // "admin", "user"
+  role          String    @default("user")
   accounts      Account[]
-  sessions      Session[]
   posts         Post[]
+  sessions      Session[]
 
   @@map("users")
 }
@@ -121,154 +103,125 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
-// Blog / CMS System
 model Post {
-  id          String   @id @default(cuid())
-  title       String
-  slug        String   @unique
-  content     String   @db.Text // HTML content from TipTap
-  excerpt     String?  @db.Text
-  coverImage  String?
-  published   Boolean  @default(false)
-  featured    Boolean  @default(false)
-  
-  // SEO Metadata
+  id             String    @id @default(cuid())
+  title          String
+  slug           String    @unique
+  content        String
+  excerpt        String?
+  coverImage     String?
+  published      Boolean   @default(false)
+  featured       Boolean   @default(false)
   seoTitle       String?
   seoDescription String?
-  keywords       String? 
-
-  authorId    String
-  author      User     @relation(fields: [authorId], references: [id])
-  
-  publishedAt DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  comments    Comment[]
+  keywords       String?
+  authorId       String
+  publishedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  comments       Comment[]
+  author         User      @relation(fields: [authorId], references: [id])
 
   @@index([slug])
   @@index([published])
   @@map("posts")
 }
 
-// Email Marketing System
-
 model SenderIdentity {
-  id        String   @id @default(cuid())
-  name      String   // Display name, e.g. "Angel Nereira"
-  email     String   // email address
-  verified  Boolean  @default(false)
-  isDefault Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String          @id @default(cuid())
+  name      String
+  email     String
+  verified  Boolean         @default(false)
+  isDefault Boolean         @default(false)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
   campaigns EmailCampaign[]
 
   @@map("sender_identities")
 }
 
 model EmailTemplate {
-  id          String   @id @default(cuid())
+  id          String          @id @default(cuid())
   name        String
   description String?
-  subject     String?  // Default subject
-  content     String   @db.Text // HTML/JSON content
-  category    String?  // "newsletter", "promotion", "transactional"
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  subject     String?
+  content     String
+  category    String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
   campaigns   EmailCampaign[]
 
   @@map("email_templates")
 }
 
 model EmailCampaign {
-  id              String   @id @default(cuid())
-  name            String   // Internal name
-  subject         String
-  content         String   @db.Text
-  status          String   @default("draft") // "draft", "scheduled", "sending", "completed", "failed"
-  
-  scheduledAt     DateTime?
-  sentAt          DateTime?
-  
-  // Audience
-  audienceFilter  Json?    // Stores filters used (e.g. { formType: "client" })
-  recipientCount  Int      @default(0)
-
-  // Content Extensions
-  attachments     Json?    // Stores array of { filename, content(base64), type }
-
-  // Stats (Aggregated for speed)
-  statsSent       Int      @default(0)
-  statsDelivered  Int      @default(0)
-  statsOpened     Int      @default(0)
-  statsClicked    Int      @default(0)
-
-  // Relations
-  senderId        String
-  sender          SenderIdentity @relation(fields: [senderId], references: [id])
-  
-  templateId      String?
-  template        EmailTemplate? @relation(fields: [templateId], references: [id])
-
-  recipients      CampaignRecipient[]
-
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String              @id @default(cuid())
+  name           String
+  subject        String
+  content        String
+  status         String              @default("draft")
+  scheduledAt    DateTime?
+  sentAt         DateTime?
+  audienceFilter Json?
+  recipientCount Int                 @default(0)
+  statsSent      Int                 @default(0)
+  statsDelivered Int                 @default(0)
+  statsOpened    Int                 @default(0)
+  statsClicked   Int                 @default(0)
+  senderId       String
+  templateId     String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  attachments    Json?
+  recipients     CampaignRecipient[]
+  sender         SenderIdentity      @relation(fields: [senderId], references: [id])
+  template       EmailTemplate?      @relation(fields: [templateId], references: [id])
 
   @@map("email_campaigns")
 }
 
 model CampaignRecipient {
-  id          String   @id @default(cuid())
-  email       String
-  status      String   @default("pending") // "sent", "delivered", "failed", "bounced"
-  
-  openedAt    DateTime?
-  clickedAt   DateTime?
-  
-  campaignId  String
-  campaign    EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  
-  contactId   String?  // Optional link to Contact model
-  contact     Contact? @relation(fields: [contactId], references: [id])
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String        @id @default(cuid())
+  email      String
+  status     String        @default("pending")
+  openedAt   DateTime?
+  clickedAt  DateTime?
+  campaignId String
+  contactId  String?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  campaign   EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  contact    Contact?      @relation(fields: [contactId], references: [id])
 
   @@index([campaignId])
   @@index([email])
   @@map("campaign_recipients")
 }
 
-// Activity Log - Lightweight tracking for CRM
 model ActivityLog {
-  id          String   @id @default(cuid())
-  
-  contactId   String?
-  contact     Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
-  
-  type        String   // "email_sent", "status_change", "note", "email_opened", "email_clicked"
-  title       String   // Short description: "Welcome email sent", "Status → Contacted"
-  metadata    Json?    // Optional: { campaignId, oldStatus, newStatus, emailSubject }
-  
-  createdAt   DateTime @default(now())
+  id        String   @id @default(cuid())
+  contactId String?
+  type      String
+  title     String
+  metadata  Json?
+  createdAt DateTime @default(now())
+  contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
 
   @@index([contactId])
   @@index([createdAt])
   @@map("activity_logs")
 }
 
-// Blog Interaction System
 model Comment {
   id          String   @id @default(cuid())
-  content     String   @db.Text
+  content     String
   postId      String
-  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   authorName  String?
   authorEmail String
   isVerified  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
   @@map("comments")
@@ -284,108 +237,76 @@ model Subscriber {
   @@map("subscribers")
 }
 
-// ============================================
-// Job Application System Models
-// ============================================
-
-// Professional Profile - Source of truth for all applications
 model ProfileBase {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  phone     String?
-  location  String?
-  documentId String?   // Cédula / ID document
-  citizenship String?  // Nationality
-  
-  // Core professional content
-  summary      String   @db.Text    // Professional summary/bio
-  experience   Json                  // Array of work experiences
-  skills       Json                  // Categorized skills with proficiency levels
-  education    Json                  // Degrees and certifications
-  projects     Json?                 // Portfolio projects
-  languages    Json?                 // Languages spoken
-  socialLinks  Json?                 // LinkedIn, GitHub, Portfolio URLs
-  
-  isActive     Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  
+  id           String        @id @default(cuid())
+  name         String
+  email        String
+  phone        String?
+  location     String?
+  summary      String
+  experience   Json
+  skills       Json
+  education    Json
+  projects     Json?
+  languages    Json?
+  socialLinks  Json?
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  citizenship  String?
+  documentId   String?
   applications Application[]
 
   @@map("profile_bases")
 }
 
-// Job Vacancy with AI Analysis Results
 model JobVacancy {
-  id        String   @id @default(cuid())
-  
-  // Source data (original input)
-  sourceType    String                  // "screenshot" | "text" | "url"
-  sourceContent String   @db.Text       // Original text content or URL
-  sourceImage   String?  @db.Text       // Base64 encoded image for screenshots
-  
-  // Extracted company/job info
-  company       String?
-  position      String?
-  location      String?
-  workMode      String?                 // "remote" | "hybrid" | "onsite"
-  salaryRange   String?
-  
-  // AI Analysis results
-  analysis           Json?              // Full structured analysis from AI
-  requirements       Json?              // { required: [], preferred: [] }
-  keywords           String[]           // Important keywords extracted
-  compatibilityScore Int?               // 0-100 matching score
-  suggestions        String?  @db.Text  // AI suggestions for this vacancy
-  
-  status        String   @default("pending") // "pending" | "analyzed" | "applied" | "archived"
-  
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  
-  applications Application[]
+  id                 String        @id @default(cuid())
+  sourceType         String
+  sourceContent      String
+  sourceImage        String?
+  company            String?
+  position           String?
+  location           String?
+  workMode           String?
+  salaryRange        String?
+  analysis           Json?
+  requirements       Json?
+  keywords           String[]
+  compatibilityScore Int?
+  suggestions        String?
+  status             String        @default("pending")
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  applications       Application[]
 
   @@index([status])
   @@index([createdAt])
   @@map("job_vacancies")
 }
 
-// Application Record - Full history of each job application
 model Application {
-  id        String   @id @default(cuid())
-  
-  // Relations
-  vacancyId    String
-  vacancy      JobVacancy @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
-  
-  profileId    String
-  profile      ProfileBase @relation(fields: [profileId], references: [id])
-  
-  // Generated CV content
-  cvContent    Json                    // Personalized CV data structure
-  cvPdfUrl     String?                 // Vercel Blob storage URL
-  cvFileName   String?                 // Original filename
-  
-  // Generated email content
-  emailSubject String
-  emailHtml    String   @db.Text
-  emailText    String   @db.Text
-  
-  // Sending details
+  id             String      @id @default(cuid())
+  vacancyId      String
+  profileId      String
+  cvContent      Json
+  cvPdfUrl       String?
+  cvFileName     String?
+  emailSubject   String
+  emailHtml      String
+  emailText      String
   recipientEmail String?
   recipientName  String?
   sentAt         DateTime?
-  resendId       String?               // Resend message ID for tracking
-  
-  // Tracking & follow-up
-  status         String   @default("draft") // "draft" | "ready" | "sent" | "opened" | "replied" | "interview" | "rejected" | "accepted"
-  notes          String?  @db.Text
+  resendId       String?
+  status         String      @default("draft")
+  notes          String?
   followUpDate   DateTime?
   responseAt     DateTime?
-  
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  profile        ProfileBase @relation(fields: [profileId], references: [id])
+  vacancy        JobVacancy  @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
 
   @@index([status])
   @@index([vacancyId])
@@ -393,22 +314,16 @@ model Application {
   @@map("applications")
 }
 
-// CV Templates - Reusable CV layout configurations
 model CVTemplate {
-  id        String   @id @default(cuid())
-  name      String
+  id          String   @id @default(cuid())
+  name        String
   description String?
-  
-  // Template configuration
-  structure Json                       // Section order and layout config
-  styles    Json                       // Colors, fonts, spacing
-  
-  isDefault Boolean  @default(false)
-  isActive  Boolean  @default(true)
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  structure   Json
+  styles      Json
+  isDefault   Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@map("cv_templates")
 }
-
