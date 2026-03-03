@@ -36,9 +36,15 @@ interface EmailAttachment {
 // --- Sender Identity Actions ---
 
 export async function getSenderIdentities() {
-    const session = await auth()
-    if (!session?.user) return []
-    return await prisma.senderIdentity.findMany({ orderBy: { createdAt: 'desc' } })
+    try {
+        const session = await auth()
+        if (!session?.user) return []
+        const identities = await prisma.senderIdentity.findMany({ orderBy: { createdAt: 'desc' } })
+        return JSON.parse(JSON.stringify(identities))
+    } catch (error) {
+        console.error("Error fetching identities:", error)
+        return []
+    }
 }
 
 export async function createSenderIdentity(data: SenderIdentityInput) {
@@ -75,9 +81,15 @@ export async function deleteSenderIdentity(id: string) {
 // --- Template Actions ---
 
 export async function getTemplates() {
-    const session = await auth()
-    if (!session?.user) return []
-    return await prisma.emailTemplate.findMany({ orderBy: { updatedAt: 'desc' } })
+    try {
+        const session = await auth()
+        if (!session?.user) return []
+        const templates = await prisma.emailTemplate.findMany({ orderBy: { updatedAt: 'desc' } })
+        return JSON.parse(JSON.stringify(templates))
+    } catch (error) {
+        console.error("Error fetching templates:", error)
+        return []
+    }
 }
 
 export async function createTemplate(data: TemplateInput) {
@@ -306,21 +318,33 @@ export async function sendCampaign(campaignId: string) {
 }
 
 export async function getCampaigns() {
-    const session = await auth()
-    if (!session?.user) return []
-    return await prisma.emailCampaign.findMany({
-        orderBy: { createdAt: 'desc' },
-        include: { sender: true }
-    })
+    try {
+        const session = await auth()
+        if (!session?.user) return []
+        const campaigns = await prisma.emailCampaign.findMany({
+            orderBy: { createdAt: 'desc' },
+            include: { sender: true }
+        })
+        return JSON.parse(JSON.stringify(campaigns))
+    } catch (error) {
+        console.error("Error fetching campaigns:", error)
+        return []
+    }
 }
 
 export async function getContacts() {
-    const session = await auth()
-    if (!session?.user) return []
-    return await prisma.contact.findMany({
-        orderBy: { createdAt: 'desc' },
-        select: { id: true, name: true, email: true }
-    })
+    try {
+        const session = await auth()
+        if (!session?.user) return []
+        const contacts = await prisma.contact.findMany({
+            orderBy: { createdAt: 'desc' },
+            select: { id: true, name: true, email: true }
+        })
+        return JSON.parse(JSON.stringify(contacts))
+    } catch (error) {
+        console.error("Error fetching contacts:", error)
+        return []
+    }
 }
 
 export async function deleteCampaign(campaignId: string) {
@@ -445,7 +469,7 @@ export async function sendQuickEmail(data: {
         })
 
         if (resendError) {
-            console.error('Resend API Error:', resendError)
+            console.error('Resend API Error details:', JSON.stringify(resendError))
             return { success: false, message: `Resend Error: ${resendError.message}` }
         }
 
@@ -464,12 +488,14 @@ export async function sendQuickEmail(data: {
             console.error('Failed to log email activity:', logError)
         }
 
-        revalidatePath('/admin/emails')
-        return { success: true, message: `Email sent to ${to}` }
+        // TEMPORARILY DISABLED TO AVOID 500 RENDER ERROR during revalidation
+        // revalidatePath('/admin/emails')
+
+        return { success: true, message: `Email sent to ${to} (Success ID: ${resendData?.id || 'OK'})` }
     } catch (error) {
         const msg = error instanceof Error ? error.message : "Internal Server Error"
-        console.error('Fatal Quick send error:', error)
-        return { success: false, message: msg }
+        console.error('CRITICAL: sendQuickEmail crashed:', error)
+        return { success: false, message: `System Error: ${msg}` }
     }
 }
 
