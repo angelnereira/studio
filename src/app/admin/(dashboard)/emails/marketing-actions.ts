@@ -436,44 +436,80 @@ export async function sendQuickEmail(data: {
     senderId: string
     attachments?: { filename: string; content: string }[]
 }) {
+    console.log('--- sendQuickEmail Action Start ---')
     try {
-        const session = await auth()
-        if (!session?.user) return { success: false, message: "Unauthorized" }
-
-        const validated = QuickSendSchema.safeParse(data)
-        if (!validated.success) {
-            const errors = validated.error.flatten().fieldErrors
-            const firstError = Object.values(errors).flat()[0] || "Invalid data"
-            return { success: false, message: firstError }
+        // 1. Auth Check - wrapped in try to catch potentially failing auth()
+        let session;
+        try {
+            session = await auth()
+        } catch (authError) {
+            console.error('Auth check failed inside action:', authError)
+            return { success: false, message: "Authentication internal error" }
         }
 
-        const { to, subject, html, senderId, attachments } = validated.data
+        if (!session?.user) {
+            console.warn('Unauthorized attempt to send email')
+            return { success: false, message: "Unauthorized" }
+        }
 
-        const resend = getResendClient();
-        // Get sender identity
+        // 2. Validate basic data
+        const { to, subject, html, senderId, attachments } = data
+        if (!to || !subject || !html || !senderId) {
+            return { success: false, message: "Missing required fields (to, subject, content, or sender)" }
+        }
+
+        // 3. Get Sender from DB
         const sender = await prisma.senderIdentity.findUnique({ where: { id: senderId } })
-        if (!sender) return { success: false, message: "Sender identity not found. Add one in Settings." }
+        if (!sender) {
+            return { success: false, message: "Sender identity not found" }
+        }
 
-        const from = `"${sender.name}" <${sender.email}>`
+        // 4. API Core
+        const resendApiKey = process.env.RESEND_API_KEY
+        if (!resendApiKey) {
+            console.error('RESEND_API_KEY is missing in production environment')
+            return { success: false, message: "Server configuration error: API Key missing" }
+        }
 
-        // Send via Resend
-        const { data: resendData, error: resendError } = await resend.emails.send({
-            from,
-            to,
-            subject,
-            html,
-            attachments: attachments?.map((a: { filename: string; content: string }) => ({
-                filename: a.filename,
-                content: Buffer.from(a.content, 'base64')
-            })),
+        // Format sender exactly like working examples
+        // Note: Working example had: "Ángel Nereira <login@angelnereira.com>"
+        const fromAddress = `${sender.name} <${sender.email}>`
+
+        console.log(`Sending email to ${to} from ${fromAddress} with ${attachments?.length || 0} attachments`)
+
+        // 5. Send using direct fetch to ensure compatibility with Vercel environment 
+        // (Avoiding potential SDK Buffer/Environment issues)
+        const response = await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${resendApiKey}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                from: fromAddress,
+                to: [to], // Pass as array as seen in successful examples
+                subject: subject,
+                html: html,
+                attachments: attachments?.map(a => ({
+                    filename: a.filename,
+                    content: a.content // Client already provides base64
+                })),
+            }),
         })
 
-        if (resendError) {
-            console.error('Resend API Error details:', JSON.stringify(resendError))
-            return { success: false, message: `Resend Error: ${resendError.message}` }
+        const resultJson = await response.json()
+
+        if (!response.ok) {
+            console.error('Resend API Fetch Error:', resultJson)
+            return {
+                success: false,
+                message: resultJson.message || `Resend API Error (${response.status})`
+            }
         }
 
-        // Log to CRM activity
+        console.log('Email sent successfully! Resend ID:', resultJson.id)
+
+        // 6. Log activity (wrapped to prevent blocking success)
         try {
             const contact = await prisma.contact.findFirst({ where: { email: to } })
             await prisma.activityLog.create({
@@ -481,21 +517,24 @@ export async function sendQuickEmail(data: {
                     type: 'email_sent',
                     title: `📧 Quick: "${subject.slice(0, 60)}${subject.length > 60 ? '...' : ''}"`,
                     contactId: contact?.id,
-                    metadata: { to, subject, sender: sender.email },
+                    metadata: { to, subject, sender: sender.email, resendId: resultJson.id },
                 }
             })
         } catch (logError) {
-            console.error('Failed to log email activity:', logError)
+            console.error('Failed to log activity after success:', logError)
         }
 
-        // TEMPORARILY DISABLED TO AVOID 500 RENDER ERROR during revalidation
-        // revalidatePath('/admin/emails')
+        // revalidatePath('/admin/emails') // Still disabled to be safe
 
-        return { success: true, message: `Email sent to ${to} (Success ID: ${resendData?.id || 'OK'})` }
+        return {
+            success: true,
+            message: `Email sent successfully to ${to}`,
+            data: { id: resultJson.id }
+        }
+
     } catch (error) {
+        console.error('CRITICAL: sendQuickEmail caught exception:', error)
         const msg = error instanceof Error ? error.message : "Internal Server Error"
-        console.error('CRITICAL: sendQuickEmail crashed:', error)
-        return { success: false, message: `System Error: ${msg}` }
+        return { success: false, message: `Action Failure: ${msg}` }
     }
 }
-
