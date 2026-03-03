@@ -238,3 +238,4 @@ Para clonar y ejecutar este proyecto en tu máquina local, sigue estos pasos:
     ```
 
     Esto abrirá Prisma Studio en `http://localhost:5555` para visualizar y editar tus datos.
+\n<- Restored original attachment handling in Trigger redeploy: Tue Mar  3 12:22:34 EST 2026 -->
