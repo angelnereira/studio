@@ -19,3 +19,7 @@ Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
     at ignore-listed frames
  POST /admin/emails 404 in 19.4s (compile: 18.5s, proxy.ts: 128ms, render: 798ms)
 ✓ Compiled in 282ms
+✓ Compiled in 1488ms
+✓ Compiled in 682ms
+✓ Compiled in 420ms
+✓ Compiled in 547ms

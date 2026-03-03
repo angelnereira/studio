@@ -24,8 +24,8 @@ export default async function EmailsPage() {
             </div>
 
             <EmailMarketingStudio
-                identities={identities}
-                templates={templates}
+                identities={JSON.parse(JSON.stringify(identities))}
+                templates={JSON.parse(JSON.stringify(templates))}
                 campaigns={JSON.parse(JSON.stringify(campaigns))}
                 contacts={JSON.parse(JSON.stringify(contacts))}
             />
