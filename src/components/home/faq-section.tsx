@@ -10,28 +10,31 @@ import { useTranslations } from "next-intl";
 
 export function FAQSection() {
     const t = useTranslations('faq');
-    const faqs = t.raw('items') as { question: string, answer: string }[];
+    const faqsRaw = t.raw('items');
+    const faqs = Array.isArray(faqsRaw) ? faqsRaw as { question: string, answer: string }[] : [];
 
     return (
         <section className="py-24 relative overflow-hidden">
             {/* Schema.org for FAQ */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "FAQPage",
-                        "mainEntity": faqs.map(faq => ({
-                            "@type": "Question",
-                            "name": faq.question,
-                            "acceptedAnswer": {
-                                "@type": "Answer",
-                                "text": faq.answer
-                            }
-                        }))
-                    })
-                }}
-            />
+            {faqs.length > 0 && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "FAQPage",
+                            "mainEntity": faqs.map(faq => ({
+                                "@type": "Question",
+                                "name": faq.question,
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": faq.answer
+                                }
+                            }))
+                        })
+                    }}
+                />
+            )}
 
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">

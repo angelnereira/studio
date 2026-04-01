@@ -189,29 +189,29 @@
                 "ratelimit": "Too many downloads. Try again in 1 hour.",
                 "generic": "Download failed. Please try again."
             }
-        },
-        "faq": {
-            "badge": "FAQ",
-            "title": "Frequently Asked Questions",
-            "subtitle": "Answers to the most common questions about my services and methodology.",
-            "items": [
-                {
-                    "question": "What development services does Ángel Nereira offer?",
-                    "answer": "I specialize in the development of high-performance Full Stack web applications, SaaS (Software as a Service) platforms for FinTech, integration of electronic invoicing systems, and development of Offline-First PWAs (Progressive Web Apps)."
-                },
-                {
-                    "question": "Do you work with international companies?",
-                    "answer": "Yes, I offer software consulting and development services for global clients, with experience working with teams in the United States, Europe, and Latin America."
-                },
-                {
-                    "question": "What is your main technology stack?",
-                    "answer": "My main stack focuses on the React and Next.js ecosystem, using TypeScript for type safety, Tailwind CSS for design, and PostgreSQL (with Prisma/Neon) for scalable databases."
-                },
-                {
-                    "question": "Do you offer AI integration services?",
-                    "answer": "Yes, I develop solutions that integrate Artificial Intelligence models (LLMs like GPT-4, Claude, Gemini) into business workflows for automation and data analysis."
-                }
-            ]
         }
+    },
+    "faq": {
+        "badge": "FAQ",
+        "title": "Frequently Asked Questions",
+        "subtitle": "Answers to the most common questions about my services and methodology.",
+        "items": [
+            {
+                "question": "What development services does Ángel Nereira offer?",
+                "answer": "I specialize in the development of high-performance Full Stack web applications, SaaS (Software as a Service) platforms for FinTech, integration of electronic invoicing systems, and development of Offline-First PWAs (Progressive Web Apps)."
+            },
+            {
+                "question": "Do you work with international companies?",
+                "answer": "Yes, I offer software consulting and development services for global clients, with experience working with teams in the United States, Europe, and Latin America."
+            },
+            {
+                "question": "What is your main technology stack?",
+                "answer": "My main stack focuses on the React and Next.js ecosystem, using TypeScript for type safety, Tailwind CSS for design, and PostgreSQL (with Prisma/Neon) for scalable databases."
+            },
+            {
+                "question": "Do you offer AI integration services?",
+                "answer": "Yes, I develop solutions that integrate Artificial Intelligence models (LLMs like GPT-4, Claude, Gemini) into business workflows for automation and data analysis."
+            }
+        ]
     }
 }
