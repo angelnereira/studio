@@ -12,9 +12,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['"Inter"', '"Geist Sans"', 'sans-serif'],
-        headline: ['"Space Grotesk"', '"Syne"', 'sans-serif'],
-        code: ['"JetBrains Mono"', '"Fira Code"', 'monospace'],
+        body: ['var(--font-inter)', 'var(--font-geist-sans)', 'sans-serif'],
+        headline: ['var(--font-space-grotesk)', 'var(--font-syne)', 'sans-serif'],
+        code: ['var(--font-jetbrains-mono)', 'var(--font-geist-mono)', 'monospace'],
       },
       colors: {
         border: 'hsl(var(--border))',

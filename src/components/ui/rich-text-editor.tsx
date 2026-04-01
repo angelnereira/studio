@@ -78,7 +78,9 @@ const EmailButton = Node.create({
 
                 if (typeof getPos === 'function') {
                     editor.commands.command(({ tr }) => {
-                        tr.setNodeMarkup(getPos(), undefined, {
+                        const pos = getPos();
+                        if (typeof pos !== 'number') return false;
+                        tr.setNodeMarkup(pos, undefined, {
                             ...node.attrs,
                             text: newText || node.attrs.text,
                             href: newLink || node.attrs.href,
@@ -165,7 +167,7 @@ const Toolbar = ({ editor, services = [] }: { editor: Editor | null, services?: 
                         <p style="text-align: center; color: #888;">${service.shortDescription}</p>
                         <div style="text-align: center; margin: 20px 0;">
                              <p style="font-size: 12px; text-transform: uppercase; color: #ccf381; margin: 0;">Planes desde</p>
-                             <p style="font-size: 36px; font-weight: 800; margin: 5px 0 10px; color: #fff;">$${typeof price === 'number' ? price.toLocaleString() : price}</p>
+                             <p style="font-size: 36px; font-weight: 800; margin: 5px 0 10px; color: #fff;">$${typeof price === 'number' ? price.toLocaleString() : (price || 0).toLocaleString()}</p>
                         </div>
                         <div style="text-align: center;">
                              <a href="${url}" style="background-color: #ccf381; color: #000; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Ver Detalles</a>
