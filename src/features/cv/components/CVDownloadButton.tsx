@@ -32,7 +32,7 @@ export function CVDownloadButton({ className, variant = "outline", compact = fal
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `Angel_Nereira_CV_${language.toUpperCase()}_2026.pdf`;
+            link.download = `Angel_Nereira_Profile_${language.toUpperCase()}_2026.pdf`;
 
             // Append, click, and cleanup
             document.body.appendChild(link);

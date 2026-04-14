@@ -286,8 +286,8 @@
     "cv": {
         "download": {
             "button": {
-                "label": "Download CV",
-                "loading": "Preparing PDF...",
+                "label": "Download Profile",
+                "loading": "Generating Profile...",
                 "success": "Download started!"
             },
             "error": {
