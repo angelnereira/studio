@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Github, Shield, Database, Zap, Code2, Target, ExternalLink } from 'lucide-react';
 import { AnimatedDiv } from '@/components/animated-div';
-import { skills, skillCategories, getSkillsByCategory } from '@/lib/skills';
+import { skills, skillCategories, getSkillsByCategory, categoryIconMap } from '@/lib/skills';
 import type { Project, Metric } from '@/lib/projects-and-testimonials';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
