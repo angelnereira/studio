@@ -1,16 +1,18 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Github, Monitor, Smartphone, Code2, Database, Zap, Shield, Target, Server, ArrowRight } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github, Code2, Database, Zap, Shield, Target, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedDiv } from "@/components/animated-div";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { projectsData } from "@/lib/projects-and-testimonials";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 interface ProjectPageProps {
     params: Promise<{
         slug: string;
+        locale: string;
     }>;
 }
 
@@ -39,20 +41,31 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 // Icon mapping
 const highlightIcons: { [key: string]: React.ElementType } = {
     'Seguridad Nivel Bancario': Shield,
+    'Bank-Grade Security': Shield,
     'Base de Datos Multi-Tenant': Database,
+    'Modular Ecosystem (ERP)': Database,
+    'Ecosistema Modular (ERP)': Database,
     'Performance Extremo': Zap,
+    'Extreme Performance': Zap,
     'Gestión de Estado Optimizada': Code2,
+    'Optimized State Management': Code2,
     'Optimización de Media': Zap,
+    'Media Optimization': Zap,
     'Migración de Base de Datos': Database,
+    'Database Migration': Database,
 };
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-    const { slug } = await params;
+    const { slug, locale } = await params;
+    setRequestLocale(locale);
+
     const project = projectsData.find((p) => p.id === slug);
 
     if (!project) {
         notFound();
     }
+
+    const t = await getTranslations('projects');
 
     return (
         <div className="container px-4 py-12 md:py-20 lg:py-24 max-w-4xl mx-auto">
@@ -62,7 +75,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     className="inline-flex items-center text-muted-foreground hover:text-primary mb-8 transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4 mr-2" />
-                    Volver a Proyectos
+                    {t('back')}
                 </Link>
             </AnimatedDiv>
 
@@ -82,7 +95,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             <Button asChild size="lg" className="gap-2">
                                 <Link href={project.liveUrl} target="_blank">
                                     <ExternalLink className="w-4 h-4" />
-                                    Ver Demo
+                                    Demo
                                 </Link>
                             </Button>
                         )}
@@ -90,7 +103,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             <Button asChild variant="outline" size="lg" className="gap-2">
                                 <Link href={project.githubUrl} target="_blank">
                                     <Github className="w-4 h-4" />
-                                    Código
+                                    Code
                                 </Link>
                             </Button>
                         )}
@@ -107,7 +120,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         </div>
                         <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
                             <Target className="w-6 h-6 text-primary" />
-                            El Desafío Técnico
+                            {t('challenge')}
                         </h2>
                         <p className="text-lg leading-relaxed text-muted-foreground">
                             {project.challenge}
@@ -120,7 +133,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <section>
                         <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                             <Zap className="w-6 h-6 text-primary" />
-                            Highlights Técnicos
+                            {t('tech_highlights')}
                         </h2>
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {project.techHighlights.map((highlight, index) => {
@@ -135,7 +148,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             {highlight.description}
                                         </p>
                                     </SpotlightCard>
-                                )
+                                );
                             })}
                         </div>
                     </section>
@@ -146,7 +159,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <section>
                         <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                             <Database className="w-6 h-6 text-primary" />
-                            Stack Tecnológico
+                            {t('stack')}
                         </h2>
                         <div className="flex flex-wrap gap-3">
                             {project.technologies.map((tech) => (
@@ -160,10 +173,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </div>
 
             <AnimatedDiv delay={0.5} className="mt-20 pt-10 border-t border-white/10 text-center">
-                <h3 className="text-2xl font-bold mb-4">¿Te interesa construir algo similar?</h3>
+                <h3 className="text-2xl font-bold mb-4">{t('similar_cta_title')}</h3>
                 <Button asChild size="lg" variant="default">
                     <Link href="/contact">
-                        Agendar Consultoría Técnica <ArrowRight className="ml-2 w-4 h-4" />
+                        {t('similar_cta_button')} <ArrowRight className="ml-2 w-4 h-4" />
                     </Link>
                 </Button>
             </AnimatedDiv>

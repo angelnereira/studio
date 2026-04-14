@@ -89,7 +89,7 @@ export default function ServicesPage() {
                   </CardHeader>
                   <CardContent className="flex-1 space-y-4">
                     <div>
-                      <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Planes desde</h4>
+                      <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">{t('services.plans_from')}</h4>
                       <div className="flex items-baseline gap-2">
                         <p className="text-2xl font-bold text-primary">${startingPrice.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">{priceSuffix}</span></p>
                         {originalPrice && (
@@ -98,7 +98,7 @@ export default function ServicesPage() {
                       </div>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">Ideal para</h4>
+                      <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider mb-2">{t('services.ideal_for')}</h4>
                       <div className="flex flex-wrap gap-2">
                         {service.tags.map((tag) => (
                           <Badge key={tag} variant="outline">{tag}</Badge>
@@ -109,14 +109,14 @@ export default function ServicesPage() {
                   <CardFooter className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 pt-4">
                     <Button asChild variant="outline" className="w-full">
                       <Link href={`/services/${service.slug}`}>
-                        Ver Detalles
+                        {t('services.view_details')}
                       </Link>
                     </Button>
                     <MagneticWrapper className="w-full">
                       <Button asChild className="w-full">
                         <Link href={`/calculadora?service=${service.slug}`}>
-                          <span className="hidden sm:inline">Cotización Rápida</span>
-                          <span className="sm:hidden">Cotizar</span>
+                          <span className="hidden sm:inline">{t('services.quick_quote')}</span>
+                          <span className="sm:hidden">{t('services.quote')}</span>
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>

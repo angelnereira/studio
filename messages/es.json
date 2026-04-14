@@ -73,7 +73,12 @@
                 "addons_subtitle": "Añade funcionalidades extra a tu proyecto para un mayor impacto.",
                 "custom_cta_title": "¿No encuentras lo que buscas?",
                 "custom_cta_description": "Estos paquetes son puntos de partida. Cada proyecto es único. Contáctame para crear una solución 100% a tu medida.",
-                "custom_cta_button": "Crear Plan Personalizado"
+                "custom_cta_button": "Crear Plan Personalizado",
+                "plans_from": "Planes desde",
+                "ideal_for": "Ideal para",
+                "view_details": "Ver Detalles",
+                "quick_quote": "Cotización Rápida",
+                "quote": "Cotizar"
         },
         "projects": {
                 "title": "Proyectos en Producción",
@@ -82,7 +87,41 @@
                 "page_subtitle": "Sistemas FinTech y E-commerce en producción. La ingeniería detrás de cada solución.",
                 "challenge": "El Desafío Técnico",
                 "tech_highlights": "Highlights Técnicos",
-                "status_production": "En Producción"
+                "status_production": "En Producción",
+                "stack": "Stack Tecnológico",
+                "back": "Volver a Proyectos",
+                "similar_cta_title": "¿Te interesa construir algo similar?",
+                "similar_cta_button": "Agendar Consultoría Técnica"
+        },
+        "calculadora": {
+                "badge": "Calculadora Interactiva",
+                "title": "Calculadora de Presupuestos",
+                "description": "Obtén una estimación detallada del costo de tu proyecto de software en pocos minutos. Nuestra calculadora considera múltiples factores para brindarte un presupuesto preciso y personalizado.",
+                "instant_estimate": "Estimación instantánea",
+                "detailed_breakdown": "Desglose detallado",
+                "export_pdf": "Exportar PDF",
+                "loading": "Cargando calculadora...",
+                "metadata_title": "Calculadora de Presupuestos | Ángel Nereira",
+                "metadata_description": "Calcula el presupuesto estimado para tu proyecto de software. Obtén una cotización detallada en minutos con nuestra calculadora interactiva.",
+                "info": {
+                        "precision_title": "Precisión Basada en Datos",
+                        "precision_desc": "Nuestros precios están basados en años de experiencia y análisis del mercado tecnológico",
+                        "customization_title": "Personalización Total",
+                        "customization_desc": "Ajusta complejidad, urgencia y ubicación para obtener un presupuesto que se adapte a tus necesidades",
+                        "transparency_title": "Transparencia Total",
+                        "transparency_desc": "Desglose completo de costos y recomendaciones personalizadas para maximizar el valor de tu inversión"
+                },
+                "faq": {
+                        "title": "Preguntas Frecuentes",
+                        "q1": "¿Qué tan preciso es el presupuesto calculado?",
+                        "a1": "El presupuesto es una estimación basada en los parámetros que seleccionas y nuestra experiencia en proyectos similares. El costo final puede variar según requisitos específicos adicionales que surjan durante el análisis detallado del proyecto.",
+                        "q2": "¿El presupuesto incluye todos los servicios mencionados?",
+                        "a2": "Sí, el presupuesto base incluye todos los features listados para cada tipo de servicio. Los complementos adicionales se agregan por separado y son opcionales pero recomendados según el tipo de proyecto.",
+                        "q3": "¿Cuánto tiempo es válida la cotización?",
+                        "a3": "Las cotizaciones generadas son válidas por 30 días desde la fecha de generación. Después de este período, recomendamos generar una nueva cotización para reflejar posibles cambios en las condiciones del mercado.",
+                        "q4": "¿Puedo modificar el proyecto después de iniciar?",
+                        "a4": "Sí, los proyectos son flexibles y pueden ajustarse durante el desarrollo. Sin embargo, cambios significativos en el alcance pueden afectar el presupuesto y timeline. Trabajamos de forma ágil para adaptarnos a tus necesidades mientras mantenemos transparencia en los costos."
+                }
         },
         "metrics": {
                 "title": "Métricas en Producción",
