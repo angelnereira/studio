@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { AnimatedDiv } from "@/components/animated-div";
 import { SpotlightCard } from "@/components/spotlight-card";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export async function generateStaticParams() {
   return services.filter(s => s.published).map((service) => ({
@@ -69,13 +70,16 @@ const PackageCard = ({ pkg, serviceSlug }: { pkg: ServicePackage, serviceSlug: s
   </SpotlightCard>
 );
 
-export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
   const resolvedParams = await params;
+  setRequestLocale(resolvedParams.locale);
   const service = services.find((s) => s.slug === resolvedParams.slug && s.published);
 
   if (!service) {
     notFound();
   }
+
+  const t = await getTranslations('services');
 
   return (
     <>
@@ -111,9 +115,9 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         <AnimatedDiv delay={0.3}>
           <div className="mt-16">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold tracking-tighter font-headline">Complementos Opcionales</h2>
+              <h2 className="text-2xl font-bold tracking-tighter font-headline">{t('addons_title')}</h2>
               <p className="max-w-[600px] mx-auto mt-2 text-muted-foreground">
-                Añade funcionalidades extra a tu proyecto para un mayor impacto.
+                {t('addons_subtitle')}
               </p>
             </div>
             <div className="max-w-2xl mx-auto space-y-4">
@@ -142,12 +146,12 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       )}
 
       <AnimatedDiv delay={0.5} className="text-center mt-16 p-8 bg-secondary/50 rounded-lg">
-        <h2 className="text-2xl font-bold tracking-tighter font-headline">¿No encuentras lo que buscas?</h2>
+        <h2 className="text-2xl font-bold tracking-tighter font-headline">{t('custom_cta_title')}</h2>
         <p className="max-w-[600px] mx-auto mt-2 text-muted-foreground">
-          Estos paquetes son puntos de partida. Cada proyecto es único. Contáctame para crear una solución 100% a tu medida.
+          {t('custom_cta_description')}
         </p>
         <Button asChild size="lg" className="mt-6">
-          <Link href="/contact?subject=Proyecto a Medida">Crear Plan Personalizado</Link>
+          <Link href="/contact?subject=Proyecto a Medida">{t('custom_cta_button')}</Link>
         </Button>
       </AnimatedDiv>
 

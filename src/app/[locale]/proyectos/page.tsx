@@ -48,12 +48,12 @@ export default function ProyectosPage() {
         "Vercel",
         "Docker"
       ],
-      status: "En Producción",
+      status: t('projects.status_production'),
       statusColor: "bg-green-500/10 text-green-600",
       metrics: [
         { value: "10,000+", label: t('metric.facturas.label') },
-        { value: "99.9%", label: "Uptime" },
-        { value: "< 200ms", label: "Response Time" },
+        { value: "99.9%", label: t('metric.uptime.label') },
+        { value: "< 200ms", label: t('metric.latency.label') },
       ],
       github: "https://github.com/angelnereira/sago-factu-V0.2",
       demo: "https://sagoone.com",
@@ -92,12 +92,12 @@ export default function ProyectosPage() {
         "Vercel",
         "PWA"
       ],
-      status: "En Producción",
+      status: t('projects.status_production'),
       statusColor: "bg-green-500/10 text-green-600",
       metrics: [
-        { value: "100%", label: "Offline Capable" },
-        { value: "WebP/AVIF", label: "Image Optimization" },
-        { value: "< 3s", label: "Time to Interactive" },
+        { value: "100%", label: t('metric.offline.label') },
+        { value: "WebP/AVIF", label: t('metric.image_opt.label') },
+        { value: "< 3s", label: t('metric.tti.label') },
       ],
       github: "https://github.com/angelnereira/plenty-market",
       demo: "https://plenty-market.vercel.app",
