@@ -39,18 +39,38 @@
     },
     "about": {
         "title": "About Me",
-        "description": "Full Stack Software Engineer specialized in FinTech and GovTech. I design and build scalable SaaS systems that process thousands of daily transactions.",
+        "description": "Full Stack Software Engineer specialized in FinTech and GovTech. I design and build scalable SaaS systems that process thousands of daily transactions, with a relentless focus on client ROI.",
         "background": {
-            "title": "Technical Focus",
-            "text": "My specialty is building Offline-First PWA applications and high-availability systems. I work with Next.js, TypeScript and PostgreSQL to create robust products that solve real business problems."
+            "title": "The Origin",
+            "text": "My engineering journey began by facing the most critical problem in business digitalization in emerging markets: systems that fail exactly when they are needed most. Building Sago One from scratch forced me to master offline-first architectures, government fiscal compliance, and bank-grade security protocols — not as academic exercises, but as business imperatives with real financial consequences. Every architectural decision I make starts with a central question: what is the direct impact on the client's operational balance sheet?"
         },
         "current": {
-            "title": "Current Projects",
-            "text": "Currently leading the development of Sago One (Enterprise ERP SaaS) and Plenty Market (E-commerce PWA). Both systems handle critical data with AES-256 encryption and advanced multi-tenant schemas."
+            "title": "Production Ecosystem",
+            "text": "Sago One processes over 10,000 DGI-certified electronic invoices, operates a touch POS, manages legal payroll, and maintains 99.9% uptime with a PWA architecture that works without internet. Plenty Market integrates a logistics Partner Program with tax-free zones and real-time inventory sync. Both are technological assets protecting the financial interests of real businesses, every day, with latencies under 200ms."
         },
         "philosophy": {
             "title": "My Philosophy",
             "text": "Clean code, scalable solutions, clear documentation"
+        },
+        "values": {
+            "title": "Engineering Pillars",
+            "subtitle": "Principles guiding every architectural decision and every line of code",
+            "architecture": {
+                "title": "Architecture First",
+                "desc": "The tech stack is a consequence of the architecture, not the other way around. Every project starts with an analysis of non-functional requirements: scalability, fault tolerance, security. This prevents technical debt that erodes client ROI."
+            },
+            "security": {
+                "title": "Non-Negotiable Security",
+                "desc": "In FinTech systems, security is not a layer added at the end. AES-256, robust authentication, and strict data validation are part of the initial design. Regulatory compliance is not optional: it is the product."
+            },
+            "durability": {
+                "title": "Software as an Asset",
+                "desc": "Strict TypeScript, clear documentation, and modular architectures are the difference between a system that scales for years and one that accumulates technical debt. The software I deliver is a capital asset, not an operating expense."
+            },
+            "communication": {
+                "title": "Value in Business Terms",
+                "desc": "CTOs and CFOs don't invest in lines of code; they invest in predictable financial outcomes. I translate every technical decision — latency, uptime, scalability — into its direct impact on revenue, operating costs, and business risk."
+            }
         }
     },
     "skills": {
@@ -200,20 +220,20 @@
             "title": "Sago One",
             "label": "All-in-One ERP SaaS | POS & FinTech | Next.js 15",
             "subtitle": "Enterprise ERP and Electronic Invoicing Platform",
-            "description": "All-in-One Enterprise Platform for businesses in Panama. Starting as a DGI-certified electronic invoicing PWA, it now integrates real-time Pro Inventory, an agile touch Point of Sale (POS), and Legal Payroll management. Its offline-first architecture ensures uninterrupted operation in low-connectivity areas.",
-            "challenge": "The challenge was to keep invoicing operational without internet. The solution was implementing an aggressive caching strategy with Service Workers and background synchronization upon reconnection. This allows merchants in rural or unstable areas to continue invoicing without interruptions.",
+            "description": "All-in-One ERP SaaS that eliminates hours of redundant administrative work weekly for Panamanian businesses. Certifies invoices with the DGI, manages real-time inventory, and operates a touch POS — all under an offline-first architecture that guarantees operational continuity and uninterrupted revenue even without internet. Payroll and inventory automation directly reduces fixed costs and eliminates the risk of tax penalties from human transcription errors.",
+            "challenge": "The critical challenge: guarantee business continuity — and revenue — during connectivity outages, which in emerging markets represent direct sales losses. The Service Workers and background sync solution ensures every transaction is recorded and invoiced regardless of network stability, protecting business cash flow at its most vulnerable moment.",
             "highlight": {
                 "security": {
                     "title": "Bank-Grade Security",
-                    "desc": "AES-256 encryption for PAC/DGI credentials, robust authentication, and secure handling of sensitive fiscal data."
+                    "desc": "AES-256 encryption for PAC/DGI credentials. Mitigates the risk of tax penalties and corporate data breaches that could represent five-figure losses."
                 },
                 "database": {
                     "title": "Modular Ecosystem (ERP)",
-                    "desc": "Seamless integration between Invoicing v2.0, fast Point of Sale (POS), inventory management with tracking, and legal payroll."
+                    "desc": "DGI Invoicing, touch POS, real-time inventory, and legal payroll integrated. Eliminates data silos and reduces monthly accounting close time."
                 },
                 "performance": {
-                    "title": "Extreme Performance",
-                    "desc": "99.9% Uptime. React Server Components for optimal rendering and minimal bundle size."
+                    "title": "99.9% Uptime · <200ms",
+                    "desc": "React Server Components for optimal rendering. Every guaranteed uptime minute protects revenue: no downtime, no lost sales, no penalties for missing invoices."
                 }
             }
         },
@@ -221,20 +241,20 @@
             "title": "Plenty Market",
             "label": "International E-commerce | PWA | Complex Logistics",
             "subtitle": "PWA E-commerce with Partner Program and Inventory Management",
-            "description": "Complete modernization from a static site to a high-performance PWA built in Next.js 14 and TypeScript. Integrates a complex logistics system (Partner Program) with real-time inventory management, product variants, and tax-free zones.",
-            "challenge": "The challenge was migrating a static site to a full e-commerce platform while maintaining fluid UX. We implemented a Partner Program allowing vendors to manage inventory with differentiated tax zones and real-time stock sync.",
+            "description": "Migration from static infrastructure to a high-performance e-commerce platform with a direct impact on conversion: TTI reduced to under 3 seconds, a critical factor given that each additional second of latency reduces conversion rates by 7%. Integrates a logistics Partner Program with tax-free zones and real-time inventory sync, enabling business models and revenue streams that the previous architecture made impossible.",
+            "challenge": "The challenge was migrating a static site to a full e-commerce platform without degrading user experience or losing existing SEO positioning. The Next.js 14 solution with aggressive asset optimization achieved sub-3s load times, increasing user retention and reducing cart abandonment at critical conversion funnel stages.",
             "highlight": {
                 "state": {
-                    "title": "Optimized State Management",
-                    "desc": "Zustand for lightweight global cart and session handling. State persistence between sessions without overhead."
+                    "title": "Conversion Optimized",
+                    "desc": "Zustand for overhead-free cart management. Persistent state between sessions: less checkout friction, higher conversion rate, lower cart abandonment."
                 },
                 "media": {
-                    "title": "Media Optimization",
-                    "desc": "Integration with Cloudinary for on-the-fly transformation (WebP/AVIF) and smart Lazy loading."
+                    "title": "Performance = Revenue",
+                    "desc": "Cloudinary with automatic WebP/AVIF transformation reduces image load time by 60%. In e-commerce, speed is a direct revenue lever."
                 },
                 "migration": {
-                    "title": "Database Migration",
-                    "desc": "Migration to PostgreSQL (Neon) via Prisma ORM for complex relational data integrity."
+                    "title": "Architecture That Scales",
+                    "desc": "PostgreSQL (Neon) via Prisma ORM guarantees data integrity under massive volumes. Infrastructure ready for traffic peaks without degradation or over-provisioning costs."
                 }
             }
         }

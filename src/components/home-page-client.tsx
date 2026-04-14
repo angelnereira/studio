@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Sparkles, TrendingUp, Zap, CheckCircle2, Shield, Code2, Database, Cloud, Server, Rocket } from "lucide-react";
+import { ArrowRight, Sparkles, TrendingUp, Zap, CheckCircle2, Shield, Code2, Database, Cloud, Server, Rocket, Target, Users } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { AnimatedDiv } from "@/components/animated-div";
@@ -79,6 +79,13 @@ export default function HomePageClient() {
   ], [t]);
 
   const [hoveredCard, setHoveredCard] = React.useState<number | null>(null);
+
+  const engineeringValues = React.useMemo(() => [
+    { key: 'architecture', icon: Target },
+    { key: 'security',     icon: Shield },
+    { key: 'durability',   icon: Code2  },
+    { key: 'communication',icon: TrendingUp },
+  ], []);
 
 
   return (
@@ -279,6 +286,35 @@ export default function HomePageClient() {
                   <p className="text-muted-foreground text-base leading-relaxed">
                     {t('about.current.text')}
                   </p>
+                </div>
+              </div>
+
+              {/* Engineering Values Pillars */}
+              <div className="mt-14">
+                <div className="text-center mb-8">
+                  <h3 className="text-xl font-bold tracking-tight font-headline text-foreground/90">
+                    {t('about.values.title')}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-2">{t('about.values.subtitle')}</p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {engineeringValues.map(({ key, icon: Icon }) => (
+                    <AnimatedDiv key={key}>
+                      <div className="group flex items-start gap-4 p-5 rounded-xl border border-white/5 hover:border-primary/30 bg-secondary/20 hover:bg-secondary/40 transition-all duration-300">
+                        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                          <Icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-foreground text-sm mb-1">
+                            {t(`about.values.${key}.title`)}
+                          </h4>
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            {t(`about.values.${key}.desc`)}
+                          </p>
+                        </div>
+                      </div>
+                    </AnimatedDiv>
+                  ))}
                 </div>
               </div>
 
