@@ -9,7 +9,7 @@ import {
 import { useTranslations } from "next-intl";
 
 export function FAQSection() {
-    const t = useTranslations('faq');
+    const t = useTranslations('cv.faq');
     const faqs = t.raw('items') as { question: string, answer: string }[];
 
     return (
