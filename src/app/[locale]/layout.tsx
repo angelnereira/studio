@@ -7,6 +7,11 @@ import { AdminBar } from '@/components/admin/admin-bar';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { routing } from '@/lib/routing';
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 // SEO Metadata optimizada para Ingeniero de Software Full Stack FinTech
 export const metadata: Metadata = {
