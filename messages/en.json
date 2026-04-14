@@ -68,7 +68,12 @@
         "description": "Software solutions for products that need to scale.",
         "cta": "View all services",
         "page_title": "Enterprise Software Solutions",
-        "page_subtitle": "I develop complete systems: from Offline-First PWAs to complex government API integrations. Specialized in FinTech SaaS."
+        "page_subtitle": "I develop complete systems: from Offline-First PWAs to complex government API integrations. Specialized in FinTech SaaS.",
+        "addons_title": "Optional Add-ons",
+        "addons_subtitle": "Add extra features to your project for greater impact.",
+        "custom_cta_title": "Can't find what you're looking for?",
+        "custom_cta_description": "These packages are starting points. Every project is unique. Contact me to create a 100% custom solution.",
+        "custom_cta_button": "Create Custom Plan"
     },
     "projects": {
         "title": "Projects in Production",
@@ -76,7 +81,8 @@
         "page_title": "Success Stories",
         "page_subtitle": "FinTech and E-commerce systems in production. The engineering behind each solution.",
         "challenge": "The Technical Challenge",
-        "tech_highlights": "Technical Highlights"
+        "tech_highlights": "Technical Highlights",
+        "status_production": "In Production"
     },
     "metrics": {
         "title": "Production Metrics",
@@ -115,6 +121,40 @@
         "job_analysis": "Job Analysis",
         "cover_letters": "Cover Letters",
         "back_to_site": "Back to Site"
+    },
+    "blog": {
+        "page_title": "Tech & Thoughts",
+        "page_description": "Explorations on software architecture, development practices, and the tech ecosystem from a Panamanian perspective with a global vision.",
+        "metadata_title": "Blog | Ángel Nereira",
+        "metadata_description": "Articles on software development, cloud architecture, and the learning journey of a Panamanian engineer."
+    },
+    "contact": {
+        "page_title": "Contact Me",
+        "page_description": "Whether for a new project, a job opportunity, a collaboration, or an invitation, I'm here to listen. Select the tab that best describes your reason for contact.",
+        "metadata_title": "Contact | Software Developer in Panama",
+        "metadata_description": "Looking for a Full Stack developer in Panama? Contact me for projects, consulting, or custom software development.",
+        "tabs": {
+            "client": "Client",
+            "employer": "Employer",
+            "collaboration": "Collaboration",
+            "invitation": "Invitation"
+        },
+        "client_card": {
+            "title": "Project Proposal",
+            "description": "Have an idea or project in mind? Tell me the details."
+        },
+        "employer_card": {
+            "title": "Job Opportunity",
+            "description": "Think I'd fit your team? Send me the role details."
+        },
+        "collaboration_card": {
+            "title": "Collaboration Proposal",
+            "description": "Interested in collaborating on a project, talk, or event? Contact me."
+        },
+        "invitation_card": {
+            "title": "Event Invitation",
+            "description": "For invitations to conferences, workshops, meetings, or any other professional event."
+        }
     },
     "project": {
         "sago_one": {
@@ -176,6 +216,12 @@
         "offline": {
             "label": "Offline Capable",
             "desc": "Full offline functionality thanks to Service Workers and PWA."
+        },
+        "image_opt": {
+            "label": "Image Optimization"
+        },
+        "tti": {
+            "label": "Time to Interactive"
         }
     },
     "cv": {
