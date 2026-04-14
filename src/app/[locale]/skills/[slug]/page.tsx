@@ -9,10 +9,12 @@ import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
 import { Badge } from "@/components/ui/badge";
 import { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 
 interface SkillPageProps {
   params: Promise<{
     slug: string;
+    locale: string;
   }>;
 }
 
@@ -61,7 +63,8 @@ const AbilityCard = ({ ability, index }: { ability: PracticalAbility; index: num
 
 
 export default async function SkillDetailPage({ params }: SkillPageProps) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
   const skill = skills.find((s) => s.slug === slug);
 
   if (!skill) {

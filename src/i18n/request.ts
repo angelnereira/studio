@@ -1,13 +1,17 @@
 import { getRequestConfig } from 'next-intl/server';
-import { headers } from 'next/headers';
+import { routing } from '../lib/routing';
 
-export default getRequestConfig(async () => {
-    // Provide a static locale, fetch it from the user, or use the locale from the request headers
-    const reqHeaders = await headers();
-    const localeHeader = reqHeaders.get('x-next-intl-locale') || 'es';
+export default getRequestConfig(async ({ requestLocale }) => {
+    // `requestLocale` is provided by next-intl v4 via `setRequestLocale()`
+    // called in each layout/page. Fall back to the default locale if absent.
+    let locale = await requestLocale;
+
+    if (!locale || !(routing.locales as readonly string[]).includes(locale)) {
+        locale = routing.defaultLocale;
+    }
 
     return {
-        locale: localeHeader,
-        messages: (await import(`../../messages/${localeHeader}.json`)).default
+        locale,
+        messages: (await import(`../../messages/${locale}.json`)).default,
     };
 });
