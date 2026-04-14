@@ -104,10 +104,10 @@ export function ClientForm() {
               <SelectValue placeholder="Selecciona un rango" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="<1k">Menos de $1,000</SelectItem>
-              <SelectItem value="1k-5k">$1,000 - $5,000</SelectItem>
+              <SelectItem value="2.5k-5k">$2,500 - $5,000</SelectItem>
               <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
-              <SelectItem value=">10k">Más de $10,000</SelectItem>
+              <SelectItem value="10k-25k">$10,000 - $25,000</SelectItem>
+              <SelectItem value=">25k">Más de $25,000</SelectItem>
             </SelectContent>
           </Select>
           {state.issues?.budget && <p className="text-sm font-medium text-destructive">{state.issues.budget}</p>}
