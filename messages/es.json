@@ -68,7 +68,12 @@
                 "description": "Soluciones de software para productos que necesitan escalar.",
                 "cta": "Ver todos los servicios",
                 "page_title": "Soluciones de Software Enterprise",
-                "page_subtitle": "Desarrollo sistemas completos: desde PWA Offline-First hasta integraciones complejas con APIs gubernamentales. Especializado en FinTech SaaS."
+                "page_subtitle": "Desarrollo sistemas completos: desde PWA Offline-First hasta integraciones complejas con APIs gubernamentales. Especializado en FinTech SaaS.",
+                "addons_title": "Complementos Opcionales",
+                "addons_subtitle": "Añade funcionalidades extra a tu proyecto para un mayor impacto.",
+                "custom_cta_title": "¿No encuentras lo que buscas?",
+                "custom_cta_description": "Estos paquetes son puntos de partida. Cada proyecto es único. Contáctame para crear una solución 100% a tu medida.",
+                "custom_cta_button": "Crear Plan Personalizado"
         },
         "projects": {
                 "title": "Proyectos en Producción",
@@ -76,7 +81,8 @@
                 "page_title": "Casos de Éxito",
                 "page_subtitle": "Sistemas FinTech y E-commerce en producción. La ingeniería detrás de cada solución.",
                 "challenge": "El Desafío Técnico",
-                "tech_highlights": "Highlights Técnicos"
+                "tech_highlights": "Highlights Técnicos",
+                "status_production": "En Producción"
         },
         "metrics": {
                 "title": "Métricas en Producción",
@@ -94,7 +100,8 @@
                 "projects": "Proyectos",
                 "skills": "Stack",
                 "contact": "Contacto",
-                "calculator": "Calculadora"
+                "calculator": "Calculadora",
+                "blog": "Blog"
         },
         "footer": {
                 "rights": "Todos los derechos reservados.",
@@ -104,7 +111,9 @@
         },
         "general": {
                 "learnMore": "Ver más",
-                "viewAll": "Ver todo"
+                "viewAll": "Ver todo",
+                "viewCode": "Ver Código",
+                "viewLive": "Ver en Vivo"
         },
         "admin": {
                 "title": "Panel de Administración",
@@ -112,6 +121,40 @@
                 "job_analysis": "Análisis de Empleos",
                 "cover_letters": "Cartas de Presentación",
                 "back_to_site": "Volver al Sitio"
+        },
+        "blog": {
+                "page_title": "Tech & Thoughts",
+                "page_description": "Exploraciones sobre arquitectura de software, prácticas de desarrollo y el ecosistema tecnológico desde una perspectiva panameña con visión global.",
+                "metadata_title": "Blog | Ángel Nereira",
+                "metadata_description": "Artículos sobre desarrollo de software, arquitectura en la nube, y el viaje de aprendizaje de un ingeniero panameño."
+        },
+        "contact": {
+                "page_title": "Contáctame",
+                "page_description": "Ya sea para un nuevo proyecto, una oportunidad laboral, una colaboración o una invitación, estoy aquí para escucharte. Selecciona la pestaña que mejor describa tu motivo de contacto.",
+                "metadata_title": "Contacto | Desarrollador de Software en Panamá",
+                "metadata_description": "¿Buscas un desarrollador Full Stack en Panamá? Contáctame para proyectos, consultorías o desarrollo de Software a la medida.",
+                "tabs": {
+                        "client": "Cliente",
+                        "employer": "Empleador",
+                        "collaboration": "Colaboración",
+                        "invitation": "Invitación"
+                },
+                "client_card": {
+                        "title": "Propuesta de Proyecto",
+                        "description": "¿Tienes una idea o proyecto en mente? Cuéntame los detalles."
+                },
+                "employer_card": {
+                        "title": "Oportunidad Laboral",
+                        "description": "¿Crees que encajaría en tu equipo? Envíame los detalles del rol."
+                },
+                "collaboration_card": {
+                        "title": "Propuesta de Colaboración",
+                        "description": "¿Interesado en colaborar en un proyecto, charla o evento? Contáctame."
+                },
+                "invitation_card": {
+                        "title": "Invitación a Evento",
+                        "description": "Para invitaciones a conferencias, talleres, reuniones o cualquier otro evento profesional."
+                }
         },
         "project": {
                 "sago_one": {
@@ -171,8 +214,14 @@
                         "desc": "Latencia promedio de API en operaciones críticas de facturación."
                 },
                 "offline": {
-                        "label": "Offline Capable",
+                        "label": "Funcional Sin Conexión",
                         "desc": "Funcionalidad completa sin conexión gracias a Service Workers y PWA."
+                },
+                "image_opt": {
+                        "label": "Optimización de Imágenes"
+                },
+                "tti": {
+                        "label": "Tiempo de Interacción"
                 }
         },
         "cv": {
@@ -186,29 +235,29 @@
                                 "ratelimit": "Demasiadas descargas. Intenta en 1 hora.",
                                 "generic": "Error al descargar. Intenta de nuevo."
                         }
+                },
+                "faq": {
+                        "badge": "FAQ",
+                        "title": "Preguntas Frecuentes",
+                        "subtitle": "Respuestas a las dudas más comunes sobre mis servicios y metodología.",
+                        "items": [
+                                {
+                                        "question": "¿Qué servicios de desarrollo ofrece Ángel Nereira?",
+                                        "answer": "Me especializo en el desarrollo de aplicaciones web Full Stack de alto rendimiento, plataformas SaaS (Software as a Service) para FinTech, integración de sistemas de facturación electrónica y desarrollo de PWAs (Progressive Web Apps) Offline-First."
+                                },
+                                {
+                                        "question": "¿Trabajas con empresas internacionales?",
+                                        "answer": "Sí, ofrezco servicios de consultoría y desarrollo de software para clientes globales, con experiencia trabajando con equipos en Estados Unidos, Europa y Latinoamérica."
+                                },
+                                {
+                                        "question": "¿Cuál es tu stack tecnológico principal?",
+                                        "answer": "Mi stack principal se centra en el ecosistema de React y Next.js, utilizando TypeScript para seguridad de tipos, Tailwind CSS para diseño, y PostgreSQL (con Prisma/Neon) para bases de datos escalables."
+                                },
+                                {
+                                        "question": "¿Ofreces servicios de integración de IA?",
+                                        "answer": "Sí, desarrollo soluciones que integran modelos de Inteligencia Artificial (LLMs como GPT-4, Claude, Gemini) en flujos de trabajo empresariales para automatización y análisis de datos."
+                                }
+                        ]
                 }
-        },
-        "faq": {
-                "badge": "FAQ",
-                "title": "Preguntas Frecuentes",
-                "subtitle": "Respuestas a las dudas más comunes sobre mis servicios y metodología.",
-                "items": [
-                        {
-                                "question": "¿Qué servicios de desarrollo ofrece Ángel Nereira?",
-                                "answer": "Me especializo en el desarrollo de aplicaciones web Full Stack de alto rendimiento, plataformas SaaS (Software as a Service) para FinTech, integración de sistemas de facturación electrónica y desarrollo de PWAs (Progressive Web Apps) Offline-First."
-                        },
-                        {
-                                "question": "¿Trabajas con empresas internacionales?",
-                                "answer": "Sí, ofrezco servicios de consultoría y desarrollo de software para clientes globales, con experiencia trabajando con equipos en Estados Unidos, Europa y Latinoamérica."
-                        },
-                        {
-                                "question": "¿Cuál es tu stack tecnológico principal?",
-                                "answer": "Mi stack principal se centra en el ecosistema de React y Next.js, utilizando TypeScript para seguridad de tipos, Tailwind CSS para diseño, y PostgreSQL (con Prisma/Neon) para bases de datos escalables."
-                        },
-                        {
-                                "question": "¿Ofreces servicios de integración de IA?",
-                                "answer": "Sí, desarrollo soluciones que integran modelos de Inteligencia Artificial (LLMs como GPT-4, Claude, Gemini) en flujos de trabajo empresariales para automatización y análisis de datos."
-                        }
-                ]
         }
 }
