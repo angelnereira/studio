@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
     try {
         const pdfBuffer = generateProfileBuffer(lang);
 
-        const response = new NextResponse(pdfBuffer);
+        const response = new NextResponse(new Uint8Array(pdfBuffer));
         response.headers.set("Content-Type", "application/pdf");
         response.headers.set("Content-Disposition", `attachment; filename="Angel_Nereira_Profile_${lang.toUpperCase()}_2026.pdf"`);
         response.headers.set("X-Content-Type-Options", "nosniff");
