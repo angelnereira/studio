@@ -81,7 +81,14 @@
             "core": "Core",
             "data": "Data",
             "infrastructure": "Infrastructure"
-        }
+        },
+        "page_title": "Tech Stack",
+        "page_subtitle": "7 areas of specialization. From frontend to AI Engineering — every technology selected for real production impact.",
+        "explore_area": "Explore area",
+        "tech_singular": "technology",
+        "tech_plural": "technologies",
+        "cta_subtitle": "Looking for an engineer with this stack for your team or project?",
+        "cta_button": "Let's talk"
     },
     "services": {
         "title": "Services",

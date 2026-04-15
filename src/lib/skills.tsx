@@ -1,11 +1,11 @@
 
 
 import * as React from "react";
-import { Server, Shield, Zap, Layers, Code2, Database, GitBranch, Briefcase } from "lucide-react";
+import { Server, Shield, Zap, Layers, Code2, Database, GitBranch, Cloud, Settings2, BrainCircuit } from "lucide-react";
 import { FaDocker, FaGitAlt } from "react-icons/fa";
-import { SiTypescript, SiPostgresql, SiVercel, SiKubernetes, SiJavascript, SiGooglecloud } from "react-icons/si";
+import { SiTypescript, SiPostgresql, SiVercel, SiKubernetes, SiJavascript, SiGooglecloud, SiGo, SiRedis, SiApachekafka, SiTerraform, SiRailway } from "react-icons/si";
 import { TbBrandNextjs } from "react-icons/tb";
-import { LinuxIcon, PrismaIcon, NeonIcon, OracleCloudIcon, SqlIcon } from "./icons";
+import { LinuxIcon, PrismaIcon, NeonIcon, OracleCloudIcon, SqlIcon, MinioIcon } from "./icons";
 import { skillsData, skillCategories, type SkillCategory } from "./data/skills-data";
 
 export type PracticalAbility = {
@@ -27,17 +27,24 @@ const iconMap: Record<string, React.ElementType> = {
   TbBrandNextjs,
   SiTypescript,
   SiJavascript,
+  SiGo,
   SiPostgresql,
   PrismaIcon,
   NeonIcon,
   SqlIcon,
-  SiVercel,
+  SiRedis,
+  SiApachekafka,
+  SiMinio: MinioIcon,
   FaDocker,
   SiKubernetes,
+  SiTerraform,
+  SiRailway,
+  SiVercel,
   SiGooglecloud,
   OracleCloudIcon,
   FaGitAlt,
   LinuxIcon,
+  BrainCircuit,
   Zap,
   Server,
   Shield,
@@ -45,6 +52,8 @@ const iconMap: Record<string, React.ElementType> = {
   Code2,
   Database,
   GitBranch,
+  Cloud,
+  Settings2,
 };
 
 export const skills: Skill[] = skillsData.map(skill => ({
@@ -61,7 +70,13 @@ export { skillCategories };
 export const getSkillsByCategory = (category: SkillCategory) =>
   skills.filter(skill => skill.category === category);
 
-// Category icon map for rendering
+// Category icon map for rendering — one entry per SkillCategory id
 export const categoryIconMap: Record<string, React.ElementType> = {
-  Code2, Database, Server, Shield,
+  Code2,       // frontend
+  Server,      // backend
+  Database,    // data
+  Settings2,   // devops
+  Cloud,       // cloud
+  Shield,      // security
+  BrainCircuit, // ai-engineering
 };

@@ -86,3 +86,13 @@ export const SqlIcon = (props: IconProps) => (
         <path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3" />
     </svg>
 );
+
+// Nombre: minio
+// Descripción: Icono estilizado de MinIO — almacenamiento de objetos S3-compatible.
+export const MinioIcon = (props: IconProps) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="M4 7h16v13H4z" />
+        <path d="M4 7l4-4h8l4 4" />
+        <path d="M9 12l2 2 4-4" />
+    </svg>
+);
