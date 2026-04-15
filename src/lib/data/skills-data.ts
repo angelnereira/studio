@@ -5,7 +5,7 @@ export type PracticalAbilityData = {
     iconName: string;
 };
 
-export type SkillCategory = "frontend" | "data" | "devops" | "security";
+export type SkillCategory = "frontend" | "backend" | "data" | "devops" | "cloud" | "security" | "ai-engineering";
 
 export type SkillData = {
     name: string;
@@ -25,7 +25,7 @@ export type SkillCategoryData = {
 };
 
 export const skillsData: SkillData[] = [
-    // === FRONTEND: Lógica de Negocio y Tipado ===
+    // === FRONTEND ===
     {
         name: "Next.js",
         slug: "nextjs",
@@ -63,7 +63,21 @@ export const skillsData: SkillData[] = [
         ]
     },
 
-    // === DATA: Persistencia, Modelado y Gestión ===
+    // === BACKEND ===
+    {
+        name: "Go (Golang)",
+        slug: "golang",
+        iconName: "SiGo",
+        description: "Lenguaje compilado de alto rendimiento para servicios backend concurrentes, APIs de baja latencia y sistemas distribuidos a escala.",
+        category: "backend",
+        practicalAbilities: [
+            { title: "Goroutines & Concurrencia", description: "Manejo de miles de conexiones simultáneas con goroutines y channels para servicios de alto throughput.", iconName: "Zap" },
+            { title: "APIs REST de Alto Rendimiento", description: "Servicios HTTP con latencias de microsegundos, binarios nativos y sin dependencias de runtime.", iconName: "Server" },
+            { title: "Integración con Kafka & Redis", description: "Productores y consumidores de eventos en tiempo real con SDKs nativos de Go para arquitecturas distribuidas.", iconName: "Database" },
+        ]
+    },
+
+    // === DATA ===
     {
         name: "PostgreSQL",
         slug: "postgresql",
@@ -112,20 +126,44 @@ export const skillsData: SkillData[] = [
             { title: "Stored Procedures", description: "Lógica de negocio en la base de datos cuando es apropiado.", iconName: "Server" },
         ]
     },
-
-    // === DEVOPS: Infraestructura y Nube Empresarial ===
     {
-        name: "Vercel",
-        slug: "vercel",
-        iconName: "SiVercel",
-        description: "Plataforma de despliegue para Next.js. Edge functions, preview deployments y CI/CD automático.",
-        category: "devops",
+        name: "Redis / Upstash",
+        slug: "redis-upstash",
+        iconName: "SiRedis",
+        description: "Base de datos in-memory y serverless para caching de alta velocidad, rate limiting y pub/sub. Upstash para edge computing sin estado.",
+        category: "data",
         practicalAbilities: [
-            { title: "GitOps & Preview Deploys", description: "Deploy automático en cada push con URLs de preview para cada PR.", iconName: "GitBranch" },
-            { title: "Edge Functions", description: "Lógica serverless ejecutada en el edge para baja latencia global.", iconName: "Zap" },
-            { title: "Analytics & Monitoring", description: "Web Vitals, logs en tiempo real y monitoreo de performance.", iconName: "Layers" },
+            { title: "Caching con TTL e Invalidación", description: "Estrategias de caché para reducir latencia de APIs y eliminar consultas redundantes a PostgreSQL.", iconName: "Zap" },
+            { title: "Rate Limiting Serverless", description: "Control de tasa de peticiones en edge functions con Upstash Redis para APIs públicas y privadas.", iconName: "Shield" },
+            { title: "Pub/Sub y Colas", description: "Comunicación asíncrona entre microservicios con canales de publicación-suscripción y colas de mensajes.", iconName: "Layers" },
         ]
     },
+    {
+        name: "Apache Kafka",
+        slug: "apache-kafka",
+        iconName: "SiApachekafka",
+        description: "Plataforma de streaming de eventos distribuida para arquitecturas event-driven y procesamiento de datos a escala en tiempo real.",
+        category: "data",
+        practicalAbilities: [
+            { title: "Producers & Consumers", description: "Publicación y consumo de eventos con tópicos, particiones y grupos de consumidores para alto throughput.", iconName: "GitBranch" },
+            { title: "Procesamiento de Streams", description: "Filtrado, transformación y agregación de eventos en tiempo real con baja latencia.", iconName: "Zap" },
+            { title: "Integración Go & Node.js", description: "SDKs nativos para producir y consumir mensajes desde servicios en Go y APIs en Node.js.", iconName: "Server" },
+        ]
+    },
+    {
+        name: "MinIO",
+        slug: "minio",
+        iconName: "SiMinio",
+        description: "Almacenamiento de objetos S3-compatible de alto rendimiento para assets, documentos, backups y datos no estructurados con alta disponibilidad.",
+        category: "data",
+        practicalAbilities: [
+            { title: "Gestión de Buckets & Políticas", description: "CRUD de objetos, políticas de acceso, versioning y lifecycle management para datos críticos.", iconName: "Database" },
+            { title: "Integración SDK JS & Go", description: "Carga y descarga de archivos desde aplicaciones Next.js y servicios Go con presigned URLs.", iconName: "Code2" },
+            { title: "Modo Distribuido", description: "Alta disponibilidad con replicación multi-nodo para resiliencia y tolerancia a fallos.", iconName: "Server" },
+        ]
+    },
+
+    // === DEVOPS ===
     {
         name: "Docker",
         slug: "docker",
@@ -148,30 +186,6 @@ export const skillsData: SkillData[] = [
             { title: "Deployments & Services", description: "Configuración de pods, réplicas, load balancing y networking.", iconName: "Server" },
             { title: "Auto-Scaling (HPA)", description: "Escalado automático basado en métricas de CPU/memoria.", iconName: "Zap" },
             { title: "Helm Charts", description: "Gestión de configuraciones complejas con templates reutilizables.", iconName: "Layers" },
-        ]
-    },
-    {
-        name: "Google Cloud",
-        slug: "google-cloud",
-        iconName: "SiGooglecloud",
-        description: "Plataforma cloud enterprise. GKE, Cloud Run, Cloud SQL y servicios serverless.",
-        category: "devops",
-        practicalAbilities: [
-            { title: "GKE (Kubernetes Engine)", description: "Clusters de Kubernetes administrados con auto-scaling y auto-repair.", iconName: "Server" },
-            { title: "Cloud Run", description: "Contenedores serverless con escalado a cero y pago por uso.", iconName: "Zap" },
-            { title: "Cloud SQL", description: "PostgreSQL administrado con backups automáticos y alta disponibilidad.", iconName: "Database" },
-        ]
-    },
-    {
-        name: "Oracle Cloud",
-        slug: "oracle-cloud",
-        iconName: "OracleCloudIcon",
-        description: "Cloud enterprise para cargas de trabajo críticas. OCI Compute, Object Storage y networking avanzado.",
-        category: "devops",
-        practicalAbilities: [
-            { title: "OCI Compute", description: "Instancias escalables con shapes flexibles y bare metal.", iconName: "Server" },
-            { title: "Object Storage", description: "Almacenamiento de objetos con tiers de acceso y lifecycle policies.", iconName: "Database" },
-            { title: "Networking & Security", description: "VCNs, subnets, security lists y NSGs para arquitecturas seguras.", iconName: "Shield" },
         ]
     },
     {
@@ -198,8 +212,70 @@ export const skillsData: SkillData[] = [
             { title: "Seguridad", description: "Firewalls (iptables/ufw), SSH hardening y auditoría de logs.", iconName: "Shield" },
         ]
     },
+    {
+        name: "Terraform",
+        slug: "terraform",
+        iconName: "SiTerraform",
+        description: "Infrastructure as Code declarativa para provisionar, versionar y gestionar infraestructura cloud de forma reproducible y consistente.",
+        category: "devops",
+        practicalAbilities: [
+            { title: "Infraestructura Declarativa", description: "Definición de recursos cloud con HCL y gestión de estado remoto para equipos.", iconName: "Layers" },
+            { title: "Provisioning Multi-Cloud", description: "Aprovisionamiento reproducible en Google Cloud, Oracle OCI y Railway desde un solo codebase.", iconName: "Server" },
+            { title: "Módulos Reutilizables", description: "Abstracción de configuraciones complejas en módulos versionados para diferentes entornos.", iconName: "Code2" },
+        ]
+    },
+    {
+        name: "Railway",
+        slug: "railway",
+        iconName: "SiRailway",
+        description: "Plataforma PaaS moderna para despliegue de contenedores y servicios backend con networking automático, secretos integrados y zero-config.",
+        category: "devops",
+        practicalAbilities: [
+            { title: "Deploy desde Dockerfile & GitHub", description: "Despliegue automático en cada push con builds reproducibles desde imagen Docker o repositorio.", iconName: "GitBranch" },
+            { title: "Variables de Entorno Gestionadas", description: "Gestión centralizada de secretos y configuraciones por entorno sin exposición de credenciales.", iconName: "Shield" },
+            { title: "Databases Administradas", description: "PostgreSQL y Redis provisionados con backups automáticos, networking privado y monitoreo integrado.", iconName: "Database" },
+        ]
+    },
 
-    // === SECURITY: Seguridad Perimetral y Resiliencia ===
+    // === CLOUD ===
+    {
+        name: "Vercel",
+        slug: "vercel",
+        iconName: "SiVercel",
+        description: "Plataforma de despliegue para Next.js. Edge functions, preview deployments y CI/CD automático.",
+        category: "cloud",
+        practicalAbilities: [
+            { title: "GitOps & Preview Deploys", description: "Deploy automático en cada push con URLs de preview para cada PR.", iconName: "GitBranch" },
+            { title: "Edge Functions", description: "Lógica serverless ejecutada en el edge para baja latencia global.", iconName: "Zap" },
+            { title: "Analytics & Monitoring", description: "Web Vitals, logs en tiempo real y monitoreo de performance.", iconName: "Layers" },
+        ]
+    },
+    {
+        name: "Google Cloud",
+        slug: "google-cloud",
+        iconName: "SiGooglecloud",
+        description: "Plataforma cloud enterprise. GKE, Cloud Run, Cloud SQL y servicios serverless.",
+        category: "cloud",
+        practicalAbilities: [
+            { title: "GKE (Kubernetes Engine)", description: "Clusters de Kubernetes administrados con auto-scaling y auto-repair.", iconName: "Server" },
+            { title: "Cloud Run", description: "Contenedores serverless con escalado a cero y pago por uso.", iconName: "Zap" },
+            { title: "Cloud SQL", description: "PostgreSQL administrado con backups automáticos y alta disponibilidad.", iconName: "Database" },
+        ]
+    },
+    {
+        name: "Oracle Cloud",
+        slug: "oracle-cloud",
+        iconName: "OracleCloudIcon",
+        description: "Cloud enterprise para cargas de trabajo críticas. OCI Compute, Object Storage y networking avanzado.",
+        category: "cloud",
+        practicalAbilities: [
+            { title: "OCI Compute", description: "Instancias escalables con shapes flexibles y bare metal.", iconName: "Server" },
+            { title: "Object Storage", description: "Almacenamiento de objetos con tiers de acceso y lifecycle policies.", iconName: "Database" },
+            { title: "Networking & Security", description: "VCNs, subnets, security lists y NSGs para arquitecturas seguras.", iconName: "Shield" },
+        ]
+    },
+
+    // === SECURITY ===
     {
         name: "Seguridad y Criptografía",
         slug: "security-cryptography",
@@ -224,35 +300,70 @@ export const skillsData: SkillData[] = [
             { title: "App Instalable (PWA)", description: "Experiencia nativa en cualquier dispositivo sin App Store. Menor fricción de adopción y mayor retención.", iconName: "Layers" },
         ]
     },
+
+    // === AI ENGINEERING ===
+    {
+        name: "AI Engineering",
+        slug: "ai-engineering",
+        iconName: "BrainCircuit",
+        description: "Ingeniería avanzada con modelos de IA — no vibecoding sino automatización de procesos, orquestación de modelos y administración de infraestructura mediante agentes de código.",
+        category: "ai-engineering",
+        practicalAbilities: [
+            { title: "Integración de APIs de Modelos", description: "Consumo y orquestación programática de Claude, GPT-4, Gemini y modelos locales desde aplicaciones de producción.", iconName: "Zap" },
+            { title: "Agentes de Código Avanzados", description: "Uso de Claude Code, Open Hands y agentes CLI para automatizar tareas de ingeniería: refactoring, testing, deploys y análisis de código.", iconName: "Code2" },
+            { title: "IA para Infraestructura", description: "Administración de servidores, diagnóstico de sistemas y ejecución de pipelines CI/CD guiados por agentes de inteligencia artificial.", iconName: "Server" },
+        ]
+    },
 ];
 
 export const skillCategories: SkillCategoryData[] = [
     {
         id: "frontend",
-        name: "Frontend, Lógica de Negocio y Tipado",
-        description: "Next.js 15, TypeScript, JavaScript Moderno",
-        businessValue: "Optimización SEO suprema, experiencia de usuario sin latencia perceptual, alta mantenibilidad del código y prevención de deuda técnica prematura.",
+        name: "Frontend & Producto Web",
+        description: "Next.js, TypeScript, JavaScript Moderno",
+        businessValue: "Optimización SEO desde el primer render, TTI < 3s, alta mantenibilidad del código y prevención de deuda técnica que erosiona el ROI.",
         iconName: "Code2"
     },
     {
+        id: "backend",
+        name: "Backend & Servicios API",
+        description: "Go (Golang) — APIs concurrentes y sistemas distribuidos",
+        businessValue: "Servicios de baja latencia con binarios nativos, procesamiento concurrente de miles de requests y arquitecturas event-driven que escalan sin fricción.",
+        iconName: "Server"
+    },
+    {
         id: "data",
-        name: "Persistencia, Modelado y Gestión de Datos",
-        description: "PostgreSQL, Prisma ORM, Neon Serverless, SQL",
-        businessValue: "Escalabilidad elástica en la nube, tipado seguro extremo a extremo, prevención de pérdida de datos y mitigación de errores humanos en transacciones críticas.",
+        name: "Datos & Persistencia",
+        description: "PostgreSQL, Prisma, Neon, Redis, Kafka, MinIO, SQL",
+        businessValue: "Escalabilidad elástica, tipado seguro extremo a extremo, streaming de eventos en tiempo real y almacenamiento de objetos para datos críticos de negocio.",
         iconName: "Database"
     },
     {
         id: "devops",
-        name: "Infraestructura, DevOps y Nube Empresarial",
-        description: "Vercel, Docker, Kubernetes, Google Cloud, Oracle Cloud",
-        businessValue: "Garantía de alta disponibilidad (99.9% uptime), auto-escalado inteligente ante picos de demanda y cumplimiento de estándares de seguridad corporativa.",
-        iconName: "Server"
+        name: "DevOps & Infraestructura",
+        description: "Docker, Kubernetes, Git, Linux, Terraform, Railway",
+        businessValue: "Pipelines CI/CD automatizados, infraestructura reproducible con IaC, contenedores consistentes y operaciones sin fricción desde desarrollo hasta producción.",
+        iconName: "Settings2"
+    },
+    {
+        id: "cloud",
+        name: "Cloud Computing",
+        description: "Vercel, Google Cloud, Oracle Cloud",
+        businessValue: "Alta disponibilidad global (99.9% uptime), auto-escalado ante picos de demanda y cumplimiento de estándares de seguridad corporativa en la nube.",
+        iconName: "Cloud"
     },
     {
         id: "security",
-        name: "Seguridad Perimetral y Resiliencia de Red",
-        description: "Encriptación AES-256, Arquitectura Offline-First (PWA), Hardening Linux",
-        businessValue: "Cumplimiento estricto de normativas bancarias y DGI, continuidad ininterrumpida de operaciones en entornos sin conectividad a internet.",
+        name: "Ciberseguridad",
+        description: "AES-256, Autenticación, PWA Offline-First, Compliance DGI",
+        businessValue: "Cumplimiento normativo bancario y DGI, protección contra brechas de datos y continuidad ininterrumpida de operaciones críticas sin conectividad.",
         iconName: "Shield"
+    },
+    {
+        id: "ai-engineering",
+        name: "AI Engineering",
+        description: "APIs de modelos, agentes de código, automatización con IA",
+        businessValue: "Automatización de procesos de ingeniería, reducción de tiempo de desarrollo y capacidad para orquestar, consumir y administrar modelos de IA como herramienta profesional.",
+        iconName: "BrainCircuit"
     },
 ];

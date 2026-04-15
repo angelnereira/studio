@@ -81,7 +81,14 @@
                         "core": "Core",
                         "data": "Data",
                         "infrastructure": "Infrastructure"
-                }
+                },
+                "page_title": "Stack Tecnológico",
+                "page_subtitle": "7 áreas de especialización. Desde frontend hasta AI Engineering — cada tecnología seleccionada por impacto real en producción.",
+                "explore_area": "Explorar área",
+                "tech_singular": "tecnología",
+                "tech_plural": "tecnologías",
+                "cta_subtitle": "¿Buscas un ingeniero con este stack para tu equipo o proyecto?",
+                "cta_button": "Hablemos"
         },
         "services": {
                 "title": "Servicios",

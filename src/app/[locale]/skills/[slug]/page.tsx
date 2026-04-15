@@ -1,44 +1,168 @@
-import { skills, PracticalAbility } from "@/lib/skills";
+import { skills, skillCategories, getSkillsByCategory, categoryIconMap, type Skill, type PracticalAbility } from "@/lib/skills";
+import { type SkillCategoryData } from "@/lib/data/skills-data";
 import { notFound } from "next/navigation";
 import * as React from "react";
-import { CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle2, Zap, Rocket, Star } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Zap, Rocket, Star, ArrowRight } from "lucide-react";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
 import { Badge } from "@/components/ui/badge";
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 
-interface SkillPageProps {
+interface SlugPageProps {
   params: Promise<{
     slug: string;
     locale: string;
   }>;
 }
 
+// Generate static params for both category IDs and individual skill slugs
 export async function generateStaticParams() {
-  return skills.map((skill) => ({
-    slug: skill.slug,
-  }));
+  return [
+    ...skillCategories.map(c => ({ slug: c.id })),
+    ...skills.map(s => ({ slug: s.slug })),
+  ];
 }
 
-export async function generateMetadata({ params }: SkillPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: SlugPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const skill = skills.find((s) => s.slug === slug);
 
-  if (!skill) {
+  const category = skillCategories.find(c => c.id === slug);
+  if (category) {
     return {
-      title: 'Habilidad no encontrada',
+      title: `${category.name} | Stack Tecnológico de Ángel Nereira`,
+      description: category.businessValue,
     };
   }
+
+  const skill = skills.find(s => s.slug === slug);
+  if (!skill) return { title: "No encontrado" };
 
   return {
     title: `Dominio Técnico en ${skill.name} | Ingeniero de Software Ángel Nereira`,
     description: skill.description,
   };
 }
+
+// ── Category detail view ──────────────────────────────────────────────────────
+
+function SkillCard({ skill }: { skill: Skill }) {
+  const SkillIcon = skill.icon;
+  return (
+    <Link href={`/skills/${skill.slug}`} className="group block h-full">
+      <SpotlightCard className="group relative flex flex-col h-full overflow-hidden transition-all duration-300 bg-secondary/30 backdrop-blur-sm border border-white/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-primary/20 hover:shadow-lg">
+        <CardHeader className="flex-row items-center gap-3 p-4 pb-2">
+          <div className="w-10 h-10 flex-shrink-0 bg-primary/10 rounded-lg flex items-center justify-center text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+            <SkillIcon className="w-5 h-5" />
+          </div>
+          <CardTitle className="transition-colors duration-300 group-hover:text-primary text-base font-bold leading-tight">
+            {skill.name}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex-1 p-4 pt-2">
+          <CardDescription className="text-sm leading-relaxed text-muted-foreground/90 line-clamp-3">
+            {skill.description}
+          </CardDescription>
+        </CardContent>
+        <CardFooter className="p-4 pt-0">
+          <Button variant="link" className="p-0 h-auto font-semibold text-xs text-primary/70 group-hover:text-primary transition-colors">
+            Ver detalles <ArrowRight className="ml-1 h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
+          </Button>
+        </CardFooter>
+      </SpotlightCard>
+    </Link>
+  );
+}
+
+function CategoryDetailPage({ category }: { category: SkillCategoryData }) {
+  const Icon = categoryIconMap[category.iconName];
+  const catSkills = getSkillsByCategory(category.id);
+
+  return (
+    <div className="flex flex-col gap-12 sm:gap-16">
+      {/* Back + Header */}
+      <AnimatedDiv>
+        <div className="flex flex-col items-center justify-center space-y-6 text-center max-w-3xl mx-auto">
+          <Link
+            href="/skills"
+            className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-2"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Volver a todas las áreas
+          </Link>
+
+          <div className="relative">
+            <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full scale-150 opacity-50" />
+            <div className="relative bg-secondary/50 backdrop-blur-md text-primary p-6 rounded-2xl border border-primary/20 shadow-2xl shadow-primary/10">
+              <Icon className="h-16 w-16" />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <Badge variant="outline" className="px-4 py-1 border-primary/30 text-primary bg-primary/5 uppercase tracking-widest text-[10px] font-bold">
+              {catSkills.length} {catSkills.length === 1 ? "tecnología" : "tecnologías"}
+            </Badge>
+            <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl font-headline bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+              {category.name}
+            </h1>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              {category.description}
+            </p>
+          </div>
+        </div>
+      </AnimatedDiv>
+
+      {/* Business value box */}
+      <AnimatedDiv delay={0.15}>
+        <div className="p-6 sm:p-8 bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/10 rounded-2xl max-w-3xl mx-auto w-full">
+          <div className="flex items-start gap-3">
+            <CheckCircle2 className="text-primary w-5 h-5 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Valor de Negocio</p>
+              <p className="text-muted-foreground leading-relaxed">{category.businessValue}</p>
+            </div>
+          </div>
+        </div>
+      </AnimatedDiv>
+
+      {/* Skills grid */}
+      <AnimatedDiv delay={0.2}>
+        <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {catSkills.map((skill, idx) => (
+            <AnimatedDiv key={skill.slug} delay={0.05 * idx}>
+              <SkillCard skill={skill} />
+            </AnimatedDiv>
+          ))}
+        </div>
+      </AnimatedDiv>
+
+      {/* Bottom CTA */}
+      <AnimatedDiv delay={0.4} className="text-center py-12 border-t border-white/5">
+        <h2 className="text-xl font-bold font-headline mb-3">¿Interesado en esta área?</h2>
+        <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
+          Si buscas un experto en {category.name.toLowerCase()} para tu proyecto o equipo, estoy disponible para consultoría técnica.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Button asChild size="lg" className="shadow-lg shadow-primary/20">
+            <Link href="/contact">
+              Contactar <Rocket className="ml-2 w-4 h-4" />
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="lg">
+            <Link href="/skills">
+              <ArrowLeft className="mr-2 w-4 h-4" /> Todas las áreas
+            </Link>
+          </Button>
+        </div>
+      </AnimatedDiv>
+    </div>
+  );
+}
+
+// ── Individual skill detail view ──────────────────────────────────────────────
 
 const AbilityCard = ({ ability, index }: { ability: PracticalAbility; index: number }) => {
   const Icon = ability.icon;
@@ -61,29 +185,21 @@ const AbilityCard = ({ ability, index }: { ability: PracticalAbility; index: num
   );
 };
 
-
-export default async function SkillDetailPage({ params }: SkillPageProps) {
-  const { slug, locale } = await params;
-  setRequestLocale(locale);
-  const skill = skills.find((s) => s.slug === slug);
-
-  if (!skill) {
-    notFound();
-  }
-
+function SkillDetailPage({ skill }: { skill: Skill }) {
   const SkillIcon = skill.icon;
+  const parentCategory = skillCategories.find(c => c.id === skill.category);
 
   return (
     <div className="flex flex-col gap-12 sm:gap-16">
-      {/* Header / Hero Section for Skill */}
+      {/* Header / Hero Section */}
       <AnimatedDiv>
         <div className="flex flex-col items-center justify-center space-y-6 text-center max-w-3xl mx-auto">
           <Link
-            href="/skills"
+            href={`/skills/${skill.category}`}
             className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Volver al Stack Tecnológico
+            {parentCategory ? `Volver a ${parentCategory.name}` : "Volver al Stack Tecnológico"}
           </Link>
 
           <div className="relative">
@@ -107,9 +223,9 @@ export default async function SkillDetailPage({ params }: SkillPageProps) {
         </div>
       </AnimatedDiv>
 
-      {/* Main Content Area */}
+      {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        {/* Left Column: Practical Implementation */}
+        {/* Left Column */}
         <div className="lg:col-span-8 space-y-12">
           <AnimatedDiv delay={0.2}>
             <div className="space-y-8">
@@ -126,7 +242,6 @@ export default async function SkillDetailPage({ params }: SkillPageProps) {
             </div>
           </AnimatedDiv>
 
-          {/* Implementation section */}
           <AnimatedDiv delay={0.4}>
             <div className="p-8 bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/10 rounded-2xl space-y-4">
               <h3 className="text-xl font-bold flex items-center gap-2">
@@ -156,7 +271,7 @@ export default async function SkillDetailPage({ params }: SkillPageProps) {
           </AnimatedDiv>
         </div>
 
-        {/* Right Column: CTA & Context */}
+        {/* Right Column: CTA */}
         <div className="lg:col-span-4 space-y-8 lg:sticky lg:top-24">
           <SpotlightCard className="p-8 bg-secondary/50 border-primary/20 space-y-6">
             <h3 className="text-xl font-bold font-headline">¿Interesado en esta tecnología?</h3>
@@ -185,12 +300,33 @@ export default async function SkillDetailPage({ params }: SkillPageProps) {
 
       <AnimatedDiv delay={0.5} className="text-center mt-12 py-12 border-t border-white/5">
         <Button asChild variant="ghost" className="hover:bg-primary/5 hover:text-primary transition-all">
-          <Link href="/skills">
+          <Link href={`/skills/${skill.category}`}>
             <ArrowLeft className="mr-2 w-4 h-4" />
-            Explorar todas las tecnologías
+            {parentCategory ? `Explorar ${parentCategory.name}` : "Explorar todas las tecnologías"}
           </Link>
         </Button>
       </AnimatedDiv>
     </div>
   );
+}
+
+// ── Page entry point ──────────────────────────────────────────────────────────
+
+export default async function SkillsSlugPage({ params }: SlugPageProps) {
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
+
+  // Check if slug matches a category
+  const category = skillCategories.find(c => c.id === slug);
+  if (category) {
+    return <CategoryDetailPage category={category} />;
+  }
+
+  // Otherwise treat as an individual skill
+  const skill = skills.find(s => s.slug === slug);
+  if (!skill) {
+    notFound();
+  }
+
+  return <SkillDetailPage skill={skill} />;
 }
