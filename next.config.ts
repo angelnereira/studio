@@ -8,7 +8,10 @@ const withBundleAnalyzer = withBundleAnalyzerConfig({
 
 /** @type {import('next').NextConfig} */
 const nextConfig: import('next').NextConfig = {
-    // TypeScript errors are now enforced at build time
+    // Keep jsPDF out of the server bundle — it has browser-specific code
+    // that breaks when webpack tries to bundle it for Node.js.
+    // The API route imports it at runtime from node_modules instead.
+    serverExternalPackages: ['jspdf'],
 
     // Performance optimizations
     compiler: {
