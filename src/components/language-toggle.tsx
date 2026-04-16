@@ -8,8 +8,6 @@ import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/lib/routing";
 import { useTransition } from "react";
 
-const LANGUAGE_TOGGLE_ENABLED = process.env.NEXT_PUBLIC_ENABLE_LANGUAGE_TOGGLE === 'true';
-
 export function LanguageToggle() {
     const [mounted, setMounted] = React.useState(false);
     const locale = useLocale();
@@ -20,10 +18,6 @@ export function LanguageToggle() {
     React.useEffect(() => {
         setMounted(true);
     }, []);
-
-    if (!LANGUAGE_TOGGLE_ENABLED) {
-        return null;
-    }
 
     const toggleLanguage = () => {
         const nextLocale = locale === 'es' ? 'en' : 'es';

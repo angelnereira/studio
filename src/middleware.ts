@@ -1,34 +1,37 @@
 import createMiddleware from 'next-intl/middleware';
+import { routing } from '@/lib/routing';
 import { NextRequest, NextResponse } from 'next/server';
+
+// Regex that matches exactly the /en or /en/... prefix — prevents false
+// positives on paths like /enquiries or /english-tips.
+const EN_PREFIX_RE = /^\/en(\/|$)/;
 
 const LOCALE_COOKIE = 'NEXT_LOCALE';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
-const intlMiddleware = createMiddleware({
-    locales: ['es', 'en'],
-    defaultLocale: 'es',
-    localePrefix: 'as-needed',
-    localeDetection: true,
-});
+const intlMiddleware = createMiddleware(routing);
 
 export default function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    // Skip intl middleware for admin routes and API routes
+    // Admin and API routes bypass i18n entirely.
     if (pathname.startsWith('/admin') || pathname.startsWith('/api')) {
-        return;
+        return NextResponse.next();
     }
 
+    // Run next-intl's locale middleware — this handles detection, rewrites
+    // and redirects based on the URL prefix, Accept-Language header and the
+    // NEXT_LOCALE cookie.
     const response = intlMiddleware(request) ?? NextResponse.next();
 
-    // Determine the active locale: explicit URL prefix takes precedence,
-    // then fall back to the existing cookie value.
-    const localeFromPath = pathname.startsWith('/en') ? 'en' : null;
+    // Persist the resolved locale in a long-lived cookie so that returning
+    // visitors who type the bare domain URL are redirected to their preferred
+    // language. The URL prefix takes precedence; fall back to the existing
+    // cookie, then to the default locale.
+    const localeFromPath = EN_PREFIX_RE.test(pathname) ? 'en' : null;
     const localeFromCookie = request.cookies.get(LOCALE_COOKIE)?.value;
-    const activeLocale = localeFromPath ?? localeFromCookie ?? 'es';
+    const activeLocale = localeFromPath ?? localeFromCookie ?? routing.defaultLocale;
 
-    // Persist the locale preference with a long-lived cookie so that
-    // returning visitors who type the root URL are redirected correctly.
     response.cookies.set(LOCALE_COOKIE, activeLocale, {
         maxAge: COOKIE_MAX_AGE,
         path: '/',
@@ -40,7 +43,6 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-    // Match all routes except Next.js internals, static files, and API
     matcher: [
         '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff|woff2|ttf|otf)).*)',
     ],
