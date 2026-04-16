@@ -27,7 +27,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="lg" className="w-full" disabled={pending}>
-      {pending ? "Enviando..." : "Enviar Oportunidad"}
+      {pending ? "Enviando..." : "Contactar Profesional"}
     </Button>
   );
 }

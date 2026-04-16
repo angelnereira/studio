@@ -14,7 +14,7 @@ import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 
 // ── Service areas ──────────────────────────────────────────────────────────
 const serviceAreas = [
-  { id: "web-development",           tabLabel: "Web Custom",       slug: "web-development" },
+  { id: "web-development",           tabLabel: "Desarrollo Web",   slug: "web-development" },
   { id: "tienda-online-ecommerce",   tabLabel: "E-commerce",       slug: "tienda-online-ecommerce" },
   { id: "aplicaciones-moviles",      tabLabel: "Apps Móviles",     slug: "aplicaciones-moviles" },
   { id: "portafolio-profesional",    tabLabel: "Portafolio",       slug: "portafolio-profesional" },
