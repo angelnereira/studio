@@ -10,7 +10,7 @@ import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
 import { Badge } from "@/components/ui/badge";
 import { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 interface SlugPageProps {
   params: Promise<{
@@ -77,7 +77,10 @@ function SkillCard({ skill }: { skill: Skill }) {
   );
 }
 
-function CategoryDetailPage({ category }: { category: SkillCategoryData }) {
+function CategoryDetailPage({ category, labels }: {
+  category: SkillCategoryData;
+  labels: { backToAreas: string; skillsCount: string };
+}) {
   const Icon = categoryIconMap[category.iconName];
   const catSkills = getSkillsByCategory(category.id);
 
@@ -91,7 +94,7 @@ function CategoryDetailPage({ category }: { category: SkillCategoryData }) {
             className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-2"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Volver a todas las áreas
+            {labels.backToAreas}
           </Link>
 
           <div className="relative">
@@ -103,7 +106,7 @@ function CategoryDetailPage({ category }: { category: SkillCategoryData }) {
 
           <div className="space-y-4">
             <Badge variant="outline" className="px-4 py-1 border-primary/30 text-primary bg-primary/5 uppercase tracking-widest text-[10px] font-bold">
-              {catSkills.length} {catSkills.length === 1 ? "tecnología" : "tecnologías"}
+              {labels.skillsCount}
             </Badge>
             <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl font-headline bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
               {category.name}
@@ -319,7 +322,13 @@ export default async function SkillsSlugPage({ params }: SlugPageProps) {
   // Check if slug matches a category
   const category = skillCategories.find(c => c.id === slug);
   if (category) {
-    return <CategoryDetailPage category={category} />;
+    const t = await getTranslations('skills');
+    const catSkills = getSkillsByCategory(category.id);
+    const labels = {
+      backToAreas: t('back_to_areas'),
+      skillsCount: t('skills_count', { count: catSkills.length }),
+    };
+    return <CategoryDetailPage category={category} labels={labels} />;
   }
 
   // Otherwise treat as an individual skill
