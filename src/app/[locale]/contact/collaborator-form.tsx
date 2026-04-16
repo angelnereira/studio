@@ -20,7 +20,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="lg" className="w-full" disabled={pending}>
-      {pending ? "Enviando..." : "Enviar Mensaje"}
+      {pending ? "Enviando..." : "Proponer Colaboración"}
     </Button>
   );
 }

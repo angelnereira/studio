@@ -214,20 +214,20 @@ export function StepResults({ result, onExportPDF, onSendEmail }: StepResultsPro
       )}
 
       {/* Actions */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col gap-3">
         <Button
           onClick={onExportPDF}
-          className="flex-1"
+          className="w-full"
           size="lg"
         >
           <Download className="h-4 w-4 mr-2" />
-          Descargar PDF
+          Exportar PDF
         </Button>
         <Button
           onClick={() => setIsEmailDialogOpen(true)}
           variant="outline"
-          className="flex-1"
-          size="lg"
+          className="w-full"
+          size="default"
         >
           <Mail className="h-4 w-4 mr-2" />
           Enviar por Email

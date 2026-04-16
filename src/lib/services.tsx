@@ -100,7 +100,7 @@ export const services: Service[] = [
       { name: "Multiidioma (ES/EN)", price: 320, description: "Para cualquier paquete." },
       { name: "Sistema de citas online", price: 640, description: "Para el paquete Presencia Corporativa." },
     ],
-    tags: ["Web", "Startups", "PYMEs", "Corporativo"],
+    tags: ["Web", "Empresas Emergentes", "PYMEs", "Corporativo"],
     published: true,
   },
   {

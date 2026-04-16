@@ -65,7 +65,24 @@ export default async function CalculadoraPage({ params }: CalculadoraPageProps) 
         </div>
 
         {/* Calculator Wizard */}
-        <Suspense fallback={<div className="w-full h-96 flex items-center justify-center text-muted-foreground">{t('loading')}</div>}>
+        <Suspense fallback={
+          <div className="max-w-5xl mx-auto animate-pulse">
+            <div className="flex justify-between mb-4">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-muted" />
+                  <div className="h-3 w-16 rounded bg-muted" />
+                </div>
+              ))}
+            </div>
+            <div className="h-2 rounded-full bg-muted mb-6" />
+            <div className="rounded-2xl bg-muted h-96 mb-6" />
+            <div className="flex justify-between">
+              <div className="h-11 w-28 rounded-lg bg-muted" />
+              <div className="h-11 w-36 rounded-lg bg-muted" />
+            </div>
+          </div>
+        }>
           <BudgetCalculatorWizard />
         </Suspense>
 

@@ -8,6 +8,8 @@ import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/lib/routing";
 import { useTransition } from "react";
 
+const LANGUAGE_TOGGLE_ENABLED = process.env.NEXT_PUBLIC_ENABLE_LANGUAGE_TOGGLE === 'true';
+
 export function LanguageToggle() {
     const [mounted, setMounted] = React.useState(false);
     const locale = useLocale();
@@ -19,6 +21,10 @@ export function LanguageToggle() {
         setMounted(true);
     }, []);
 
+    if (!LANGUAGE_TOGGLE_ENABLED) {
+        return null;
+    }
+
     const toggleLanguage = () => {
         const nextLocale = locale === 'es' ? 'en' : 'es';
         startTransition(() => {
@@ -28,9 +34,8 @@ export function LanguageToggle() {
 
     if (!mounted) {
         return (
-            <Button variant="ghost" size="icon" className="relative">
+            <Button variant="ghost" size="icon" className="relative" aria-label="Cambiar idioma">
                 <Languages className="h-[1.2rem] w-[1.2rem]" />
-                <span className="sr-only">Toggle language</span>
             </Button>
         );
     }
@@ -41,13 +46,12 @@ export function LanguageToggle() {
             size="icon"
             className="relative hover:bg-accent hover:text-accent-foreground"
             onClick={toggleLanguage}
-            title={locale === 'es' ? "Cambiar a Inglés" : "Switch to Spanish"}
+            aria-label={locale === 'es' ? "Cambiar a Inglés" : "Switch to Spanish"}
         >
             <Languages className="h-[1.3rem] w-[1.3rem] transition-all" />
             <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground border border-background">
                 {locale.toUpperCase()}
             </span>
-            <span className="sr-only">Toggle language</span>
         </Button>
     );
 }

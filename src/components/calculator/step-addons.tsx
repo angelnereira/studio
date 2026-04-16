@@ -21,20 +21,52 @@ export function StepAddOns({
 }: StepAddOnsProps) {
   const recommendedAddOns = RECOMMENDATIONS_BY_SERVICE[serviceType] || [];
 
-  // Sort add-ons: recommended first
-  const sortedAddOns = Object.values(ADD_ONS).sort((a, b) => {
-    const aRecommended = recommendedAddOns.includes(a.id);
-    const bRecommended = recommendedAddOns.includes(b.id);
-
-    if (aRecommended && !bRecommended) return -1;
-    if (!aRecommended && bRecommended) return 1;
-    return 0;
-  });
+  const allAddOns = Object.values(ADD_ONS);
+  const recommended = allAddOns.filter((a) => recommendedAddOns.includes(a.id));
+  const optional = allAddOns.filter((a) => !recommendedAddOns.includes(a.id));
 
   const totalAddOnsPrice = selectedAddOns.reduce((total, addOnId) => {
     const addOn = ADD_ONS[addOnId];
     return total + (addOn?.price || 0);
   }, 0);
+
+  const renderAddOnCard = (addOn: (typeof allAddOns)[number]) => {
+    const isSelected = selectedAddOns.includes(addOn.id);
+    return (
+      <Card
+        key={addOn.id}
+        className={`p-5 cursor-pointer transition-all hover:shadow-md ${
+          isSelected
+            ? 'border-primary border-2 bg-primary/5'
+            : 'border-border hover:border-primary/50'
+        }`}
+        onClick={() => onToggleAddOn(addOn.id)}
+      >
+        <div className="flex items-start gap-3 flex-1 mb-3">
+          <Checkbox
+            id={addOn.id}
+            checked={isSelected}
+            onCheckedChange={() => onToggleAddOn(addOn.id)}
+            onClick={(e) => e.stopPropagation()}
+          />
+          <div className="flex-1">
+            <Label htmlFor={addOn.id} className="font-semibold cursor-pointer block mb-1">
+              {addOn.name}
+            </Label>
+            <p className="text-sm text-muted-foreground">{addOn.description}</p>
+          </div>
+        </div>
+        <div className="flex justify-between items-center pt-3 border-t">
+          {addOn.estimatedHours && (
+            <span className="text-xs text-muted-foreground">~{addOn.estimatedHours}h</span>
+          )}
+          <span className="text-sm font-bold text-primary ml-auto">
+            ${addOn.price.toLocaleString()}
+          </span>
+        </div>
+      </Card>
+    );
+  };
 
   return (
     <div className="space-y-6">
@@ -58,83 +90,32 @@ export function StepAddOns({
         </Card>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {sortedAddOns.map((addOn) => {
-          const isSelected = selectedAddOns.includes(addOn.id);
-          const isRecommended = recommendedAddOns.includes(addOn.id);
-
-          return (
-            <Card
-              key={addOn.id}
-              className={`p-5 cursor-pointer transition-all hover:shadow-md ${
-                isSelected
-                  ? 'border-primary border-2 bg-primary/5'
-                  : 'border-border hover:border-primary/50'
-              }`}
-              onClick={() => onToggleAddOn(addOn.id)}
-            >
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-start gap-3 flex-1">
-                  <Checkbox
-                    id={addOn.id}
-                    checked={isSelected}
-                    onCheckedChange={() => onToggleAddOn(addOn.id)}
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Label
-                        htmlFor={addOn.id}
-                        className="font-semibold cursor-pointer"
-                      >
-                        {addOn.name}
-                      </Label>
-                      {isRecommended && (
-                        <Badge
-                          variant="secondary"
-                          className="text-xs bg-amber-100 text-amber-900 dark:bg-amber-900 dark:text-amber-100"
-                        >
-                          <Star className="h-3 w-3 mr-1 fill-current" />
-                          Recomendado
-                        </Badge>
-                      )}
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {addOn.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center pt-3 border-t">
-                {addOn.estimatedHours && (
-                  <span className="text-xs text-muted-foreground">
-                    ~{addOn.estimatedHours}h
-                  </span>
-                )}
-                <span className="text-sm font-bold text-primary ml-auto">
-                  ${addOn.price.toLocaleString()}
-                </span>
-              </div>
-            </Card>
-          );
-        })}
-      </div>
-
-      <Card className="p-4 bg-amber-50 dark:bg-amber-950 border-amber-200 dark:border-amber-800">
-        <div className="flex gap-2">
-          <Star className="h-5 w-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-medium text-amber-900 dark:text-amber-100 mb-1">
-              Complementos Recomendados
-            </p>
-            <p className="text-xs text-amber-800 dark:text-amber-200">
-              Hemos marcado los complementos más relevantes para tu tipo de proyecto.
-              Estos servicios suelen maximizar el valor y éxito del proyecto.
-            </p>
+      {recommended.length > 0 && (
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
+            <h3 className="text-sm font-semibold text-foreground">Recomendados para tu proyecto</h3>
+            <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-900 dark:bg-amber-900 dark:text-amber-100">
+              {recommended.length}
+            </Badge>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {recommended.map(renderAddOnCard)}
           </div>
         </div>
-      </Card>
+      )}
+
+      {optional.length > 0 && (
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Check className="h-4 w-4 text-muted-foreground" />
+            <h3 className="text-sm font-semibold text-muted-foreground">Opcionales</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {optional.map(renderAddOnCard)}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

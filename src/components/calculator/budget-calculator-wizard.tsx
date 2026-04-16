@@ -87,7 +87,7 @@ export function BudgetCalculatorWizard() {
   const stepTitles = [
     'Servicio',
     'Configuración',
-    'Timeline',
+    'Cronograma',
     'Complementos',
     'Resultados',
   ];
@@ -206,7 +206,7 @@ export function BudgetCalculatorWizard() {
                   className={`text-xs ${isActive ? 'text-foreground font-medium' : 'text-muted-foreground'
                     }`}
                 >
-                  {title}
+                  {stepNumber}. {title}
                 </p>
               </div>
             );
