@@ -88,7 +88,9 @@
                 "tech_singular": "tecnología",
                 "tech_plural": "tecnologías",
                 "cta_subtitle": "¿Buscas un ingeniero con este stack para tu equipo o proyecto?",
-                "cta_button": "Hablemos"
+                "cta_button": "Hablemos",
+                "back_to_areas": "Volver a todas las áreas",
+                "skills_count": "{count} tecnologías"
         },
         "services": {
                 "title": "Servicios",
