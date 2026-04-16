@@ -16,22 +16,24 @@ import { useToast } from "@/hooks/use-toast";
 import { services } from "@/lib/services";
 import { onContactSubmit, FormState } from "./actions";
 import { Label } from "@/components/ui/label";
+import { useTranslations } from "next-intl";
 
 const initialState: FormState = {
   message: "",
   status: "idle",
 };
 
-function SubmitButton() {
+function SubmitButton({ submitText, submittingText }: { submitText: string; submittingText: string }) {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="lg" className="w-full" disabled={pending}>
-      {pending ? "Enviando..." : "Enviar Propuesta"}
+      {pending ? submittingText : submitText}
     </Button>
   );
 }
 
 export function ClientForm() {
+  const t = useTranslations("contact.form");
   const { toast } = useToast();
   const [state, formAction] = useActionState(onContactSubmit, initialState);
   const formRef = useRef<HTMLFormElement>(null);
@@ -39,18 +41,18 @@ export function ClientForm() {
   useEffect(() => {
     if (state.status === 'success' && state.formType === 'client') {
       toast({
-        title: "¡Mensaje Enviado!",
+        title: t("client.success_title"),
         description: state.message,
       });
       formRef.current?.reset();
     } else if (state.status === 'error' && state.formType === 'client' && state.message && !state.issues) {
       toast({
         variant: "destructive",
-        title: "Error al enviar",
+        title: t("shared.error_title"),
         description: state.message,
       });
     }
-  }, [state, toast]);
+  }, [state, toast, t]);
 
   return (
     <form
@@ -61,88 +63,88 @@ export function ClientForm() {
       <input type="hidden" name="formType" value="client" />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="name">Nombre Completo</Label>
-          <Input id="name" name="name" placeholder="Tu nombre" />
+          <Label htmlFor="name">{t("client.name_label")}</Label>
+          <Input id="name" name="name" placeholder={t("client.name_placeholder")} />
           {state.issues?.name && <p className="text-sm font-medium text-destructive">{state.issues.name}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" name="email" type="email" placeholder="tu.email@ejemplo.com" />
+          <Label htmlFor="email">{t("shared.email_label")}</Label>
+          <Input id="email" name="email" type="email" placeholder={t("client.email_placeholder")} />
           {state.issues?.email && <p className="text-sm font-medium text-destructive">{state.issues.email}</p>}
         </div>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="company">Empresa (Opcional)</Label>
-          <Input id="company" name="company" placeholder="Nombre de tu empresa" />
+          <Label htmlFor="company">{t("client.company_label")}</Label>
+          <Input id="company" name="company" placeholder={t("client.company_placeholder")} />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="country">País (Opcional)</Label>
-          <Input id="country" name="country" placeholder="País de residencia" />
+          <Label htmlFor="country">{t("shared.country_label")}</Label>
+          <Input id="country" name="country" placeholder={t("client.country_placeholder")} />
         </div>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="service">Servicio de Interés</Label>
+          <Label htmlFor="service">{t("client.service_label")}</Label>
           <Select name="service">
             <SelectTrigger id="service">
-              <SelectValue placeholder="Selecciona un servicio" />
+              <SelectValue placeholder={t("client.service_placeholder")} />
             </SelectTrigger>
             <SelectContent>
               {services.filter(s => s.published).map(service => (
                 <SelectItem key={service.slug} value={service.slug}>{service.title}</SelectItem>
               ))}
-              <SelectItem value="other">Otro</SelectItem>
+              <SelectItem value="other">{t("client.service_other")}</SelectItem>
             </SelectContent>
           </Select>
           {state.issues?.service && <p className="text-sm font-medium text-destructive">{state.issues.service}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="budget">Presupuesto Estimado</Label>
+          <Label htmlFor="budget">{t("client.budget_label")}</Label>
           <Select name="budget">
             <SelectTrigger id="budget">
-              <SelectValue placeholder="Selecciona un rango" />
+              <SelectValue placeholder={t("client.budget_placeholder")} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="2.5k-5k">$2,500 - $5,000</SelectItem>
               <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
               <SelectItem value="10k-25k">$10,000 - $25,000</SelectItem>
-              <SelectItem value=">25k">Más de $25,000</SelectItem>
+              <SelectItem value=">25k">{t("client.budget_more")}</SelectItem>
             </SelectContent>
           </Select>
           {state.issues?.budget && <p className="text-sm font-medium text-destructive">{state.issues.budget}</p>}
         </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="industry">Rubro de la Empresa (Opcional)</Label>
+        <Label htmlFor="industry">{t("shared.industry_label")}</Label>
         <Select name="industry">
           <SelectTrigger id="industry">
-            <SelectValue placeholder="Selecciona el rubro" />
+            <SelectValue placeholder={t("shared.industry_placeholder")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="technology">Tecnología y Software</SelectItem>
-            <SelectItem value="ecommerce">E-commerce y Retail</SelectItem>
-            <SelectItem value="finance">Finanzas y Banca</SelectItem>
-            <SelectItem value="health">Salud y Bienestar</SelectItem>
-            <SelectItem value="education">Educación</SelectItem>
-            <SelectItem value="professional-services">Servicios Profesionales</SelectItem>
-            <SelectItem value="real-estate">Bienes Raíces</SelectItem>
-            <SelectItem value="transport-logistics">Transporte y Logística</SelectItem>
-            <SelectItem value="other">Otro</SelectItem>
+            <SelectItem value="technology">{t("shared.industry_technology")}</SelectItem>
+            <SelectItem value="ecommerce">{t("shared.industry_ecommerce")}</SelectItem>
+            <SelectItem value="finance">{t("shared.industry_finance")}</SelectItem>
+            <SelectItem value="health">{t("shared.industry_health")}</SelectItem>
+            <SelectItem value="education">{t("shared.industry_education")}</SelectItem>
+            <SelectItem value="professional-services">{t("shared.industry_professional_services")}</SelectItem>
+            <SelectItem value="real-estate">{t("shared.industry_real_estate")}</SelectItem>
+            <SelectItem value="transport-logistics">{t("shared.industry_transport")}</SelectItem>
+            <SelectItem value="other">{t("shared.industry_other")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="message">Cuéntame sobre tu proyecto</Label>
+        <Label htmlFor="message">{t("client.message_label")}</Label>
         <Textarea
           id="message"
           name="message"
-          placeholder="Describe tus necesidades, objetivos y cualquier detalle relevante."
+          placeholder={t("client.message_placeholder")}
           className="min-h-[150px]"
         />
         {state.issues?.message && <p className="text-sm font-medium text-destructive">{state.issues.message}</p>}
       </div>
-      <SubmitButton />
+      <SubmitButton submitText={t("client.submit")} submittingText={t("shared.submitting")} />
     </form>
   );
 }
