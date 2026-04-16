@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { ArrowRight, CheckCircle2, Code2 } from "lucide-react";
+import { ArrowRight, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -272,72 +272,6 @@ export default function ServicesPage() {
           <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
             {t("services.page_subtitle")}
           </p>
-        </div>
-      </AnimatedDiv>
-
-      {/* ── Service Areas Matrix ─────────────────────────────────────────── */}
-      <AnimatedDiv delay={0.1}>
-        <div className="mb-14">
-          <h2 className="text-xl font-bold font-headline mb-6 text-center tracking-tight">
-            Áreas de Especialización → Stack → Valor de Negocio
-          </h2>
-
-          {/* Column headers — desktop */}
-          <div className="hidden md:grid md:grid-cols-[1.3fr_1.5fr_2fr] gap-px rounded-t-xl overflow-hidden border border-white/10 border-b-0">
-            <div className="bg-primary/10 px-5 py-3 text-xs font-bold uppercase tracking-widest text-primary">
-              Área de Servicio
-            </div>
-            <div className="bg-primary/10 px-5 py-3 text-xs font-bold uppercase tracking-widest text-primary">
-              Stack / Tecnologías
-            </div>
-            <div className="bg-primary/10 px-5 py-3 text-xs font-bold uppercase tracking-widest text-primary">
-              Valor de Negocio
-            </div>
-          </div>
-
-          {/* Rows */}
-          <div className="rounded-xl md:rounded-t-none overflow-hidden border border-white/10 divide-y divide-white/5">
-            {serviceAreas.map(area => {
-              const svc = getServiceBySlug(area.slug);
-              const Icon = svc?.icon ?? Code2;
-
-              return (
-                <div
-                  key={area.id}
-                  className="grid grid-cols-1 md:grid-cols-[1.3fr_1.5fr_2fr] bg-secondary/10 hover:bg-secondary/30 transition-colors duration-300"
-                >
-                  {/* Col 1: Area name + icon */}
-                  <div className="px-5 py-5 flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Icon className="w-4 h-4 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-foreground text-sm leading-snug">
-                        {area.name}
-                      </p>
-                      {/* Show tech on mobile below name */}
-                      <p className="text-[11px] text-muted-foreground mt-1 md:hidden leading-relaxed">
-                        {area.techStack}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Col 2: Tech stack — desktop only */}
-                  <div className="hidden md:flex px-5 py-5 items-start">
-                    <p className="text-sm text-muted-foreground leading-relaxed">{area.techStack}</p>
-                  </div>
-
-                  {/* Col 3: Business value */}
-                  <div className="px-5 py-5 flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0 mt-0.5 hidden md:block" />
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {area.businessValue}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </AnimatedDiv>
 
