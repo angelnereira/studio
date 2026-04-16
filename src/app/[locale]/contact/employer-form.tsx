@@ -16,23 +16,24 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { onContactSubmit, FormState } from "./actions";
 import { Label } from "@/components/ui/label";
-
+import { useTranslations } from "next-intl";
 
 const initialState: FormState = {
   message: "",
   status: "idle",
 };
 
-function SubmitButton() {
+function SubmitButton({ submitText, submittingText }: { submitText: string; submittingText: string }) {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="lg" className="w-full" disabled={pending}>
-      {pending ? "Enviando..." : "Contactar Profesional"}
+      {pending ? submittingText : submitText}
     </Button>
   );
 }
 
 export function EmployerForm() {
+  const t = useTranslations("contact.form");
   const { toast } = useToast();
   const [state, formAction] = useActionState(onContactSubmit, initialState);
   const formRef = useRef<HTMLFormElement>(null);
@@ -40,18 +41,18 @@ export function EmployerForm() {
   useEffect(() => {
     if (state.status === 'success' && state.formType === 'employer') {
       toast({
-        title: "¡Información Recibida!",
-        description: "Gracias por considerarme. Revisaré la oportunidad y te contactaré pronto.",
+        title: t("employer.success_title"),
+        description: t("employer.success_description"),
       });
       formRef.current?.reset();
     } else if (state.status === 'error' && state.formType === 'employer' && state.message && !state.issues) {
        toast({
         variant: "destructive",
-        title: "Error al enviar",
+        title: t("shared.error_title"),
         description: state.message,
       });
     }
-  }, [state, toast]);
+  }, [state, toast, t]);
 
   return (
     <form
@@ -62,82 +63,82 @@ export function EmployerForm() {
       <input type="hidden" name="formType" value="employer" />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="recruiterName">Tu Nombre</Label>
-          <Input id="recruiterName" name="recruiterName" placeholder="Nombre del reclutador" />
+          <Label htmlFor="recruiterName">{t("employer.recruiter_name_label")}</Label>
+          <Input id="recruiterName" name="recruiterName" placeholder={t("employer.recruiter_name_placeholder")} />
           {state.issues?.recruiterName && <p className="text-sm font-medium text-destructive">{state.issues.recruiterName}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Email de Contacto</Label>
-          <Input id="email" name="email" type="email" placeholder="tu.email@empresa.com" />
+          <Label htmlFor="email">{t("employer.email_label")}</Label>
+          <Input id="email" name="email" type="email" placeholder={t("employer.email_placeholder")} />
           {state.issues?.email && <p className="text-sm font-medium text-destructive">{state.issues.email}</p>}
         </div>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="companyName">Nombre de la Empresa</Label>
-          <Input id="companyName" name="companyName" placeholder="Mi Empresa S.A." />
+          <Label htmlFor="companyName">{t("employer.company_name_label")}</Label>
+          <Input id="companyName" name="companyName" placeholder={t("employer.company_name_placeholder")} />
           {state.issues?.companyName && <p className="text-sm font-medium text-destructive">{state.issues.companyName}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="jobTitle">Título del Puesto</Label>
-          <Input id="jobTitle" name="jobTitle" placeholder="Senior Software Engineer" />
+          <Label htmlFor="jobTitle">{t("employer.job_title_label")}</Label>
+          <Input id="jobTitle" name="jobTitle" placeholder={t("employer.job_title_placeholder")} />
           {state.issues?.jobTitle && <p className="text-sm font-medium text-destructive">{state.issues.jobTitle}</p>}
         </div>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="country">País (Opcional)</Label>
-            <Input id="country" name="country" placeholder="País de la empresa" />
+            <Label htmlFor="country">{t("shared.country_label")}</Label>
+            <Input id="country" name="country" placeholder={t("employer.country_placeholder")} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="salaryOffer">Oferta Salarial (Opcional)</Label>
-            <Input id="salaryOffer" name="salaryOffer" placeholder="Ej: $50k - $70k USD" />
+            <Label htmlFor="salaryOffer">{t("employer.salary_label")}</Label>
+            <Input id="salaryOffer" name="salaryOffer" placeholder={t("employer.salary_placeholder")} />
           </div>
       </div>
       <div className="space-y-2">
-          <Label htmlFor="industry">Rubro de la Empresa (Opcional)</Label>
+          <Label htmlFor="industry">{t("shared.industry_label")}</Label>
           <Select name="industry">
             <SelectTrigger id="industry">
-              <SelectValue placeholder="Selecciona el rubro" />
+              <SelectValue placeholder={t("shared.industry_placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="technology">Tecnología y Software</SelectItem>
-              <SelectItem value="ecommerce">E-commerce y Retail</SelectItem>
-              <SelectItem value="finance">Finanzas y Banca</SelectItem>
-              <SelectItem value="health">Salud y Bienestar</SelectItem>
-              <SelectItem value="education">Educación</SelectItem>
-              <SelectItem value="professional-services">Servicios Profesionales</SelectItem>
-              <SelectItem value="real-estate">Bienes Raíces</SelectItem>
-              <SelectItem value="transport-logistics">Transporte y Logística</SelectItem>
-              <SelectItem value="other">Otro</SelectItem>
+              <SelectItem value="technology">{t("shared.industry_technology")}</SelectItem>
+              <SelectItem value="ecommerce">{t("shared.industry_ecommerce")}</SelectItem>
+              <SelectItem value="finance">{t("shared.industry_finance")}</SelectItem>
+              <SelectItem value="health">{t("shared.industry_health")}</SelectItem>
+              <SelectItem value="education">{t("shared.industry_education")}</SelectItem>
+              <SelectItem value="professional-services">{t("shared.industry_professional_services")}</SelectItem>
+              <SelectItem value="real-estate">{t("shared.industry_real_estate")}</SelectItem>
+              <SelectItem value="transport-logistics">{t("shared.industry_transport")}</SelectItem>
+              <SelectItem value="other">{t("shared.industry_other")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="contractType">Tipo de Contrato (Opcional)</Label>
+          <Label htmlFor="contractType">{t("employer.contract_label")}</Label>
           <Select name="contractType">
             <SelectTrigger id="contractType">
-              <SelectValue placeholder="Selecciona el tipo de contrato" />
+              <SelectValue placeholder={t("employer.contract_placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="full-time">Tiempo Completo</SelectItem>
-              <SelectItem value="part-time">Tiempo Parcial</SelectItem>
-              <SelectItem value="contract">Contrato / Freelance</SelectItem>
-              <SelectItem value="internship">Pasantía</SelectItem>
+              <SelectItem value="full-time">{t("employer.contract_full_time")}</SelectItem>
+              <SelectItem value="part-time">{t("employer.contract_part_time")}</SelectItem>
+              <SelectItem value="contract">{t("employer.contract_freelance")}</SelectItem>
+              <SelectItem value="internship">{t("employer.contract_internship")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
       <div className="space-y-2">
-        <Label htmlFor="jobDescription">Descripción o Enlace a la Vacante</Label>
+        <Label htmlFor="jobDescription">{t("employer.job_description_label")}</Label>
         <Textarea
           id="jobDescription"
           name="jobDescription"
-          placeholder="Pega aquí la descripción del puesto o un enlace a la publicación de la vacante."
+          placeholder={t("employer.job_description_placeholder")}
           className="min-h-[150px]"
         />
         {state.issues?.jobDescription && <p className="text-sm font-medium text-destructive">{state.issues.jobDescription}</p>}
       </div>
-      <SubmitButton />
+      <SubmitButton submitText={t("employer.submit")} submittingText={t("shared.submitting")} />
     </form>
   );
 }

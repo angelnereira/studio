@@ -15,22 +15,24 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { onContactSubmit, FormState } from "./actions";
 import { Label } from "@/components/ui/label";
+import { useTranslations } from "next-intl";
 
 const initialState: FormState = {
   message: "",
   status: "idle",
 };
 
-function SubmitButton() {
+function SubmitButton({ submitText, submittingText }: { submitText: string; submittingText: string }) {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="lg" className="w-full" disabled={pending}>
-      {pending ? "Enviando..." : "Enviar Invitación"}
+      {pending ? submittingText : submitText}
     </Button>
   );
 }
 
 export function InvitationForm() {
+  const t = useTranslations("contact.form");
   const { toast } = useToast();
   const [state, formAction] = useActionState(onContactSubmit, initialState);
   const formRef = useRef<HTMLFormElement>(null);
@@ -39,19 +41,19 @@ export function InvitationForm() {
   useEffect(() => {
     if (state.status === 'success' && state.formType === 'invitation') {
       toast({
-        title: "¡Invitación Recibida!",
-        description: "Gracias por la invitación. Revisaré los detalles y te contactaré pronto.",
+        title: t("invitation.success_title"),
+        description: t("invitation.success_description"),
       });
       formRef.current?.reset();
       setDate(undefined);
     } else if (state.status === 'error' && state.formType === 'invitation' && state.message && !state.issues) {
        toast({
         variant: "destructive",
-        title: "Error al enviar",
+        title: t("shared.error_title"),
         description: state.message,
       });
     }
-  }, [state, toast]);
+  }, [state, toast, t]);
 
   const handleSubmit = (formData: FormData) => {
     if (date) {
@@ -65,53 +67,53 @@ export function InvitationForm() {
       <input type="hidden" name="formType" value="invitation" />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="inviterName">Tu Nombre</Label>
-          <Input id="inviterName" name="inviterName" placeholder="Nombre de quien invita" />
+          <Label htmlFor="inviterName">{t("invitation.inviter_name_label")}</Label>
+          <Input id="inviterName" name="inviterName" placeholder={t("invitation.inviter_name_placeholder")} />
           {state.issues?.inviterName && <p className="text-sm font-medium text-destructive">{state.issues.inviterName}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Email de Contacto</Label>
-          <Input id="email" name="email" type="email" placeholder="tu.email@ejemplo.com" />
+          <Label htmlFor="email">{t("invitation.email_label")}</Label>
+          <Input id="email" name="email" type="email" placeholder={t("invitation.email_placeholder")} />
           {state.issues?.email && <p className="text-sm font-medium text-destructive">{state.issues.email}</p>}
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="eventName">Nombre del Evento</Label>
-        <Input id="eventName" name="eventName" placeholder="Ej: Tech Conf 2024" />
+        <Label htmlFor="eventName">{t("invitation.event_name_label")}</Label>
+        <Input id="eventName" name="eventName" placeholder={t("invitation.event_name_placeholder")} />
         {state.issues?.eventName && <p className="text-sm font-medium text-destructive">{state.issues.eventName}</p>}
       </div>
-      
+
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="eventType">Tipo de Evento</Label>
+          <Label htmlFor="eventType">{t("invitation.event_type_label")}</Label>
           <Select name="eventType">
             <SelectTrigger id="eventType">
-              <SelectValue placeholder="Selecciona el tipo" />
+              <SelectValue placeholder={t("invitation.event_type_placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="conferencia">Conferencia</SelectItem>
-              <SelectItem value="taller">Taller / Workshop</SelectItem>
-              <SelectItem value="meetup">Meetup / Comunidad</SelectItem>
-              <SelectItem value="reunion-negocios">Reunión de Negocios</SelectItem>
-              <SelectItem value="podcast-entrevista">Podcast / Entrevista</SelectItem>
-              <SelectItem value="otro">Otro</SelectItem>
+              <SelectItem value="conferencia">{t("invitation.event_type_conference")}</SelectItem>
+              <SelectItem value="taller">{t("invitation.event_type_workshop")}</SelectItem>
+              <SelectItem value="meetup">{t("invitation.event_type_meetup")}</SelectItem>
+              <SelectItem value="reunion-negocios">{t("invitation.event_type_business")}</SelectItem>
+              <SelectItem value="podcast-entrevista">{t("invitation.event_type_podcast")}</SelectItem>
+              <SelectItem value="otro">{t("invitation.event_type_other")}</SelectItem>
             </SelectContent>
           </Select>
           {state.issues?.eventType && <p className="text-sm font-medium text-destructive">{state.issues.eventType}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="proposedRole">Rol Propuesto</Label>
+          <Label htmlFor="proposedRole">{t("invitation.proposed_role_label")}</Label>
           <Select name="proposedRole">
             <SelectTrigger id="proposedRole">
-              <SelectValue placeholder="Selecciona tu rol" />
+              <SelectValue placeholder={t("invitation.proposed_role_placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="expositor">Expositor / Ponente</SelectItem>
-              <SelectItem value="panelista">Panelista</SelectItem>
-              <SelectItem value="asistente-especial">Asistente Especial</SelectItem>
-              <SelectItem value="mentor">Mentor</SelectItem>
-              <SelectItem value="entrevistado">Entrevistado</SelectItem>
+              <SelectItem value="expositor">{t("invitation.role_speaker")}</SelectItem>
+              <SelectItem value="panelista">{t("invitation.role_panelist")}</SelectItem>
+              <SelectItem value="asistente-especial">{t("invitation.role_special_guest")}</SelectItem>
+              <SelectItem value="mentor">{t("invitation.role_mentor")}</SelectItem>
+              <SelectItem value="entrevistado">{t("invitation.role_interviewee")}</SelectItem>
             </SelectContent>
           </Select>
           {state.issues?.proposedRole && <p className="text-sm font-medium text-destructive">{state.issues.proposedRole}</p>}
@@ -120,7 +122,7 @@ export function InvitationForm() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label>Fecha del Evento</Label>
+          <Label>{t("invitation.event_date_label")}</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -131,7 +133,7 @@ export function InvitationForm() {
                 )}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "PPP") : <span>Selecciona una fecha</span>}
+                {date ? format(date, "PPP") : <span>{t("invitation.select_date")}</span>}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
@@ -147,28 +149,28 @@ export function InvitationForm() {
           {state.issues?.eventDate && <p className="text-sm font-medium text-destructive">{state.issues.eventDate}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="eventTime">Hora (Opcional)</Label>
+          <Label htmlFor="eventTime">{t("invitation.event_time_label")}</Label>
           <Input id="eventTime" name="eventTime" type="time" />
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="eventLocation">Ubicación o Enlace</Label>
-        <Input id="eventLocation" name="eventLocation" placeholder="Dirección física o URL de la reunión" />
+        <Label htmlFor="eventLocation">{t("invitation.event_location_label")}</Label>
+        <Input id="eventLocation" name="eventLocation" placeholder={t("invitation.event_location_placeholder")} />
         {state.issues?.eventLocation && <p className="text-sm font-medium text-destructive">{state.issues.eventLocation}</p>}
       </div>
-     
+
       <div className="space-y-2">
-        <Label htmlFor="invitationReason">Motivo de la Invitación</Label>
+        <Label htmlFor="invitationReason">{t("invitation.invitation_reason_label")}</Label>
         <Textarea
           id="invitationReason"
           name="invitationReason"
-          placeholder="Describe brevemente el evento y el motivo de la invitación."
+          placeholder={t("invitation.invitation_reason_placeholder")}
           className="min-h-[120px]"
         />
         {state.issues?.invitationReason && <p className="text-sm font-medium text-destructive">{state.issues.invitationReason}</p>}
       </div>
-      <SubmitButton />
+      <SubmitButton submitText={t("invitation.submit")} submittingText={t("shared.submitting")} />
     </form>
   );
 }

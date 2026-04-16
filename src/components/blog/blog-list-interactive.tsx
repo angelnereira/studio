@@ -9,6 +9,7 @@ import { SpotlightCard } from '@/components/spotlight-card';
 import { AnimatedDiv } from '@/components/animated-div';
 import { Search, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface Post {
   slug: string;
@@ -24,6 +25,8 @@ interface BlogListInteractiveProps {
 }
 
 export function BlogListInteractive({ posts }: BlogListInteractiveProps) {
+  const t = useTranslations('blog');
+  const locale = useLocale();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
@@ -68,7 +71,7 @@ export function BlogListInteractive({ posts }: BlogListInteractiveProps) {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               type="text"
-              placeholder="Buscar artículos..."
+              placeholder={t('search_placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 pr-10"
@@ -85,7 +88,7 @@ export function BlogListInteractive({ posts }: BlogListInteractiveProps) {
 
           {/* Tag Filter Pills */}
           <div className="flex flex-wrap gap-2 justify-center items-center">
-            <span className="text-sm text-muted-foreground">Filtrar por tema:</span>
+            <span className="text-sm text-muted-foreground">{t('filter_by_topic')}</span>
             {allTags.map(tag => (
               <Badge
                 key={tag}
@@ -104,7 +107,7 @@ export function BlogListInteractive({ posts }: BlogListInteractiveProps) {
                 className="text-xs"
               >
                 <X className="h-3 w-3 mr-1" />
-                Limpiar filtros
+                {t('clear_filters')}
               </Button>
             )}
           </div>
@@ -112,8 +115,8 @@ export function BlogListInteractive({ posts }: BlogListInteractiveProps) {
           {/* Results Count */}
           <p className="text-center text-sm text-muted-foreground">
             {filteredPosts.length === posts.length
-              ? `${posts.length} artículo${posts.length !== 1 ? 's' : ''}`
-              : `${filteredPosts.length} de ${posts.length} artículo${posts.length !== 1 ? 's' : ''}`
+              ? t('article_count', { count: posts.length })
+              : t('article_count_filtered', { filtered: filteredPosts.length, total: posts.length })
             }
           </p>
         </div>
@@ -147,7 +150,7 @@ export function BlogListInteractive({ posts }: BlogListInteractiveProps) {
                   </CardHeader>
                   <CardFooter className="flex items-center gap-2 text-sm text-muted-foreground border-t pt-4">
                     <time dateTime={post.date} className="text-xs">
-                      {new Date(post.date).toLocaleDateString('es-PA', {
+                      {new Date(post.date).toLocaleDateString(locale === 'en' ? 'en-US' : 'es-PA', {
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric'
@@ -163,14 +166,14 @@ export function BlogListInteractive({ posts }: BlogListInteractiveProps) {
         ) : (
           <div className="col-span-full text-center py-12">
             <p className="text-muted-foreground text-lg">
-              No se encontraron artículos que coincidan con tu búsqueda.
+              {t('no_results')}
             </p>
             <Button
               variant="outline"
               onClick={clearFilters}
               className="mt-4"
             >
-              Ver todos los artículos
+              {t('view_all_articles')}
             </Button>
           </div>
         )}

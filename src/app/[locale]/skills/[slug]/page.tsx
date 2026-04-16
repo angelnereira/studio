@@ -49,7 +49,18 @@ export async function generateMetadata({ params }: SlugPageProps): Promise<Metad
 
 // ── Category detail view ──────────────────────────────────────────────────────
 
-function SkillCard({ skill }: { skill: Skill }) {
+interface CategoryLabels {
+  backToAreas: string;
+  skillsCount: string;
+  viewDetails: string;
+  businessValueLabel: string;
+  interestedAreaTitle: string;
+  interestedAreaDesc: string;
+  contactBtn: string;
+  allAreasBtn: string;
+}
+
+function SkillCard({ skill, viewDetailsLabel }: { skill: Skill; viewDetailsLabel: string }) {
   const SkillIcon = skill.icon;
   return (
     <Link href={`/skills/${skill.slug}`} className="group block h-full">
@@ -69,7 +80,7 @@ function SkillCard({ skill }: { skill: Skill }) {
         </CardContent>
         <CardFooter className="p-4 pt-0">
           <Button variant="link" className="p-0 h-auto font-semibold text-xs text-primary/70 group-hover:text-primary transition-colors">
-            Ver detalles <ArrowRight className="ml-1 h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
+            {viewDetailsLabel} <ArrowRight className="ml-1 h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
           </Button>
         </CardFooter>
       </SpotlightCard>
@@ -79,7 +90,7 @@ function SkillCard({ skill }: { skill: Skill }) {
 
 function CategoryDetailPage({ category, labels }: {
   category: SkillCategoryData;
-  labels: { backToAreas: string; skillsCount: string };
+  labels: CategoryLabels;
 }) {
   const Icon = categoryIconMap[category.iconName];
   const catSkills = getSkillsByCategory(category.id);
@@ -124,7 +135,7 @@ function CategoryDetailPage({ category, labels }: {
           <div className="flex items-start gap-3">
             <CheckCircle2 className="text-primary w-5 h-5 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">Valor de Negocio</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-2">{labels.businessValueLabel}</p>
               <p className="text-muted-foreground leading-relaxed">{category.businessValue}</p>
             </div>
           </div>
@@ -136,7 +147,7 @@ function CategoryDetailPage({ category, labels }: {
         <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {catSkills.map((skill, idx) => (
             <AnimatedDiv key={skill.slug} delay={0.05 * idx}>
-              <SkillCard skill={skill} />
+              <SkillCard skill={skill} viewDetailsLabel={labels.viewDetails} />
             </AnimatedDiv>
           ))}
         </div>
@@ -144,19 +155,19 @@ function CategoryDetailPage({ category, labels }: {
 
       {/* Bottom CTA */}
       <AnimatedDiv delay={0.4} className="text-center py-12 border-t border-white/5">
-        <h2 className="text-xl font-bold font-headline mb-3">¿Interesado en esta área?</h2>
+        <h2 className="text-xl font-bold font-headline mb-3">{labels.interestedAreaTitle}</h2>
         <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
-          Si buscas un experto en {category.name.toLowerCase()} para tu proyecto o equipo, estoy disponible para consultoría técnica.
+          {labels.interestedAreaDesc}
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button asChild size="lg" className="shadow-lg shadow-primary/20">
             <Link href="/contact">
-              Contactar <Rocket className="ml-2 w-4 h-4" />
+              {labels.contactBtn} <Rocket className="ml-2 w-4 h-4" />
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg">
             <Link href="/skills">
-              <ArrowLeft className="mr-2 w-4 h-4" /> Todas las áreas
+              <ArrowLeft className="mr-2 w-4 h-4" /> {labels.allAreasBtn}
             </Link>
           </Button>
         </div>
@@ -166,6 +177,20 @@ function CategoryDetailPage({ category, labels }: {
 }
 
 // ── Individual skill detail view ──────────────────────────────────────────────
+
+interface SkillLabels {
+  backToCategory: string;
+  specializedBadge: string;
+  practicalAbilitiesTitle: string;
+  implementationTitle: string;
+  implementationDesc: string;
+  performanceOpt: string;
+  scalableArch: string;
+  interestedTechTitle: string;
+  interestedTechDesc: string;
+  workTogether: string;
+  exploreCategory: string;
+}
 
 const AbilityCard = ({ ability, index }: { ability: PracticalAbility; index: number }) => {
   const Icon = ability.icon;
@@ -188,9 +213,8 @@ const AbilityCard = ({ ability, index }: { ability: PracticalAbility; index: num
   );
 };
 
-function SkillDetailPage({ skill }: { skill: Skill }) {
+function SkillDetailPage({ skill, labels }: { skill: Skill; labels: SkillLabels }) {
   const SkillIcon = skill.icon;
-  const parentCategory = skillCategories.find(c => c.id === skill.category);
 
   return (
     <div className="flex flex-col gap-12 sm:gap-16">
@@ -202,7 +226,7 @@ function SkillDetailPage({ skill }: { skill: Skill }) {
             className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            {parentCategory ? `Volver a ${parentCategory.name}` : "Volver al Stack Tecnológico"}
+            {labels.backToCategory}
           </Link>
 
           <div className="relative">
@@ -214,7 +238,7 @@ function SkillDetailPage({ skill }: { skill: Skill }) {
 
           <div className="space-y-4">
             <Badge variant="outline" className="px-4 py-1 border-primary/30 text-primary bg-primary/5 uppercase tracking-widest text-[10px] font-bold">
-              {skill.category} specialized
+              {labels.specializedBadge}
             </Badge>
             <h1 className="text-4xl font-extrabold tracking-tighter sm:text-6xl font-headline bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
               {skill.name}
@@ -234,7 +258,7 @@ function SkillDetailPage({ skill }: { skill: Skill }) {
             <div className="space-y-8">
               <div className="flex items-center gap-3 border-b border-white/5 pb-4">
                 <Zap className="text-primary w-6 h-6" />
-                <h2 className="text-2xl font-bold tracking-tight font-headline">Capacidades Prácticas & Aplicación</h2>
+                <h2 className="text-2xl font-bold tracking-tight font-headline">{labels.practicalAbilitiesTitle}</h2>
               </div>
 
               <div className="grid gap-6 md:grid-cols-2">
@@ -249,12 +273,10 @@ function SkillDetailPage({ skill }: { skill: Skill }) {
             <div className="p-8 bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/10 rounded-2xl space-y-4">
               <h3 className="text-xl font-bold flex items-center gap-2">
                 <CheckCircle2 className="text-primary w-5 h-5" />
-                ¿Cómo implemento {skill.name}?
+                {labels.implementationTitle}
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Utilizo {skill.name} como pieza fundamental en el desarrollo de <strong>Sago One</strong> y <strong>Plenty Market</strong>.
-                Mi enfoque no es solo el uso básico, sino la optimización de recursos, seguridad y escalabilidad, asegurando que
-                cada línea de código aporte valor real al negocio y una experiencia superior al usuario final.
+                {labels.implementationDesc}
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <div className="flex items-center gap-2 text-sm text-foreground/80 font-medium">
@@ -263,11 +285,11 @@ function SkillDetailPage({ skill }: { skill: Skill }) {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-foreground/80 font-medium">
                   <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                  Optimización de Performance
+                  {labels.performanceOpt}
                 </div>
                 <div className="flex items-center gap-2 text-sm text-foreground/80 font-medium">
                   <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                  Arquitectura Escalable
+                  {labels.scalableArch}
                 </div>
               </div>
             </div>
@@ -277,13 +299,13 @@ function SkillDetailPage({ skill }: { skill: Skill }) {
         {/* Right Column: CTA */}
         <div className="lg:col-span-4 space-y-8 lg:sticky lg:top-24">
           <SpotlightCard className="p-8 bg-secondary/50 border-primary/20 space-y-6">
-            <h3 className="text-xl font-bold font-headline">¿Interesado en esta tecnología?</h3>
+            <h3 className="text-xl font-bold font-headline">{labels.interestedTechTitle}</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Si estás buscando un experto que domine {skill.name} para llevar tu proyecto al siguiente nivel de ingeniería, estoy disponible para consultoría técnica.
+              {labels.interestedTechDesc}
             </p>
             <Button asChild className="w-full h-12 text-base font-bold shadow-lg shadow-primary/20">
               <Link href="/contact">
-                Work Together <Rocket className="ml-2 w-5 h-5" />
+                {labels.workTogether} <Rocket className="ml-2 w-5 h-5" />
               </Link>
             </Button>
           </SpotlightCard>
@@ -305,7 +327,7 @@ function SkillDetailPage({ skill }: { skill: Skill }) {
         <Button asChild variant="ghost" className="hover:bg-primary/5 hover:text-primary transition-all">
           <Link href={`/skills/${skill.category}`}>
             <ArrowLeft className="mr-2 w-4 h-4" />
-            {parentCategory ? `Explorar ${parentCategory.name}` : "Explorar todas las tecnologías"}
+            {labels.exploreCategory}
           </Link>
         </Button>
       </AnimatedDiv>
@@ -319,16 +341,23 @@ export default async function SkillsSlugPage({ params }: SlugPageProps) {
   const { slug, locale } = await params;
   setRequestLocale(locale);
 
+  const t = await getTranslations('skills');
+
   // Check if slug matches a category
   const category = skillCategories.find(c => c.id === slug);
   if (category) {
-    const t = await getTranslations('skills');
     const catSkills = getSkillsByCategory(category.id);
-    const labels = {
+    const categoryLabels: CategoryLabels = {
       backToAreas: t('back_to_areas'),
       skillsCount: t('skills_count', { count: catSkills.length }),
+      viewDetails: t('view_details'),
+      businessValueLabel: t('business_value_label'),
+      interestedAreaTitle: t('interested_area_title'),
+      interestedAreaDesc: t('interested_area_desc', { areaName: category.name.toLowerCase() }),
+      contactBtn: t('contact_btn'),
+      allAreasBtn: t('all_areas_btn'),
     };
-    return <CategoryDetailPage category={category} labels={labels} />;
+    return <CategoryDetailPage category={category} labels={categoryLabels} />;
   }
 
   // Otherwise treat as an individual skill
@@ -337,5 +366,24 @@ export default async function SkillsSlugPage({ params }: SlugPageProps) {
     notFound();
   }
 
-  return <SkillDetailPage skill={skill} />;
+  const parentCategory = skillCategories.find(c => c.id === skill.category);
+  const skillLabels: SkillLabels = {
+    backToCategory: parentCategory
+      ? t('back_to_category', { categoryName: parentCategory.name })
+      : t('back_to_stack'),
+    specializedBadge: t('specialized_badge', { category: skill.category }),
+    practicalAbilitiesTitle: t('practical_abilities_title'),
+    implementationTitle: t('implementation_title', { skillName: skill.name }),
+    implementationDesc: t('implementation_desc', { skillName: skill.name }),
+    performanceOpt: t('performance_opt'),
+    scalableArch: t('scalable_arch'),
+    interestedTechTitle: t('interested_tech_title'),
+    interestedTechDesc: t('interested_tech_desc', { skillName: skill.name }),
+    workTogether: t('work_together'),
+    exploreCategory: parentCategory
+      ? t('explore_category', { categoryName: parentCategory.name })
+      : t('explore_all_tech'),
+  };
+
+  return <SkillDetailPage skill={skill} labels={skillLabels} />;
 }
