@@ -32,7 +32,7 @@ export type Service = {
   addOns: ServiceAddOn[];
   tags: string[];
   published: boolean;
-  category: "Web Development" | "AI Solutions" | "Infrastructure & Maintenance" | "Business Management" | "Mentorías y Capacitación";
+  category: "Web Development" | "AI Solutions" | "Infrastructure & Maintenance" | "Business Management" | "Mentorías y Capacitación" | "Ciberseguridad";
 };
 
 
@@ -490,6 +490,261 @@ export const services: Service[] = [
       { name: "Soporte 24/7", price: 500, priceSuffix: "/mes", description: "Soporte crítico para emisión de facturas." }
     ],
     tags: ["DGI", "Panamá", "FinTech", "Legal"],
+    published: true,
+  },
+  // === CYBERSECURITY ===
+  {
+    title: "Ciberseguridad y Auditoría",
+    slug: "ciberseguridad-auditoria",
+    icon: Shield,
+    category: "Ciberseguridad",
+    shortDescription: "Protege tu empresa con auditorías de seguridad, pruebas de penetración y monitoreo continuo antes de que lo hagan los atacantes.",
+    fullDescription: "Con instituciones como la CSS, Titán y la Contraloría de Panamá sufriendo ataques recientes, la seguridad digital ya no es opcional. Evaluamos tu sistema de forma ética y profesional para encontrar vulnerabilidades antes que los hackers, y te entregamos un plan claro de acción para blindar tu operación.",
+    packages: [
+      {
+        name: "Diagnóstico de Seguridad",
+        price: 900,
+        description: "Una radiografía rápida de los riesgos de seguridad de tu sistema, ideal para saber dónde estás parado.",
+        features: [
+          "Escaneo de vulnerabilidades conocidas (OWASP Top 10)",
+          "Revisión de configuraciones básicas del servidor",
+          "Análisis de exposición de puertos y servicios activos",
+          "Verificación de versiones desactualizadas de software",
+          "Reporte ejecutivo con semáforo de riesgo (Alto / Medio / Bajo)",
+          "Recomendaciones de remediación priorizadas"
+        ],
+        cta: "Iniciar Diagnóstico",
+        time: "1-2 semanas"
+      },
+      {
+        name: "Auditoría Completa",
+        price: 2800,
+        description: "Evaluación exhaustiva de todos los vectores de ataque de tu infraestructura y aplicaciones digitales.",
+        features: [
+          "Todo lo del Diagnóstico de Seguridad",
+          "Auditoría de código de aplicaciones web (análisis estático)",
+          "Pruebas de autenticación, sesiones y control de acceso",
+          "Análisis de cifrado de datos en tránsito y en reposo",
+          "Revisión de logs y políticas de permisos de usuarios",
+          "Plan de remediación detallado con roadmap de correcciones",
+          "Reunión técnica de revisión de resultados con el equipo"
+        ],
+        cta: "Auditar Sistema",
+        time: "3-4 semanas"
+      },
+      {
+        name: "Pentesting Profesional",
+        price: "4,800+",
+        description: "Simulamos un ataque real a tus sistemas (ethical hacking) para encontrar exactamente lo que un hacker encontraría.",
+        features: [
+          "Todo lo de la Auditoría Completa",
+          "Pruebas de penetración en aplicaciones web y red interna",
+          "Análisis de amenazas internas (insider threats)",
+          "Ingeniería social y phishing controlado (opcional)",
+          "Informe técnico + informe ejecutivo de resultados",
+          "Plan de respuesta a incidentes personalizado",
+          "Presentación de resultados a dirección o junta"
+        ],
+        cta: "Contratar Pentesting",
+        time: "4-8 semanas"
+      }
+    ],
+    addOns: [
+      { name: "Monitoreo Continuo de Seguridad", price: 350, priceSuffix: "/mes", description: "Vigilancia activa de amenazas y alertas en tiempo real." },
+      { name: "Plan de Respuesta a Incidentes", price: 1000, description: "Documentación y protocolos para actuar en caso de un ataque." },
+      { name: "Capacitación de Concienciación al Personal", price: 800, description: "Taller para que tu equipo identifique phishing y amenazas comunes." }
+    ],
+    tags: ["Ciberseguridad", "Auditoría", "Pentesting", "Empresas"],
+    published: true,
+  },
+  // === INFRASTRUCTURE & SERVERS ===
+  {
+    title: "Infraestructura y Servidores",
+    slug: "infraestructura-servidores",
+    icon: Server,
+    category: "Infrastructure & Maintenance",
+    shortDescription: "Configura, administra y escala tu infraestructura tecnológica local o en la nube, sin necesidad de un equipo TI propio.",
+    fullDescription: "Desde instalar y configurar un servidor en tu oficina hasta diseñar una arquitectura cloud completa, me encargo de toda la capa técnica para que tu negocio funcione sin interrupciones. Ideal para empresas que necesitan un departamento TI externo, confiable y disponible.",
+    packages: [
+      {
+        name: "Configuración de Servidor",
+        price: "700 - 1,200",
+        description: "Instala y configura correctamente tu servidor local o en la nube desde cero, listo para producción.",
+        features: [
+          "Instalación y hardening del sistema operativo (Linux/Windows Server)",
+          "Configuración de firewall y políticas de acceso seguro",
+          "Instalación de servicios web (Nginx/Apache) y bases de datos",
+          "Configuración de SSL/TLS y dominio personalizado",
+          "Sistema de backups automáticos programados",
+          "Documentación completa de la infraestructura configurada"
+        ],
+        cta: "Configurar Servidor",
+        time: "1-2 semanas"
+      },
+      {
+        name: "Administración Mensual",
+        price: 400,
+        priceSuffix: "/mes",
+        description: "Tu departamento TI externo: administramos tu infraestructura para que tú te concentres en tu negocio.",
+        features: [
+          "Monitoreo de disponibilidad y rendimiento 24/7",
+          "Aplicación de parches de seguridad y actualizaciones críticas",
+          "Gestión de backups y planes de recuperación",
+          "Soporte técnico remoto (respuesta garantizada en 4h)",
+          "Reporte mensual de estado y salud del servidor",
+          "Hasta 4 horas de cambios y mejoras incluidas al mes"
+        ],
+        cta: "Contratar Administración",
+        time: "Suscripción mensual"
+      },
+      {
+        name: "Infraestructura Empresarial",
+        price: "3,500+",
+        description: "Diseño e implementación de infraestructura compleja: on-premise, cloud o arquitectura híbrida.",
+        features: [
+          "Diseño de arquitectura de red y servidores a medida",
+          "Implementación de VPN corporativa segura",
+          "Virtualización (Proxmox) y contenedores (Docker / Kubernetes)",
+          "Alta disponibilidad, balanceo de carga y failover",
+          "Estrategia de disaster recovery y continuidad del negocio",
+          "Migración de sistemas legacy a infraestructura moderna"
+        ],
+        cta: "Diseñar Infraestructura",
+        time: "4-10+ semanas"
+      }
+    ],
+    addOns: [
+      { name: "Migración a la Nube (AWS/GCP/Azure)", price: 1200, description: "Mueve tu infraestructura actual a la nube sin tiempo de inactividad." },
+      { name: "Configuración de VPN Corporativa", price: 600, description: "Acceso remoto seguro para empleados y oficinas remotas." },
+      { name: "Respaldo Offsite en la Nube", price: 200, priceSuffix: "/mes", description: "Copias de seguridad cifradas almacenadas fuera de tu sitio." }
+    ],
+    tags: ["Servidores", "Cloud", "Infraestructura", "DevOps"],
+    published: true,
+  },
+  // === LOCAL BUSINESS SYSTEMS ===
+  {
+    title: "Sistemas para Negocios Locales",
+    slug: "soluciones-negocios-locales",
+    icon: Building,
+    category: "Business Management",
+    shortDescription: "Sistemas de punto de venta y gestión completa para restaurantes, salones de belleza, bares y comercios locales.",
+    fullDescription: "Digitaliza tu negocio con una solución diseñada para la realidad de los comercios locales. Sin tecnicismos ni complicaciones: un sistema que tu equipo aprende en un día y que te da el control total sobre ventas, inventario y clientes. Ideal para restaurantes, salones de belleza, bares, tiendas de ropa y cualquier negocio con local físico.",
+    packages: [
+      {
+        name: "Sistema Básico POS",
+        price: 1200,
+        description: "Tu negocio en orden: punto de venta y control de inventario en una sola pantalla táctil.",
+        features: [
+          "Sistema POS táctil (tablet o pantalla táctil)",
+          "Control de inventario con alertas de stock bajo",
+          "Registro de ventas y generación de recibos",
+          "Reportes diarios de ventas y productos más vendidos",
+          "Capacitación para 2 usuarios incluida",
+          "Soporte post-entrega (desde $150/mes)"
+        ],
+        cta: "Implementar POS",
+        time: "2-3 semanas"
+      },
+      {
+        name: "Sistema de Gestión Completo",
+        price: 3000,
+        description: "Gestiona tu restaurante, salón de belleza o local con todas las herramientas que un negocio moderno necesita.",
+        features: [
+          "Todo lo del Sistema Básico POS",
+          "Gestión de mesas / citas / turnos (según el tipo de negocio)",
+          "Módulo de clientes y programa de fidelización básico",
+          "Control de costos y márgenes por producto o servicio",
+          "Reportes avanzados de desempeño del negocio",
+          "Integración con impresora de comandas (cocina/servicio)",
+          "Soporte post-entrega (desde $250/mes)"
+        ],
+        cta: "Digitalizar Negocio",
+        time: "4-6 semanas"
+      },
+      {
+        name: "Solución Premium con App",
+        price: "5,500+",
+        description: "La herramienta definitiva para negocios que quieren crecer: sistema de gestión completo más app para tus clientes.",
+        features: [
+          "Todo lo del Sistema de Gestión Completo",
+          "App móvil para clientes (iOS y Android)",
+          "Pedidos en línea y reservas digitales desde la app",
+          "Programa de lealtad con puntos y recompensas",
+          "Dashboard de analítica del negocio en tiempo real",
+          "Integración con plataformas de delivery (Uber Eats, etc.)",
+          "Soporte post-entrega (desde $400/mes)"
+        ],
+        cta: "Crear Solución Premium",
+        time: "8-12+ semanas"
+      }
+    ],
+    addOns: [
+      { name: "Menú Digital con QR", price: 350, description: "Menú interactivo accesible desde el celular del cliente." },
+      { name: "Integración con Plataforma de Delivery", price: 500, description: "Conecta tu sistema con Uber Eats, PedidosYa u otras plataformas." },
+      { name: "Sistema de Reservas Online", price: 400, description: "Reservas y citas por WhatsApp, web o app." }
+    ],
+    tags: ["Restaurantes", "Salones", "Negocios Locales", "POS"],
+    published: true,
+  },
+  // === R&D / CONSULTING ===
+  {
+    title: "Consultoría e I+D Tecnológico",
+    slug: "investigacion-desarrollo",
+    icon: LineChart,
+    category: "AI Solutions",
+    shortDescription: "Acompaña la innovación y expansión de tu empresa con consultoría tecnológica estratégica y desarrollo de prototipos.",
+    fullDescription: "Si tu empresa quiere innovar, adoptar nuevas tecnologías o construir un producto nuevo pero no sabe por dónde empezar, aquí es donde entramos. Evaluamos tu situación, exploramos opciones y construimos los primeros prototipos para validar ideas antes de hacer una inversión grande.",
+    packages: [
+      {
+        name: "Sesión de Consultoría",
+        price: 750,
+        priceSuffix: "/ 4 horas",
+        description: "Claridad técnica para decisiones estratégicas: evaluamos tu situación y trazamos un camino concreto.",
+        features: [
+          "Reunión de discovery para entender tus objetivos y contexto",
+          "Evaluación del estado actual de tu tecnología",
+          "Propuesta de arquitectura de solución con pros y contras",
+          "Informe ejecutivo con roadmap tecnológico priorizado",
+          "Seguimiento por email durante 30 días"
+        ],
+        cta: "Agendar Consultoría",
+        time: "1-2 semanas"
+      },
+      {
+        name: "Prueba de Concepto (POC)",
+        price: "3,500 - 5,500",
+        description: "Valida tu idea antes de invertir: construimos un prototipo funcional para probar el mercado rápidamente.",
+        features: [
+          "Definición conjunta de alcance y criterios de éxito",
+          "Desarrollo de prototipo funcional (interfaz + lógica core)",
+          "Pruebas internas y sesión de demostración en vivo",
+          "Informe técnico de viabilidad y próximos pasos recomendados",
+          "Código fuente entregado al cliente al finalizar"
+        ],
+        cta: "Construir POC",
+        time: "4-8 semanas"
+      },
+      {
+        name: "Proyecto I+D Completo",
+        price: "8,000+",
+        description: "Innovación con metodología: investigamos, desarrollamos y lanzamos nuevas capacidades tecnológicas para tu empresa.",
+        features: [
+          "Sprint de investigación y análisis del estado del arte",
+          "Desarrollo iterativo con ciclos de feedback y ajuste",
+          "Integración con los sistemas existentes de la empresa",
+          "Documentación técnica completa del proyecto",
+          "Transferencia de conocimiento al equipo interno",
+          "Acompañamiento post-lanzamiento los primeros 3 meses"
+        ],
+        cta: "Iniciar I+D",
+        time: "12-24+ semanas"
+      }
+    ],
+    addOns: [
+      { name: "Análisis de Competencia Tecnológica", price: 500, description: "Evaluación de las soluciones tecnológicas que usa tu competencia." },
+      { name: "Capacitación del Equipo en la Solución", price: 800, description: "Entrenamiento práctico para que tu equipo adopte la nueva tecnología." }
+    ],
+    tags: ["I+D", "Innovación", "Consultoría", "Tecnología"],
     published: true,
   },
 ];

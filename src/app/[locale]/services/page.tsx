@@ -106,6 +106,42 @@ const serviceAreas = [
       "Moderniza equipos de TI legados, reduce deuda técnica organizacional y acelera la velocidad de entrega de código de toda la organización con programas B2B a medida.",
     slug: "mentoria-capacitacion",
   },
+  {
+    id: "ciberseguridad-auditoria",
+    tabLabel: "Ciberseguridad",
+    name: "Ciberseguridad y Auditoría de Sistemas",
+    techStack: "OWASP Top 10, análisis SAST, Nmap, pruebas de penetración, gestión de CVEs, cifrado AES-256",
+    businessValue:
+      "Previene filtraciones de datos: el costo de remediar un ataque supera 10× el de una auditoría preventiva. Identifica tus vulnerabilidades antes que los atacantes y protege la reputación y los datos de tus clientes.",
+    slug: "ciberseguridad-auditoria",
+  },
+  {
+    id: "infraestructura-servidores",
+    tabLabel: "Servidores",
+    name: "Infraestructura, Servidores y Administración TI",
+    techStack: "Linux (Ubuntu/Debian), Nginx, Docker, Proxmox, VPNs, Firewalls, AWS / GCP / Azure",
+    businessValue:
+      "Tu departamento TI externo: infraestructura confiable sin el costo de un sysadmin de tiempo completo. Desde configurar un servidor local hasta arquitectura cloud escalable con administración continua.",
+    slug: "infraestructura-servidores",
+  },
+  {
+    id: "soluciones-negocios-locales",
+    tabLabel: "Negocios Locales",
+    name: "Sistemas POS y Gestión para Negocios Locales",
+    techStack: "POS táctil, control de inventario, impresoras de comandas, fidelización, integración delivery, app móvil",
+    businessValue:
+      "Digitaliza tu restaurante, salón o tienda con un sistema completo de ventas, inventario y clientes. Toma decisiones con datos reales y deja de depender de hojas de papel o Excel.",
+    slug: "soluciones-negocios-locales",
+  },
+  {
+    id: "investigacion-desarrollo",
+    tabLabel: "I+D / Consultoría",
+    name: "Consultoría Tecnológica e Investigación y Desarrollo",
+    techStack: "Arquitectura de soluciones, MVPs, pruebas de concepto, análisis de viabilidad, roadmaps tecnológicos",
+    businessValue:
+      "Valida ideas antes de invertir. Transforma necesidades de negocio en soluciones tecnológicas concretas: desde un diagnóstico estratégico hasta un prototipo funcional que demuestra valor a inversores o directivos.",
+    slug: "investigacion-desarrollo",
+  },
 ] as const;
 
 // ── Helpers ────────────────────────────────────────────────────────────────
