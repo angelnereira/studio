@@ -90,7 +90,7 @@
                 "cta_subtitle": "¿Buscas un ingeniero con este stack para tu equipo o proyecto?",
                 "cta_button": "Hablemos",
                 "back_to_areas": "Volver a todas las áreas",
-                "skills_count": "{count} tecnologías"
+                "skills_count": "{count, plural, one {# tecnología} other {# tecnologías}}"
         },
         "services": {
                 "title": "Servicios",
