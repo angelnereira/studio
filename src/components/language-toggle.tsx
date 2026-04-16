@@ -8,7 +8,7 @@ import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/lib/routing";
 import { useTransition } from "react";
 
-const LANGUAGE_TOGGLE_ENABLED = process.env.NEXT_PUBLIC_ENABLE_LANGUAGE_TOGGLE === 'true';
+const LANGUAGE_TOGGLE_ENABLED = process.env.NEXT_PUBLIC_ENABLE_LANGUAGE_TOGGLE !== 'false';
 
 export function LanguageToggle() {
     const [mounted, setMounted] = React.useState(false);
