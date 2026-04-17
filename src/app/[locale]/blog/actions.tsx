@@ -5,11 +5,20 @@ import { Resend } from "resend"
 import VerificationEmail from "@/emails/verification-template"
 import { revalidatePath } from "next/cache"
 import { render } from "@react-email/render"
+import { rateLimit } from "@/lib/rate-limit"
+import { headers } from "next/headers"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function submitComment(postId: string, data: { name: string, email: string, content: string }) {
     try {
+        const headersList = await headers();
+        const ip = headersList.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+        const { allowed } = await rateLimit(ip, 'comment', 10, 3600);
+        if (!allowed) {
+            return { success: false, error: "Has comentado demasiado. Espera un rato." };
+        }
+
         // 1. Check if subscriber exists and is verified
         const subscriber = await prisma.subscriber.findUnique({
             where: { email: data.email }

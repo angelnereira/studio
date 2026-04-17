@@ -4,6 +4,7 @@ import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
+import { cacheDel } from "@/lib/cache"
 
 const StatusSchema = z.enum(["new", "contacted", "closed", "spam"])
 const FormTypeSchema = z.enum(["client", "employer", "collaborator", "invitation"])
@@ -51,6 +52,7 @@ export async function updateContactStatus(id: string, newStatus: string) {
             }),
         ])
 
+        await cacheDel(['dash:stats', 'dash:activity']);
         revalidatePath("/admin/crm")
         return { message: "Status updated" }
     } catch (error) {
@@ -227,6 +229,7 @@ export async function createContact(data: CreateContactInput) {
             },
         })
 
+        await cacheDel('dash:stats');
         revalidatePath("/admin/crm")
         return { success: true, message: "Contact created", contactId: contact.id }
     } catch (error) {

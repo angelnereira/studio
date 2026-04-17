@@ -16,6 +16,7 @@ import { PremiumText } from "@/components/premium-text";
 import { GradientFlowText } from "@/components/ui/gradient-flow-text";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { FAQSection } from "@/components/home/faq-section";
+import { SiteVisitCounter } from "@/components/analytics/site-visit-counter";
 import { CVDownloadButton } from "@/features/cv/components/CVDownloadButton";
 
 const DynamicServicesSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ServicesSection), {
@@ -336,6 +337,13 @@ export default function HomePageClient() {
       <DynamicServicesSection />
       <DynamicProjectsSection />
       <DynamicMetricsSection />
+
+      {/* Live Visit Counter */}
+      <section className="w-full py-12">
+        <AnimatedDiv>
+          <SiteVisitCounter />
+        </AnimatedDiv>
+      </section>
 
       {/* FAQ Section for AI/SEO */}
       <FAQSection />

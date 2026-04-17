@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
+import { cacheDel, cacheInvalidatePattern } from "@/lib/cache"
 
 // Schema validattion for Posts
 const PostSchema = z.object({
@@ -80,6 +81,7 @@ export async function createPost(prevState: PostState, formData: FormData) {
                 publishedAt: validatedFields.data.published ? new Date() : null,
             },
         })
+        await Promise.all([cacheDel('dash:stats'), cacheInvalidatePattern('blog:*')]);
     } catch (error) {
         console.error("Database Error:", error)
         return { message: "Database Error: Failed to Create Post." }
@@ -124,6 +126,7 @@ export async function updatePost(id: string, prevState: PostState, formData: For
                 publishedAt: validatedFields.data.published ? new Date() : null,
             },
         })
+        await Promise.all([cacheDel('dash:stats'), cacheInvalidatePattern('blog:*')]);
     } catch (error) {
         return { message: "Database Error: Failed to Update Post." }
     }
@@ -141,6 +144,7 @@ export async function deletePost(id: string) {
         await prisma.post.delete({
             where: { id },
         })
+        await Promise.all([cacheDel('dash:stats'), cacheInvalidatePattern('blog:*')]);
         revalidatePath("/admin/blog")
         return { message: "Deleted Post" }
     } catch (error) {

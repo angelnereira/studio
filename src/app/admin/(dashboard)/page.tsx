@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
 import { DashboardClient } from "./dashboard-client"
+import { cacheWrap } from "@/lib/cache"
+import { getActiveVisitors, getDailyViews, getTotalSiteVisits } from "@/lib/analytics"
 
 interface ActivityLogMetadata {
   subject?: string;
@@ -27,26 +29,33 @@ function timeAgo(date: Date) {
 export default async function AdminDashboard() {
   const session = await auth()
 
-  // Fetch Real Data from Prisma
-  const [
-    leadsCount,
-    postsCount,
-    campaignsCount,
-    applicationsCount,
-    vacanciesCount,
-    recentActivity
-  ] = await Promise.all([
-    prisma.contact.count({ where: { status: 'new' } }),
-    prisma.post.count({ where: { published: true } }),
-    prisma.emailCampaign.count({}),
-    prisma.application.count({}),
-    prisma.jobVacancy.count({}),
-    prisma.activityLog.findMany({
-      take: 5,
-      orderBy: { createdAt: 'desc' },
-      include: { contact: { select: { email: true, name: true } } }
-    })
-  ])
+  // Fetch Real Data from Prisma (cached in Redis for 2 min)
+  const [dbStats, recentActivity, analyticsData] = await Promise.all([
+    cacheWrap('dash:stats', 120, () =>
+      Promise.all([
+        prisma.contact.count({ where: { status: 'new' } }),
+        prisma.post.count({ where: { published: true } }),
+        prisma.emailCampaign.count({}),
+        prisma.application.count({}),
+        prisma.jobVacancy.count({}),
+      ])
+    ),
+    cacheWrap('dash:activity', 60, () =>
+      prisma.activityLog.findMany({
+        take: 5,
+        orderBy: { createdAt: 'desc' },
+        include: { contact: { select: { email: true, name: true } } }
+      })
+    ),
+    Promise.all([
+      getActiveVisitors(),
+      getDailyViews(),
+      getTotalSiteVisits(),
+    ]),
+  ]);
+
+  const [leadsCount, postsCount, campaignsCount, applicationsCount, vacanciesCount] = dbStats;
+  const [activeVisitors, dailyViews, totalVisits] = analyticsData;
 
   // Process Stats
   const stats = [
@@ -54,6 +63,8 @@ export default async function AdminDashboard() {
     { title: "Active Leads", value: leadsCount.toString(), icon: "users", change: "New prospects", color: "text-emerald-400" },
     { title: "Campaigns", value: campaignsCount.toString(), icon: "mouse-pointer", change: "Emails sent", color: "text-purple-400" },
     { title: "Applications", value: applicationsCount.toString(), icon: "briefcase", change: `${vacanciesCount} vacancies tracked`, color: "text-orange-400" },
+    { title: "Live Visitors", value: activeVisitors.toString(), icon: "activity", change: "Right now", color: "text-rose-400" },
+    { title: "Views Today", value: dailyViews.toString(), icon: "bar-chart", change: `${totalVisits} total`, color: "text-cyan-400" },
   ]
 
   // Process Activities

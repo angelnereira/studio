@@ -4,6 +4,9 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { sendContactEmail } from "@/lib/email";
 import { sendWelcomeEmail } from "@/lib/email-sender";
+import { rateLimit } from "@/lib/rate-limit";
+import { cacheDel } from "@/lib/cache";
+import { headers } from "next/headers";
 
 // Define schemas for each form
 const clientSchema = z.object({
@@ -72,6 +75,16 @@ export async function onContactSubmit(
   prevState: FormState,
   data: FormData
 ): Promise<FormState> {
+  const headersList = await headers();
+  const ip = headersList.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+  const { allowed } = await rateLimit(ip, 'contact', 5, 900);
+  if (!allowed) {
+    return {
+      status: 'error',
+      message: 'Has enviado demasiados mensajes. Por favor, espera unos minutos.',
+    };
+  }
+
   const rawFormData = Object.fromEntries(data);
   const formData: Record<string, unknown> = {};
 
@@ -126,6 +139,7 @@ export async function onContactSubmit(
       await prisma.contact.create({
         data: contactData as Parameters<typeof prisma.contact.create>[0]['data'],
       });
+      await cacheDel('dash:stats');
     } catch (dbError) {
       console.warn("Advertencia: No se pudo guardar en la base de datos (CRM), pero se enviará el email.", dbError);
     }

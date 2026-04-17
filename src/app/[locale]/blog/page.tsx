@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/blog';
+import { getCachedPosts } from '@/lib/blog';
 import { AnimatedDiv } from '@/components/animated-div';
 import { BlogListInteractive } from '@/components/blog/blog-list-interactive';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -21,7 +21,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const posts = await getAllPosts();
+  const posts = await getCachedPosts();
   const t = await getTranslations('blog');
 
   return (
