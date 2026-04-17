@@ -43,6 +43,7 @@ model Contact {
   phone              String?
   activityLogs       ActivityLog[]
   campaignRecipients CampaignRecipient[]
+  inboundEmails      InboundEmail[]
 
   @@index([formType])
   @@index([email])
@@ -312,6 +313,32 @@ model Application {
   @@index([vacancyId])
   @@index([createdAt])
   @@map("applications")
+}
+
+model InboundEmail {
+  id          String   @id @default(cuid())
+  messageId   String   @unique
+  fromEmail   String
+  fromName    String?
+  toEmail     String
+  subject     String
+  text        String?
+  html        String?
+  inReplyTo   String?
+  attachments Json?
+  read        Boolean  @default(false)
+  archived    Boolean  @default(false)
+  receivedAt  DateTime
+  createdAt   DateTime @default(now())
+  contactId   String?
+  contact     Contact? @relation(fields: [contactId], references: [id], onDelete: SetNull)
+
+  @@index([receivedAt])
+  @@index([read])
+  @@index([archived])
+  @@index([contactId])
+  @@index([fromEmail])
+  @@map("inbound_emails")
 }
 
 model CVTemplate {

@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Users, Eye, MousePointerClick, TrendingUp, Plus, Mail, FileText, Briefcase, Search } from "lucide-react"
+import { Users, Eye, MousePointerClick, TrendingUp, Plus, Mail, FileText, Briefcase, Search, Activity, BarChart } from "lucide-react"
 import { StatCard } from "@/components/admin/stat-card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -70,7 +70,7 @@ export function DashboardClient({ stats, activities, userName = "Chief" }: Dashb
                 </div>
             </motion.div>
 
-            <motion.div variants={item} className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <motion.div variants={item} className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
                 {stats.map((stat, i) => (
                     <DashboardStatCard key={i} {...stat} />
                 ))}
@@ -162,6 +162,9 @@ const iconMap: Record<string, React.ElementType> = {
     "mouse-pointer": MousePointerClick,
     "trending-up": TrendingUp,
     "briefcase": Briefcase,
+    "mail": Mail,
+    "activity": Activity,
+    "bar-chart": BarChart,
 }
 
 function DashboardStatCard({ title, value, icon, change, color }: StatData) {

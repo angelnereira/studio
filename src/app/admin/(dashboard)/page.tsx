@@ -38,6 +38,7 @@ export default async function AdminDashboard() {
         prisma.emailCampaign.count({}),
         prisma.application.count({}),
         prisma.jobVacancy.count({}),
+        prisma.inboundEmail.count({ where: { read: false, archived: false } }).catch(() => 0),
       ])
     ),
     cacheWrap('dash:activity', 60, () =>
@@ -54,11 +55,12 @@ export default async function AdminDashboard() {
     ]),
   ]);
 
-  const [leadsCount, postsCount, campaignsCount, applicationsCount, vacanciesCount] = dbStats;
+  const [leadsCount, postsCount, campaignsCount, applicationsCount, vacanciesCount, unreadInbound] = dbStats;
   const [activeVisitors, dailyViews, totalVisits] = analyticsData;
 
   // Process Stats
   const stats = [
+    { title: "Unread Emails", value: unreadInbound.toString(), icon: "mail", change: "Incoming messages", color: "text-primary" },
     { title: "Published Posts", value: postsCount.toString(), icon: "eye", change: "Blog content", color: "text-blue-400" },
     { title: "Active Leads", value: leadsCount.toString(), icon: "users", change: "New prospects", color: "text-emerald-400" },
     { title: "Campaigns", value: campaignsCount.toString(), icon: "mouse-pointer", change: "Emails sent", color: "text-purple-400" },
