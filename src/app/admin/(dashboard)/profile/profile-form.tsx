@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { ProfileBase } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,6 +44,7 @@ interface ProfileFormProps {
 export function ProfileForm({ profile }: ProfileFormProps) {
     const [isPending, startTransition] = useTransition();
     const { toast } = useToast();
+    const router = useRouter();
 
     // Form state
     const [name, setName] = useState(profile.name);
@@ -66,16 +68,14 @@ export function ProfileForm({ profile }: ProfileFormProps) {
         try {
             const result = await importProfileFromWebsite();
             if (result.success) {
-                alert("Profile imported successfully!");
-                // Force refresh or update local state could be better, but revalidatePath handles server data.
-                // We might need to reload the page to see changes if we don't update local state.
-                window.location.reload();
+                toast({ title: "Profile imported from website" });
+                router.refresh();
             } else {
-                alert("Failed to import: " + result.message);
+                toast({ variant: "destructive", title: "Import failed", description: result.message });
             }
         } catch (e) {
             console.error(e);
-            alert("Error importing profile");
+            toast({ variant: "destructive", title: "Error importing profile" });
         } finally {
             setIsImporting(false);
         }

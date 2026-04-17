@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
     LayoutDashboard, FileText, Mail, Users, Settings,
-    Briefcase, User, FileSignature, Search
+    Briefcase, User, FileSignature, Search, Inbox
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -24,6 +24,7 @@ const NAV_SECTIONS = [
     {
         label: "Outreach",
         items: [
+            { href: "/admin/inbox", icon: Inbox, label: "Inbox" },
             { href: "/admin/emails", icon: Mail, label: "Email Marketing" },
             { href: "/admin/crm", icon: Users, label: "CRM & Leads" },
         ],

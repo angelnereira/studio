@@ -4,9 +4,12 @@ import { prisma } from "@/lib/prisma"
 import { Resend } from "resend"
 import VerificationEmail from "@/emails/verification-template"
 import { revalidatePath } from "next/cache"
-import { render } from "@react-email/render"
+import { randomBytes } from "crypto"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+
+const SUBSCRIBER_TOKEN_PREFIX = "subscriber:"
+const SUBSCRIBER_TOKEN_TTL_MS = 24 * 60 * 60 * 1000 // 24h
 
 export async function submitComment(postId: string, data: { name: string, email: string, content: string }) {
     try {
@@ -50,39 +53,62 @@ export async function submitComment(postId: string, data: { name: string, email:
 
 export async function verifySubscriber(email: string) {
     try {
-        // Generate a simple verification link (In production, use a signed token/JWT)
-        // For this demo, we'll just encode the email.
-        // SECURITY NOTE: This is weak. Ideally use a separate VerificationToken table.
-        const token = Buffer.from(email).toString('base64')
-        const link = `${process.env.NEXT_PUBLIC_APP_URL || 'https://angelnereira.com'}/verify-subscriber?token=${token}`
+        const token = randomBytes(32).toString("hex")
+        const expires = new Date(Date.now() + SUBSCRIBER_TOKEN_TTL_MS)
 
-        // Send Email
-        await resend.emails.send({
-            from: 'Angel Nereira <onboarding@resend.dev>', // Update with your verified domain
-            to: email,
-            subject: 'Verifica tu email para comentar',
-            react: <VerificationEmail verificationLink={ link } />
+        await prisma.verificationToken.create({
+            data: {
+                identifier: `${SUBSCRIBER_TOKEN_PREFIX}${email}`,
+                token,
+                expires,
+            },
         })
 
-    return { success: true }
-} catch (error) {
-    console.error("Error sending verification:", error)
-    return { success: false, error: "Failed to send email" }
-}
+        const link = `${process.env.NEXT_PUBLIC_APP_URL || 'https://angelnereira.com'}/verify-subscriber?token=${token}`
+
+        await resend.emails.send({
+            from: 'Angel Nereira <onboarding@resend.dev>',
+            to: email,
+            subject: 'Verifica tu email para comentar',
+            react: <VerificationEmail verificationLink={link} />
+        })
+
+        return { success: true }
+    } catch (error) {
+        console.error("Error sending verification:", error)
+        return { success: false, error: "Failed to send email" }
+    }
 }
 
 // Action called by the verification page
 export async function confirmVerification(token: string) {
     try {
-        const email = Buffer.from(token, 'base64').toString('ascii')
-
-        await prisma.subscriber.update({
-            where: { email },
-            data: { isVerified: true }
+        const record = await prisma.verificationToken.findUnique({
+            where: { token },
         })
+
+        if (!record || !record.identifier.startsWith(SUBSCRIBER_TOKEN_PREFIX)) {
+            return { success: false, error: "Invalid token" }
+        }
+
+        if (record.expires < new Date()) {
+            await prisma.verificationToken.delete({ where: { token } }).catch(() => { })
+            return { success: false, error: "Token expired" }
+        }
+
+        const email = record.identifier.slice(SUBSCRIBER_TOKEN_PREFIX.length)
+
+        await prisma.subscriber.upsert({
+            where: { email },
+            update: { isVerified: true },
+            create: { email, isVerified: true },
+        })
+
+        await prisma.verificationToken.delete({ where: { token } }).catch(() => { })
 
         return { success: true, email }
     } catch (error) {
+        console.error("confirmVerification error:", error)
         return { success: false, error: "Invalid token" }
     }
 }

@@ -1,13 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Building2, MapPin, Calendar, Mail, FileText, Download, Send, ExternalLink } from "lucide-react";
+import { ArrowLeft, Building2, MapPin, Calendar, Mail, FileText, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
+import { ApplicationActions } from "../application-actions";
 
 export const dynamic = 'force-dynamic';
 
@@ -75,26 +76,18 @@ export default async function ApplicationDetailPage({ params }: PageProps) {
             </div>
 
             {/* Quick Actions */}
-            <div className="flex gap-3">
-                <Button variant="outline" className="gap-2">
-                    <Download className="h-4 w-4" />
-                    Download CV
-                </Button>
-                {application.status === "ready" && (
-                    <Button className="gap-2">
-                        <Send className="h-4 w-4" />
-                        Send Application
-                    </Button>
-                )}
-                {application.cvPdfUrl && (
-                    <Button variant="ghost" className="gap-2" asChild>
-                        <a href={application.cvPdfUrl} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-4 w-4" />
-                            View PDF
-                        </a>
-                    </Button>
-                )}
-            </div>
+            <ApplicationActions
+                applicationId={application.id}
+                status={application.status}
+                cvPdfUrl={application.cvPdfUrl}
+                cvContent={cvContent as unknown as Parameters<typeof ApplicationActions>[0]["cvContent"]}
+                profileName={application.profile.name}
+                profileEmail={application.profile.email}
+                profilePhone={application.profile.phone}
+                profileLocation={application.profile.location}
+                vacancyCompany={application.vacancy.company}
+                vacancyPosition={application.vacancy.position}
+            />
 
             {/* Main Content Grid */}
             <div className="grid lg:grid-cols-3 gap-6">

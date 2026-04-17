@@ -70,7 +70,7 @@ export function DashboardClient({ stats, activities, userName = "Chief" }: Dashb
                 </div>
             </motion.div>
 
-            <motion.div variants={item} className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <motion.div variants={item} className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
                 {stats.map((stat, i) => (
                     <DashboardStatCard key={i} {...stat} />
                 ))}
@@ -162,6 +162,7 @@ const iconMap: Record<string, React.ElementType> = {
     "mouse-pointer": MousePointerClick,
     "trending-up": TrendingUp,
     "briefcase": Briefcase,
+    "mail": Mail,
 }
 
 function DashboardStatCard({ title, value, icon, change, color }: StatData) {

@@ -1,6 +1,7 @@
 
 import { NextResponse } from 'next/server'
 import { prisma } from "@/lib/prisma"
+import { verifyResendWebhook } from "@/lib/resend-webhook"
 
 // Resend Webhooks: https://resend.com/docs/dashboard/webhooks/events
 // We expect a text body to verify signature or JSON depending on config.
@@ -22,7 +23,15 @@ import { prisma } from "@/lib/prisma"
 
 export async function POST(req: Request) {
     try {
-        const payload = await req.json()
+        const rawBody = await req.text()
+        let payload: { type?: string; data?: Record<string, unknown> }
+        try {
+            payload = verifyResendWebhook(rawBody, req.headers) as typeof payload
+        } catch (err) {
+            console.warn("[resend-webhook] Signature verification failed:", err)
+            return new NextResponse("Invalid signature", { status: 401 })
+        }
+
         const { type, data } = payload
 
         // Log webhook events for debugging/audit (only type, not full data)
@@ -33,8 +42,8 @@ export async function POST(req: Request) {
 
         // Extract Metadata (Tags)
         // Tags come as array: [{ name: 'key', value: 'val' }]
-        const tags = data.tags || []
-        const campaignIdTag = tags.find((t: { name: string; value: string }) => t.name === 'campaignId')
+        const tags = (data.tags as { name: string; value: string }[] | undefined) || []
+        const campaignIdTag = tags.find((t) => t.name === 'campaignId')
         const campaignId = campaignIdTag ? campaignIdTag.value : null
 
         // If we don't have a campaign ID, we can't associate metrics easily unless we rely on 'to' address and time
@@ -43,7 +52,7 @@ export async function POST(req: Request) {
             return new NextResponse("Ignored: No Campaign ID", { status: 200 })
         }
 
-        const email = Array.isArray(data.to) ? data.to[0] : data.to
+        const email = Array.isArray(data.to) ? (data.to as string[])[0] : (data.to as string)
 
         // Update Stats based on Event Type
         // We update the CampaignRecipient record first
