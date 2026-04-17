@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Users, Eye, MousePointerClick, TrendingUp, Plus, Mail, FileText, Briefcase, Search } from "lucide-react"
+import { Users, Eye, MousePointerClick, TrendingUp, Plus, Mail, FileText, Briefcase, Search, Activity, BarChart } from "lucide-react"
 import { StatCard } from "@/components/admin/stat-card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -163,6 +163,8 @@ const iconMap: Record<string, React.ElementType> = {
     "trending-up": TrendingUp,
     "briefcase": Briefcase,
     "mail": Mail,
+    "activity": Activity,
+    "bar-chart": BarChart,
 }
 
 function DashboardStatCard({ title, value, icon, change, color }: StatData) {

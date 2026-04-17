@@ -81,6 +81,7 @@
     "genkitx-anthropic": "^0.29.0",
     "genkitx-openai": "^0.29.0",
     "gray-matter": "^4.0.3",
+    "ioredis": "^5.10.1",
     "jspdf": "^3.0.4",
     "lucide-react": "^0.475.0",
     "next": "^16.0.10",

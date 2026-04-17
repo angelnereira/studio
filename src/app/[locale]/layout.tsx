@@ -4,6 +4,8 @@ import { RootLayoutClient } from '@/components/root-layout-client';
 import { BackgroundAnimation } from '@/components/ui/background-animation';
 import { GlobalEasterEggs } from '@/components/global-easter-eggs';
 import { AdminBar } from '@/components/admin/admin-bar';
+import { PageViewTracker } from '@/components/analytics/page-view-tracker';
+import { LivePulse } from '@/components/ui/live-pulse';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -231,7 +233,11 @@ export default async function RootLayout({
             <GlobalEasterEggs />
             <BackgroundAnimation />
             <AdminBar />
+            <PageViewTracker />
             {children}
+            <div className="fixed bottom-4 right-4 z-50">
+              <LivePulse />
+            </div>
           </RootLayoutClient>
         </NextIntlClientProvider>
       </body>

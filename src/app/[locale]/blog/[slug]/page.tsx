@@ -1,5 +1,6 @@
 
-import { getPostBySlug, getRelatedPosts, getAllPostSlugs } from '@/lib/blog';
+import { getPostBySlug, getRelatedPosts, getAllPostSlugs, getCachedPostBySlug, getCachedRelatedPosts } from '@/lib/blog';
+import { ViewCounter } from '@/components/analytics/view-counter';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { SpotlightCard } from '@/components/spotlight-card';
@@ -60,7 +61,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   let post;
 
   try {
-    post = getPostBySlug(slug);
+    post = await getCachedPostBySlug(slug);
   } catch (error) {
     notFound();
   }
@@ -85,8 +86,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     createdAt: c.createdAt.toISOString(),
   }));
 
-  // Obtener posts relacionados
-  const relatedPosts = getRelatedPosts(slug, 3);
+  // Obtener posts relacionados (cached)
+  const relatedPosts = await getCachedRelatedPosts(slug, 3);
 
   return (
     <ModernPostLayout
@@ -98,6 +99,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       tags={post.tags}
       coverImage={post.coverImage}
     >
+      {/* View Counter */}
+      <div className="mb-8">
+        <ViewCounter path={`/blog/${slug}`} />
+      </div>
+
       {/* Contenido del artículo con ReactMarkdown */}
       <div className="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-headline prose-p:font-sans prose-img:rounded-xl prose-img:border prose-img:border-primary/10">
         <ReactMarkdown

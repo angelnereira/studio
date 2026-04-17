@@ -2,8 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import readingTime from 'reading-time';
+import { cacheWrap, cacheInvalidatePattern } from './cache';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
+
+const BLOG_CACHE_TTL = 3600; // 1 hour
+const RELATED_CACHE_TTL = 7200; // 2 hours
 
 export interface Post {
   slug: string;
@@ -119,4 +123,31 @@ export function getAllTags(): string[] {
   });
 
   return Array.from(tagsSet).sort();
+}
+
+// --- Redis-cached versions ---
+
+export function getCachedPosts(): Promise<Omit<Post, 'content'>[]> {
+  return cacheWrap('blog:posts', BLOG_CACHE_TTL, () => getAllPosts());
+}
+
+export function getCachedPostBySlug(slug: string): Promise<Post> {
+  return cacheWrap(`blog:post:${slug}`, BLOG_CACHE_TTL, () => getPostBySlug(slug));
+}
+
+export function getCachedRelatedPosts(
+  slug: string,
+  limit = 3,
+): Promise<Omit<Post, 'content'>[]> {
+  return cacheWrap(`blog:related:${slug}`, RELATED_CACHE_TTL, () =>
+    getRelatedPosts(slug, limit),
+  );
+}
+
+export function getCachedTags(): Promise<string[]> {
+  return cacheWrap('blog:tags', BLOG_CACHE_TTL, () => getAllTags());
+}
+
+export async function invalidateBlogCache(): Promise<void> {
+  await cacheInvalidatePattern('blog:*');
 }
