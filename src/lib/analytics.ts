@@ -1,4 +1,5 @@
 import { redis } from './redis';
+import { prisma } from './prisma';
 
 export interface TrackingData {
   path: string;
@@ -32,33 +33,52 @@ function todayKey(): string {
 export async function trackPageView(
   data: TrackingData,
 ): Promise<{ previousCount: number; newCount: number } | null> {
-  if (!redis) return null;
+  // Always persist to Postgres (source of truth)
+  try {
+    await prisma.pageView.create({
+      data: {
+        path: data.path,
+        visitorId: data.visitorId,
+        referrer: data.referrer,
+        device: data.device,
+        browser: data.browser,
+        os: data.os,
+        country: data.country,
+      },
+    });
+  } catch (err) {
+    console.error('[analytics] Postgres insert failed:', err);
+  }
+
+  if (redis) {
+    try {
+      const pipeline = redis.pipeline();
+      pipeline.hincrby('analytics:views', data.path, 1);
+      pipeline.incr('analytics:total_visits');
+      pipeline.incr(`analytics:daily:${todayKey()}`);
+      pipeline.expire(`analytics:daily:${todayKey()}`, 86400 * 2);
+      pipeline.zincrby('analytics:popular', 1, data.path);
+      if (data.device) pipeline.hincrby('analytics:devices', data.device, 1);
+      if (data.browser) pipeline.hincrby('analytics:browsers', data.browser, 1);
+      if (data.os) pipeline.hincrby('analytics:os', data.os, 1);
+      if (data.referrer) pipeline.hincrby('analytics:referrers', data.referrer, 1);
+      if (data.country) pipeline.hincrby('analytics:countries', data.country, 1);
+      if (data.screen) pipeline.hincrby('analytics:screens', data.screen, 1);
+      if (data.language) pipeline.hincrby('analytics:languages', data.language, 1);
+      if (data.visitorId) {
+        pipeline.zadd('analytics:visitors', Date.now(), data.visitorId);
+      }
+      const results = await pipeline.exec();
+      const newCount = (results?.[1]?.[1] as number) ?? 0;
+      if (newCount > 0) return { previousCount: newCount - 1, newCount };
+    } catch {
+      // fall through to Postgres count
+    }
+  }
 
   try {
-    const pipeline = redis.pipeline();
-
-    pipeline.hincrby('analytics:views', data.path, 1);
-    pipeline.incr('analytics:total_visits');
-    pipeline.incr(`analytics:daily:${todayKey()}`);
-    pipeline.expire(`analytics:daily:${todayKey()}`, 86400 * 2);
-    pipeline.zincrby('analytics:popular', 1, data.path);
-
-    if (data.device) pipeline.hincrby('analytics:devices', data.device, 1);
-    if (data.browser) pipeline.hincrby('analytics:browsers', data.browser, 1);
-    if (data.os) pipeline.hincrby('analytics:os', data.os, 1);
-    if (data.referrer) pipeline.hincrby('analytics:referrers', data.referrer, 1);
-    if (data.country) pipeline.hincrby('analytics:countries', data.country, 1);
-    if (data.screen) pipeline.hincrby('analytics:screens', data.screen, 1);
-    if (data.language) pipeline.hincrby('analytics:languages', data.language, 1);
-
-    if (data.visitorId) {
-      pipeline.zadd('analytics:visitors', Date.now(), data.visitorId);
-    }
-
-    const results = await pipeline.exec();
-
-    const newCount = (results?.[1]?.[1] as number) ?? 0;
-    return { previousCount: newCount - 1, newCount };
+    const newCount = await prisma.pageView.count();
+    return { previousCount: Math.max(newCount - 1, 0), newCount };
   } catch {
     return null;
   }
@@ -75,10 +95,16 @@ export async function getPageViews(path: string): Promise<number> {
 }
 
 export async function getTotalSiteVisits(): Promise<number> {
-  if (!redis) return 0;
+  if (redis) {
+    try {
+      const val = await redis.get('analytics:total_visits');
+      if (val) return parseInt(val, 10);
+    } catch {
+      // fall through to Postgres
+    }
+  }
   try {
-    const val = await redis.get('analytics:total_visits');
-    return val ? parseInt(val, 10) : 0;
+    return await prisma.pageView.count();
   } catch {
     return 0;
   }
@@ -110,21 +136,42 @@ export async function trackVisitor(visitorId: string): Promise<void> {
 }
 
 export async function getActiveVisitors(): Promise<number> {
-  if (!redis) return 0;
+  if (redis) {
+    try {
+      const fiveMinAgo = Date.now() - 5 * 60 * 1000;
+      await redis.zremrangebyscore('analytics:visitors', '-inf', fiveMinAgo);
+      const count = await redis.zcard('analytics:visitors');
+      if (count > 0) return count;
+    } catch {
+      // fall through to Postgres
+    }
+  }
   try {
-    const fiveMinAgo = Date.now() - 5 * 60 * 1000;
-    await redis.zremrangebyscore('analytics:visitors', '-inf', fiveMinAgo);
-    return await redis.zcard('analytics:visitors');
+    const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000);
+    const rows = await prisma.pageView.findMany({
+      where: { createdAt: { gte: fiveMinAgo }, visitorId: { not: null } },
+      select: { visitorId: true },
+      distinct: ['visitorId'],
+    });
+    return rows.length;
   } catch {
     return 0;
   }
 }
 
 export async function getDailyViews(): Promise<number> {
-  if (!redis) return 0;
+  if (redis) {
+    try {
+      const val = await redis.get(`analytics:daily:${todayKey()}`);
+      if (val) return parseInt(val, 10);
+    } catch {
+      // fall through to Postgres
+    }
+  }
   try {
-    const val = await redis.get(`analytics:daily:${todayKey()}`);
-    return val ? parseInt(val, 10) : 0;
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    return await prisma.pageView.count({ where: { createdAt: { gte: startOfDay } } });
   } catch {
     return 0;
   }

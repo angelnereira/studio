@@ -354,3 +354,20 @@ model CVTemplate {
 
   @@map("cv_templates")
 }
+
+model PageView {
+  id        String   @id @default(cuid())
+  path      String
+  visitorId String?
+  referrer  String?
+  device    String?
+  browser   String?
+  os        String?
+  country   String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([visitorId])
+  @@index([path])
+  @@map("page_views")
+}

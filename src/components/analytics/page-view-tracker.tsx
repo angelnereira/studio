@@ -18,7 +18,11 @@ export function PageViewTracker() {
   const tracked = useRef<string | null>(null);
 
   useEffect(() => {
+    if (!pathname) return;
     if (tracked.current === pathname) return;
+    // Don't track admin traffic in public analytics
+    if (pathname.startsWith('/admin')) return;
+
     tracked.current = pathname;
 
     const visitorId = getVisitorId();

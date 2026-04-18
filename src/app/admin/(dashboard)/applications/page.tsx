@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
+import { PageHeader } from "@/components/admin/page-header";
 
 export const dynamic = 'force-dynamic';
 
@@ -58,21 +59,18 @@ export default async function ApplicationsPage() {
 
     return (
         <div className="space-y-8">
-            {/* Header */}
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight">Job Applications</h1>
-                    <p className="text-muted-foreground mt-1">
-                        Manage your job applications with AI-powered CV and email generation
-                    </p>
-                </div>
-                <Button asChild className="gap-2">
-                    <Link href="/admin/applications/new">
-                        <Plus className="h-4 w-4" />
-                        New Application
-                    </Link>
-                </Button>
-            </div>
+            <PageHeader
+                title="Job Applications"
+                description="Track your job applications with AI-powered CV and email generation."
+                icon={<Briefcase className="h-5 w-5" />}
+                actions={
+                    <Button asChild>
+                        <Link href="/admin/applications/new">
+                            <Plus className="mr-2 h-4 w-4" /> New application
+                        </Link>
+                    </Button>
+                }
+            />
 
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

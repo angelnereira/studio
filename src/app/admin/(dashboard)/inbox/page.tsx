@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Mail, MailOpen, Inbox as InboxIcon } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
+import { PageHeader } from "@/components/admin/page-header";
+import { StatCard } from "@/components/admin/stat-card";
 
 export const dynamic = "force-dynamic";
 
@@ -28,47 +30,21 @@ export default async function InboxPage() {
 
     return (
         <div className="space-y-8">
-            <div className="flex items-center gap-4">
-                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <InboxIcon className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                    <h1 className="text-2xl font-bold">Inbox</h1>
-                    <p className="text-muted-foreground text-sm">
-                        Incoming emails received via Resend Inbound
-                    </p>
-                </div>
-            </div>
+            <PageHeader
+                title="Inbox"
+                description="Incoming messages received via Resend Inbound."
+                icon={<InboxIcon className="h-5 w-5" />}
+            />
 
             <div className="grid gap-4 md:grid-cols-3">
-                <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm text-muted-foreground">Total</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-3xl font-bold">{total}</p>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm text-muted-foreground">Unread</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-3xl font-bold">{unread}</p>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader className="pb-2">
-                        <CardTitle className="text-sm text-muted-foreground">Last received</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-sm">
-                            {lastReceived
-                                ? formatDistanceToNow(lastReceived, { addSuffix: true, locale: es })
-                                : "Never"}
-                        </p>
-                    </CardContent>
-                </Card>
+                <StatCard title="Total" value={total} icon={Mail} color="text-blue-400" />
+                <StatCard title="Unread" value={unread} icon={Mail} color="text-primary" change={unread > 0 ? "Needs attention" : "All caught up"} />
+                <StatCard
+                    title="Last received"
+                    value={lastReceived ? formatDistanceToNow(lastReceived, { addSuffix: true, locale: es }) : "Never"}
+                    icon={MailOpen}
+                    color="text-emerald-400"
+                />
             </div>
 
             <Card>

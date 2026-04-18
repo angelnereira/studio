@@ -3,9 +3,10 @@ import { prisma } from "@/lib/prisma"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Plus, Edit, Trash2, Globe, FileText, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
+import { Plus, Edit, Trash2, FileText, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { deletePost } from "./actions"
+import { PageHeader } from "@/components/admin/page-header"
 
 export const metadata = {
     title: "Blog CMS | Admin Studio",
@@ -32,17 +33,18 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Blog CMS</h2>
-                    <p className="text-muted-foreground">Manage your articles, tutorials, and news.</p>
-                </div>
-                <Link href="/admin/blog/create">
-                    <Button className="font-bold">
-                        <Plus className="mr-2 h-4 w-4" /> Create New Post
+            <PageHeader
+                title="Blog CMS"
+                description="Manage your articles, tutorials, and news."
+                icon={<FileText className="h-5 w-5" />}
+                actions={
+                    <Button asChild>
+                        <Link href="/admin/blog/create">
+                            <Plus className="mr-2 h-4 w-4" /> New post
+                        </Link>
                     </Button>
-                </Link>
-            </div>
+                }
+            />
 
             <div className="grid gap-6">
                 {posts.length === 0 && page === 1 ? (

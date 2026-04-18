@@ -3,9 +3,10 @@ import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, AlertTriangle, XCircle, Server, Database, Cloud, Key, Shield } from "lucide-react"
+import { CheckCircle2, AlertTriangle, XCircle, Server, Database, Cloud, Key, Shield, Settings as SettingsIcon, Zap } from "lucide-react"
 import { getSenderIdentities } from "@/app/admin/(dashboard)/emails/marketing-actions"
 import { SenderIdentitiesManager } from "@/components/admin/sender-identities-manager"
+import { PageHeader } from "@/components/admin/page-header"
 
 export const metadata = {
     title: "Settings | Admin Studio",
@@ -50,7 +51,21 @@ async function getHealthChecks(): Promise<HealthCheck[]> {
         checks.push({ icon: Cloud, label: "Cloudinary Media", status: 'warning', message: "Not configured" })
     }
 
-    // 5. Vercel (inferred)
+    // 5. Redis (cache + analytics acceleration)
+    if (process.env.REDIS_URL) {
+        checks.push({ icon: Zap, label: "Redis Cache", status: 'ok', message: "URL configured" })
+    } else {
+        checks.push({ icon: Zap, label: "Redis Cache", status: 'warning', message: "Optional – falling back to Postgres" })
+    }
+
+    // 6. Resend webhook secret
+    if (process.env.RESEND_WEBHOOK_SECRET) {
+        checks.push({ icon: Shield, label: "Resend Webhook Secret", status: 'ok', message: "Configured" })
+    } else {
+        checks.push({ icon: Shield, label: "Resend Webhook Secret", status: 'warning', message: "Recommended for production" })
+    }
+
+    // 7. Vercel (inferred)
     if (process.env.VERCEL) {
         checks.push({ icon: Server, label: "Vercel Deployment", status: 'ok', message: "Production" })
     } else {
@@ -83,29 +98,28 @@ export default async function SettingsPage() {
 
     return (
         <div className="space-y-8">
-            <div>
-                <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
-                <p className="text-muted-foreground">System health, integrations, and configuration.</p>
-            </div>
+            <PageHeader
+                title="Settings"
+                description="System health, integrations and sender identities."
+                icon={<SettingsIcon className="h-5 w-5" />}
+                actions={
+                    <Badge
+                        variant="outline"
+                        className={allGood
+                            ? "border-green-500/50 text-green-400 bg-green-500/10"
+                            : "border-yellow-500/50 text-yellow-400 bg-yellow-500/10"
+                        }
+                    >
+                        {okCount}/{totalCount} healthy
+                    </Badge>
+                }
+            />
 
-            <div className="grid gap-6 md:grid-cols-2">
-                <Card>
+            <div className="grid gap-6 lg:grid-cols-5">
+                <Card className="lg:col-span-3">
                     <CardHeader>
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <CardTitle>Environment Status</CardTitle>
-                                <CardDescription>Live health of connected services.</CardDescription>
-                            </div>
-                            <Badge
-                                variant="outline"
-                                className={allGood
-                                    ? "border-green-500/50 text-green-400 bg-green-500/10"
-                                    : "border-yellow-500/50 text-yellow-400 bg-yellow-500/10"
-                                }
-                            >
-                                {okCount}/{totalCount} Healthy
-                            </Badge>
-                        </div>
+                        <CardTitle>Environment status</CardTitle>
+                        <CardDescription>Live health of connected services.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
                         {checks.map((check, i) => {
@@ -128,9 +142,9 @@ export default async function SettingsPage() {
                     </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="lg:col-span-2">
                     <CardHeader>
-                        <CardTitle>Admin Profile</CardTitle>
+                        <CardTitle>Admin profile</CardTitle>
                         <CardDescription>Current active session details.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
