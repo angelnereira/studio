@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import { CRMClient } from "./crm-client"
-import { Users, AlertCircle, CheckCircle2, Clock, Mail, Tag } from "lucide-react"
+import { Users, AlertCircle, CheckCircle2, Clock, Mail } from "lucide-react"
 import { StatCard } from "@/components/admin/stat-card"
+import { PageHeader } from "@/components/admin/page-header"
 import { getAllTags } from "./actions"
 
 export const metadata = {
@@ -38,10 +39,11 @@ export default async function CRMPage() {
 
     return (
         <div className="space-y-8">
-            <div>
-                <h2 className="text-3xl font-bold tracking-tight">CRM & Leads</h2>
-                <p className="text-muted-foreground">Manage incoming inquiries and business opportunities.</p>
-            </div>
+            <PageHeader
+                title="CRM & Leads"
+                description="Manage incoming inquiries and business opportunities."
+                icon={<Users className="h-5 w-5" />}
+            />
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
                 <StatCard title="Total Leads" value={total} icon={Users} color="text-blue-400" />

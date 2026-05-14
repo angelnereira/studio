@@ -3,6 +3,8 @@ import { ProfileForm } from "./profile-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { User, Briefcase, Award, Languages, Globe } from "lucide-react";
 import type { WorkExperience, SkillCategory, LanguageEntry, ProjectEntry } from "@/types/profile";
+import { PageHeader } from "@/components/admin/page-header";
+import { StatCard } from "@/components/admin/stat-card";
 
 export const dynamic = 'force-dynamic';
 
@@ -38,41 +40,42 @@ export default async function ProfilePage() {
 
     return (
         <div className="space-y-8">
-            {/* Header */}
-            <div>
-                <h1 className="text-3xl font-bold tracking-tight">Professional Profile</h1>
-                <p className="text-muted-foreground mt-1">
-                    Manage your professional information used for job applications
-                </p>
-            </div>
+            <PageHeader
+                title="Professional Profile"
+                description="Data used to generate personalized CVs and cover letters."
+                icon={<User className="h-5 w-5" />}
+            />
 
-            {/* Profile Status */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 <StatCard
+                    title="Profile"
+                    value={profile ? "Active" : "Not set"}
                     icon={User}
-                    label="Profile"
-                    value={profile ? "Active" : "Not Set"}
-                    className={profile ? "text-green-400" : "text-yellow-400"}
+                    color={profile ? "text-green-400" : "text-yellow-400"}
                 />
                 <StatCard
-                    icon={Briefcase}
-                    label="Experience"
+                    title="Experience"
                     value={(profile?.experience as unknown as WorkExperience[])?.length || 0}
+                    icon={Briefcase}
+                    color="text-blue-400"
                 />
                 <StatCard
-                    icon={Award}
-                    label="Skills"
+                    title="Skills"
                     value={(profile?.skills as unknown as SkillCategory[])?.reduce((acc: number, s: SkillCategory) => acc + (s.items?.length || 0), 0) || 0}
+                    icon={Award}
+                    color="text-purple-400"
                 />
                 <StatCard
-                    icon={Languages}
-                    label="Languages"
+                    title="Languages"
                     value={(profile?.languages as unknown as LanguageEntry[])?.length || 0}
+                    icon={Languages}
+                    color="text-cyan-400"
                 />
                 <StatCard
-                    icon={Globe}
-                    label="Projects"
+                    title="Projects"
                     value={(profile?.projects as ProjectEntry[])?.length || 0}
+                    icon={Globe}
+                    color="text-orange-400"
                 />
             </div>
 
@@ -92,28 +95,3 @@ export default async function ProfilePage() {
     );
 }
 
-function StatCard({
-    icon: Icon,
-    label,
-    value,
-    className = "",
-}: {
-    icon: React.ElementType;
-    label: string;
-    value: string | number;
-    className?: string;
-}) {
-    return (
-        <Card>
-            <CardContent className="pt-6">
-                <div className="flex items-center gap-3">
-                    <Icon className={`h-5 w-5 ${className || "text-muted-foreground"}`} />
-                    <div>
-                        <p className="text-2xl font-bold">{value}</p>
-                        <p className="text-xs text-muted-foreground">{label}</p>
-                    </div>
-                </div>
-            </CardContent>
-        </Card>
-    );
-}

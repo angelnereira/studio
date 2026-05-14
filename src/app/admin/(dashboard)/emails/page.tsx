@@ -1,27 +1,28 @@
 
 import { EmailMarketingStudio } from "@/components/admin/emails/email-marketing-studio"
 import { getSenderIdentities, getTemplates, getCampaigns, getContacts } from "./marketing-actions"
+import { PageHeader } from "@/components/admin/page-header"
+import { Mail } from "lucide-react"
 
 export const metadata = {
     title: "Email Marketing Studio | Admin",
 }
 
 export default async function EmailsPage() {
-    const identities = await getSenderIdentities()
-    const templates = await getTemplates() // Assuming this exists or returns []
-    const campaigns = await getCampaigns()
-    const contacts = await getContacts()
+    const [identities, templates, campaigns, contacts] = await Promise.all([
+        getSenderIdentities(),
+        getTemplates(),
+        getCampaigns(),
+        getContacts(),
+    ])
 
     return (
         <div className="space-y-8">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                        Marketing Studio
-                    </h2>
-                    <p className="text-muted-foreground">Manage campaigns, templates, and audiences.</p>
-                </div>
-            </div>
+            <PageHeader
+                title="Email Marketing"
+                description="Design campaigns, manage templates and segment your audience."
+                icon={<Mail className="h-5 w-5" />}
+            />
 
             <EmailMarketingStudio
                 identities={JSON.parse(JSON.stringify(identities))}

@@ -34,60 +34,36 @@ function formatNumber(n: number): string {
 export function SiteVisitCounter() {
   const [count, setCount] = useState<number | null>(null);
   const [showGlow, setShowGlow] = useState(false);
-  const hasTracked = useRef(false);
+  const loaded = useRef(false);
 
   useEffect(() => {
-    if (hasTracked.current) return;
+    if (loaded.current) return;
+    loaded.current = true;
 
-    const sessionKey = '__home_tracked';
-    const alreadyTracked = sessionStorage.getItem(sessionKey);
-
-    if (alreadyTracked) {
-      fetch('/api/analytics/stats?type=total')
+    // Tracking happens in <PageViewTracker />. Here we only read the stat
+    // and briefly animate to the latest value.
+    let attempts = 0;
+    const poll = () => {
+      fetch('/api/analytics/stats?type=total', { cache: 'no-store' })
         .then((r) => r.json())
-        .then((d) => setCount(d.total ?? 0))
-        .catch(() => {});
-      hasTracked.current = true;
-      return;
-    }
-
-    hasTracked.current = true;
-
-    function getVisitorId(): string {
-      const key = '__visitor_id';
-      let id = localStorage.getItem(key);
-      if (!id) {
-        id = crypto.randomUUID();
-        localStorage.setItem(key, id);
-      }
-      return id;
-    }
-
-    fetch('/api/analytics/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        path: '/',
-        referrer: document.referrer,
-        screen: `${screen.width}x${screen.height}`,
-        language: navigator.language,
-        visitorId: getVisitorId(),
-      }),
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        const prev = data.previousCount ?? 0;
-        setCount(prev);
-
-        setTimeout(() => {
-          setCount(data.newCount ?? prev + 1);
-          setShowGlow(true);
-          setTimeout(() => setShowGlow(false), 1200);
-        }, 1000);
-
-        sessionStorage.setItem(sessionKey, '1');
-      })
-      .catch(() => {});
+        .then((d) => {
+          const total = typeof d.total === 'number' ? d.total : 0;
+          setCount((prev) => {
+            if (prev !== null && total > prev) {
+              setShowGlow(true);
+              setTimeout(() => setShowGlow(false), 1200);
+            }
+            return total;
+          });
+        })
+        .catch(() => {})
+        .finally(() => {
+          // poll once after 1.5s to pick up the page view we just triggered
+          attempts += 1;
+          if (attempts < 2) setTimeout(poll, 1500);
+        });
+    };
+    poll();
   }, []);
 
   if (count === null) {

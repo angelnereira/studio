@@ -10,7 +10,6 @@ interface ActivityLogMetadata {
   newStatus?: string;
 }
 
-// Helper to format time ago
 function timeAgo(date: Date) {
   const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000);
   let interval = seconds / 31536000;
@@ -29,7 +28,6 @@ function timeAgo(date: Date) {
 export default async function AdminDashboard() {
   const session = await auth()
 
-  // Fetch Real Data from Prisma (cached in Redis for 2 min)
   const [dbStats, recentActivity, analyticsData] = await Promise.all([
     cacheWrap('dash:stats', 120, () =>
       Promise.all([
@@ -58,18 +56,20 @@ export default async function AdminDashboard() {
   const [leadsCount, postsCount, campaignsCount, applicationsCount, vacanciesCount, unreadInbound] = dbStats;
   const [activeVisitors, dailyViews, totalVisits] = analyticsData;
 
-  // Process Stats
-  const stats = [
-    { title: "Unread Emails", value: unreadInbound.toString(), icon: "mail", change: "Incoming messages", color: "text-primary" },
-    { title: "Published Posts", value: postsCount.toString(), icon: "eye", change: "Blog content", color: "text-blue-400" },
-    { title: "Active Leads", value: leadsCount.toString(), icon: "users", change: "New prospects", color: "text-emerald-400" },
-    { title: "Campaigns", value: campaignsCount.toString(), icon: "mouse-pointer", change: "Emails sent", color: "text-purple-400" },
-    { title: "Applications", value: applicationsCount.toString(), icon: "briefcase", change: `${vacanciesCount} vacancies tracked`, color: "text-orange-400" },
-    { title: "Live Visitors", value: activeVisitors.toString(), icon: "activity", change: "Right now", color: "text-rose-400" },
-    { title: "Views Today", value: dailyViews.toString(), icon: "bar-chart", change: `${totalVisits} total`, color: "text-cyan-400" },
+  const trafficStats = [
+    { title: "Live Visitors", value: activeVisitors.toString(), icon: "activity", change: "Last 5 minutes", color: "text-rose-400" },
+    { title: "Views Today", value: dailyViews.toString(), icon: "bar-chart", change: "Since midnight", color: "text-cyan-400" },
+    { title: "Total Visits", value: totalVisits.toLocaleString(), icon: "eye", change: "All time", color: "text-blue-400" },
   ]
 
-  // Process Activities
+  const studioStats = [
+    { title: "Unread Emails", value: unreadInbound.toString(), icon: "mail", change: "Inbox messages", color: "text-primary" },
+    { title: "New Leads", value: leadsCount.toString(), icon: "users", change: "To follow up", color: "text-emerald-400" },
+    { title: "Applications", value: applicationsCount.toString(), icon: "briefcase", change: `${vacanciesCount} vacancies`, color: "text-orange-400" },
+    { title: "Campaigns", value: campaignsCount.toString(), icon: "mouse-pointer", change: "Emails dispatched", color: "text-purple-400" },
+    { title: "Published Posts", value: postsCount.toString(), icon: "file-text", change: "Blog content", color: "text-sky-400" },
+  ]
+
   const activities = recentActivity.map(log => ({
     id: log.id,
     type: log.type,
@@ -85,7 +85,8 @@ export default async function AdminDashboard() {
 
   return (
     <DashboardClient
-      stats={stats}
+      trafficStats={trafficStats}
+      studioStats={studioStats}
       activities={activities}
       userName={session?.user?.name || "Chief"}
     />
