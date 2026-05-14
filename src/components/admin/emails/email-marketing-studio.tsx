@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { format } from "date-fns"
 import {
-    Send, LayoutTemplate, Users, Settings, Plus,
-    ArrowRight, ChevronRight, Check, Calendar as CalendarIcon, Copy, BarChart3,
-    FileText, Save, Loader2, Trash2, Mail, Paperclip, Code2, Upload, ShieldCheck, AlertTriangle, Sparkles
+    Send, LayoutTemplate, Plus,
+    Copy, BarChart3,
+    FileText, Save, Loader2, Trash2, Mail, Paperclip, Code2, Upload, ShieldCheck, AlertTriangle, Sparkles, X
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -19,15 +19,13 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { useToast } from "@/hooks/use-toast"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog"
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { VisualEmailComposer } from "@/components/admin/emails/visual-email-composer"
 import { services } from "@/lib/services"
-import { systemTemplates, type SystemTemplate } from "@/lib/system-email-templates"
-import { createSenderIdentity, createTemplate, sendCampaign, saveCampaignDraft, deleteSenderIdentity, deleteCampaign, duplicateCampaign, sendQuickEmail } from "@/app/admin/(dashboard)/emails/marketing-actions"
+import { systemTemplates } from "@/lib/system-email-templates"
+import { createTemplate, deleteCampaign, duplicateCampaign, sendQuickEmail } from "@/app/admin/(dashboard)/emails/marketing-actions"
 import { generateEmailWithAI } from "@/app/admin/(dashboard)/emails/ai-actions"
 
 // Types
@@ -51,12 +49,20 @@ interface EmailMarketingStudioProps {
     contacts: Contact[]
 }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+function parseEmails(input: string): string[] {
+    return input
+        .split(/[,;\n]/)
+        .map(e => e.trim())
+        .filter(Boolean)
+}
+
 export function EmailMarketingStudio({ identities, templates, campaigns, contacts }: EmailMarketingStudioProps) {
     const { toast } = useToast()
     const router = useRouter()
 
     // Combine database templates with system templates
-    const allTemplates = [
+    const allTemplates = useMemo(() => [
         ...systemTemplates.map(st => ({
             id: st.id,
             name: st.name,
@@ -67,18 +73,20 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
             isSystem: true,
         })),
         ...templates.map(t => ({ ...t, isSystem: false, category: 'custom', description: '' }))
-    ]
+    ], [templates])
 
     // --- Compose State (Gmail-like) ---
     const [draft, setDraft] = useState({
         to: "",
+        cc: "",
+        bcc: "",
         subject: "",
         content: "",
         senderId: identities[0]?.id || "",
-        attachments: [] as { filename: string, content: string }[]
+        attachments: [] as { filename: string, content: string, size?: number }[]
     })
+    const [showCcBcc, setShowCcBcc] = useState(false)
     const [isSending, setIsSending] = useState(false)
-    const [selectedContactId, setSelectedContactId] = useState<string>("")
     const [editorMode, setEditorMode] = useState<'visual' | 'code' | 'html'>('visual')
     const [showPreview, setShowPreview] = useState(false)
     const [rawHtmlInput, setRawHtmlInput] = useState('')
@@ -96,6 +104,13 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
     const [aiAction, setAiAction] = useState<"generate" | "improve" | "shorten" | "professional">("generate")
     const [isGeneratingAi, setIsGeneratingAi] = useState(false)
 
+    // Parsed recipient lists for live counters
+    const toEmails = parseEmails(draft.to)
+    const ccEmails = parseEmails(draft.cc)
+    const bccEmails = parseEmails(draft.bcc)
+    const totalRecipients = toEmails.length + ccEmails.length + bccEmails.length
+    const invalidEmails = [...toEmails, ...ccEmails, ...bccEmails].filter(e => !EMAIL_RE.test(e))
+
     // --- AI Assistant Handler ---
     const handleAiGenerate = async () => {
         if (!aiPrompt && aiAction === "generate") {
@@ -111,11 +126,10 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                 currentBody: draft.content
             })
             if (res.success && res.data) {
-                setDraft(prev => ({
-                    ...prev,
-                    subject: res.data.subject || prev.subject,
-                    content: res.data.htmlBody || prev.content
-                }))
+                applyExternalContent({
+                    content: res.data.htmlBody || draft.content,
+                    subject: res.data.subject || draft.subject,
+                })
                 toast({ title: "✨ AI Magic Applied", description: "Your email has been updated." })
                 setShowAiDialog(false)
                 setAiPrompt("")
@@ -123,6 +137,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                 toast({ title: "AI Error", description: res.message || "Failed to generate.", variant: "destructive" })
             }
         } catch (error) {
+            console.error('AI error:', error)
             toast({ title: "AI Error", description: "An unexpected error occurred.", variant: "destructive" })
         } finally {
             setIsGeneratingAi(false)
@@ -134,53 +149,53 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
         const warnings: string[] = []
         let clean = html
 
-        // Remove <script> tags
         const scriptCount = (clean.match(/<script[\s\S]*?<\/script>/gi) || []).length
         if (scriptCount > 0) { warnings.push(`Removed ${scriptCount} <script> tag(s) — blocked by email clients`); clean = clean.replace(/<script[\s\S]*?<\/script>/gi, '') }
 
-        // Remove <iframe> tags
         const iframeCount = (clean.match(/<iframe[\s\S]*?<\/iframe>/gi) || []).length + (clean.match(/<iframe[^>]*\/>/gi) || []).length
         if (iframeCount > 0) { warnings.push(`Removed ${iframeCount} <iframe> tag(s) — spam trigger`); clean = clean.replace(/<iframe[\s\S]*?(<\/iframe>|\/>)/gi, '') }
 
-        // Remove <form> tags
         if (/<form/i.test(clean)) { warnings.push('Removed <form> tags — most clients block forms'); clean = clean.replace(/<\/?form[^>]*>/gi, '') }
 
-        // Remove <embed>, <object>, <applet>
-        clean = clean.replace(/<(embed|object|applet)[\s\S]*?(<\/(embed|object|applet)>|\/>)/gi, (m) => { warnings.push('Removed embedded objects'); return '' })
+        clean = clean.replace(/<(embed|object|applet)[\s\S]*?(<\/(embed|object|applet)>|\/>)/gi, () => { warnings.push('Removed embedded objects'); return '' })
 
-        // Remove javascript: URLs
         if (/javascript:/i.test(clean)) { warnings.push('Removed javascript: URLs — security risk'); clean = clean.replace(/javascript:[^"']*/gi, '#') }
 
-        // Remove on* event handlers (onclick, onload, etc.)
         const eventCount = (clean.match(/\son\w+\s*=/gi) || []).length
         if (eventCount > 0) { warnings.push(`Removed ${eventCount} event handler(s) (onclick, onload, etc.)`); clean = clean.replace(/\son\w+\s*=\s*["'][^"']*["']/gi, '') }
 
-        // Remove <style> blocks with @import or expression()
         if (/@import/i.test(clean) || /expression\s*\(/i.test(clean)) {
             warnings.push('Removed @import / expression() in CSS — spam trigger')
             clean = clean.replace(/@import[^;]+;/gi, '')
             clean = clean.replace(/expression\s*\([^)]*\)/gi, '')
         }
 
-        // Warn about position: fixed/absolute (strip them)
         if (/position\s*:\s*(fixed|absolute)/i.test(clean)) {
             warnings.push('Removed position:fixed/absolute — breaks email layout')
             clean = clean.replace(/position\s*:\s*(fixed|absolute)/gi, 'position:relative')
         }
 
-        // Check for excessive links (>20)
         const linkCount = (clean.match(/<a\s/gi) || []).length
         if (linkCount > 20) warnings.push(`${linkCount} links detected — too many links trigger spam filters`)
 
-        // Check missing alt on images
         const imgNoAlt = (clean.match(/<img(?![^>]*alt=)[^>]*>/gi) || []).length
         if (imgNoAlt > 0) warnings.push(`${imgNoAlt} image(s) missing alt text — add alt for better deliverability`)
 
-        // Warn about all-caps text
         const capsWords = clean.replace(/<[^>]*>/g, '').match(/\b[A-Z]{5,}\b/g) || []
         if (capsWords.length > 3) warnings.push('Excessive ALL CAPS text detected — triggers spam filters')
 
         return { clean, warnings }
+    }
+
+    // Centralized: when content comes from outside (template/upload/AI), we MUST
+    // both update draft.content AND switch the user to a controlled editor that
+    // shows it. The visual block composer has its own internal block state and
+    // can't render arbitrary HTML, so we route to the code editor.
+    const applyExternalContent = ({ content, subject }: { content: string; subject?: string }) => {
+        setDraft(prev => ({ ...prev, content, subject: prev.subject || subject || prev.subject }))
+        setRawHtmlInput(content)
+        setEditorMode(prev => (prev === 'visual' ? 'code' : prev))
+        setShowPreview(false)
     }
 
     // Handle raw HTML upload from file
@@ -204,6 +219,8 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
             })
         }
         reader.readAsText(file)
+        // Reset the input value so re-uploading the same filename re-triggers onChange.
+        e.target.value = ''
     }
 
     // Apply raw HTML with sanitization
@@ -227,47 +244,70 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
         }
     }
 
-    // Helper to read file as base64
+    // Helper to read file as base64 (returns total size for limit enforcement)
+    const MAX_FILE_MB = 4
+    const MAX_TOTAL_MB = 40 // Resend caps at 40MB total per email
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const files = Array.from(e.target.files)
-            const newAttachments: { filename: string, content: string }[] = []
+        if (!e.target.files) return
+        const files = Array.from(e.target.files)
+        const existingTotal = draft.attachments.reduce((s, a) => s + (a.size || 0), 0)
+        const newAttachments: { filename: string, content: string, size: number }[] = []
+        let runningTotal = existingTotal
 
-            for (const file of files) {
-                if (file.size > 4 * 1024 * 1024) {
-                    toast({ title: "File too large", description: `${file.name} exceeds 4MB limit.`, variant: "destructive" })
-                    continue
-                }
-
-                const reader = new FileReader()
-                const promise = new Promise<{ filename: string, content: string }>((resolve) => {
-                    reader.onload = (re) => {
-                        const base64 = re.target?.result as string
-                        const content = base64.split(',')[1] || base64
-                        resolve({ filename: file.name, content })
-                    }
-                })
-                reader.readAsDataURL(file)
-                newAttachments.push(await promise)
+        for (const file of files) {
+            if (file.size > MAX_FILE_MB * 1024 * 1024) {
+                toast({ title: "File too large", description: `${file.name} exceeds ${MAX_FILE_MB}MB limit.`, variant: "destructive" })
+                continue
             }
-            setDraft(prev => ({ ...prev, attachments: [...prev.attachments, ...newAttachments] }))
+            if (runningTotal + file.size > MAX_TOTAL_MB * 1024 * 1024) {
+                toast({ title: "Total too large", description: `Combined attachments exceed ${MAX_TOTAL_MB}MB (Resend limit).`, variant: "destructive" })
+                continue
+            }
+
+            const reader = new FileReader()
+            const promise = new Promise<{ filename: string, content: string, size: number }>((resolve, reject) => {
+                reader.onload = (re) => {
+                    const base64 = re.target?.result as string
+                    const content = base64.split(',')[1] || base64
+                    resolve({ filename: file.name, content, size: file.size })
+                }
+                reader.onerror = () => reject(reader.error)
+            })
+            reader.readAsDataURL(file)
+            newAttachments.push(await promise)
+            runningTotal += file.size
         }
+        setDraft(prev => ({ ...prev, attachments: [...prev.attachments, ...newAttachments] }))
+        e.target.value = ''
     }
 
-    // Auto-fill from contact select
-    const handleContactSelect = (contactId: string) => {
+    // Add contact email to a field (To/Cc/Bcc) — preserves any existing emails.
+    const addContactTo = (contactId: string, field: 'to' | 'cc' | 'bcc' = 'to') => {
         const contact = contacts.find(c => c.id === contactId)
-        if (contact) {
-            setSelectedContactId(contactId)
-            setDraft(prev => ({ ...prev, to: contact.email }))
-            toast({ title: "Contact Selected", description: `Auto-filled email for ${contact.name}` })
-        }
+        if (!contact) return
+        setDraft(prev => {
+            const existing = parseEmails(prev[field])
+            if (existing.includes(contact.email)) return prev
+            const next = [...existing, contact.email].join(', ')
+            return { ...prev, [field]: next }
+        })
+        toast({ title: "Added", description: `${contact.name || contact.email} added to ${field.toUpperCase()}` })
     }
 
     // --- Quick Send (Gmail-like) ---
     const handleQuickSend = async () => {
-        if (!draft.to) { toast({ title: "Missing recipient", description: "Enter a To email address.", variant: "destructive" }); return }
-        if (!draft.subject) { toast({ title: "Missing subject", description: "Enter a subject line.", variant: "destructive" }); return }
+        if (toEmails.length === 0) {
+            toast({ title: "Missing recipient", description: "Add at least one address in 'To'.", variant: "destructive" })
+            return
+        }
+        if (invalidEmails.length > 0) {
+            toast({ title: "Invalid email", description: `Fix: ${invalidEmails.slice(0, 3).join(', ')}${invalidEmails.length > 3 ? '…' : ''}`, variant: "destructive" })
+            return
+        }
+        if (!draft.subject.trim()) {
+            toast({ title: "Missing subject", description: "Enter a subject line.", variant: "destructive" })
+            return
+        }
 
         // Final sync of content if in HTML mode to avoid silent data loss
         let currentContent = draft.content
@@ -277,31 +317,40 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
             setDraft(prev => ({ ...prev, content: clean }))
         }
 
-        if (!currentContent) { toast({ title: "Missing content", description: "Add some email content.", variant: "destructive" }); return }
-        if (!draft.senderId) { toast({ title: "No sender", description: "Select a sender identity or add one in Settings.", variant: "destructive" }); return }
+        if (!currentContent.trim()) {
+            toast({ title: "Missing content", description: "Add some email content.", variant: "destructive" })
+            return
+        }
+        if (!draft.senderId) {
+            toast({ title: "No sender", description: "Select a sender identity (Settings → Sender Identities).", variant: "destructive" })
+            return
+        }
 
         setIsSending(true)
         try {
             const result = await sendQuickEmail({
-                to: draft.to,
+                to: toEmails,
+                cc: ccEmails,
+                bcc: bccEmails,
                 subject: draft.subject,
                 html: currentContent,
                 senderId: draft.senderId,
-                attachments: draft.attachments.length > 0 ? draft.attachments : undefined
+                attachments: draft.attachments.length > 0
+                    ? draft.attachments.map(({ filename, content }) => ({ filename, content }))
+                    : undefined
             })
 
             if (result.success) {
                 toast({ title: "✅ Sent!", description: result.message })
-                setDraft({ to: "", subject: "", content: "", senderId: draft.senderId, attachments: [] })
+                setDraft({ to: "", cc: "", bcc: "", subject: "", content: "", senderId: draft.senderId, attachments: [] })
                 setRawHtmlInput("")
-                setSelectedContactId("")
+                setShowCcBcc(false)
                 router.refresh()
             } else {
-                console.error('Send error:', result.message)
                 throw new Error(result.message || "Failed to send")
             }
         } catch (error) {
-            console.error('Catch Quick send error:', error)
+            console.error('Quick send error:', error)
             const msg = error instanceof Error ? error.message : "Failed to send."
             toast({ title: "Error", description: msg, variant: "destructive" })
         } finally {
@@ -310,90 +359,141 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
     }
 
     return (
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="bg-black/40 border border-white/10 p-1">
-                <TabsTrigger value="compose" className="gap-2"><Send className="w-4 h-4" /> Compose</TabsTrigger>
-                <TabsTrigger value="campaigns" className="gap-2"><LayoutTemplate className="w-4 h-4" /> Campaigns</TabsTrigger>
-                <TabsTrigger value="templates" className="gap-2"><FileText className="w-4 h-4" /> Templates</TabsTrigger>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 md:space-y-6">
+            <TabsList className="bg-black/40 border border-white/10 p-1 w-full md:w-auto overflow-x-auto">
+                <TabsTrigger value="compose" className="gap-1.5 text-xs md:text-sm"><Send className="w-3.5 h-3.5 md:w-4 md:h-4" /> Compose</TabsTrigger>
+                <TabsTrigger value="campaigns" className="gap-1.5 text-xs md:text-sm"><LayoutTemplate className="w-3.5 h-3.5 md:w-4 md:h-4" /> Campaigns</TabsTrigger>
+                <TabsTrigger value="templates" className="gap-1.5 text-xs md:text-sm"><FileText className="w-3.5 h-3.5 md:w-4 md:h-4" /> Templates</TabsTrigger>
             </TabsList>
 
             {/* --- COMPOSE TAB (Gmail-like) --- */}
             <TabsContent value="compose" className="space-y-4">
                 <Card className="border-white/10 bg-black/40 backdrop-blur-xl">
-                    <CardHeader className="pb-4">
-                        <CardTitle className="flex items-center gap-2">
-                            <Mail className="w-5 h-5" /> Quick Compose
+                    <CardHeader className="pb-3 md:pb-4">
+                        <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+                            <Mail className="w-4 h-4 md:w-5 md:h-5" /> Quick Compose
                         </CardTitle>
-                        <CardDescription>Send professional HTML emails directly — just like Gmail but beautiful.</CardDescription>
+                        <CardDescription className="text-xs md:text-sm">Send professional HTML emails — supports multiple recipients (up to 50 per email, including CC/BCC).</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        {/* To / From row */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <Label className="text-xs text-muted-foreground">To</Label>
-                                <div className="flex gap-2">
-                                    <Input
-                                        placeholder="recipient@email.com"
-                                        type="email"
-                                        value={draft.to}
-                                        onChange={(e) => setDraft({ ...draft, to: e.target.value })}
-                                        className="flex-1"
-                                    />
-                                    <Select onValueChange={handleContactSelect} value={selectedContactId}>
-                                        <SelectTrigger className="w-[140px]">
-                                            <SelectValue placeholder="Contacts" />
+                        {/* To */}
+                        <div className="space-y-1.5">
+                            <div className="flex items-center justify-between">
+                                <Label className="text-xs text-muted-foreground">
+                                    To {toEmails.length > 0 && <Badge variant="outline" className="ml-2 text-[10px] py-0">{toEmails.length}</Badge>}
+                                </Label>
+                                <button type="button" onClick={() => setShowCcBcc(!showCcBcc)} className="text-[11px] text-muted-foreground hover:text-white transition">
+                                    {showCcBcc ? '− Hide Cc/Bcc' : '+ Add Cc/Bcc'}
+                                </button>
+                            </div>
+                            <div className="flex flex-col sm:flex-row gap-2">
+                                <Input
+                                    placeholder="email@a.com, email@b.com, email@c.com"
+                                    type="text"
+                                    value={draft.to}
+                                    onChange={(e) => setDraft({ ...draft, to: e.target.value })}
+                                    className="flex-1"
+                                />
+                                {contacts.length > 0 && (
+                                    <Select onValueChange={(id) => addContactTo(id, 'to')}>
+                                        <SelectTrigger className="sm:w-[140px]">
+                                            <SelectValue placeholder="+ Contact" />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {contacts.map(c => (
-                                                <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                                                <SelectItem key={c.id} value={c.id}>{c.name || c.email}</SelectItem>
                                             ))}
                                         </SelectContent>
                                     </Select>
-                                </div>
-                            </div>
-                            <div className="space-y-2">
-                                <Label className="text-xs text-muted-foreground">From</Label>
-                                <Select
-                                    value={draft.senderId}
-                                    onValueChange={(v) => setDraft({ ...draft, senderId: v })}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select Sender" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {identities.map(id => (
-                                            <SelectItem key={id.id} value={id.id}>
-                                                {id.name} ({id.email})
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {identities.length === 0 && (
-                                    <p className="text-xs text-red-400">Add a sender identity in Settings first.</p>
                                 )}
                             </div>
+                            <p className="text-[10px] text-muted-foreground">Separate multiple emails with commas or semicolons.</p>
+                        </div>
+
+                        {showCcBcc && (
+                            <>
+                                <div className="space-y-1.5">
+                                    <Label className="text-xs text-muted-foreground">
+                                        Cc {ccEmails.length > 0 && <Badge variant="outline" className="ml-2 text-[10px] py-0">{ccEmails.length}</Badge>}
+                                    </Label>
+                                    <Input
+                                        placeholder="cc1@example.com, cc2@example.com"
+                                        type="text"
+                                        value={draft.cc}
+                                        onChange={(e) => setDraft({ ...draft, cc: e.target.value })}
+                                    />
+                                </div>
+                                <div className="space-y-1.5">
+                                    <Label className="text-xs text-muted-foreground">
+                                        Bcc {bccEmails.length > 0 && <Badge variant="outline" className="ml-2 text-[10px] py-0">{bccEmails.length}</Badge>}
+                                    </Label>
+                                    <Input
+                                        placeholder="bcc1@example.com, bcc2@example.com"
+                                        type="text"
+                                        value={draft.bcc}
+                                        onChange={(e) => setDraft({ ...draft, bcc: e.target.value })}
+                                    />
+                                </div>
+                            </>
+                        )}
+
+                        {/* From */}
+                        <div className="space-y-1.5">
+                            <Label className="text-xs text-muted-foreground">From</Label>
+                            <Select
+                                value={draft.senderId}
+                                onValueChange={(v) => setDraft({ ...draft, senderId: v })}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select Sender" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {identities.map(id => (
+                                        <SelectItem key={id.id} value={id.id}>
+                                            {id.name} ({id.email})
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            {identities.length === 0 && (
+                                <p className="text-xs text-red-400">Add a sender identity in Settings first.</p>
+                            )}
                         </div>
 
                         {/* Subject */}
-                        <div className="space-y-2">
+                        <div className="space-y-1.5">
                             <Label className="text-xs text-muted-foreground">Subject</Label>
                             <Input
                                 placeholder="Your email subject..."
                                 value={draft.subject}
                                 onChange={(e) => setDraft({ ...draft, subject: e.target.value })}
-                                className="text-base font-medium"
+                                className="text-sm md:text-base font-medium"
                             />
                         </div>
+
+                        {/* Recipient summary banner */}
+                        {totalRecipients > 0 && (
+                            <div className="text-[11px] text-muted-foreground bg-black/30 rounded border border-white/5 px-3 py-2">
+                                <span className="text-white font-medium">{totalRecipients} total recipient{totalRecipients > 1 ? 's' : ''}</span>
+                                {' · '}
+                                {toEmails.length > 0 && <>To: {toEmails.length}</>}
+                                {ccEmails.length > 0 && <> · Cc: {ccEmails.length}</>}
+                                {bccEmails.length > 0 && <> · Bcc: {bccEmails.length}</>}
+                                {invalidEmails.length > 0 && (
+                                    <span className="text-red-400 ml-2">⚠ {invalidEmails.length} invalid</span>
+                                )}
+                            </div>
+                        )}
 
                         <Separator className="bg-white/10" />
 
                         {/* Editor mode toggle + Template loader */}
-                        <div className="flex items-center justify-between">
-                            <div className="flex gap-0.5 p-0.5 bg-black/40 rounded border border-white/10">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between">
+                            <div className="flex gap-0.5 p-0.5 bg-black/40 rounded border border-white/10 overflow-x-auto">
                                 <button
                                     onClick={() => setEditorMode('visual')}
                                     className={cn(
-                                        'text-xs px-3 py-1.5 rounded transition-colors',
+                                        'text-xs px-2.5 sm:px-3 py-1.5 rounded transition-colors whitespace-nowrap',
                                         editorMode === 'visual' ? 'bg-[#DFFF00]/20 text-[#DFFF00]' : 'text-muted-foreground hover:text-white'
                                     )}
                                 >
@@ -402,7 +502,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                 <button
                                     onClick={() => setEditorMode('code')}
                                     className={cn(
-                                        'text-xs px-3 py-1.5 rounded transition-colors',
+                                        'text-xs px-2.5 sm:px-3 py-1.5 rounded transition-colors whitespace-nowrap',
                                         editorMode === 'code' ? 'bg-white/10 text-white' : 'text-muted-foreground hover:text-white'
                                     )}
                                 >
@@ -411,22 +511,22 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                 <button
                                     onClick={() => { setEditorMode('html'); setRawHtmlInput(draft.content) }}
                                     className={cn(
-                                        'text-xs px-3 py-1.5 rounded transition-colors flex items-center gap-1',
+                                        'text-xs px-2.5 sm:px-3 py-1.5 rounded transition-colors flex items-center gap-1 whitespace-nowrap',
                                         editorMode === 'html' ? 'bg-orange-500/20 text-orange-400' : 'text-muted-foreground hover:text-white'
                                     )}
                                 >
                                     <Code2 className="w-3 h-3" /> Raw HTML
                                 </button>
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 flex-wrap">
                                 <Select onValueChange={(v) => {
                                     const t = allTemplates.find(t => t.id === v)
                                     if (t) {
-                                        setDraft(prev => ({ ...prev, content: t.content, subject: prev.subject || t.subject || "" }))
+                                        applyExternalContent({ content: t.content, subject: t.subject || undefined })
                                         toast({ title: "Template Loaded", description: `"${t.name}" applied.` })
                                     }
                                 }}>
-                                    <SelectTrigger className="w-[180px] h-8 text-xs">
+                                    <SelectTrigger className="w-[150px] sm:w-[180px] h-8 text-xs">
                                         <SelectValue placeholder="📦 Load Template..." />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -446,7 +546,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                 <Dialog open={showAiDialog} onOpenChange={setShowAiDialog}>
                                     <DialogTrigger asChild>
                                         <Button size="sm" className="h-8 text-xs gap-1.5 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white border-0">
-                                            <Sparkles className="w-3.5 h-3.5" /> AI Assistant
+                                            <Sparkles className="w-3.5 h-3.5" /> AI
                                         </Button>
                                     </DialogTrigger>
                                     <DialogContent className="sm:max-w-[425px]">
@@ -461,7 +561,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                         <div className="space-y-4 py-2">
                                             <div className="space-y-2">
                                                 <Label>Action</Label>
-                                                <Select value={aiAction} onValueChange={(val: any) => setAiAction(val)}>
+                                                <Select value={aiAction} onValueChange={(val: "generate" | "improve" | "shorten" | "professional") => setAiAction(val)}>
                                                     <SelectTrigger>
                                                         <SelectValue />
                                                     </SelectTrigger>
@@ -499,7 +599,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                         {/* Content: Visual / Code / Preview */}
                         {showPreview ? (
                             <div className="rounded-xl border border-white/10 bg-white overflow-hidden">
-                                <div className="bg-gray-100 px-4 py-2 border-b flex items-center gap-2">
+                                <div className="bg-gray-100 px-3 sm:px-4 py-2 border-b flex items-center gap-2">
                                     <div className="flex gap-1.5">
                                         <div className="w-3 h-3 rounded-full bg-red-400" />
                                         <div className="w-3 h-3 rounded-full bg-yellow-400" />
@@ -507,7 +607,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                     </div>
                                     <span className="text-xs text-gray-500 ml-2">Email Preview</span>
                                 </div>
-                                <div className="p-0 min-h-[400px] max-h-[600px] overflow-y-auto">
+                                <div className="p-0 min-h-[300px] max-h-[600px] overflow-y-auto">
                                     <div dangerouslySetInnerHTML={{ __html: draft.content || '<div style="padding: 40px; text-align: center; color: #999;">No content yet — switch to Edit and start composing.</div>' }} />
                                 </div>
                             </div>
@@ -519,12 +619,12 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                             <div className="space-y-3">
                                 {/* Raw HTML Editor */}
                                 <div className="rounded-xl border border-orange-500/20 bg-black/60 overflow-hidden">
-                                    <div className="flex items-center justify-between px-3 py-2 bg-orange-500/10 border-b border-orange-500/20">
+                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-3 py-2 bg-orange-500/10 border-b border-orange-500/20">
                                         <div className="flex items-center gap-2">
                                             <Code2 className="w-4 h-4 text-orange-400" />
                                             <span className="text-xs font-medium text-orange-400">Raw HTML Code</span>
                                         </div>
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 flex-wrap">
                                             <Label htmlFor="html-file-upload" className="cursor-pointer text-xs bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded transition-colors flex items-center gap-1">
                                                 <Upload className="w-3 h-3" /> Upload .html
                                             </Label>
@@ -543,7 +643,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                     <textarea
                                         value={rawHtmlInput}
                                         onChange={(e) => setRawHtmlInput(e.target.value)}
-                                        className="w-full min-h-[350px] bg-transparent text-green-300 font-mono text-xs p-4 focus:outline-none resize-y leading-relaxed"
+                                        className="w-full min-h-[280px] sm:min-h-[350px] bg-transparent text-green-300 font-mono text-xs p-3 sm:p-4 focus:outline-none resize-y leading-relaxed"
                                         placeholder={'<!-- Paste your HTML email code here -->\n<div style="font-family: Arial, sans-serif;">\n  <h1>Your Email</h1>\n  <p>Content goes here...</p>\n</div>'}
                                         spellCheck={false}
                                     />
@@ -562,11 +662,11 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                 )}
 
                                 {/* Anti-spam tips */}
-                                <div className="rounded-lg border border-white/5 bg-black/30 p-3">
+                                <div className="rounded-lg border border-white/5 bg-black/30 p-3 hidden sm:block">
                                     <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground mb-2">
                                         <ShieldCheck className="w-3.5 h-3.5" /> Anti-Spam Best Practices
                                     </div>
-                                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[10px] text-muted-foreground">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-[10px] text-muted-foreground">
                                         <p>✅ Use inline styles, not &lt;style&gt; blocks</p>
                                         <p>✅ Add alt text to all images</p>
                                         <p>✅ Keep image-to-text ratio balanced</p>
@@ -587,8 +687,8 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                         )}
 
                         {/* Attachments */}
-                        <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                            <div className="flex items-center gap-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-white/10">
+                            <div className="flex items-center gap-3 flex-wrap">
                                 <Label htmlFor="quick-file-upload" className="cursor-pointer text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded transition-colors flex items-center gap-1.5">
                                     <Paperclip className="w-3.5 h-3.5" /> Attach File
                                 </Label>
@@ -604,25 +704,37 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                         {draft.attachments.map((file, idx) => (
                                             <Badge key={idx} variant="secondary" className="gap-1.5 pl-2 pr-1 py-0.5 text-xs">
                                                 <span className="truncate max-w-[120px]">{file.filename}</span>
-                                                <Trash2
-                                                    className="w-3 h-3 cursor-pointer hover:text-red-400"
+                                                {file.size && (
+                                                    <span className="text-muted-foreground text-[10px]">
+                                                        {(file.size / 1024 / 1024).toFixed(1)}MB
+                                                    </span>
+                                                )}
+                                                <button
+                                                    type="button"
+                                                    className="hover:text-red-400"
                                                     onClick={() => setDraft({
                                                         ...draft,
                                                         attachments: draft.attachments.filter((_, i) => i !== idx)
                                                     })}
-                                                />
+                                                >
+                                                    <X className="w-3 h-3" />
+                                                </button>
                                             </Badge>
                                         ))}
                                     </div>
                                 )}
                             </div>
                             <Button
-                                className="bg-[#DFFF00] text-black hover:bg-[#c8e600] font-bold px-6 gap-2"
+                                className="w-full sm:w-auto bg-[#DFFF00] text-black hover:bg-[#c8e600] font-bold px-6 gap-2"
                                 onClick={handleQuickSend}
-                                disabled={isSending || !draft.to || !draft.subject}
+                                disabled={isSending || toEmails.length === 0 || !draft.subject}
                             >
                                 {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                                {isSending ? "Sending..." : "Send Email"}
+                                {isSending
+                                    ? "Sending..."
+                                    : totalRecipients > 1
+                                        ? `Send to ${totalRecipients}`
+                                        : "Send Email"}
                             </Button>
                         </div>
                     </CardContent>
@@ -635,8 +747,8 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
             <TabsContent value="campaigns">
                 <Card className="bg-black/40 border-white/10">
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-2"><BarChart3 className="w-5 h-5" /> Campaign Results</CardTitle>
-                        <CardDescription>Track performance and manage your sent campaigns.</CardDescription>
+                        <CardTitle className="flex items-center gap-2 text-base md:text-lg"><BarChart3 className="w-4 h-4 md:w-5 md:h-5" /> Campaign Results</CardTitle>
+                        <CardDescription className="text-xs md:text-sm">Track performance and manage your sent campaigns.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
@@ -649,11 +761,11 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                             ) : campaigns.map(c => {
                                 const openRate = c.statsSent > 0 ? Math.round((c.statsOpened / c.statsSent) * 100) : 0
                                 return (
-                                    <div key={c.id} className="p-4 rounded-lg border border-white/10 bg-black/20 space-y-3">
-                                        <div className="flex items-center justify-between">
-                                            <div>
-                                                <h4 className="font-medium">{c.name}</h4>
-                                                <p className="text-xs text-muted-foreground">
+                                    <div key={c.id} className="p-3 md:p-4 rounded-lg border border-white/10 bg-black/20 space-y-3">
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                            <div className="min-w-0">
+                                                <h4 className="font-medium truncate">{c.name}</h4>
+                                                <p className="text-xs text-muted-foreground truncate">
                                                     {format(new Date(c.createdAt), 'MMM d, yyyy')} · via {c.sender?.email || 'Unknown'}
                                                 </p>
                                             </div>
@@ -676,25 +788,24 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                                 }}><Trash2 className="w-3.5 h-3.5" /></Button>
                                             </div>
                                         </div>
-                                        <div className="grid grid-cols-4 gap-3">
-                                            <div className="bg-black/30 rounded-lg p-2.5 text-center border border-white/5">
-                                                <p className="text-lg font-bold">{c.statsSent}</p>
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
+                                            <div className="bg-black/30 rounded-lg p-2 md:p-2.5 text-center border border-white/5">
+                                                <p className="text-base md:text-lg font-bold">{c.statsSent}</p>
                                                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Sent</p>
                                             </div>
-                                            <div className="bg-black/30 rounded-lg p-2.5 text-center border border-white/5">
-                                                <p className="text-lg font-bold text-blue-400">{c.statsOpened}</p>
+                                            <div className="bg-black/30 rounded-lg p-2 md:p-2.5 text-center border border-white/5">
+                                                <p className="text-base md:text-lg font-bold text-blue-400">{c.statsOpened}</p>
                                                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Opened</p>
                                             </div>
-                                            <div className="bg-black/30 rounded-lg p-2.5 text-center border border-white/5">
-                                                <p className="text-lg font-bold text-green-400">{openRate}%</p>
+                                            <div className="bg-black/30 rounded-lg p-2 md:p-2.5 text-center border border-white/5">
+                                                <p className="text-base md:text-lg font-bold text-green-400">{openRate}%</p>
                                                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Open Rate</p>
                                             </div>
-                                            <div className="bg-black/30 rounded-lg p-2.5 text-center border border-white/5">
-                                                <p className="text-lg font-bold text-yellow-400">{c.statsSent > 0 ? c.statsSent - c.statsOpened : 0}</p>
+                                            <div className="bg-black/30 rounded-lg p-2 md:p-2.5 text-center border border-white/5">
+                                                <p className="text-base md:text-lg font-bold text-yellow-400">{c.statsSent > 0 ? c.statsSent - c.statsOpened : 0}</p>
                                                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Pending</p>
                                             </div>
                                         </div>
-                                        {/* Open rate bar */}
                                         <div className="w-full bg-white/5 rounded-full h-1.5">
                                             <div className="h-full rounded-full bg-gradient-to-r from-primary to-green-400 transition-all" style={{ width: `${openRate}%` }} />
                                         </div>
@@ -708,14 +819,14 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
 
             {/* --- TEMPLATES TAB --- */}
             <TabsContent value="templates">
-                <div className="space-y-8">
+                <div className="space-y-6 md:space-y-8">
                     {/* System Templates Section */}
                     <div>
                         <div className="flex items-center gap-2 mb-4">
                             <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30">📦 Sistema</Badge>
-                            <h3 className="text-lg font-semibold">Templates Predefinidos</h3>
+                            <h3 className="text-base md:text-lg font-semibold">Templates Predefinidos</h3>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                             {allTemplates.filter(t => t.isSystem).map(t => (
                                 <Card key={t.id} className="bg-black/40 border-white/10 hover:border-primary/50 cursor-pointer group transition-all">
                                     <CardHeader className="pb-2">
@@ -729,9 +840,10 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                     <CardFooter className="pt-2">
                                         <Button
                                             variant="secondary"
-                                            className="w-full opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                                            className="w-full text-xs"
                                             onClick={() => {
-                                                setDraft(prev => ({ ...prev, content: t.content, subject: prev.subject || t.subject || "" }))
+                                                applyExternalContent({ content: t.content, subject: t.subject || undefined })
+                                                setActiveTab('compose')
                                                 toast({ title: "Template Cargado", description: `"${t.name}" listo para usar en Compose.` })
                                             }}
                                         >
@@ -747,9 +859,9 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                     <div>
                         <div className="flex items-center gap-2 mb-4">
                             <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">📝 Personalizados</Badge>
-                            <h3 className="text-lg font-semibold">Mis Templates</h3>
+                            <h3 className="text-base md:text-lg font-semibold">Mis Templates</h3>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                             {templates.map(t => (
                                 <Card key={t.id} className="bg-black/40 border-white/10 hover:border-primary/50 cursor-pointer group transition-all">
                                     <CardHeader>
@@ -760,8 +872,8 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                                     </CardContent>
                                     <CardFooter>
-                                        <Button variant="secondary" className="w-full opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => {
-                                            setDraft(prev => ({ ...prev, content: t.content, subject: prev.subject || t.subject || '' }))
+                                        <Button variant="secondary" className="w-full" onClick={() => {
+                                            applyExternalContent({ content: t.content, subject: t.subject || undefined })
                                             setActiveTab('compose')
                                             toast({ title: 'Template Loaded', description: `"${t.name}" loaded into Compose for editing.` })
                                         }}>Edit Template</Button>
@@ -772,7 +884,7 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
                             {/* Create Template Dialog */}
                             <Dialog open={showCreateTemplate} onOpenChange={setShowCreateTemplate}>
                                 <DialogTrigger asChild>
-                                    <Card className="bg-black/20 border-white/10 border-dashed flex items-center justify-center min-h-[250px] hover:bg-black/30 cursor-pointer transition-colors" onClick={() => setShowCreateTemplate(true)}>
+                                    <Card className="bg-black/20 border-white/10 border-dashed flex items-center justify-center min-h-[200px] sm:min-h-[250px] hover:bg-black/30 cursor-pointer transition-colors" onClick={() => setShowCreateTemplate(true)}>
                                         <div className="text-center">
                                             <Plus className="w-8 h-8 mx-auto mb-2 opacity-50" />
                                             <p className="font-medium">Create Template</p>
@@ -834,4 +946,3 @@ export function EmailMarketingStudio({ identities, templates, campaigns, contact
         </Tabs>
     )
 }
-

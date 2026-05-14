@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, User } from "lucide-react";
 import { formatDistanceToNow, format } from "date-fns";
 import { es } from "date-fns/locale";
-import { markEmailRead } from "../actions";
 import { InboxDetailActions } from "../inbox-detail-client";
 
 export const dynamic = "force-dynamic";
@@ -30,8 +29,18 @@ export default async function InboxDetailPage({ params }: PageProps) {
 
     if (!email) notFound();
 
+    // Mark as read on view. Done inline (no revalidatePath) because calling
+    // a server action's revalidate during a Server Component render is a
+    // Next.js anti-pattern that breaks the page.
     if (!email.read) {
-        await markEmailRead(email.id, true);
+        try {
+            await prisma.inboundEmail.update({
+                where: { id: email.id },
+                data: { read: true },
+            });
+        } catch (err) {
+            console.error("[inbox] markRead-on-view failed (non-blocking):", err);
+        }
     }
 
     return (
