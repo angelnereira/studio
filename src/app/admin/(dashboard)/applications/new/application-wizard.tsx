@@ -43,7 +43,19 @@ const steps = [
 
 type SourceType = "text" | "screenshot" | "url";
 
-export default function NewApplicationWizard() {
+export interface CVAssetOption {
+    id: string;
+    name: string;
+    language: string;
+    kind: string;
+    isDefault: boolean;
+}
+
+interface WizardProps {
+    cvAssets?: CVAssetOption[];
+}
+
+export default function NewApplicationWizard({ cvAssets = [] }: WizardProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { toast } = useToast();
@@ -51,12 +63,25 @@ export default function NewApplicationWizard() {
     // State
     const [currentStep, setCurrentStep] = useState(1);
     const [sourceType, setSourceType] = useState<SourceType>("text");
-    const [language, setLanguage] = useState("English");
+    // language stays as ISO code on the wire ("en" | "es") so it matches
+    // the server action schema directly.
+    const [language, setLanguage] = useState<"en" | "es">("es");
+    const [cvAssetId, setCvAssetId] = useState<string>("auto");
     const [model, setModel] = useState("gemini");
     const [vacancyId, setVacancyId] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Auto-pick the default CV for the chosen language so the wizard
+    // pre-selects "your usual CV" without an extra click.
+    useEffect(() => {
+        if (cvAssetId !== "auto") return;
+        // already auto — nothing to do
+    }, [cvAssetId]);
+
+    const cvAssetsForLanguage = cvAssets.filter(a => a.language === language);
+    const defaultAssetForLanguage = cvAssetsForLanguage.find(a => a.isDefault);
 
     // Form states
     const [captureState, captureAction] = useActionState<CaptureVacancyState, FormData>(captureVacancy, {
@@ -426,6 +451,14 @@ export default function NewApplicationWizard() {
                             >
                                 <input type="hidden" name="vacancyId" value={captureState.vacancyId || initialVacancyId || ""} />
 
+                                {/* Hidden inputs so language + cvAssetId reach the server action via FormData. */}
+                                <input type="hidden" name="language" value={language} />
+                                <input
+                                    type="hidden"
+                                    name="cvAssetId"
+                                    value={cvAssetId === "auto" ? (defaultAssetForLanguage?.id ?? "") : cvAssetId}
+                                />
+
                                 <div className="grid sm:grid-cols-2 gap-4">
                                     <div className="space-y-2">
                                         <Label htmlFor="profileId">Profile</Label>
@@ -438,21 +471,53 @@ export default function NewApplicationWizard() {
                                         <p className="text-xs text-muted-foreground">Leave empty to use default profile</p>
                                     </div>
                                     <div className="space-y-2">
-                                        <Label htmlFor="language">Language</Label>
-                                        <Select value={language} onValueChange={setLanguage}>
-                                            <SelectTrigger id="language" className="w-[180px]">
-                                                <SelectValue placeholder="Select language" />
+                                        <Label htmlFor="language">Idioma del CV / Email</Label>
+                                        <Select value={language} onValueChange={(v) => setLanguage(v === "en" ? "en" : "es")}>
+                                            <SelectTrigger id="language" className="w-full sm:w-[200px]">
+                                                <SelectValue />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="English">English</SelectItem>
-                                                <SelectItem value="Spanish">Spanish</SelectItem>
+                                                <SelectItem value="es">🇪🇸 Español</SelectItem>
+                                                <SelectItem value="en">🇬🇧 English</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
+
+                                    <div className="space-y-2 sm:col-span-2">
+                                        <Label>CV que se adjuntará</Label>
+                                        <Select value={cvAssetId} onValueChange={setCvAssetId}>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="auto">
+                                                    {defaultAssetForLanguage
+                                                        ? `🔁 Auto: "${defaultAssetForLanguage.name}" (default ${language.toUpperCase()})`
+                                                        : `🛠 Generar PDF desde mi perfil (${language.toUpperCase()})`}
+                                                </SelectItem>
+                                                {cvAssetsForLanguage.length > 0 && (
+                                                    <>
+                                                        <div className="px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+                                                            Tus CVs en {language === "es" ? "español" : "inglés"}
+                                                        </div>
+                                                        {cvAssetsForLanguage.map(a => (
+                                                            <SelectItem key={a.id} value={a.id}>
+                                                                {a.name} {a.isDefault && "★"}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </>
+                                                )}
+                                                <div className="px-2 py-1 text-[10px] text-muted-foreground border-t border-white/10 mt-1 pt-1">
+                                                    ¿No aparece? Súbelo en /admin/cv-assets
+                                                </div>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+
                                     <div className="space-y-2">
                                         <Label htmlFor="model">AI Model</Label>
                                         <Select value={model} onValueChange={setModel}>
-                                            <SelectTrigger id="model" className="w-[200px]">
+                                            <SelectTrigger id="model" className="w-full sm:w-[200px]">
                                                 <SelectValue placeholder="Select Model" />
                                             </SelectTrigger>
                                             <SelectContent>

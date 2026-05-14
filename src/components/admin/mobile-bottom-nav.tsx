@@ -24,6 +24,7 @@ const MORE_ITEMS = [
     { href: "/admin/blog", icon: FileText, label: "Blog & CMS" },
     { href: "/admin/applications", icon: Briefcase, label: "Applications" },
     { href: "/admin/profile", icon: User, label: "Profile" },
+    { href: "/admin/cv-assets", icon: FileText, label: "CV Assets" },
     { href: "/admin/cover-letter", icon: FileSignature, label: "Cover Letters" },
     { href: "/admin/job-analysis", icon: Search, label: "Job Analysis" },
     { href: "/admin/settings", icon: Settings, label: "Settings" },

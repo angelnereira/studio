@@ -9,6 +9,7 @@ import { Resend } from "resend";
 import { revalidatePath } from "next/cache";
 import { load } from "cheerio";
 import type { WorkExperience, SkillCategory, VacancyRequirements, VacancyAnalysis } from "@/types/profile";
+import { buildPersonalizedCVPdf } from "@/lib/cv-pdf-server";
 
 // ============================================
 // Schemas
@@ -23,7 +24,8 @@ const captureVacancySchema = z.object({
 const generateApplicationSchema = z.object({
     vacancyId: z.string().min(1),
     profileId: z.string().min(1),
-    language: z.string().optional(),
+    language: z.enum(["en", "es"]).optional(),
+    cvAssetId: z.string().optional(),
     model: z.string().optional(),
     recipientName: z.string().optional(),
     recipientEmail: z.string().email().optional(),
@@ -221,7 +223,8 @@ export async function generateApplication(
             };
         }
 
-        const { vacancyId, profileId, language, model, recipientName, recipientEmail } = parsed.data;
+        const { vacancyId, profileId, language, cvAssetId, model: _model, recipientName, recipientEmail } = parsed.data;
+        const lang: "en" | "es" = language === "es" ? "es" : "en";
 
         // Fetch vacancy and profile
         const [vacancy, profile] = await Promise.all([
@@ -262,8 +265,19 @@ export async function generateApplication(
                 cultureFit: (vacancy.analysis as VacancyAnalysis)?.cultureFit || null,
             },
             recipientName,
-            language: (language === 'es' ? 'es' : 'en') as 'en' | 'es',
+            language: lang,
         });
+
+        // If cvAssetId came in, validate it exists. Otherwise leave null and
+        // the send action will fall back to generating a PDF from cvContent.
+        let resolvedCvAssetId: string | null = null;
+        if (cvAssetId) {
+            const asset = await prisma.cVAsset.findUnique({
+                where: { id: cvAssetId },
+                select: { id: true, language: true },
+            });
+            if (asset) resolvedCvAssetId = asset.id;
+        }
 
         // Create application record
         const application = await prisma.application.create({
@@ -271,6 +285,8 @@ export async function generateApplication(
                 vacancyId,
                 profileId,
                 cvContent: JSON.parse(JSON.stringify(content.cv)),
+                language: lang,
+                cvAssetId: resolvedCvAssetId,
                 emailSubject: content.email.subject,
                 emailHtml: `${content.email.greeting}\n\n${content.email.opening}\n\n${content.email.body}\n\n${content.email.closing}\n\n${content.email.signature}`,
                 emailText: `${content.email.greeting}\n\n${content.email.opening}\n\n${content.email.body}\n\n${content.email.closing}\n\n${content.email.signature}`,
@@ -298,15 +314,26 @@ export async function generateApplication(
 }
 
 /**
- * Send application via email with CV attachment
+ * Send application via email with CV attachment.
+ *
+ * Attachment priority:
+ *   1) cvAssetId on the Application → use that uploaded PDF (custom CV the
+ *      user designed externally, e.g. their Canva PDF in the language they
+ *      want).
+ *   2) Otherwise → generate a personalized PDF from `cvContent` in the
+ *      application's language using buildPersonalizedCVPdf.
+ *
+ * Resend `tags` carry applicationId + vacancyId so the Resend events webhook
+ * (open/click/bounce) can route updates back to the right Application row
+ * without us having to parse subjects.
  */
 export async function sendApplication(
-    applicationId: string
+    applicationId: string,
 ): Promise<SendApplicationState> {
     try {
         const application = await prisma.application.findUnique({
             where: { id: applicationId },
-            include: { vacancy: true, profile: true },
+            include: { vacancy: true, profile: true, cvAsset: true },
         });
 
         if (!application) {
@@ -321,121 +348,33 @@ export async function sendApplication(
             return { success: false, message: "Email service not configured" };
         }
 
-        const resend = new Resend(process.env.RESEND_API_KEY);
+        const lang: "en" | "es" = application.language === "es" ? "es" : "en";
 
-        // Generate PDF attachment from CV content
-        let attachments: { filename: string; content: Buffer }[] = [];
+        // Build the CV attachment: prefer the uploaded asset, else generate.
+        const attachments: { filename: string; content: Buffer }[] = [];
         try {
-            const cvContent = application.cvContent as Record<string, unknown>;
-            if (cvContent) {
-                const { default: jsPDF } = await import('jspdf');
-                const doc = new jsPDF();
-                const profile = application.profile;
-                const vacancy = application.vacancy;
-
-                // Simple but professional CV PDF
-                const pageWidth = doc.internal.pageSize.getWidth();
-                const margin = 20;
-                const contentWidth = pageWidth - 2 * margin;
-                let y = 20;
-
-                // Header
-                doc.setFillColor(223, 255, 0);
-                doc.rect(0, 0, pageWidth, 50, 'F');
-                doc.setTextColor(0, 0, 0);
-                doc.setFontSize(24);
-                doc.setFont('helvetica', 'bold');
-                doc.text(profile.name, margin, y + 12);
-                doc.setFontSize(10);
-                doc.setFont('helvetica', 'normal');
-                doc.text([profile.email, profile.phone, profile.location].filter(Boolean).join(' · '), margin, y + 22);
-
-                y = 60;
-                doc.setTextColor(255, 255, 255);
-
-                // Target position
-                if (vacancy.position && vacancy.company) {
-                    doc.setFillColor(30, 30, 30);
-                    doc.roundedRect(margin, y, contentWidth, 12, 3, 3, 'F');
-                    doc.setFontSize(9);
-                    doc.setTextColor(223, 255, 0);
-                    doc.text(`Application for: ${vacancy.position} at ${vacancy.company}`, margin + 5, y + 8);
-                    y += 20;
-                }
-
-                // Summary
-                const summary = (cvContent.summary as string) || profile.summary;
-                if (summary) {
-                    doc.setFontSize(12);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(223, 255, 0);
-                    doc.text('Professional Summary', margin, y);
-                    y += 7;
-                    doc.setFontSize(9);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(180, 180, 180);
-                    const lines = doc.splitTextToSize(summary, contentWidth);
-                    lines.forEach((line: string) => { doc.text(line, margin, y); y += 4.5; });
-                    y += 5;
-                }
-
-                // Skills
-                const skills = (cvContent.skillsHighlighted as string[]) || [];
-                if (skills.length > 0) {
-                    doc.setFontSize(12);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(223, 255, 0);
-                    doc.text('Key Skills', margin, y);
-                    y += 7;
-                    doc.setFontSize(9);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(255, 255, 255);
-                    doc.text(skills.slice(0, 15).join(' · '), margin, y);
-                    y += 10;
-                }
-
-                // Experience
-                const experience = (cvContent.experience as Record<string, unknown>[]) || [];
-                if (experience.length > 0) {
-                    doc.setFontSize(12);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(223, 255, 0);
-                    doc.text('Professional Experience', margin, y);
-                    y += 7;
-                    experience.slice(0, 5).forEach((exp) => {
-                        if (y > 270) { doc.addPage(); y = 20; }
-                        doc.setFontSize(10);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(255, 255, 255);
-                        doc.text(String(exp.position || ''), margin, y);
-                        doc.setFontSize(9);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(156, 163, 175);
-                        doc.text(`${exp.company || ''} · ${exp.period || ''}`, margin, y + 5);
-                        y += 12;
-                        const highlights = (exp.highlights as string[]) || [];
-                        highlights.slice(0, 3).forEach((h: string) => {
-                            const hLines = doc.splitTextToSize(`• ${h}`, contentWidth - 5);
-                            hLines.forEach((line: string) => { doc.text(line, margin + 3, y); y += 4; });
-                        });
-                        y += 3;
-                    });
-                }
-
-                // Generate buffer
-                const pdfBuffer = Buffer.from(doc.output('arraybuffer'));
-                const safeName = profile.name.replace(/\s+/g, '_');
-                const safeCompany = (vacancy.company || 'General').replace(/\s+/g, '_');
-                attachments = [{
-                    filename: `${safeName}_CV_${safeCompany}.pdf`,
-                    content: pdfBuffer,
-                }];
+            if (application.cvAsset) {
+                attachments.push({
+                    filename: application.cvAsset.name.endsWith(".pdf")
+                        ? application.cvAsset.name
+                        : `${application.cvAsset.name}.pdf`,
+                    content: Buffer.from(application.cvAsset.data),
+                });
+            } else if (application.cvContent) {
+                const { buffer, filename } = buildPersonalizedCVPdf({
+                    profile: application.profile,
+                    vacancy: application.vacancy,
+                    cvContent: application.cvContent as Parameters<typeof buildPersonalizedCVPdf>[0]["cvContent"],
+                    language: lang,
+                });
+                attachments.push({ filename, content: buffer });
             }
         } catch (pdfError) {
-            console.error('PDF generation failed, sending without attachment:', pdfError);
-            // Continue without attachment
+            // Don't fail the send; just send without attachment and log.
+            console.error("[sendApplication] CV attachment failed (non-blocking):", pdfError);
         }
 
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const result = await resend.emails.send({
             from: `${application.profile.name} <contact@angelnereira.com>`,
             to: [application.recipientEmail],
@@ -443,6 +382,11 @@ export async function sendApplication(
             html: application.emailHtml,
             text: application.emailText,
             replyTo: application.profile.email,
+            tags: [
+                { name: "applicationId", value: application.id },
+                { name: "vacancyId", value: application.vacancyId },
+                { name: "language", value: lang },
+            ],
             ...(attachments.length > 0 && { attachments }),
         });
 
@@ -450,7 +394,26 @@ export async function sendApplication(
             return { success: false, message: result.error.message };
         }
 
-        // Update application status
+        // Make sure the recipient lives in CRM so inbound replies can be
+        // attributed back to them and to this application via fromEmail match.
+        try {
+            const existing = await prisma.contact.findFirst({
+                where: { email: application.recipientEmail },
+                select: { id: true },
+            });
+            if (!existing) {
+                await prisma.contact.create({
+                    data: {
+                        email: application.recipientEmail,
+                        name: application.recipientName ?? application.recipientEmail.split("@")[0],
+                        formType: "recruiter",
+                    },
+                });
+            }
+        } catch (contactErr) {
+            console.error("[sendApplication] contact upsert failed (non-blocking):", contactErr);
+        }
+
         await prisma.application.update({
             where: { id: applicationId },
             data: {
@@ -460,13 +423,13 @@ export async function sendApplication(
             },
         });
 
-        // Update vacancy status
         await prisma.jobVacancy.update({
             where: { id: application.vacancyId },
             data: { status: "applied" },
         });
 
         revalidatePath("/admin/applications");
+        revalidatePath(`/admin/applications/${applicationId}`);
 
         return {
             success: true,

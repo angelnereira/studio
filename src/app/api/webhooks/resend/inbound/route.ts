@@ -108,6 +108,30 @@ export async function POST(req: Request) {
             select: { id: true },
         });
 
+        // Try to attribute this inbound reply to an existing Application.
+        // Match logic (most specific first):
+        //   1. inReplyTo matches Application.resendId — direct threading.
+        //   2. fromEmail matches an Application.recipientEmail in non-terminal
+        //      status, picking the most recent. This catches recruiters who
+        //      don't preserve the In-Reply-To header.
+        let applicationMatch: { id: string; vacancyId: string } | null = null;
+        if (data.in_reply_to) {
+            applicationMatch = await prisma.application.findFirst({
+                where: { resendId: data.in_reply_to },
+                select: { id: true, vacancyId: true },
+            });
+        }
+        if (!applicationMatch) {
+            applicationMatch = await prisma.application.findFirst({
+                where: {
+                    recipientEmail: fromEmail,
+                    status: { in: ["sent", "opened", "replied", "interview"] },
+                },
+                orderBy: { sentAt: "desc" },
+                select: { id: true, vacancyId: true },
+            });
+        }
+
         const record = await prisma.inboundEmail.upsert({
             where: { messageId },
             update: {},
@@ -123,8 +147,25 @@ export async function POST(req: Request) {
                 attachments: data.attachments ? (data.attachments as unknown as object) : undefined,
                 receivedAt,
                 contactId: contact?.id ?? null,
+                applicationId: applicationMatch?.id ?? null,
             },
         });
+
+        // If linked to an application, mark it as replied and bump vacancy.
+        if (applicationMatch?.id) {
+            try {
+                await prisma.application.update({
+                    where: { id: applicationMatch.id },
+                    data: { status: "replied", repliedAt: receivedAt, responseAt: receivedAt },
+                });
+                await prisma.jobVacancy.update({
+                    where: { id: applicationMatch.vacancyId },
+                    data: { status: "responded" },
+                });
+            } catch (err) {
+                console.error("[resend-inbound] application status bump failed:", err);
+            }
+        }
 
         if (contact?.id) {
             await prisma.activityLog.create({
@@ -132,7 +173,12 @@ export async function POST(req: Request) {
                     type: "email_received",
                     title: `Received: ${subject}`,
                     contactId: contact.id,
-                    metadata: { messageId, fromEmail, subject },
+                    metadata: {
+                        messageId,
+                        fromEmail,
+                        subject,
+                        applicationId: applicationMatch?.id ?? null,
+                    },
                 },
             });
         }

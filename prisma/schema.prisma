@@ -293,6 +293,8 @@ model Application {
   cvContent      Json
   cvPdfUrl       String?
   cvFileName     String?
+  language       String      @default("en")
+  cvAssetId      String?
   emailSubject   String
   emailHtml      String
   emailText      String
@@ -304,39 +306,68 @@ model Application {
   notes          String?
   followUpDate   DateTime?
   responseAt     DateTime?
+  openedAt       DateTime?
+  clickedAt      DateTime?
+  repliedAt      DateTime?
+  bouncedAt      DateTime?
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
   profile        ProfileBase @relation(fields: [profileId], references: [id])
   vacancy        JobVacancy  @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+  cvAsset        CVAsset?    @relation(fields: [cvAssetId], references: [id], onDelete: SetNull)
+  inboundEmails  InboundEmail[]
 
   @@index([status])
   @@index([vacancyId])
+  @@index([cvAssetId])
+  @@index([resendId])
   @@index([createdAt])
   @@map("applications")
 }
 
+model CVAsset {
+  id           String        @id @default(cuid())
+  name         String
+  language     String        @default("en")
+  kind         String        @default("custom") // "short" | "profile" | "custom"
+  mimeType     String        @default("application/pdf")
+  data         Bytes
+  size         Int
+  isDefault    Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  applications Application[]
+
+  @@index([language])
+  @@index([isDefault])
+  @@map("cv_assets")
+}
+
 model InboundEmail {
-  id          String   @id @default(cuid())
-  messageId   String   @unique
-  fromEmail   String
-  fromName    String?
-  toEmail     String
-  subject     String
-  text        String?
-  html        String?
-  inReplyTo   String?
-  attachments Json?
-  read        Boolean  @default(false)
-  archived    Boolean  @default(false)
-  receivedAt  DateTime
-  createdAt   DateTime @default(now())
-  contactId   String?
-  contact     Contact? @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  id            String       @id @default(cuid())
+  messageId     String       @unique
+  fromEmail     String
+  fromName      String?
+  toEmail       String
+  subject       String
+  text          String?
+  html          String?
+  inReplyTo     String?
+  attachments   Json?
+  read          Boolean      @default(false)
+  archived      Boolean      @default(false)
+  receivedAt    DateTime
+  createdAt     DateTime     @default(now())
+  contactId     String?
+  applicationId String?
+  contact       Contact?     @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  application   Application? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
 
   @@index([receivedAt])
   @@index([read])
   @@index([archived])
   @@index([contactId])
+  @@index([applicationId])
   @@index([fromEmail])
   @@map("inbound_emails")
 }
