@@ -31,7 +31,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 // --- Custom Email-Friendly Extensions ---
 
@@ -362,6 +362,16 @@ export function RichTextEditor({ content, onChange, editable = true, services }:
             onChange(editor.getHTML())
         },
     })
+
+    // Sync external content changes into the editor (e.g. template load, HTML upload).
+    // TipTap doesn't react to the `content` prop after mount; we have to push it manually.
+    useEffect(() => {
+        if (!editor) return
+        const current = editor.getHTML()
+        if (content && content !== current) {
+            editor.commands.setContent(content, false)
+        }
+    }, [content, editor])
 
     return (
         <div className="flex flex-col">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import {
     Type, Image, MousePointerClick, Minus, MoveVertical,
     Columns2, Share2, FileDown, Plus, Trash2, ChevronUp,
@@ -373,6 +373,13 @@ export function VisualEmailComposer({ initialBlocks, onChange }: VisualEmailComp
         setBlocks(newBlocks)
         onChange(blocksToFullHtml(newBlocks))
     }, [onChange])
+
+    // Emit initial HTML on mount so the parent has draft.content before any edits.
+    // Without this, switching from Visual mode to Send without editing produces an empty email.
+    useEffect(() => {
+        onChange(blocksToFullHtml(blocks))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const addBlock = (type: BlockType) => {
         const newBlock = createBlock(type)

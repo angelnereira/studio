@@ -416,21 +416,27 @@ export async function getCampaignStats(campaignId: string) {
 
 // ═══════════════════════════════════════
 // QUICK SEND — Gmail-like direct send
+// Supports single or multiple recipients via Resend's "to"/"cc"/"bcc" arrays
+// (Resend allows up to 50 recipients combined per email).
 // ═══════════════════════════════════════
 
-const QuickSendSchema = z.object({
-    to: z.string().email("Invalid email address"),
-    subject: z.string().min(1, "Subject is required"),
-    html: z.string().min(1, "Email content is required"),
-    senderId: z.string().min(1, "Sender is required"),
-    attachments: z.array(z.object({
-        filename: z.string(),
-        content: z.string()
-    })).optional(),
-})
+const RESEND_RECIPIENT_LIMIT = 50
+
+const emailListSchema = z
+    .array(z.string().email("Invalid email address"))
+    .max(RESEND_RECIPIENT_LIMIT, `Max ${RESEND_RECIPIENT_LIMIT} recipients per email`)
+
+// Parses "a@x.com, b@y.com;  c@z.com" into a clean array of valid emails.
+function parseRecipients(input: string | string[] | undefined): string[] {
+    if (!input) return []
+    const raw = Array.isArray(input) ? input : input.split(/[,;\n]/)
+    return raw.map(e => e.trim()).filter(Boolean)
+}
 
 export async function sendQuickEmail(data: {
-    to: string
+    to: string | string[]
+    cc?: string | string[]
+    bcc?: string | string[]
     subject: string
     html: string
     senderId: string
@@ -440,14 +446,32 @@ export async function sendQuickEmail(data: {
     const session = await auth()
     if (!session?.user) return { success: false, message: "Unauthorized" }
 
-    const { to, subject, html, senderId, attachments } = data
-    if (!to || !subject || !html || !senderId) {
-        return { success: false, message: "Missing required fields" }
+    const toList = parseRecipients(data.to)
+    const ccList = parseRecipients(data.cc)
+    const bccList = parseRecipients(data.bcc)
+
+    if (toList.length === 0) {
+        return { success: false, message: "At least one recipient is required in 'To'." }
+    }
+    if (!data.subject?.trim()) return { success: false, message: "Subject is required" }
+    if (!data.html?.trim()) return { success: false, message: "Email content is required" }
+    if (!data.senderId) return { success: false, message: "Sender identity is required" }
+
+    // Validate each list and enforce Resend's combined limit
+    for (const [label, list] of [["to", toList], ["cc", ccList], ["bcc", bccList]] as const) {
+        const result = emailListSchema.safeParse(list)
+        if (!result.success) {
+            return { success: false, message: `Invalid ${label} list: ${result.error.errors[0]?.message ?? "format error"}` }
+        }
+    }
+    const total = toList.length + ccList.length + bccList.length
+    if (total > RESEND_RECIPIENT_LIMIT) {
+        return { success: false, message: `Resend allows max ${RESEND_RECIPIENT_LIMIT} recipients per email (you have ${total}).` }
     }
 
     try {
         // 2. Get sender identity
-        const sender = await prisma.senderIdentity.findUnique({ where: { id: senderId } })
+        const sender = await prisma.senderIdentity.findUnique({ where: { id: data.senderId } })
         if (!sender) return { success: false, message: "Sender identity not found" }
 
         // Format sender as: "Name <email@domain.com>"
@@ -459,10 +483,12 @@ export async function sendQuickEmail(data: {
         // 4. Send using SDK with { data, error } pattern
         const { data: resendData, error: resendError } = await resend.emails.send({
             from,
-            to: [to],
-            subject,
-            html,
-            attachments: attachments?.map(a => ({
+            to: toList,
+            cc: ccList.length > 0 ? ccList : undefined,
+            bcc: bccList.length > 0 ? bccList : undefined,
+            subject: data.subject,
+            html: data.html,
+            attachments: data.attachments?.map(a => ({
                 filename: a.filename,
                 content: Buffer.from(a.content, 'base64')
             })),
@@ -474,26 +500,42 @@ export async function sendQuickEmail(data: {
             return { success: false, message: resendError.message }
         }
 
-        // 6. Success logging and activity
-        console.log('Email sent successfully. ID:', resendData?.id)
-
+        // 6. Success logging and activity — log per matched contact for CRM traceability
         try {
-            const contact = await prisma.contact.findFirst({ where: { email: to } })
-            await prisma.activityLog.create({
-                data: {
-                    type: 'email_sent',
-                    title: `📧 Quick: "${subject.slice(0, 40)}"`,
-                    contactId: contact?.id,
-                    metadata: { to, subject, resendId: resendData?.id },
-                }
+            const allRecipients = [...toList, ...ccList, ...bccList]
+            const matched = await prisma.contact.findMany({
+                where: { email: { in: allRecipients } },
+                select: { id: true, email: true }
             })
+            if (matched.length > 0) {
+                await prisma.activityLog.createMany({
+                    data: matched.map(c => ({
+                        type: 'email_sent',
+                        title: `📧 Quick: "${data.subject.slice(0, 40)}"`,
+                        contactId: c.id,
+                        metadata: { to: toList, cc: ccList, bcc: bccList, subject: data.subject, resendId: resendData?.id } as object,
+                    })),
+                })
+            } else {
+                await prisma.activityLog.create({
+                    data: {
+                        type: 'email_sent',
+                        title: `📧 Quick: "${data.subject.slice(0, 40)}"`,
+                        metadata: { to: toList, cc: ccList, bcc: bccList, subject: data.subject, resendId: resendData?.id } as object,
+                    }
+                })
+            }
         } catch (logErr) {
-            console.error('Log failed:', logErr)
+            console.error('Log failed (non-blocking):', logErr)
         }
+
+        const recipientSummary = toList.length === 1 && ccList.length === 0 && bccList.length === 0
+            ? toList[0]
+            : `${total} recipients`
 
         return {
             success: true,
-            message: `Email sent to ${to}`,
+            message: `Email sent to ${recipientSummary}`,
             data: { id: resendData?.id }
         }
 
