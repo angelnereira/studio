@@ -14,17 +14,6 @@ async function requireSession() {
     return session;
 }
 
-export async function markEmailRead(id: string, read = true) {
-    await requireSession();
-    await prisma.inboundEmail.update({
-        where: { id },
-        data: { read },
-    });
-    revalidatePath("/admin/inbox");
-    revalidatePath(`/admin/inbox/${id}`);
-    revalidatePath("/admin");
-}
-
 export async function archiveEmail(id: string, archived = true) {
     await requireSession();
     await prisma.inboundEmail.update({
@@ -39,14 +28,6 @@ export async function deleteInboundEmail(id: string) {
     await requireSession();
     await prisma.inboundEmail.delete({ where: { id } });
     revalidatePath("/admin/inbox");
-}
-
-export async function getUnreadInboundCount(): Promise<number> {
-    try {
-        return await prisma.inboundEmail.count({ where: { read: false, archived: false } });
-    } catch {
-        return 0;
-    }
 }
 
 const ReplySchema = z.object({
