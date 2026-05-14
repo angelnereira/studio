@@ -10,6 +10,7 @@ import {
 import { cn } from "@/lib/utils"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
+import { signOutAction } from "@/app/admin/(dashboard)/_actions/auth"
 
 // Five primary destinations live on the bar; everything else lives behind "More".
 const PRIMARY_ITEMS = [
@@ -31,17 +32,15 @@ const MORE_ITEMS = [
 interface MobileBottomNavProps {
     userName?: string | null
     userEmail?: string | null
-    onSignOut?: () => void | Promise<void>
 }
 
-export function MobileBottomNav({ userName, userEmail, onSignOut }: MobileBottomNavProps) {
+export function MobileBottomNav({ userName, userEmail }: MobileBottomNavProps) {
     const pathname = usePathname()
     const [showMore, setShowMore] = useState(false)
 
     const isActive = (href: string, exact?: boolean) =>
         exact ? pathname === href : pathname === href || pathname.startsWith(href + "/")
 
-    // Highlight "More" when on any of the secondary routes
     const moreActive = MORE_ITEMS.some(i => isActive(i.href))
 
     return (
@@ -131,22 +130,16 @@ export function MobileBottomNav({ userName, userEmail, onSignOut }: MobileBottom
                             })}
                         </div>
 
-                        {onSignOut && (
-                            <form
-                                action={async () => {
-                                    setShowMore(false)
-                                    await onSignOut()
-                                }}
+                        {/* Server Action wired straight to the form — no client wrapper. */}
+                        <form action={signOutAction}>
+                            <Button
+                                type="submit"
+                                variant="ghost"
+                                className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-950/30"
                             >
-                                <Button
-                                    type="submit"
-                                    variant="ghost"
-                                    className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-950/30"
-                                >
-                                    <LogOut className="mr-2 h-4 w-4" /> Sign Out
-                                </Button>
-                            </form>
-                        )}
+                                <LogOut className="mr-2 h-4 w-4" /> Sign Out
+                            </Button>
+                        </form>
                     </div>
                 </SheetContent>
             </Sheet>
