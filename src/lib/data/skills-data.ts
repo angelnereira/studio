@@ -5,7 +5,7 @@ export type PracticalAbilityData = {
     iconName: string;
 };
 
-export type SkillCategory = "frontend" | "backend" | "data" | "devops" | "cloud" | "security" | "ai-engineering";
+export type SkillCategory = "frontend" | "backend" | "data" | "devops" | "cloud" | "security" | "ai-engineering" | "mobile-systems";
 
 export type SkillData = {
     name: string;
@@ -35,7 +35,7 @@ export const skillsData: SkillData[] = [
         practicalAbilities: [
             { title: "App Router & Server Components", description: "Arquitecturas modernas con React Server Components para renderizado óptimo y bundle size mínimo.", iconName: "Zap" },
             { title: "API Routes & Server Actions", description: "Backend integrado con endpoints RESTful y Server Actions para operaciones de base de datos.", iconName: "Server" },
-            { title: "PWA & Offline-First", description: "Implementación de Service Workers y estrategias de caché para aplicaciones offline-first.", iconName: "Shield" },
+            { title: "PWA & Offline-First", description: "Service Workers y estrategias de caché para aplicaciones que operan sin conexión.", iconName: "Shield" },
         ]
     },
     {
@@ -68,12 +68,36 @@ export const skillsData: SkillData[] = [
         name: "Go (Golang)",
         slug: "golang",
         iconName: "SiGo",
-        description: "Lenguaje compilado de alto rendimiento para servicios backend concurrentes, APIs de baja latencia y sistemas distribuidos a escala.",
+        description: "Lenguaje compilado de alto rendimiento para servicios backend concurrentes, APIs de baja latencia y herramientas de sistemas.",
         category: "backend",
         practicalAbilities: [
             { title: "Goroutines & Concurrencia", description: "Manejo de miles de conexiones simultáneas con goroutines y channels para servicios de alto throughput.", iconName: "Zap" },
-            { title: "APIs REST de Alto Rendimiento", description: "Servicios HTTP con latencias de microsegundos, binarios nativos y sin dependencias de runtime.", iconName: "Server" },
-            { title: "Integración con Kafka & Redis", description: "Productores y consumidores de eventos en tiempo real con SDKs nativos de Go para arquitecturas distribuidas.", iconName: "Database" },
+            { title: "Microservicios Fiscales", description: "Microservicio Go en Sago One que genera CUFE/CAFE offline (~15µs/op, algoritmo Módulo 10).", iconName: "Server" },
+            { title: "SDK HKA Open Source", description: "Gateway SOAP fiscal multi-tenant con validación estricta y enrutamiento dinámico de tipos de documento.", iconName: "Database" },
+        ]
+    },
+    {
+        name: "Rust",
+        slug: "rust",
+        iconName: "SiRust",
+        description: "Lenguaje de sistemas con garantías de memoria sin GC. Lo uso para herramientas nativas Android (VPN routing, audio DSP) y módulos críticos sin overhead.",
+        category: "backend",
+        practicalAbilities: [
+            { title: "Tooling Nativo Android", description: "Gravital-Share: forwarding de tráfico VPN para dispositivos en hotspot con reglas iptables/nftables dinámicas.", iconName: "Server" },
+            { title: "Audio / DSP Pipeline", description: "Gravital-Talk: filtros de audio de baja latencia construidos desde principios de procesamiento digital de señales.", iconName: "Zap" },
+            { title: "Memory Safety Sin GC", description: "Garantías de seguridad de memoria en compilación, ideal para componentes embebidos críticos.", iconName: "Shield" },
+        ]
+    },
+    {
+        name: "Kotlin",
+        slug: "kotlin",
+        iconName: "SiKotlin",
+        description: "Lenguaje principal para Android nativo. Lo uso para construir herramientas de desarrollador como terminales Linux profesionales en el bolsillo.",
+        category: "mobile-systems",
+        practicalAbilities: [
+            { title: "Android Nativo", description: "Gravital-Shell: terminal Linux profesional para Android con interfaz nativa y gestor APK integrado.", iconName: "Code2" },
+            { title: "JNI & Procesos Nativos", description: "Interoperación con código C/proot para ejecutar entornos Alpine Linux aislados sin root.", iconName: "Server" },
+            { title: "Coroutines & Flow", description: "Manejo asíncrono moderno para UI responsiva y operaciones de larga duración.", iconName: "Zap" },
         ]
     },
 
@@ -82,23 +106,23 @@ export const skillsData: SkillData[] = [
         name: "PostgreSQL",
         slug: "postgresql",
         iconName: "SiPostgresql",
-        description: "Base de datos relacional robusta y extensible. El estándar para aplicaciones empresariales.",
+        description: "Base de datos relacional robusta y extensible. El estándar para aplicaciones empresariales con cargas transaccionales críticas.",
         category: "data",
         practicalAbilities: [
-            { title: "Diseño de Esquemas", description: "Modelado de datos normalizados, relaciones complejas y constraints para integridad.", iconName: "Database" },
-            { title: "Queries Optimizadas", description: "JOINs eficientes, índices estratégicos y análisis de query plans.", iconName: "Zap" },
-            { title: "Transacciones ACID", description: "Operaciones atómicas para datos críticos (facturación, inventario, pagos).", iconName: "Shield" },
+            { title: "Row Level Security", description: "Aislamiento multi-tenant a nivel de base de datos en Sago One, combinado con Prisma Client Extensions.", iconName: "Shield" },
+            { title: "Queries Optimizadas", description: "JOINs eficientes, índices estratégicos y análisis de query plans para operaciones fiscales con miles de transacciones diarias.", iconName: "Zap" },
+            { title: "Transacciones ACID", description: "Operaciones atómicas para datos críticos: facturación, inventario, pagos y nómina.", iconName: "Database" },
         ]
     },
     {
         name: "Prisma ORM",
         slug: "prisma",
         iconName: "PrismaIcon",
-        description: "ORM moderno con tipado automático. Schema declarativo y migraciones versionadas.",
+        description: "ORM moderno con tipado automático. Schema declarativo, migraciones versionadas y Client Extensions para multi-tenancy seguro.",
         category: "data",
         practicalAbilities: [
             { title: "Schema Declarativo", description: "Definición de modelos, relaciones y validaciones en un solo archivo.", iconName: "Layers" },
-            { title: "Migraciones Versionadas", description: "Control de versiones del schema con rollback y historial de cambios.", iconName: "GitBranch" },
+            { title: "Client Extensions Multi-Tenant", description: "Aislamiento de tenants enforced a nivel de driver, sin filtros olvidados en queries individuales.", iconName: "GitBranch" },
             { title: "Type-Safe Queries", description: "Autocompletado y validación de queries en tiempo de compilación.", iconName: "Shield" },
         ]
     },
@@ -106,24 +130,24 @@ export const skillsData: SkillData[] = [
         name: "Neon",
         slug: "neon",
         iconName: "NeonIcon",
-        description: "PostgreSQL serverless con branching. Ideal para desarrollo y producción escalable.",
+        description: "PostgreSQL serverless con branching nativo. Crítico para entornos resilientes de staging y producción sin sobrecostos.",
         category: "data",
         practicalAbilities: [
             { title: "Serverless PostgreSQL", description: "Escalado automático y pago por uso. Sin administración de servidores.", iconName: "Zap" },
-            { title: "Database Branching", description: "Crear branches de la base de datos para desarrollo y testing aislado.", iconName: "GitBranch" },
-            { title: "Connection Pooling", description: "Gestión eficiente de conexiones para aplicaciones serverless.", iconName: "Server" },
+            { title: "Database Branching", description: "Branches aislados de la base de datos para QA y previews por feature, sin afectar producción.", iconName: "GitBranch" },
+            { title: "Connection Pooling", description: "Gestión eficiente de conexiones para aplicaciones serverless en Vercel Edge.", iconName: "Server" },
         ]
     },
     {
         name: "SQL",
         slug: "sql",
         iconName: "SqlIcon",
-        description: "Lenguaje estándar para consultas de bases de datos relacionales.",
+        description: "Lenguaje estándar para consultas de bases de datos relacionales. Imprescindible para optimización y análisis de datos.",
         category: "data",
         practicalAbilities: [
             { title: "Queries Complejas", description: "CTEs, window functions, subqueries y aggregations avanzadas.", iconName: "Code2" },
             { title: "Optimización", description: "Análisis de EXPLAIN plans e indexación estratégica.", iconName: "Zap" },
-            { title: "Stored Procedures", description: "Lógica de negocio en la base de datos cuando es apropiado.", iconName: "Server" },
+            { title: "Migraciones Auditables", description: "SQL de migración versionado y revisable, con rollback predecible.", iconName: "Server" },
         ]
     },
     {
@@ -135,31 +159,19 @@ export const skillsData: SkillData[] = [
         practicalAbilities: [
             { title: "Caching con TTL e Invalidación", description: "Estrategias de caché para reducir latencia de APIs y eliminar consultas redundantes a PostgreSQL.", iconName: "Zap" },
             { title: "Rate Limiting Serverless", description: "Control de tasa de peticiones en edge functions con Upstash Redis para APIs públicas y privadas.", iconName: "Shield" },
-            { title: "Pub/Sub y Colas", description: "Comunicación asíncrona entre microservicios con canales de publicación-suscripción y colas de mensajes.", iconName: "Layers" },
+            { title: "Pub/Sub y Colas", description: "Comunicación asíncrona entre microservicios con canales de publicación-suscripción.", iconName: "Layers" },
         ]
     },
     {
-        name: "Apache Kafka",
-        slug: "apache-kafka",
-        iconName: "SiApachekafka",
-        description: "Plataforma de streaming de eventos distribuida para arquitecturas event-driven y procesamiento de datos a escala en tiempo real.",
+        name: "BullMQ",
+        slug: "bullmq",
+        iconName: "BullMQIcon",
+        description: "Sistema de colas distribuidas sobre Redis para procesamiento background, jobs programados y orquestación de tareas con reintentos exponenciales.",
         category: "data",
         practicalAbilities: [
-            { title: "Producers & Consumers", description: "Publicación y consumo de eventos con tópicos, particiones y grupos de consumidores para alto throughput.", iconName: "GitBranch" },
-            { title: "Procesamiento de Streams", description: "Filtrado, transformación y agregación de eventos en tiempo real con baja latencia.", iconName: "Zap" },
-            { title: "Integración Go & Node.js", description: "SDKs nativos para producir y consumir mensajes desde servicios en Go y APIs en Node.js.", iconName: "Server" },
-        ]
-    },
-    {
-        name: "MinIO",
-        slug: "minio",
-        iconName: "SiMinio",
-        description: "Almacenamiento de objetos S3-compatible de alto rendimiento para assets, documentos, backups y datos no estructurados con alta disponibilidad.",
-        category: "data",
-        practicalAbilities: [
-            { title: "Gestión de Buckets & Políticas", description: "CRUD de objetos, políticas de acceso, versioning y lifecycle management para datos críticos.", iconName: "Database" },
-            { title: "Integración SDK JS & Go", description: "Carga y descarga de archivos desde aplicaciones Next.js y servicios Go con presigned URLs.", iconName: "Code2" },
-            { title: "Modo Distribuido", description: "Alta disponibilidad con replicación multi-nodo para resiliencia y tolerancia a fallos.", iconName: "Server" },
+            { title: "Jobs Asíncronos", description: "Descarga de trabajo pesado (envío masivo de emails, generación de PDFs fiscales) fuera del request principal.", iconName: "Zap" },
+            { title: "Reintentos & Dead-Letter", description: "Reintentos exponenciales configurables, jobs muertos en colas de inspección y observabilidad por evento.", iconName: "Shield" },
+            { title: "Workers Horizontales", description: "Escalado horizontal de consumidores sin coordinación manual; throughput proporcional al número de workers.", iconName: "Server" },
         ]
     },
 
@@ -168,7 +180,7 @@ export const skillsData: SkillData[] = [
         name: "Docker",
         slug: "docker",
         iconName: "FaDocker",
-        description: "Containerización de aplicaciones. Ambientes consistentes desde desarrollo hasta producción.",
+        description: "Containerización de aplicaciones. Ambientes consistentes desde desarrollo hasta producción, base para CI/CD reproducible.",
         category: "devops",
         practicalAbilities: [
             { title: "Dockerfiles Optimizados", description: "Multi-stage builds para imágenes ligeras y seguras.", iconName: "Layers" },
@@ -177,51 +189,27 @@ export const skillsData: SkillData[] = [
         ]
     },
     {
-        name: "Kubernetes",
-        slug: "kubernetes",
-        iconName: "SiKubernetes",
-        description: "Orquestación de contenedores a escala. Auto-scaling, self-healing y rolling updates.",
-        category: "devops",
-        practicalAbilities: [
-            { title: "Deployments & Services", description: "Configuración de pods, réplicas, load balancing y networking.", iconName: "Server" },
-            { title: "Auto-Scaling (HPA)", description: "Escalado automático basado en métricas de CPU/memoria.", iconName: "Zap" },
-            { title: "Helm Charts", description: "Gestión de configuraciones complejas con templates reutilizables.", iconName: "Layers" },
-        ]
-    },
-    {
-        name: "Git",
+        name: "Git & CI/CD",
         slug: "git",
         iconName: "FaGitAlt",
-        description: "Control de versiones distribuido. Branching strategies, rebasing y colaboración en equipo.",
+        description: "Control de versiones distribuido y automatización de pipelines. GitHub Actions para builds, tests y despliegues reproducibles.",
         category: "devops",
         practicalAbilities: [
             { title: "GitFlow & Trunk-Based", description: "Estrategias de branching según el contexto del proyecto.", iconName: "GitBranch" },
-            { title: "Rebase & Cherry-Pick", description: "Historial limpio y manipulación precisa de commits.", iconName: "Layers" },
-            { title: "GitHub Actions", description: "CI/CD pipelines, automated testing y deploy workflows.", iconName: "Zap" },
+            { title: "GitHub Actions", description: "Pipelines CI/CD con testing automatizado, builds reproducibles y despliegues a Vercel/Railway.", iconName: "Zap" },
+            { title: "DB Branching Integrado", description: "Cada PR levanta su propia rama de base de datos (Neon) para QA aislado antes del merge.", iconName: "Layers" },
         ]
     },
     {
         name: "Linux",
         slug: "linux",
         iconName: "LinuxIcon",
-        description: "Sistema operativo de servidores. Administración, scripting y seguridad.",
+        description: "Sistema operativo de servidores. Administración, scripting, configuración de firewalls y operaciones en cliente activo (Consulado de Colombia).",
         category: "devops",
         practicalAbilities: [
             { title: "Shell Scripting", description: "Automatización de tareas con Bash y scripts de mantenimiento.", iconName: "Code2" },
-            { title: "Administración de Servidores", description: "Configuración de servicios, usuarios, permisos y networking.", iconName: "Server" },
-            { title: "Seguridad", description: "Firewalls (iptables/ufw), SSH hardening y auditoría de logs.", iconName: "Shield" },
-        ]
-    },
-    {
-        name: "Terraform",
-        slug: "terraform",
-        iconName: "SiTerraform",
-        description: "Infrastructure as Code declarativa para provisionar, versionar y gestionar infraestructura cloud de forma reproducible y consistente.",
-        category: "devops",
-        practicalAbilities: [
-            { title: "Infraestructura Declarativa", description: "Definición de recursos cloud con HCL y gestión de estado remoto para equipos.", iconName: "Layers" },
-            { title: "Provisioning Multi-Cloud", description: "Aprovisionamiento reproducible en Google Cloud, Oracle OCI y Railway desde un solo codebase.", iconName: "Server" },
-            { title: "Módulos Reutilizables", description: "Abstracción de configuraciones complejas en módulos versionados para diferentes entornos.", iconName: "Code2" },
+            { title: "Firewall Config", description: "Configuración de firewalls (iptables/nftables/ufw) y SSH hardening en infraestructura crítica.", iconName: "Shield" },
+            { title: "Server Administration", description: "Gestión de servidores locales, redes y mantenimiento periódico para clientes activos.", iconName: "Server" },
         ]
     },
     {
@@ -242,50 +230,38 @@ export const skillsData: SkillData[] = [
         name: "Vercel",
         slug: "vercel",
         iconName: "SiVercel",
-        description: "Plataforma de despliegue para Next.js. Edge functions, preview deployments y CI/CD automático.",
+        description: "Plataforma de despliegue para Next.js. Edge functions, preview deployments y CI/CD automático con observabilidad nativa.",
         category: "cloud",
         practicalAbilities: [
-            { title: "GitOps & Preview Deploys", description: "Deploy automático en cada push con URLs de preview para cada PR.", iconName: "GitBranch" },
-            { title: "Edge Functions", description: "Lógica serverless ejecutada en el edge para baja latencia global.", iconName: "Zap" },
-            { title: "Analytics & Monitoring", description: "Web Vitals, logs en tiempo real y monitoreo de performance.", iconName: "Layers" },
+            { title: "Edge Runtime", description: "Lógica serverless ejecutada en el edge para baja latencia global; Sago One y Plenty Market corren ahí.", iconName: "Zap" },
+            { title: "Preview Deployments", description: "Cada PR genera una URL aislada con base de datos branched para QA antes de merge.", iconName: "GitBranch" },
+            { title: "Analytics & Vitals", description: "Web Vitals, logs en tiempo real y monitoreo de performance para mantener TTI < 3s.", iconName: "Layers" },
         ]
     },
     {
         name: "Google Cloud",
         slug: "google-cloud",
         iconName: "SiGooglecloud",
-        description: "Plataforma cloud enterprise. GKE, Cloud Run, Cloud SQL y servicios serverless.",
+        description: "Plataforma cloud enterprise. Cloud Run, Cloud SQL y servicios serverless para cargas de trabajo que no encajan en edge runtime.",
         category: "cloud",
         practicalAbilities: [
-            { title: "GKE (Kubernetes Engine)", description: "Clusters de Kubernetes administrados con auto-scaling y auto-repair.", iconName: "Server" },
-            { title: "Cloud Run", description: "Contenedores serverless con escalado a cero y pago por uso.", iconName: "Zap" },
-            { title: "Cloud SQL", description: "PostgreSQL administrado con backups automáticos y alta disponibilidad.", iconName: "Database" },
-        ]
-    },
-    {
-        name: "Oracle Cloud",
-        slug: "oracle-cloud",
-        iconName: "OracleCloudIcon",
-        description: "Cloud enterprise para cargas de trabajo críticas. OCI Compute, Object Storage y networking avanzado.",
-        category: "cloud",
-        practicalAbilities: [
-            { title: "OCI Compute", description: "Instancias escalables con shapes flexibles y bare metal.", iconName: "Server" },
-            { title: "Object Storage", description: "Almacenamiento de objetos con tiers de acceso y lifecycle policies.", iconName: "Database" },
-            { title: "Networking & Security", description: "VCNs, subnets, security lists y NSGs para arquitecturas seguras.", iconName: "Shield" },
+            { title: "Cloud Run", description: "Contenedores serverless con escalado a cero y pago por uso para microservicios Go.", iconName: "Zap" },
+            { title: "Cloud SQL", description: "PostgreSQL administrado para clientes que requieren residencia de datos específica.", iconName: "Database" },
+            { title: "Networking & Security", description: "VPCs, IAM y service accounts para arquitecturas aisladas y auditables.", iconName: "Shield" },
         ]
     },
 
     // === SECURITY ===
     {
-        name: "Seguridad y Criptografía",
-        slug: "security-cryptography",
+        name: "Seguridad & Compliance",
+        slug: "security-compliance",
         iconName: "Shield",
-        description: "Implementación de protocolos de seguridad de nivel bancario: AES-256, autenticación robusta y cumplimiento normativo DGI/PAC.",
+        description: "Protocolos de seguridad de nivel bancario y arquitectura multi-tenant: AES-256-CBC, JWT, Row Level Security y cumplimiento DGI/PAC.",
         category: "security",
         practicalAbilities: [
-            { title: "Encriptación AES-256", description: "Cifrado de datos sensibles (credenciales PAC/DGI, datos fiscales) con protocolos de nivel bancario.", iconName: "Shield" },
-            { title: "Autenticación Segura", description: "NextAuth, JWT, sesiones seguras y flujos de verificación que previenen accesos no autorizados.", iconName: "Server" },
-            { title: "Cumplimiento Normativo", description: "Integración certificada con APIs gubernamentales (DGI/PAC) con validación estricta y auditoría de cada transacción.", iconName: "Layers" },
+            { title: "Encriptación AES-256-CBC", description: "Cifrado de credenciales PAC/DGI y datos fiscales con protocolos de nivel bancario.", iconName: "Shield" },
+            { title: "Auth & JWT", description: "NextAuth, JWT y sesiones seguras con flujos de verificación que previenen accesos no autorizados.", iconName: "Server" },
+            { title: "Multi-Tenancy + RLS", description: "Aislamiento de tenants a nivel de driver Prisma y Row Level Security en PostgreSQL: imposible filtrar datos cruzados.", iconName: "Database" },
         ]
     },
     {
@@ -297,7 +273,33 @@ export const skillsData: SkillData[] = [
         practicalAbilities: [
             { title: "Service Workers & Caché", description: "Estrategias de caché agresiva que mantienen operativas las transacciones críticas sin internet.", iconName: "Zap" },
             { title: "Sincronización Offline", description: "Cola de operaciones offline con resolución de conflictos y sincronización automática al recuperar conexión.", iconName: "Server" },
-            { title: "App Instalable (PWA)", description: "Experiencia nativa en cualquier dispositivo sin App Store. Menor fricción de adopción y mayor retención.", iconName: "Layers" },
+            { title: "CUFE/CAFE Offline", description: "Algoritmo Módulo 10 implementado en Go para generar códigos fiscales sin conexión con contingencia de 72h.", iconName: "Layers" },
+        ]
+    },
+
+    // === MOBILE & SYSTEMS ===
+    {
+        name: "Web Bluetooth & ESC/POS",
+        slug: "web-bluetooth-escpos",
+        iconName: "BluetoothIcon",
+        description: "Impresión térmica e integración con periféricos directamente desde el navegador. Sin drivers, sin apps nativas, sin fricción para el merchant.",
+        category: "mobile-systems",
+        practicalAbilities: [
+            { title: "Impresión Térmica", description: "Comandos ESC/POS sobre Web Bluetooth para impresoras térmicas en el POS de Sago One.", iconName: "Zap" },
+            { title: "Escáner de Códigos en Tiempo Real", description: "Captura de barcode con la cámara y layout split-screen cámara/carrito para POS táctil.", iconName: "Code2" },
+            { title: "Sin Apps Nativas", description: "El merchant solo abre el navegador. Cero instalación, cero permisos especiales, cero soporte de drivers.", iconName: "Server" },
+        ]
+    },
+    {
+        name: "Alpine Linux & PTY",
+        slug: "alpine-linux-pty",
+        iconName: "LinuxIcon",
+        description: "Entornos Linux mínimos y pseudo-terminales reales. Base de Gravital-Shell: ejecuta Alpine en Android sin root, con sesiones múltiples y persistentes.",
+        category: "mobile-systems",
+        practicalAbilities: [
+            { title: "Alpine sin Root", description: "Entornos Alpine Linux ejecutándose sobre Android con proot, sin requerir privilegios root.", iconName: "Server" },
+            { title: "PTY Real", description: "Pseudo-terminales reales para herramientas que requieren TTY (vim, htop, less) — no emulaciones aproximadas.", iconName: "Code2" },
+            { title: "Sesiones Exportables", description: "Estado completo de sesión exportable/importable; continuidad real entre dispositivos.", iconName: "GitBranch" },
         ]
     },
 
@@ -306,12 +308,12 @@ export const skillsData: SkillData[] = [
         name: "AI Engineering",
         slug: "ai-engineering",
         iconName: "BrainCircuit",
-        description: "Ingeniería avanzada con modelos de IA — no vibecoding sino automatización de procesos, orquestación de modelos y administración de infraestructura mediante agentes de código.",
+        description: "Ingeniería avanzada con modelos de IA — no vibecoding sino orquestación programática, automatización de pipelines y administración guiada por agentes.",
         category: "ai-engineering",
         practicalAbilities: [
-            { title: "Integración de APIs de Modelos", description: "Consumo y orquestación programática de Claude, GPT-4, Gemini y modelos locales desde aplicaciones de producción.", iconName: "Zap" },
-            { title: "Agentes de Código Avanzados", description: "Uso de Claude Code, Open Hands y agentes CLI para automatizar tareas de ingeniería: refactoring, testing, deploys y análisis de código.", iconName: "Code2" },
-            { title: "IA para Infraestructura", description: "Administración de servidores, diagnóstico de sistemas y ejecución de pipelines CI/CD guiados por agentes de inteligencia artificial.", iconName: "Server" },
+            { title: "Vercel AI SDK & LLMs", description: "Integración de Claude, GPT-4, Gemini y modelos locales en flujos de producción con streaming y tool-use.", iconName: "Zap" },
+            { title: "TensorFlow.js Edge AI", description: "Asistencia biométrica en Sago One: modelos corriendo en el dispositivo sin enviar datos sensibles a la nube.", iconName: "Code2" },
+            { title: "Agentes de Código", description: "Uso de Claude Code, Open Hands y agentes CLI para automatizar tareas de ingeniería: refactoring, testing, deploys.", iconName: "Server" },
         ]
     },
 ];
@@ -320,50 +322,57 @@ export const skillCategories: SkillCategoryData[] = [
     {
         id: "frontend",
         name: "Frontend & Producto Web",
-        description: "Next.js, TypeScript, JavaScript Moderno",
-        businessValue: "Optimización SEO desde el primer render, TTI < 3s, alta mantenibilidad del código y prevención de deuda técnica que erosiona el ROI.",
+        description: "Next.js 15, React 19, TypeScript",
+        businessValue: "TTI < 3s, SEO desde el primer render, alta mantenibilidad y prevención de la deuda técnica que erosiona el ROI.",
         iconName: "Code2"
     },
     {
         id: "backend",
         name: "Backend & Servicios API",
-        description: "Go (Golang) — APIs concurrentes y sistemas distribuidos",
-        businessValue: "Servicios de baja latencia con binarios nativos, procesamiento concurrente de miles de requests y arquitecturas event-driven que escalan sin fricción.",
+        description: "Go, Rust, Node.js — APIs concurrentes y herramientas nativas",
+        businessValue: "Servicios de baja latencia, microservicios fiscales con tiempos de respuesta en microsegundos y herramientas nativas sin overhead.",
         iconName: "Server"
     },
     {
         id: "data",
         name: "Datos & Persistencia",
-        description: "PostgreSQL, Prisma, Neon, Redis, Kafka, MinIO, SQL",
-        businessValue: "Escalabilidad elástica, tipado seguro extremo a extremo, streaming de eventos en tiempo real y almacenamiento de objetos para datos críticos de negocio.",
+        description: "PostgreSQL, Prisma, Neon, Redis, BullMQ, SQL",
+        businessValue: "Escalabilidad elástica, tipado seguro extremo a extremo, colas distribuidas para procesamiento background y branching de base de datos por PR.",
         iconName: "Database"
     },
     {
         id: "devops",
         name: "DevOps & Infraestructura",
-        description: "Docker, Kubernetes, Git, Linux, Terraform, Railway",
-        businessValue: "Pipelines CI/CD automatizados, infraestructura reproducible con IaC, contenedores consistentes y operaciones sin fricción desde desarrollo hasta producción.",
+        description: "Docker, GitHub Actions, Linux, Railway",
+        businessValue: "Pipelines CI/CD automatizados, builds reproducibles, configuración de firewalls e infraestructura operativa sin fricción.",
         iconName: "Settings2"
     },
     {
         id: "cloud",
         name: "Cloud Computing",
-        description: "Vercel, Google Cloud, Oracle Cloud",
-        businessValue: "Alta disponibilidad global (99.9% uptime), auto-escalado ante picos de demanda y cumplimiento de estándares de seguridad corporativa en la nube.",
+        description: "Vercel Edge, Google Cloud",
+        businessValue: "Alta disponibilidad global (99.9% uptime), auto-escalado ante picos de demanda y cumplimiento de estándares de seguridad corporativa.",
         iconName: "Cloud"
     },
     {
         id: "security",
-        name: "Ciberseguridad",
-        description: "AES-256, Autenticación, PWA Offline-First, Compliance DGI",
-        businessValue: "Cumplimiento normativo bancario y DGI, protección contra brechas de datos y continuidad ininterrumpida de operaciones críticas sin conectividad.",
+        name: "Seguridad & Compliance",
+        description: "AES-256-CBC, JWT, RLS, PWA Offline-First, DGI/PAC",
+        businessValue: "Cumplimiento normativo bancario y DGI, aislamiento multi-tenant garantizado y continuidad ininterrumpida sin conectividad.",
         iconName: "Shield"
+    },
+    {
+        id: "mobile-systems",
+        name: "Móvil & Sistemas",
+        description: "Kotlin / Android, Alpine Linux, ESC/POS, Web Bluetooth",
+        businessValue: "Herramientas nativas para developers, integración con periféricos físicos sin drivers y entornos Linux en el bolsillo.",
+        iconName: "Smartphone"
     },
     {
         id: "ai-engineering",
         name: "AI Engineering",
-        description: "APIs de modelos, agentes de código, automatización con IA",
-        businessValue: "Automatización de procesos de ingeniería, reducción de tiempo de desarrollo y capacidad para orquestar, consumir y administrar modelos de IA como herramienta profesional.",
+        description: "Vercel AI SDK, TensorFlow.js, agentes de código",
+        businessValue: "Automatización de procesos de ingeniería, IA en el edge sin filtrar datos sensibles y orquestación profesional de modelos.",
         iconName: "BrainCircuit"
     },
 ];
