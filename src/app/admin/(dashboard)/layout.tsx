@@ -1,12 +1,20 @@
 
 import Link from "next/link"
 import { LogOut, ExternalLink } from "lucide-react"
-import { auth, signOut } from "@/auth"
+import { auth } from "@/auth"
 import { Button } from "@/components/ui/button"
 import { redirect } from "next/navigation"
 import { AdminBreadcrumb } from "@/components/admin/admin-breadcrumb"
 import { MobileBottomNav } from "@/components/admin/mobile-bottom-nav"
 import { SidebarNav } from "@/components/admin/sidebar-nav"
+import { signOutAction } from "./_actions/auth"
+
+// Every page under /admin/(dashboard) reads cookies/session via auth() in
+// this layout, which is a dynamic API. Without this declaration Next.js
+// tries to statically render child pages, throws a "Dynamic server usage"
+// error inside our try/catches, and the request fails with the generic
+// "Server Components render" overlay in production.
+export const dynamic = "force-dynamic"
 
 export default async function DashboardLayout({
     children,
@@ -17,11 +25,6 @@ export default async function DashboardLayout({
 
     if (!session) {
         redirect("/admin/login")
-    }
-
-    const handleSignOut = async () => {
-        "use server"
-        await signOut()
     }
 
     return (
@@ -48,7 +51,7 @@ export default async function DashboardLayout({
                                 <p className="text-muted-foreground truncate max-w-[120px]">{session.user?.email}</p>
                             </div>
                         </div>
-                        <form action={handleSignOut}>
+                        <form action={signOutAction}>
                             <Button variant="ghost" className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-950/30">
                                 <LogOut className="mr-2 h-4 w-4" /> Sign Out
                             </Button>
@@ -62,7 +65,6 @@ export default async function DashboardLayout({
                 <div className="absolute inset-0 bg-grid-white/[0.02] -z-10" />
                 <header className="h-14 md:h-16 border-b border-white/5 flex items-center justify-between px-3 md:px-6 bg-background/50 backdrop-blur-sm sticky top-0 z-10">
                     <div className="flex items-center gap-3 md:gap-4 min-w-0">
-                        {/* Mobile brand */}
                         <Link href="/admin" className="flex items-center gap-2 md:hidden">
                             <div className="w-7 h-7 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
                                 AN
@@ -78,7 +80,6 @@ export default async function DashboardLayout({
                         </Link>
                     </Button>
                 </header>
-                {/* pb-20 on mobile leaves space for the fixed bottom nav */}
                 <div className="p-3 sm:p-4 md:p-8 w-full mx-auto pb-24 md:pb-8">
                     {children}
                 </div>
@@ -88,7 +89,6 @@ export default async function DashboardLayout({
             <MobileBottomNav
                 userName={session.user?.name}
                 userEmail={session.user?.email}
-                onSignOut={handleSignOut}
             />
         </div>
     )

@@ -121,10 +121,10 @@ function getContent(lang: 'es' | 'en'): ProfileContent {
             ],
             stackTitle: 'STACK TECNOLÓGICO',
             stackGroups: [
-                { label: 'Frontend & Mobile', items: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'PWA / Service Workers'] },
-                { label: 'Backend & APIs', items: ['Node.js', 'tRPC', 'REST APIs', 'Prisma ORM', 'Zod'] },
-                { label: 'Data & Infrastructure', items: ['PostgreSQL', 'Neon Serverless', 'Redis', 'Vercel Edge', 'Docker'] },
-                { label: 'Integraciones', items: ['DGI / PAC (FinTech)', 'Stripe', 'Cloudinary', 'LLM APIs', 'Resend'] },
+                { label: 'Lenguajes', items: ['TypeScript', 'Go', 'Rust', 'Kotlin', 'Node.js', 'SQL'] },
+                { label: 'Backend & Datos', items: ['PostgreSQL (Neon)', 'Prisma ORM', 'Upstash Redis', 'BullMQ', 'SOAP / REST'] },
+                { label: 'Infraestructura', items: ['Docker', 'Vercel Edge', 'Railway', 'GCP', 'GitHub Actions'] },
+                { label: 'Seguridad & Móvil', items: ['AES-256-CBC', 'RLS Multi-tenant', 'PWA Offline-First', 'Web Bluetooth', 'ESC/POS'] },
             ],
             ctaTitle: '¿LISTO PARA EL SIGUIENTE NIVEL?',
             ctaBody:
@@ -221,10 +221,10 @@ function getContent(lang: 'es' | 'en'): ProfileContent {
         ],
         stackTitle: 'TECHNOLOGY STACK',
         stackGroups: [
-            { label: 'Frontend & Mobile', items: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'PWA / Service Workers'] },
-            { label: 'Backend & APIs', items: ['Node.js', 'tRPC', 'REST APIs', 'Prisma ORM', 'Zod'] },
-            { label: 'Data & Infrastructure', items: ['PostgreSQL', 'Neon Serverless', 'Redis', 'Vercel Edge', 'Docker'] },
-            { label: 'Integrations', items: ['DGI / PAC (FinTech)', 'Stripe', 'Cloudinary', 'LLM APIs', 'Resend'] },
+            { label: 'Languages', items: ['TypeScript', 'Go', 'Rust', 'Kotlin', 'Node.js', 'SQL'] },
+            { label: 'Backend & Data', items: ['PostgreSQL (Neon)', 'Prisma ORM', 'Upstash Redis', 'BullMQ', 'SOAP / REST'] },
+            { label: 'Infrastructure', items: ['Docker', 'Vercel Edge', 'Railway', 'GCP', 'GitHub Actions'] },
+            { label: 'Security & Mobile', items: ['AES-256-CBC', 'Multi-tenant RLS', 'PWA Offline-First', 'Web Bluetooth', 'ESC/POS'] },
         ],
         ctaTitle: 'READY FOR THE NEXT LEVEL?',
         ctaBody:

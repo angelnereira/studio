@@ -31,10 +31,12 @@ const DynamicMetricsSection = dynamic(() => import('@/components/home-sections')
 
 import { useTranslations } from "next-intl";
 
-// Core Stack - Solo tecnologías de Sago One y Plenty Market
+// Core Stack - tecnologías que respaldan Sago One y Plenty Market
 const coreTechnologies = [
   { name: "Next.js 15", icon: Code2 },
   { name: "TypeScript", icon: Code2 },
+  { name: "Go", icon: Server },
+  { name: "Rust", icon: Server },
   { name: "PostgreSQL", icon: Database },
   { name: "Neon", icon: Database },
   { name: "Prisma", icon: Server },

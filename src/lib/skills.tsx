@@ -1,11 +1,11 @@
 
 
 import * as React from "react";
-import { Server, Shield, Zap, Layers, Code2, Database, GitBranch, Cloud, Settings2, BrainCircuit } from "lucide-react";
+import { Server, Shield, Zap, Layers, Code2, Database, GitBranch, Cloud, Settings2, BrainCircuit, Smartphone, Bluetooth, Rss } from "lucide-react";
 import { FaDocker, FaGitAlt } from "react-icons/fa";
-import { SiTypescript, SiPostgresql, SiVercel, SiKubernetes, SiJavascript, SiGooglecloud, SiGo, SiRedis, SiApachekafka, SiTerraform, SiRailway } from "react-icons/si";
+import { SiTypescript, SiPostgresql, SiVercel, SiJavascript, SiGooglecloud, SiGo, SiRedis, SiRailway, SiRust, SiKotlin } from "react-icons/si";
 import { TbBrandNextjs } from "react-icons/tb";
-import { LinuxIcon, PrismaIcon, NeonIcon, OracleCloudIcon, SqlIcon, MinioIcon } from "./icons";
+import { LinuxIcon, PrismaIcon, NeonIcon, SqlIcon } from "./icons";
 import { skillsData, skillCategories, type SkillCategory } from "./data/skills-data";
 
 export type PracticalAbility = {
@@ -28,23 +28,23 @@ const iconMap: Record<string, React.ElementType> = {
   SiTypescript,
   SiJavascript,
   SiGo,
+  SiRust,
+  SiKotlin,
   SiPostgresql,
   PrismaIcon,
   NeonIcon,
   SqlIcon,
   SiRedis,
-  SiApachekafka,
-  SiMinio: MinioIcon,
+  BullMQIcon: Rss, // BullMQ uses Rss as a reasonable queue/stream stand-in icon
   FaDocker,
-  SiKubernetes,
-  SiTerraform,
   SiRailway,
   SiVercel,
   SiGooglecloud,
-  OracleCloudIcon,
   FaGitAlt,
   LinuxIcon,
+  BluetoothIcon: Bluetooth,
   BrainCircuit,
+  Smartphone,
   Zap,
   Server,
   Shield,
@@ -78,5 +78,6 @@ export const categoryIconMap: Record<string, React.ElementType> = {
   Settings2,   // devops
   Cloud,       // cloud
   Shield,      // security
+  Smartphone,  // mobile-systems
   BrainCircuit, // ai-engineering
 };
