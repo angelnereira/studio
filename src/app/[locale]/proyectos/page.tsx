@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ExternalLink, Github, Code2, Database, Lock, Target, Zap, Shield } from "lucide-react";
+import { ExternalLink, Github, Code2, Database, Target, Zap, Shield, Terminal, Network, AudioLines, FileCode2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -9,100 +9,95 @@ import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
 import { useTranslations } from "next-intl";
 import { TiltCard } from "@/components/ui/tilt-card";
+import { projectsData } from "@/lib/projects-and-testimonials";
+
+// Stable mapping: project id → i18n key prefix under `project.*`
+const PROJECT_I18N_KEY: Record<string, string> = {
+  "sago-one-fintech-saas": "sago_one",
+  "plenty-market-ecommerce-pwa": "plenty_market",
+  "hka-sdk-fiscal-gateway": "hka_sdk",
+  "gravital-shell-android-terminal": "gravital_shell",
+  "gravital-share-android-vpn": "gravital_share",
+  "gravital-talk-audio-comm": "gravital_talk",
+};
+
+// Highlights: { i18n key, icon } per project — pulled from `project.<key>.highlight.<key>.*`
+const PROJECT_HIGHLIGHTS: Record<string, { key: string; icon: React.ElementType }[]> = {
+  "sago-one-fintech-saas": [
+    { key: "security", icon: Shield },
+    { key: "database", icon: Database },
+    { key: "performance", icon: Zap },
+  ],
+  "plenty-market-ecommerce-pwa": [
+    { key: "state", icon: Code2 },
+    { key: "media", icon: Zap },
+    { key: "migration", icon: Database },
+  ],
+  "hka-sdk-fiscal-gateway": [
+    { key: "validation", icon: Shield },
+    { key: "routing", icon: Network },
+    { key: "multitenant", icon: Database },
+  ],
+  "gravital-shell-android-terminal": [
+    { key: "pty", icon: Terminal },
+    { key: "sessions", icon: Code2 },
+    { key: "apk", icon: Database },
+  ],
+  "gravital-share-android-vpn": [
+    { key: "forwarding", icon: Network },
+    { key: "performance", icon: Zap },
+    { key: "fail_secure", icon: Shield },
+  ],
+  "gravital-talk-audio-comm": [
+    { key: "dsp", icon: AudioLines },
+    { key: "auth", icon: Shield },
+    { key: "cloud", icon: Database },
+  ],
+};
+
+// Per-project metrics shown on the listing page. Open-source projects show
+// stack-derived highlights instead of production metrics.
+const PROJECT_METRICS: Record<string, { value: string; labelKey: string; fallback: string }[]> = {
+  "sago-one-fintech-saas": [
+    { value: "10,000+", labelKey: "metric.facturas.label", fallback: "Invoices" },
+    { value: "99.9%", labelKey: "metric.uptime.label", fallback: "Uptime" },
+    { value: "< 200ms", labelKey: "metric.latency.label", fallback: "Latency" },
+  ],
+  "plenty-market-ecommerce-pwa": [
+    { value: "100%", labelKey: "metric.offline.label", fallback: "Offline" },
+    { value: "WebP/AVIF", labelKey: "metric.image_opt.label", fallback: "Image opt" },
+    { value: "< 3s", labelKey: "metric.tti.label", fallback: "TTI" },
+  ],
+};
 
 export default function ProyectosPage() {
   const t = useTranslations();
 
-  const projects = [
-    {
-      id: "sago-one-fintech-saas",
-      title: t('project.sago_one.title'),
-      label: t('project.sago_one.label'),
-      subtitle: t('project.sago_one.subtitle'),
-      description: t('project.sago_one.description'),
-      challenge: t('project.sago_one.challenge'),
-      techHighlights: [
-        {
-          title: t('project.sago_one.highlight.security.title'),
-          description: t('project.sago_one.highlight.security.desc'),
-          icon: Shield
-        },
-        {
-          title: t('project.sago_one.highlight.database.title'),
-          description: t('project.sago_one.highlight.database.desc'),
-          icon: Database
-        },
-        {
-          title: t('project.sago_one.highlight.performance.title'),
-          description: t('project.sago_one.highlight.performance.desc'),
-          icon: Zap
-        }
-      ],
-      stack: [
-        "Next.js 15",
-        "TypeScript",
-        "Prisma ORM",
-        "Neon PostgreSQL",
-        "PWA / Service Workers",
-        "AES-256 Encryption",
-        "Vercel",
-        "Docker"
-      ],
-      status: t('projects.status_production'),
-      statusColor: "bg-green-500/10 text-green-600",
-      metrics: [
-        { value: "10,000+", label: t('metric.facturas.label') },
-        { value: "99.9%", label: t('metric.uptime.label') },
-        { value: "< 200ms", label: t('metric.latency.label') },
-      ],
-      github: "https://github.com/angelnereira/sago-factu-V0.2",
-      demo: "https://sagoone.com",
-    },
-    {
-      id: "plenty-market-ecommerce-pwa",
-      title: t('project.plenty_market.title'),
-      label: t('project.plenty_market.label'),
-      subtitle: t('project.plenty_market.subtitle'),
-      description: t('project.plenty_market.description'),
-      challenge: t('project.plenty_market.challenge'),
-      techHighlights: [
-        {
-          title: t('project.plenty_market.highlight.state.title'),
-          description: t('project.plenty_market.highlight.state.desc'),
-          icon: Code2
-        },
-        {
-          title: t('project.plenty_market.highlight.media.title'),
-          description: t('project.plenty_market.highlight.media.desc'),
-          icon: Zap
-        },
-        {
-          title: t('project.plenty_market.highlight.migration.title'),
-          description: t('project.plenty_market.highlight.migration.desc'),
-          icon: Database
-        }
-      ],
-      stack: [
-        "Next.js 14",
-        "TypeScript",
-        "Prisma ORM",
-        "Neon PostgreSQL",
-        "Zustand",
-        "Cloudinary",
-        "Vercel",
-        "PWA"
-      ],
-      status: t('projects.status_production'),
-      statusColor: "bg-green-500/10 text-green-600",
-      metrics: [
-        { value: "100%", label: t('metric.offline.label') },
-        { value: "WebP/AVIF", label: t('metric.image_opt.label') },
-        { value: "< 3s", label: t('metric.tti.label') },
-      ],
-      github: "https://github.com/angelnereira/plenty-market",
-      demo: "https://plenty-market.vercel.app",
-    },
-  ];
+  const projects = projectsData.map((p) => {
+    const i18nKey = PROJECT_I18N_KEY[p.id];
+    const highlightDefs = PROJECT_HIGHLIGHTS[p.id] ?? [];
+    const isOpenSource = p.status === "open-source";
+    return {
+      id: p.id,
+      title: i18nKey ? t(`project.${i18nKey}.title`) : p.title,
+      label: i18nKey ? t(`project.${i18nKey}.label`) : p.label,
+      subtitle: i18nKey ? t(`project.${i18nKey}.subtitle`) : p.label,
+      description: i18nKey ? t(`project.${i18nKey}.description`) : p.description,
+      challenge: i18nKey ? t(`project.${i18nKey}.challenge`) : (p.challenge ?? ""),
+      techHighlights: highlightDefs.map((h) => ({
+        title: i18nKey ? t(`project.${i18nKey}.highlight.${h.key}.title`) : "",
+        description: i18nKey ? t(`project.${i18nKey}.highlight.${h.key}.desc`) : "",
+        icon: h.icon,
+      })),
+      stack: p.technologies,
+      status: isOpenSource ? "Open Source" : t("projects.status_production"),
+      statusColor: isOpenSource ? "bg-purple-500/10 text-purple-300" : "bg-green-500/10 text-green-600",
+      metrics: PROJECT_METRICS[p.id] ?? [],
+      github: p.githubUrl,
+      demo: p.liveUrl,
+      isOpenSource,
+    };
+  });
 
   return (
     <>
@@ -196,21 +191,23 @@ export default function ProyectosPage() {
                     </div>
                   </div>
 
-                  {/* Métricas */}
-                  <div className="mb-8">
-                    <h3 className="font-semibold mb-4 flex items-center gap-2">
-                      <Zap className="h-5 w-5 text-primary" />
-                      Métricas en Producción
-                    </h3>
-                    <div className="grid grid-cols-3 gap-4">
-                      {project.metrics.map((metric, i) => (
-                        <div key={i} className="text-center p-4 bg-primary/5 border border-primary/10 rounded-lg">
-                          <div className="text-xl sm:text-2xl font-bold text-primary">{metric.value}</div>
-                          <div className="text-xs text-muted-foreground">{metric.label}</div>
-                        </div>
-                      ))}
+                  {/* Métricas (only for production projects with real numbers) */}
+                  {project.metrics.length > 0 && (
+                    <div className="mb-8">
+                      <h3 className="font-semibold mb-4 flex items-center gap-2">
+                        <Zap className="h-5 w-5 text-primary" />
+                        Métricas en Producción
+                      </h3>
+                      <div className="grid grid-cols-3 gap-4">
+                        {project.metrics.map((metric, i) => (
+                          <div key={i} className="text-center p-4 bg-primary/5 border border-primary/10 rounded-lg">
+                            <div className="text-xl sm:text-2xl font-bold text-primary">{metric.value}</div>
+                            <div className="text-xs text-muted-foreground">{t(metric.labelKey)}</div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Tech Stack */}
                   <div className="mb-8">
@@ -241,7 +238,7 @@ export default function ProyectosPage() {
                       <Button asChild size="sm">
                         <Link href={project.demo} target="_blank">
                           <ExternalLink className="mr-2 h-4 w-4" />
-                          Ver en Producción
+                          {project.isOpenSource ? "Ver Repo" : "Ver en Producción"}
                         </Link>
                       </Button>
                     )}

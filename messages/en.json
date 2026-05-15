@@ -413,6 +413,90 @@
                     "desc": "PostgreSQL (Neon) via Prisma ORM guarantees data integrity under massive volumes. Infrastructure ready for traffic peaks without degradation or over-provisioning costs."
                 }
             }
+        },
+        "hka_sdk": {
+            "title": "HKA-SDK",
+            "label": "HKA/DGI Fiscal SDK | Go | Open Source",
+            "subtitle": "Multi-tenant SOAP fiscal gateway for HKA PAC",
+            "description": "SDK and fiscal gateway for HKA PAC that abstracts SOAP protocol complexity with strict validation, dynamic document-type routing, and native multi-tenant support. Extracted from Sago One so any fiscal project in Panama can integrate without re-implementing the protocol from scratch.",
+            "challenge": "Integrating HKA's SOAP is famously friction-heavy: inconsistent payloads, implicit validation, opaque error messages. The fix was a typed schema layer per document type, early compile-time errors, and stateless per-tenant configuration.",
+            "highlight": {
+                "validation": {
+                    "title": "Strict Validation",
+                    "desc": "Typed schemas per DGI document type. Payload errors are caught before the network call, reducing failed PAC round-trips."
+                },
+                "routing": {
+                    "title": "Dynamic Routing",
+                    "desc": "Endpoint resolution by document type with no hardcoding. Adding new documents doesn't touch the core."
+                },
+                "multitenant": {
+                    "title": "Native Multi-Tenant",
+                    "desc": "Per-tenant credentials and config, zero global state. SaaS-ready from the very first commit."
+                }
+            }
+        },
+        "gravital_shell": {
+            "title": "Gravital-Shell",
+            "label": "Linux Terminal for Android | Kotlin | Open Source",
+            "subtitle": "Alpine Linux in your pocket, no root needed",
+            "description": "Professional Linux terminal for Android — runs isolated Alpine Linux environments without root, with real PTY support, multiple sessions, APK package manager, and session export/import. Built for developers who need a serious environment on any device.",
+            "challenge": "Most Android terminals are approximate emulations that break tools needing a real TTY (vim, htop, less). Real PTY without root required combining proot with native Linux primitives from Kotlin/JNI.",
+            "highlight": {
+                "pty": {
+                    "title": "Real PTY, No Root",
+                    "desc": "Real pseudo-terminals on Android via proot, no root privileges. TUI tools just work."
+                },
+                "sessions": {
+                    "title": "Persistent Sessions",
+                    "desc": "Export/import the full state of a session. Pick up on another device exactly where you left off."
+                },
+                "apk": {
+                    "title": "Built-in APK Manager",
+                    "desc": "Install Alpine packages directly from the terminal with a native Android UI."
+                }
+            }
+        },
+        "gravital_share": {
+            "title": "Gravital-Share",
+            "label": "VPN Hotspot Forwarding | Rust | Open Source",
+            "subtitle": "VPN routing for devices on the hotspot",
+            "description": "Solves a concrete Android VPN routing gap: ensures traffic from hotspot-connected devices is routed through the host device's VPN tunnel. Useful for remote teams sharing a secure network from a single device.",
+            "challenge": "Android by default doesn't route hotspot traffic through the host's VPN tunnel. The fix dynamically manipulates iptables/nftables rules and monitors VPN state to prevent leaks.",
+            "highlight": {
+                "forwarding": {
+                    "title": "Transparent Forwarding",
+                    "desc": "Dynamic iptables/nftables rules automatically route hotspot traffic through the active VPN tunnel."
+                },
+                "performance": {
+                    "title": "Zero Overhead",
+                    "desc": "Native Rust component with minimal memory footprint. Doesn't interfere with the host device's own traffic."
+                },
+                "fail_secure": {
+                    "title": "Fail-Secure by Default",
+                    "desc": "If the VPN drops, forwarding stops. Zero unprotected-traffic leakage."
+                }
+            }
+        },
+        "gravital_talk": {
+            "title": "Gravital-Talk",
+            "label": "Audio / Communication | Rust | Open Source",
+            "subtitle": "Standalone audio library with Gravital ID",
+            "description": "Standalone audio and communication library with native Gravital ID authentication and Gravital Cloud persistence. Designed to be embedded in apps needing secure voice channels without depending on proprietary SDKs.",
+            "challenge": "Most voice SDKs are proprietary black boxes with expensive licenses and little control over the audio chain. Building a native pipeline in Rust gives full control over filters, latency, and persistence, drawing on years of DSP experience.",
+            "highlight": {
+                "dsp": {
+                    "title": "Custom DSP Pipeline",
+                    "desc": "Low-latency audio filters built from Digital Signal Processing principles applied during my years as an audio engineer."
+                },
+                "auth": {
+                    "title": "Gravital ID Auth",
+                    "desc": "Native integration with the Gravital identity system, no client-side credential exposure."
+                },
+                "cloud": {
+                    "title": "Cloud Persistence",
+                    "desc": "Sessions, recordings, and metadata synced to Gravital Cloud with end-to-end encryption."
+                }
+            }
         }
     },
     "metric": {

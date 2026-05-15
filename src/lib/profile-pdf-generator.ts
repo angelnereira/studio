@@ -21,6 +21,14 @@ interface ProfileContent {
     metrics: Array<{ value: string; label: string }>;
     servicesTitle: string;
     services: Array<{ name: string; value: string }>;
+    experienceTitle: string;
+    experience: Array<{
+        role: string;
+        company: string;
+        period: string;
+        location?: string;
+        highlights: string[];
+    }>;
     portfolioTitle: string;
     projects: Array<{
         name: string;
@@ -29,6 +37,15 @@ interface ProfileContent {
         roi: string;
         metric: string;
     }>;
+    openSourceTitle: string;
+    openSourceProjects: Array<{
+        name: string;
+        stack: string;
+        description: string;
+        repo: string;
+    }>;
+    languagesTitle: string;
+    languages: Array<{ language: string; level: string }>;
     stackTitle: string;
     stackGroups: Array<{ label: string; items: string[] }>;
     ctaTitle: string;
@@ -90,20 +107,45 @@ function getContent(lang: 'es' | 'en'): ProfileContent {
                         'Traduzco cada decisión técnica en su impacto directo sobre los ingresos.',
                 },
             ],
+            experienceTitle: 'EXPERIENCIA PROFESIONAL',
+            experience: [
+                {
+                    role: 'Founder & Lead Engineer / Consultor IT',
+                    company: 'UbicSys S.A.',
+                    period: 'Ago 2024 – Presente',
+                    location: 'Panamá',
+                    highlights: [
+                        'Sago One (Plataforma SaaS B2B): arquitecto y desarrollador principal de la plataforma de facturación electrónica PWA Offline-First (DGI/HKA-PAC). 10+ empresas activas en producción, incluyendo Zona Libre y Puerto de Cruceros Colón 2000.',
+                        'Ministerio de Seguridad – Sistema 911: lideré migración en vivo de imágenes de SO en terminales de despacho de emergencias con cero downtime, manteniendo 100% de capacidad operativa.',
+                        'Consulado de Colombia (cliente activo): mantenimiento periódico de infraestructura crítica — redes, firewalls, servidores locales y atención presencial de incidentes.',
+                        'SITAC (Colombia): diagnósticos técnicos remotos para el Ministerio de Relaciones Exteriores que aceleraron la resolución de fallas de despliegue internacional.',
+                        '99.9% de uptime mediante arquitecturas Serverless-first y Database Branching (Neon PostgreSQL).',
+                    ],
+                },
+                {
+                    role: 'Consultor de Software & Audio Engineer',
+                    company: 'Freelance Internacional',
+                    period: 'Ene 2017 – Ene 2024',
+                    highlights: [
+                        'I+D en bases de infraestructura de baja latencia y patrones de diseño adaptables para sistemas de software y audio.',
+                        'Diseño de algoritmos de alta precisión aplicando Procesamiento Digital de Señales (DSP) en pipelines de procesamiento de audio.',
+                    ],
+                },
+            ],
             portfolioTitle: 'PORTAFOLIO · CASOS DE ÉXITO',
             projects: [
                 {
                     name: 'Sago One',
                     label: 'ERP SaaS Todo-en-Uno · FinTech · Next.js 15',
                     description:
-                        'Plataforma ERP empresarial que certifica facturas ante la DGI, gestiona inventario en ' +
-                        'tiempo real y opera un POS táctil bajo arquitectura offline-first. Garantiza continuidad ' +
-                        'operativa e ingresos ininterrumpidos incluso sin conexión a internet.',
+                        'Plataforma SaaS B2B multi-tenant para emisión de documentos fiscales electrónicos vía ' +
+                        'SOAP HKA/DGI (PAC-compliant). Microservicio Go para CUFE/CAFE offline (~15µs/op, Módulo 10). ' +
+                        'POS offline-first con impresión térmica Web Bluetooth (ESC/POS).',
                     roi:
                         'Elimina multas fiscales por errores de transcripción, reduce el tiempo de cierre contable ' +
                         'mensual y protege el flujo de caja durante interrupciones de red —el momento más crítico ' +
                         'para los ingresos de un negocio.',
-                    metric: '10K+ facturas procesadas · AES-256 · 99.9% uptime',
+                    metric: '10K+ facturas · AES-256-CBC · RLS multi-tenant · 99.9% uptime',
                 },
                 {
                     name: 'Plenty Market',
@@ -118,6 +160,38 @@ function getContent(lang: 'es' | 'en'): ProfileContent {
                         'el abandono de carrito en fases críticas del funnel.',
                     metric: 'TTI <3s · 60% reducción en carga de imágenes · Partner Program activo',
                 },
+            ],
+            openSourceTitle: 'OPEN SOURCE · HERRAMIENTAS PROPIAS',
+            openSourceProjects: [
+                {
+                    name: 'HKA-SDK',
+                    stack: 'Go',
+                    description: 'Gateway fiscal SOAP multi-tenant para HKA PAC. Abstrae la complejidad SOAP con validación estricta y enrutamiento dinámico de tipos de documento.',
+                    repo: 'github.com/angelnereira/HKA-SDK',
+                },
+                {
+                    name: 'Gravital-Shell',
+                    stack: 'Kotlin',
+                    description: 'Terminal Linux profesional para Android. Ejecuta Alpine Linux sin root con PTY real, sesiones persistentes y gestor APK integrado.',
+                    repo: 'github.com/angelnereira/Gravital-Shell',
+                },
+                {
+                    name: 'Gravital-Share',
+                    stack: 'Rust',
+                    description: 'Resuelve el VPN routing en hotspots Android: enruta el tráfico de dispositivos conectados al hotspot a través del túnel VPN del anfitrión.',
+                    repo: 'github.com/angelnereira/Gravital-Share',
+                },
+                {
+                    name: 'Gravital-Talk',
+                    stack: 'Rust',
+                    description: 'Biblioteca de comunicación / audio standalone con auth Gravital ID y persistencia en Gravital Cloud. Pipeline DSP propio de baja latencia.',
+                    repo: 'github.com/angelnereira/Gravital-Talk',
+                },
+            ],
+            languagesTitle: 'IDIOMAS',
+            languages: [
+                { language: 'Español', level: 'Nativo' },
+                { language: 'Inglés', level: 'Lectura técnica avanzada · Conversacional intermedio' },
             ],
             stackTitle: 'STACK TECNOLÓGICO',
             stackGroups: [
@@ -192,19 +266,44 @@ function getContent(lang: 'es' | 'en'): ProfileContent {
                     'I translate every technical decision into its direct impact on revenue.',
             },
         ],
+        experienceTitle: 'PROFESSIONAL EXPERIENCE',
+        experience: [
+            {
+                role: 'Founder & Lead Engineer / IT Consultant',
+                company: 'UbicSys S.A.',
+                period: 'Aug 2024 – Present',
+                location: 'Panama',
+                highlights: [
+                    'Sago One (B2B SaaS): architected and lead-developed the Offline-First PWA invoicing platform (DGI/HKA-PAC compliant). 10+ active enterprise clients including Free Trade Zone operators and Colón 2000 Cruise Port.',
+                    'Ministry of Security – 911 Emergency System: spearheaded a live, zero-downtime OS image migration across dispatch terminals, maintaining 100% operational capacity throughout.',
+                    'Colombian Consulate (ongoing client): on-site IT infrastructure maintenance — network administration, firewall configuration, on-premise servers, hardware health checks.',
+                    'SITAC (Colombia): remote technical diagnostics for the Colombian Ministry of Foreign Affairs that accelerated international deployment-failure resolution.',
+                    '99.9% guaranteed uptime via Serverless-first architectures and Neon PostgreSQL Database Branching.',
+                ],
+            },
+            {
+                role: 'Software Consultant & Audio Engineer',
+                company: 'Freelance International',
+                period: 'Jan 2017 – Jan 2024',
+                highlights: [
+                    'R&D for low-latency infrastructure foundations and adaptable design patterns for software and audio systems.',
+                    'Applied Digital Signal Processing (DSP) principles to design high-precision algorithms for audio processing pipelines.',
+                ],
+            },
+        ],
         portfolioTitle: 'PORTFOLIO · CASE STUDIES',
         projects: [
             {
                 name: 'Sago One',
                 label: 'All-in-One ERP SaaS · FinTech · Next.js 15',
                 description:
-                    'Enterprise ERP platform that certifies invoices to the DGI (Tax Authority), manages real-time ' +
-                    'inventory, and operates a touchscreen POS under an offline-first architecture. Guarantees ' +
-                    'operational continuity and uninterrupted revenue even without internet.',
+                    'Multi-tenant B2B SaaS for electronic fiscal document emission via HKA/DGI SOAP (PAC-compliant). ' +
+                    'Go microservice for offline CUFE/CAFE generation (~15µs/op, Módulo 10). Offline-first POS with ' +
+                    'Web Bluetooth thermal printing (ESC/POS).',
                 roi:
                     'Eliminates tax penalties from transcription errors, reduces monthly accounting close time, ' +
                     'and protects cash flow during network outages—the most critical moment for a business\'s revenue.',
-                metric: '10K+ invoices processed · AES-256 · 99.9% uptime',
+                metric: '10K+ invoices · AES-256-CBC · multi-tenant RLS · 99.9% uptime',
             },
             {
                 name: 'Plenty Market',
@@ -218,6 +317,38 @@ function getContent(lang: 'es' | 'en'): ProfileContent {
                     'critical funnel stages.',
                 metric: 'TTI <3s · 60% image load reduction · Active Partner Program',
             },
+        ],
+        openSourceTitle: 'OPEN SOURCE · OWN TOOLING',
+        openSourceProjects: [
+            {
+                name: 'HKA-SDK',
+                stack: 'Go',
+                description: 'Multi-tenant SOAP fiscal gateway for HKA PAC. Abstracts SOAP complexity with strict validation and dynamic document-type routing.',
+                repo: 'github.com/angelnereira/HKA-SDK',
+            },
+            {
+                name: 'Gravital-Shell',
+                stack: 'Kotlin',
+                description: 'Professional Linux terminal for Android. Runs Alpine Linux without root with real PTY, persistent sessions and built-in APK manager.',
+                repo: 'github.com/angelnereira/Gravital-Shell',
+            },
+            {
+                name: 'Gravital-Share',
+                stack: 'Rust',
+                description: 'Solves Android VPN routing on hotspots: routes traffic from hotspot-connected devices through the host\'s VPN tunnel.',
+                repo: 'github.com/angelnereira/Gravital-Share',
+            },
+            {
+                name: 'Gravital-Talk',
+                stack: 'Rust',
+                description: 'Standalone audio / communication library with Gravital ID auth and Gravital Cloud persistence. Custom low-latency DSP pipeline.',
+                repo: 'github.com/angelnereira/Gravital-Talk',
+            },
+        ],
+        languagesTitle: 'LANGUAGES',
+        languages: [
+            { language: 'Spanish', level: 'Native proficiency' },
+            { language: 'English', level: 'Advanced technical reading · Basic-Intermediate conversational' },
         ],
         stackTitle: 'TECHNOLOGY STACK',
         stackGroups: [
@@ -400,7 +531,66 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
     });
 
     // ─────────────────────────────────────────
-    // PAGE 2 — Portfolio
+    // PAGE 2 — Experience + Portfolio
+    // ─────────────────────────────────────────
+    doc.addPage();
+    doc.setFillColor(...DEEP_FOREST);
+    doc.rect(0, 0, PAGE_W, PAGE_H, 'F');
+    doc.setFillColor(...ACID_LIME);
+    doc.rect(0, 0, PAGE_W, 3, 'F');
+    y = MARGIN;
+
+    // ── Experience ─────────────────────────────
+    sectionTitle(content.experienceTitle);
+
+    content.experience.forEach((exp, ei) => {
+        checkPageBreak(30);
+
+        // Role header line
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...TEXT_PRIMARY);
+        doc.text(exp.role, MARGIN, y);
+
+        // Period right-aligned
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...ACID_LIME);
+        doc.text(exp.period, PAGE_W - MARGIN, y, { align: 'right' });
+        y += 5;
+
+        // Company + location
+        doc.setFontSize(8.5);
+        doc.setFont('helvetica', 'italic');
+        doc.setTextColor(...TEXT_SECONDARY);
+        const companyLine = exp.location ? `${exp.company} · ${exp.location}` : exp.company;
+        doc.text(companyLine, MARGIN, y);
+        y += 5;
+
+        // Bulleted highlights
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8.5);
+        doc.setTextColor(...TEXT_SECONDARY);
+        exp.highlights.forEach((h) => {
+            const lines = doc.splitTextToSize(`•  ${h}`, CONTENT_W - 4);
+            lines.forEach((line: string) => {
+                checkPageBreak(5);
+                doc.text(line, MARGIN + 2, y);
+                y += 4.4;
+            });
+        });
+
+        if (ei < content.experience.length - 1) {
+            y += 3;
+            drawHRule();
+            y += 1;
+        }
+    });
+
+    y += 6;
+
+    // ─────────────────────────────────────────
+    // PAGE 3 — Portfolio + Open Source + Stack
     // ─────────────────────────────────────────
     doc.addPage();
 
@@ -487,6 +677,76 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
     });
 
     y += 8;
+
+    // ── Open Source projects (compact list) ────
+    checkPageBreak(60);
+    sectionTitle(content.openSourceTitle);
+
+    content.openSourceProjects.forEach((osp, oi) => {
+        checkPageBreak(16);
+
+        // Project name + stack tag in one row
+        doc.setFontSize(9.5);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...ACID_LIME);
+        doc.text(osp.name, MARGIN, y);
+
+        const stackText = `· ${osp.stack}`;
+        const nameWidth = doc.getTextWidth(osp.name);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...TEXT_SECONDARY);
+        doc.text(stackText, MARGIN + nameWidth + 3, y);
+
+        // Repo URL right-aligned
+        doc.setFontSize(7);
+        doc.setTextColor(...TEXT_SECONDARY);
+        doc.text(osp.repo, PAGE_W - MARGIN, y, { align: 'right' });
+        y += 4.5;
+
+        // Description
+        doc.setFontSize(8.2);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...TEXT_SECONDARY);
+        const ospLines = doc.splitTextToSize(osp.description, CONTENT_W);
+        ospLines.forEach((line: string) => {
+            checkPageBreak(5);
+            doc.text(line, MARGIN, y);
+            y += 4.2;
+        });
+
+        if (oi < content.openSourceProjects.length - 1) {
+            y += 2;
+        }
+    });
+
+    y += 8;
+
+    // ── Languages ──────────────────────────────
+    checkPageBreak(28);
+    sectionTitle(content.languagesTitle);
+
+    content.languages.forEach((lng) => {
+        checkPageBreak(6);
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...TEXT_PRIMARY);
+        doc.text(lng.language, MARGIN, y);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...TEXT_SECONDARY);
+        // Indent the level text after the language label
+        const langWidth = doc.getTextWidth(lng.language);
+        const levelLines = doc.splitTextToSize(lng.level, CONTENT_W - langWidth - 8);
+        levelLines.forEach((line: string, idx: number) => {
+            const x = idx === 0 ? MARGIN + langWidth + 6 : MARGIN + langWidth + 6;
+            doc.text(line, x, y);
+            if (idx < levelLines.length - 1) y += 4.5;
+        });
+        y += 6;
+    });
+
+    y += 6;
 
     // ── Tech Stack ────────────────────────────
     checkPageBreak(60);
