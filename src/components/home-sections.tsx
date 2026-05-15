@@ -3,9 +3,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Github, Shield, Database, Zap, Code2, Target, ExternalLink } from 'lucide-react';
+import { ArrowRight, Github, Shield, Database, Zap, Code2, Target, ExternalLink, Terminal, Network, AudioLines, FileCode2 } from 'lucide-react';
 import { AnimatedDiv } from '@/components/animated-div';
 import { skills, skillCategories, getSkillsByCategory, categoryIconMap } from '@/lib/skills';
+import { projectsData } from '@/lib/projects-and-testimonials';
 import type { Project, Metric } from '@/lib/projects-and-testimonials';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -36,16 +37,56 @@ const PlentyMarketIcon = (props: React.SVGProps<SVGSVGElement>) => (
 const projectIcons: { [key: string]: React.ElementType } = {
   'sago-one-fintech-saas': SagoOneIcon,
   'plenty-market-ecommerce-pwa': PlentyMarketIcon,
+  'hka-sdk-fiscal-gateway': FileCode2,
+  'gravital-shell-android-terminal': Terminal,
+  'gravital-share-android-vpn': Network,
+  'gravital-talk-audio-comm': AudioLines,
 };
 
-// Icon mapping for tech highlights
-const highlightIcons: { [key: string]: React.ElementType } = {
-  'Seguridad Nivel Bancario': Shield,
-  'Base de Datos Multi-Tenant': Database,
-  'Performance Extremo': Zap,
-  'Gestión de Estado Optimizada': Code2,
-  'Optimización de Media': Zap,
-  'Migración de Base de Datos': Database,
+// Stable mapping: project id → i18n key prefix under `project.*` in messages
+const PROJECT_I18N_KEY: Record<string, string> = {
+  'sago-one-fintech-saas': 'sago_one',
+  'plenty-market-ecommerce-pwa': 'plenty_market',
+  'hka-sdk-fiscal-gateway': 'hka_sdk',
+  'gravital-shell-android-terminal': 'gravital_shell',
+  'gravital-share-android-vpn': 'gravital_share',
+  'gravital-talk-audio-comm': 'gravital_talk',
+};
+
+// Each project declares 3 named highlights. We expose them with the data
+// so the renderer can pull labels from i18n via stable keys instead of
+// matching by translated title.
+const PROJECT_HIGHLIGHTS: Record<string, { key: string; icon: React.ElementType }[]> = {
+  'sago-one-fintech-saas': [
+    { key: 'security', icon: Shield },
+    { key: 'database', icon: Database },
+    { key: 'performance', icon: Zap },
+  ],
+  'plenty-market-ecommerce-pwa': [
+    { key: 'state', icon: Code2 },
+    { key: 'media', icon: Zap },
+    { key: 'migration', icon: Database },
+  ],
+  'hka-sdk-fiscal-gateway': [
+    { key: 'validation', icon: Shield },
+    { key: 'routing', icon: Network },
+    { key: 'multitenant', icon: Database },
+  ],
+  'gravital-shell-android-terminal': [
+    { key: 'pty', icon: Terminal },
+    { key: 'sessions', icon: Code2 },
+    { key: 'apk', icon: Database },
+  ],
+  'gravital-share-android-vpn': [
+    { key: 'forwarding', icon: Network },
+    { key: 'performance', icon: Zap },
+    { key: 'fail_secure', icon: Shield },
+  ],
+  'gravital-talk-audio-comm': [
+    { key: 'dsp', icon: AudioLines },
+    { key: 'auth', icon: Shield },
+    { key: 'cloud', icon: Database },
+  ],
 };
 
 export function SkillsSection() {
@@ -124,40 +165,30 @@ export function ProjectsSection() {
     setIsClient(true);
   }, []);
 
-  const projects = [
-    {
-      id: 'sago-one-fintech-saas',
-      title: t('project.sago_one.title'),
-      label: t('project.sago_one.label'),
-      description: t('project.sago_one.description'),
-      technologies: ["Next.js 15", "TypeScript", "Prisma ORM", "Neon PostgreSQL", "PWA", "Service Workers", "AES-256", "Vercel"],
-      logo: SagoOneIcon,
-      githubUrl: "https://github.com/angelnereira/sago-factu-V0.2",
-      liveUrl: "https://sagoone.com",
-      challenge: t('project.sago_one.challenge'),
-      techHighlights: [
-        { title: 'Seguridad Nivel Bancario', description: t('project.sago_one.highlight.security.desc') }, // Title matches icon mapping
-        { title: 'Base de Datos Multi-Tenant', description: t('project.sago_one.highlight.database.desc') },
-        { title: 'Performance Extremo', description: t('project.sago_one.highlight.performance.desc') }
-      ]
-    },
-    {
-      id: 'plenty-market-ecommerce-pwa',
-      title: t('project.plenty_market.title'),
-      label: t('project.plenty_market.label'),
-      description: t('project.plenty_market.description'),
-      technologies: ["Next.js 14", "TypeScript", "Prisma ORM", "Neon PostgreSQL", "Zustand", "Cloudinary", "Vercel", "PWA"],
-      logo: PlentyMarketIcon,
-      githubUrl: "https://github.com/angelnereira/plenty-market",
-      liveUrl: "https://plenty-market.vercel.app",
-      challenge: t('project.plenty_market.challenge'),
-      techHighlights: [
-        { title: 'Gestión de Estado Optimizada', description: t('project.plenty_market.highlight.state.desc') },
-        { title: 'Optimización de Media', description: t('project.plenty_market.highlight.media.desc') },
-        { title: 'Migración de Base de Datos', description: t('project.plenty_market.highlight.migration.desc') }
-      ]
-    }
-  ];
+  // Data-driven: build the cards from the canonical projectsData using
+  // stable i18n keys per project. Adding a new project = add it to
+  // projectsData + add a `project.<key>` entry in messages.{es,en}.json.
+  const projects = projectsData.map((p) => {
+    const i18nKey = PROJECT_I18N_KEY[p.id];
+    const highlightDefs = PROJECT_HIGHLIGHTS[p.id] ?? [];
+    return {
+      id: p.id,
+      title: i18nKey ? t(`project.${i18nKey}.title`) : p.title,
+      label: i18nKey ? t(`project.${i18nKey}.label`) : p.label,
+      description: i18nKey ? t(`project.${i18nKey}.description`) : p.description,
+      technologies: p.technologies,
+      logo: projectIcons[p.id] ?? FileCode2,
+      githubUrl: p.githubUrl,
+      liveUrl: p.liveUrl,
+      challenge: i18nKey ? t(`project.${i18nKey}.challenge`) : p.challenge,
+      status: p.status,
+      techHighlights: highlightDefs.map((h) => ({
+        title: i18nKey ? t(`project.${i18nKey}.highlight.${h.key}.title`) : '',
+        description: i18nKey ? t(`project.${i18nKey}.highlight.${h.key}.desc`) : '',
+        icon: h.icon,
+      })),
+    };
+  });
 
   return (
     <section id="projects" className="w-full bg-background/50">
@@ -241,14 +272,13 @@ export function ProjectsSection() {
                         </h4>
                         <div className="grid gap-3">
                           {project.techHighlights.map((highlight, i) => {
-                            const IconComponent = highlightIcons[highlight.title] || Code2;
+                            const IconComponent = highlight.icon ?? Code2;
                             return (
                               <div key={i} className="flex items-start gap-3 p-3 bg-secondary/30 rounded-lg">
                                 <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                                   <IconComponent className="w-4 h-4 text-primary" />
                                 </div>
                                 <div>
-                                  {/* Using t() for titles if we wanted, but map matches icons. Description is translated. */}
                                   <p className="font-medium text-foreground text-sm">{highlight.title}</p>
                                   <p className="text-xs text-muted-foreground">{highlight.description}</p>
                                 </div>
