@@ -90,12 +90,12 @@ function SkillCard({ skill, viewDetailsLabel }: { skill: Skill; viewDetailsLabel
   );
 }
 
-function CategoryDetailPage({ category, labels }: {
+function CategoryDetailPage({ category, catSkills, labels }: {
   category: SkillCategoryData;
+  catSkills: Skill[];
   labels: CategoryLabels;
 }) {
   const Icon = categoryIconMap[category.iconName];
-  const catSkills = getSkillsByCategory(category.id);
 
   return (
     <div className="flex flex-col gap-12 sm:gap-16">
@@ -361,7 +361,7 @@ export default async function SkillsSlugPage({ params }: SlugPageProps) {
       contactBtn: t('contact_btn'),
       allAreasBtn: t('all_areas_btn'),
     };
-    return <CategoryDetailPage category={category} labels={categoryLabels} />;
+    return <CategoryDetailPage category={category} catSkills={catSkills} labels={categoryLabels} />;
   }
 
   // Otherwise treat as an individual skill
