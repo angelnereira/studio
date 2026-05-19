@@ -5,7 +5,7 @@ import { useEffect, useState, Suspense } from "react"
 import { confirmVerification } from "@/app/[locale]/blog/actions"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/lib/routing"
 
 function VerifyContent() {
     const searchParams = useSearchParams()

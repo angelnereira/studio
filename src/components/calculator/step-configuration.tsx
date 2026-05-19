@@ -7,6 +7,7 @@ import { SpotlightCard } from '@/components/spotlight-card';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { TiltCard } from '@/components/ui/tilt-card';
 
 interface StepConfigurationProps {
@@ -22,18 +23,19 @@ export function StepConfiguration({
   onComplexitySelect,
   onCountrySelect,
 }: StepConfigurationProps) {
+  const t = useTranslations('calculator');
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">Configuración del Proyecto</h2>
+        <h2 className="text-2xl font-bold mb-2">{t('configuration.title')}</h2>
         <p className="text-muted-foreground">
-          Define la complejidad y ubicación para un presupuesto preciso
+          {t('configuration.subtitle')}
         </p>
       </div>
 
       {/* Complexity Selection */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Nivel de Complejidad</h3>
+        <h3 className="text-lg font-semibold">{t('configuration.complexity')}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {Object.values(MULTIPLICADORES_COMPLEJIDAD).map((complexity) => {
             const isSelected = selectedComplexity === complexity.level;
@@ -73,7 +75,7 @@ export function StepConfiguration({
 
                   <div className="mt-3 pt-3 border-t">
                     <span className="text-xs font-medium text-primary">
-                      Multiplicador: {complexity.multiplier}x
+                      {t('configuration.multiplier')}: {complexity.multiplier}x
                     </span>
                   </div>
                 </Card>
@@ -85,7 +87,7 @@ export function StepConfiguration({
 
       {/* Country Selection */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">País/Región</h3>
+        <h3 className="text-lg font-semibold">{t('configuration.country')}</h3>
         <Card className="p-6">
           <RadioGroup
             value={selectedCountry || undefined}

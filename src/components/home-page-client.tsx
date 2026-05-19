@@ -1,33 +1,19 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/lib/routing";
 import Image from "next/image";
 import { ArrowRight, Sparkles, TrendingUp, Zap, CheckCircle2, Shield, Code2, Database, Cloud, Server, Rocket, Target, Users } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { AnimatedDiv } from "@/components/animated-div";
-import { projectsData, metricsData } from "@/lib/projects-and-testimonials";
-import dynamic from 'next/dynamic';
-import { Skeleton } from "@/components/ui/skeleton";
 import { SpotlightCard } from "./spotlight-card";
 import { Badge } from "@/components/ui/badge";
-import { HackerText } from "@/components/ui/hacker-text";
 import { PremiumText } from "@/components/premium-text";
-import { GradientFlowText } from "@/components/ui/gradient-flow-text";
 import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 import { FAQSection } from "@/components/home/faq-section";
 import { SiteVisitCounter } from "@/components/analytics/site-visit-counter";
 import { CVDownloadButton } from "@/features/cv/components/CVDownloadButton";
-
-const DynamicServicesSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ServicesSection), {
-  loading: () => <Skeleton className="h-96 w-full" />,
-});
-const DynamicProjectsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.ProjectsSection), {
-  loading: () => <Skeleton className="h-96 w-full" />,
-});
-const DynamicMetricsSection = dynamic(() => import('@/components/home-sections').then(mod => mod.MetricsSection), {
-  loading: () => <Skeleton className="h-64 w-full" />,
-});
+import { ServicesSection, ProjectsSection, MetricsSection } from "@/components/home-sections";
 
 import { useTranslations } from "next-intl";
 
@@ -50,7 +36,7 @@ export default function HomePageClient() {
     { value: "5+", label: t('hero.stats.years'), icon: TrendingUp },
     { value: "10K+", label: t('hero.stats.facturas'), icon: CheckCircle2 },
     { value: "99.9%", label: t('hero.stats.uptime'), icon: Shield },
-    { value: "< 200ms", label: "Response Time", icon: Zap },
+    { value: "< 200ms", label: t('hero.stats.responseTime'), icon: Zap },
   ], [t]);
 
   // Solution categories - enfocado en arquitectura técnica - Memoized
@@ -336,9 +322,9 @@ export default function HomePageClient() {
       </section>
 
       {/* Dynamic Sections - Services, Projects, Metrics */}
-      <DynamicServicesSection />
-      <DynamicProjectsSection />
-      <DynamicMetricsSection />
+      <ServicesSection />
+      <ProjectsSection />
+      <MetricsSection />
 
       {/* Live Visit Counter */}
       <section className="w-full py-12">

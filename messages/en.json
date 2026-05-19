@@ -1,562 +1,633 @@
 {
-    "hero": {
-        "greeting": "Hi, I'm",
-        "name": "Ángel Nereira",
-        "title": "Full Stack Software Engineer",
-        "subtitle": "FinTech Developer & Modern Web Apps",
-        "description": "Engineer specialized in FinTech, GovTech, and SaaS platforms. I build modern applications that work on any device, ensuring security and scalability.",
-        "cta": {
-            "services": "View Projects",
-            "contact": "Technical Consulting"
-        },
-        "badge": "Creator of Sago One · ERP SaaS",
-        "stats": {
-            "years": "Years of Experience",
-            "projects": "Projects Delivered",
-            "facturas": "Invoices Processed",
-            "uptime": "SaaS Uptime"
-        }
-    },
-    "solutions": {
-        "title": "Solutions that Scale",
-        "subtitle": "High-level software engineering for products that need performance, security and availability.",
-        "enterprise": {
-            "title": "FinTech & Compliance",
-            "desc": "Electronic invoicing systems, government integrations (DGI, PAC) and bank-grade security.",
-            "stats": "AES-256 Encryption"
-        },
-        "digital": {
-            "title": "PWA Offline-First",
-            "desc": "Progressive applications that work without internet. Service Workers, strategic caching and smart sync.",
-            "stats": "100% Offline Capable"
-        },
-        "consulting": {
-            "title": "SaaS Development",
-            "desc": "Multi-tenant systems, horizontal scalability and PostgreSQL database optimization.",
-            "stats": "Multi-Tenant Ready"
-        },
-        "explore": "View Details"
-    },
-    "about": {
-        "title": "About Me",
-        "description": "Full Stack Software Engineer specialized in FinTech and GovTech. I design and build scalable SaaS systems that process thousands of daily transactions, with a relentless focus on client ROI.",
-        "background": {
-            "title": "The Origin",
-            "text": "My engineering journey began by facing the most critical problem in business digitalization in emerging markets: systems that fail exactly when they are needed most. Building Sago One from scratch forced me to master offline-first architectures, government fiscal compliance, and bank-grade security protocols — not as academic exercises, but as business imperatives with real financial consequences. Every architectural decision I make starts with a central question: what is the direct impact on the client's operational balance sheet?"
-        },
-        "current": {
-            "title": "Production Ecosystem",
-            "text": "Sago One processes over 10,000 DGI-certified electronic invoices, operates a touch POS, manages legal payroll, and maintains 99.9% uptime with a PWA architecture that works without internet. Plenty Market integrates a logistics Partner Program with tax-free zones and real-time inventory sync. Both are technological assets protecting the financial interests of real businesses, every day, with latencies under 200ms."
-        },
-        "philosophy": {
-            "title": "My Philosophy",
-            "text": "Clean code, scalable solutions, clear documentation"
-        },
-        "values": {
-            "title": "Engineering Pillars",
-            "subtitle": "Principles guiding every architectural decision and every line of code",
-            "architecture": {
-                "title": "Architecture First",
-                "desc": "The tech stack is a consequence of the architecture, not the other way around. Every project starts with an analysis of non-functional requirements: scalability, fault tolerance, security. This prevents technical debt that erodes client ROI."
-            },
-            "security": {
-                "title": "Non-Negotiable Security",
-                "desc": "In FinTech systems, security is not a layer added at the end. AES-256, robust authentication, and strict data validation are part of the initial design. Regulatory compliance is not optional: it is the product."
-            },
-            "durability": {
-                "title": "Software as an Asset",
-                "desc": "Strict TypeScript, clear documentation, and modular architectures are the difference between a system that scales for years and one that accumulates technical debt. The software I deliver is a capital asset, not an operating expense."
-            },
-            "communication": {
-                "title": "Value in Business Terms",
-                "desc": "CTOs and CFOs don't invest in lines of code; they invest in predictable financial outcomes. I translate every technical decision — latency, uptime, scalability — into its direct impact on revenue, operating costs, and business risk."
-            }
-        }
-    },
-    "skills": {
-        "title": "Tech Stack",
-        "description": "The tools I use to build Sago One and Plenty Market.",
-        "cta": "View Full Stack",
-        "category": {
-            "core": "Core",
-            "data": "Data",
-            "infrastructure": "Infrastructure"
-        },
-        "page_title": "Tech Stack",
-        "page_subtitle": "7 areas of specialization. From frontend to AI Engineering — every technology selected for real production impact.",
-        "explore_area": "Explore area",
-        "tech_singular": "technology",
-        "tech_plural": "technologies",
-        "cta_subtitle": "Looking for an engineer with this stack for your team or project?",
-        "cta_button": "Let's talk",
-        "back_to_areas": "Back to all areas",
-        "skills_count": "{count, plural, one {# technology} other {# technologies}}",
-        "view_details": "View details",
-        "business_value_label": "Business Value",
-        "interested_area_title": "Interested in this area?",
-        "interested_area_desc": "If you're looking for an expert in {areaName} for your project or team, I'm available for technical consulting.",
-        "contact_btn": "Contact",
-        "all_areas_btn": "All areas",
-        "practical_abilities_title": "Practical Capabilities & Application",
-        "implementation_title": "How do I implement {skillName}?",
-        "implementation_desc": "I use {skillName} as a core building block in developing Sago One and Plenty Market. My approach goes beyond basic usage — I focus on resource optimization, security, and scalability, ensuring every line of code delivers real business value and a superior end-user experience.",
-        "performance_opt": "Performance Optimization",
-        "scalable_arch": "Scalable Architecture",
-        "interested_tech_title": "Interested in this technology?",
-        "interested_tech_desc": "If you're looking for an expert who masters {skillName} to take your project to the next engineering level, I'm available for technical consulting.",
-        "work_together": "Work Together",
-        "back_to_category": "Back to {categoryName}",
-        "back_to_stack": "Back to Tech Stack",
-        "explore_category": "Explore {categoryName}",
-        "explore_all_tech": "Explore all technologies",
-        "specialized_badge": "{category} Specialized"
-    },
-    "services": {
-        "title": "Services",
-        "description": "Software solutions for products that need to scale.",
-        "cta": "View all services",
-        "page_title": "Technology Solutions to Grow Your Business",
-        "page_subtitle": "From web development and mobile apps to cybersecurity, infrastructure, and business management — complete solutions for Panama and Latin America.",
-        "addons_title": "Optional Add-ons",
-        "addons_subtitle": "Add extra features to your project for greater impact.",
-        "custom_cta_title": "Can't find what you're looking for?",
-        "custom_cta_description": "These packages are starting points. Every project is unique. Contact me to create a 100% custom solution.",
-        "custom_cta_button": "Create Custom Plan",
-        "plans_from": "Plans from",
-        "ideal_for": "Ideal for",
-        "view_details": "View Details",
-        "quick_quote": "Quick Quote",
-        "quote": "Quote"
-    },
-    "projects": {
-        "title": "Projects in Production",
-        "description": "Real systems processing transactions. The engineering behind each solution.",
-        "page_title": "Success Stories",
-        "page_subtitle": "FinTech and E-commerce systems in production. The engineering behind each solution.",
-        "challenge": "The Technical Challenge",
-        "tech_highlights": "Technical Highlights",
-        "status_production": "In Production",
-        "stack": "Tech Stack",
-        "back": "Back to Projects",
-        "similar_cta_title": "Interested in building something similar?",
-        "similar_cta_button": "Schedule Technical Consulting"
-    },
-    "calculadora": {
-        "badge": "Interactive Calculator",
-        "title": "Budget Calculator",
-        "description": "Get a detailed cost estimate for your software project in minutes. Our calculator considers multiple factors to give you a precise, personalized quote.",
-        "instant_estimate": "Instant Estimation",
-        "detailed_breakdown": "Detailed Breakdown",
-        "export_pdf": "Export PDF",
-        "loading": "Loading calculator...",
-        "metadata_title": "Budget Calculator | Ángel Nereira",
-        "metadata_description": "Calculate the estimated budget for your software project. Get a detailed quote in minutes with our interactive calculator.",
-        "info": {
-            "precision_title": "Data-Driven Precision",
-            "precision_desc": "Our prices are based on years of experience and analysis of the technology market.",
-            "customization_title": "Full Customization",
-            "customization_desc": "Adjust complexity, urgency, and location to get a quote tailored to your needs.",
-            "transparency_title": "Full Transparency",
-            "transparency_desc": "Complete cost breakdown and personalized recommendations to maximize the value of your investment."
-        },
-        "faq": {
-            "title": "Frequently Asked Questions",
-            "q1": "How accurate is the calculated budget?",
-            "a1": "The budget is an estimate based on the parameters you select and our experience with similar projects. The final cost may vary based on additional specific requirements that emerge during the detailed project analysis.",
-            "q2": "Does the budget include all listed services?",
-            "a2": "Yes, the base budget includes all features listed for each service type. Additional add-ons are added separately and are optional but recommended depending on the project type.",
-            "q3": "How long is the quote valid?",
-            "a3": "Generated quotes are valid for 30 days from the generation date. After this period, we recommend generating a new quote to reflect possible changes in market conditions.",
-            "q4": "Can I modify the project after starting?",
-            "a4": "Yes, projects are flexible and can be adjusted during development. However, significant scope changes may affect the budget and timeline. We work in an agile way to adapt to your needs while maintaining cost transparency."
-        }
-    },
-    "metrics": {
-        "title": "Production Metrics",
-        "subtitle": "Real numbers from production systems."
-    },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "name": "Ángel Nereira",
+    "title": "Full Stack Software Engineer",
+    "subtitle": "FinTech Developer & Modern Web Apps",
+    "description": "Engineer specialized in FinTech, GovTech, and SaaS platforms. I build modern applications that work on any device, ensuring security and scalability.",
     "cta": {
-        "title": "Need high-level development?",
-        "subtitle": "Let's build systems that scale. Available for FinTech, E-commerce and SaaS projects.",
-        "button": "Book Consulting"
+      "services": "View Projects",
+      "contact": "Technical Consulting"
     },
-    "nav": {
-        "home": "Home",
-        "about": "About",
-        "services": "Services",
-        "projects": "Projects",
-        "skills": "Stack",
-        "contact": "Contact",
-        "calculator": "Calculator",
-        "blog": "Blog"
-    },
-    "footer": {
-        "rights": "All rights reserved.",
-        "built": "Developed with",
-        "quote": "\"Clean code, scalable solutions.\"",
-        "builtBy": "Built by Ángel Nereira."
-    },
-    "general": {
-        "learnMore": "Learn more",
-        "viewAll": "View all",
-        "viewCode": "View Code",
-        "viewLive": "View Live"
-    },
-    "admin": {
-        "title": "Admin Panel",
-        "dashboard": "Dashboard",
-        "job_analysis": "Job Analysis",
-        "cover_letters": "Cover Letters",
-        "back_to_site": "Back to Site"
-    },
-    "blog": {
-        "page_title": "Tech & Thoughts",
-        "page_description": "Explorations on software architecture, development practices, and the tech ecosystem from a Panamanian perspective with a global vision.",
-        "metadata_title": "Blog | Ángel Nereira",
-        "metadata_description": "Articles on software development, cloud architecture, and the learning journey of a Panamanian engineer.",
-        "search_placeholder": "Search articles...",
-        "filter_by_topic": "Filter by topic:",
-        "clear_filters": "Clear filters",
-        "no_results": "No articles found matching your search.",
-        "view_all_articles": "View all articles",
-        "article_count": "{count, plural, one {# article} other {# articles}}",
-        "article_count_filtered": "{filtered} of {total, plural, one {# article} other {# articles}}"
-    },
-    "contact": {
-        "page_title": "Contact Me",
-        "page_description": "Whether for a new project, a job opportunity, a collaboration, or an invitation, I'm here to listen. Select the tab that best describes your reason for contact.",
-        "metadata_title": "Contact | Software Developer in Panama",
-        "metadata_description": "Looking for a Full Stack developer in Panama? Contact me for projects, consulting, or custom software development.",
-        "tabs": {
-            "client": "Client",
-            "employer": "Employer",
-            "collaboration": "Collaboration",
-            "invitation": "Invitation"
-        },
-        "client_card": {
-            "title": "Project Proposal",
-            "description": "Have an idea or project in mind? Tell me the details."
-        },
-        "employer_card": {
-            "title": "Job Opportunity",
-            "description": "Think I'd fit your team? Send me the role details."
-        },
-        "collaboration_card": {
-            "title": "Collaboration Proposal",
-            "description": "Interested in collaborating on a project, talk, or event? Contact me."
-        },
-        "invitation_card": {
-            "title": "Event Invitation",
-            "description": "For invitations to conferences, workshops, meetings, or any other professional event."
-        },
-        "form": {
-            "shared": {
-                "submitting": "Sending...",
-                "error_title": "Error sending",
-                "email_label": "Email",
-                "country_label": "Country (Optional)",
-                "industry_label": "Business Industry (Optional)",
-                "industry_placeholder": "Select an industry",
-                "industry_technology": "Technology & Software",
-                "industry_ecommerce": "E-commerce & Retail",
-                "industry_finance": "Finance & Banking",
-                "industry_health": "Health & Wellness",
-                "industry_education": "Education",
-                "industry_professional_services": "Professional Services",
-                "industry_real_estate": "Real Estate",
-                "industry_transport": "Transport & Logistics",
-                "industry_other": "Other"
-            },
-            "client": {
-                "name_label": "Full Name",
-                "name_placeholder": "Your name",
-                "email_placeholder": "your.email@example.com",
-                "company_label": "Company (Optional)",
-                "company_placeholder": "Your company name",
-                "country_placeholder": "Country of residence",
-                "service_label": "Service of Interest",
-                "service_placeholder": "Select a service",
-                "service_other": "Other",
-                "budget_label": "Estimated Budget",
-                "budget_placeholder": "Select a range",
-                "budget_more": "More than $25,000",
-                "message_label": "Tell me about your project",
-                "message_placeholder": "Describe your needs, goals, and any relevant details.",
-                "submit": "Send Proposal",
-                "success_title": "Message Sent!"
-            },
-            "employer": {
-                "recruiter_name_label": "Your Name",
-                "recruiter_name_placeholder": "Recruiter name",
-                "email_label": "Contact Email",
-                "email_placeholder": "your.email@company.com",
-                "company_name_label": "Company Name",
-                "company_name_placeholder": "My Company Inc.",
-                "job_title_label": "Job Title",
-                "job_title_placeholder": "Senior Software Engineer",
-                "country_placeholder": "Company country",
-                "salary_label": "Salary Offer (Optional)",
-                "salary_placeholder": "e.g. $50k - $70k USD",
-                "contract_label": "Contract Type (Optional)",
-                "contract_placeholder": "Select contract type",
-                "contract_full_time": "Full Time",
-                "contract_part_time": "Part Time",
-                "contract_freelance": "Contract / Freelance",
-                "contract_internship": "Internship",
-                "job_description_label": "Job Description or Link",
-                "job_description_placeholder": "Paste the job description or a link to the job posting here.",
-                "submit": "Contact Professional",
-                "success_title": "Information Received!",
-                "success_description": "Thank you for considering me. I'll review the opportunity and get back to you soon."
-            },
-            "collaborator": {
-                "name_label": "Your Name",
-                "name_placeholder": "First and Last Name",
-                "email_placeholder": "your.email@example.com",
-                "linkedin_label": "LinkedIn Profile (Optional)",
-                "linkedin_placeholder": "https://linkedin.com/in/...",
-                "portfolio_label": "Portfolio or GitHub (Optional)",
-                "portfolio_placeholder": "https://github.com/...",
-                "expertise_label": "Area of Expertise (Optional)",
-                "expertise_placeholder": "Select your main area",
-                "expertise_frontend": "Frontend Development",
-                "expertise_backend": "Backend Development",
-                "expertise_fullstack": "Full-Stack Development",
-                "expertise_devops": "DevOps / SRE",
-                "expertise_mobile": "Mobile Development (iOS/Android)",
-                "expertise_ux_ui": "UX/UI Design",
-                "expertise_data_ai": "Data Science / AI / ML",
-                "expertise_pm": "Project Management",
-                "expertise_other": "Other",
-                "subject_label": "What is the collaboration about?",
-                "subject_placeholder": "Main subject of your proposal",
-                "message_label": "Proposal or Idea",
-                "message_placeholder": "Describe the collaboration you have in mind, the project, or the idea you want to discuss.",
-                "submit": "Propose Collaboration",
-                "success_title": "Message Received!",
-                "success_description": "Thank you for your interest in collaborating. I've saved your proposal."
-            },
-            "invitation": {
-                "inviter_name_label": "Your Name",
-                "inviter_name_placeholder": "Name of the person inviting",
-                "email_label": "Contact Email",
-                "email_placeholder": "your.email@example.com",
-                "event_name_label": "Event Name",
-                "event_name_placeholder": "e.g. Tech Conf 2024",
-                "event_type_label": "Event Type",
-                "event_type_placeholder": "Select type",
-                "event_type_conference": "Conference",
-                "event_type_workshop": "Workshop",
-                "event_type_meetup": "Meetup / Community",
-                "event_type_business": "Business Meeting",
-                "event_type_podcast": "Podcast / Interview",
-                "event_type_other": "Other",
-                "proposed_role_label": "Proposed Role",
-                "proposed_role_placeholder": "Select your role",
-                "role_speaker": "Speaker / Presenter",
-                "role_panelist": "Panelist",
-                "role_special_guest": "Special Guest",
-                "role_mentor": "Mentor",
-                "role_interviewee": "Interviewee",
-                "event_date_label": "Event Date",
-                "select_date": "Select a date",
-                "event_time_label": "Time (Optional)",
-                "event_location_label": "Location or Link",
-                "event_location_placeholder": "Physical address or meeting URL",
-                "invitation_reason_label": "Reason for Invitation",
-                "invitation_reason_placeholder": "Briefly describe the event and the reason for the invitation.",
-                "submit": "Send Invitation",
-                "success_title": "Invitation Received!",
-                "success_description": "Thank you for the invitation. I'll review the details and get back to you soon."
-            }
-        }
-    },
-    "project": {
-        "sago_one": {
-            "title": "Sago One",
-            "label": "All-in-One ERP SaaS | POS & FinTech | Next.js 15",
-            "subtitle": "Enterprise ERP and Electronic Invoicing Platform",
-            "description": "All-in-One ERP SaaS that eliminates hours of redundant administrative work weekly for Panamanian businesses. Certifies invoices with the DGI, manages real-time inventory, and operates a touch POS — all under an offline-first architecture that guarantees operational continuity and uninterrupted revenue even without internet. Payroll and inventory automation directly reduces fixed costs and eliminates the risk of tax penalties from human transcription errors.",
-            "challenge": "The critical challenge: guarantee business continuity — and revenue — during connectivity outages, which in emerging markets represent direct sales losses. The Service Workers and background sync solution ensures every transaction is recorded and invoiced regardless of network stability, protecting business cash flow at its most vulnerable moment.",
-            "highlight": {
-                "security": {
-                    "title": "Bank-Grade Security",
-                    "desc": "AES-256 encryption for PAC/DGI credentials. Mitigates the risk of tax penalties and corporate data breaches that could represent five-figure losses."
-                },
-                "database": {
-                    "title": "Modular Ecosystem (ERP)",
-                    "desc": "DGI Invoicing, touch POS, real-time inventory, and legal payroll integrated. Eliminates data silos and reduces monthly accounting close time."
-                },
-                "performance": {
-                    "title": "99.9% Uptime · <200ms",
-                    "desc": "React Server Components for optimal rendering. Every guaranteed uptime minute protects revenue: no downtime, no lost sales, no penalties for missing invoices."
-                }
-            }
-        },
-        "plenty_market": {
-            "title": "Plenty Market",
-            "label": "International E-commerce | PWA | Complex Logistics",
-            "subtitle": "PWA E-commerce with Partner Program and Inventory Management",
-            "description": "Migration from static infrastructure to a high-performance e-commerce platform with a direct impact on conversion: TTI reduced to under 3 seconds, a critical factor given that each additional second of latency reduces conversion rates by 7%. Integrates a logistics Partner Program with tax-free zones and real-time inventory sync, enabling business models and revenue streams that the previous architecture made impossible.",
-            "challenge": "The challenge was migrating a static site to a full e-commerce platform without degrading user experience or losing existing SEO positioning. The Next.js 14 solution with aggressive asset optimization achieved sub-3s load times, increasing user retention and reducing cart abandonment at critical conversion funnel stages.",
-            "highlight": {
-                "state": {
-                    "title": "Conversion Optimized",
-                    "desc": "Zustand for overhead-free cart management. Persistent state between sessions: less checkout friction, higher conversion rate, lower cart abandonment."
-                },
-                "media": {
-                    "title": "Performance = Revenue",
-                    "desc": "Cloudinary with automatic WebP/AVIF transformation reduces image load time by 60%. In e-commerce, speed is a direct revenue lever."
-                },
-                "migration": {
-                    "title": "Architecture That Scales",
-                    "desc": "PostgreSQL (Neon) via Prisma ORM guarantees data integrity under massive volumes. Infrastructure ready for traffic peaks without degradation or over-provisioning costs."
-                }
-            }
-        },
-        "hka_sdk": {
-            "title": "HKA-SDK",
-            "label": "HKA/DGI Fiscal SDK | Go | Open Source",
-            "subtitle": "Multi-tenant SOAP fiscal gateway for HKA PAC",
-            "description": "SDK and fiscal gateway for HKA PAC that abstracts SOAP protocol complexity with strict validation, dynamic document-type routing, and native multi-tenant support. Extracted from Sago One so any fiscal project in Panama can integrate without re-implementing the protocol from scratch.",
-            "challenge": "Integrating HKA's SOAP is famously friction-heavy: inconsistent payloads, implicit validation, opaque error messages. The fix was a typed schema layer per document type, early compile-time errors, and stateless per-tenant configuration.",
-            "highlight": {
-                "validation": {
-                    "title": "Strict Validation",
-                    "desc": "Typed schemas per DGI document type. Payload errors are caught before the network call, reducing failed PAC round-trips."
-                },
-                "routing": {
-                    "title": "Dynamic Routing",
-                    "desc": "Endpoint resolution by document type with no hardcoding. Adding new documents doesn't touch the core."
-                },
-                "multitenant": {
-                    "title": "Native Multi-Tenant",
-                    "desc": "Per-tenant credentials and config, zero global state. SaaS-ready from the very first commit."
-                }
-            }
-        },
-        "gravital_shell": {
-            "title": "Gravital-Shell",
-            "label": "Linux Terminal for Android | Kotlin | Open Source",
-            "subtitle": "Alpine Linux in your pocket, no root needed",
-            "description": "Professional Linux terminal for Android — runs isolated Alpine Linux environments without root, with real PTY support, multiple sessions, APK package manager, and session export/import. Built for developers who need a serious environment on any device.",
-            "challenge": "Most Android terminals are approximate emulations that break tools needing a real TTY (vim, htop, less). Real PTY without root required combining proot with native Linux primitives from Kotlin/JNI.",
-            "highlight": {
-                "pty": {
-                    "title": "Real PTY, No Root",
-                    "desc": "Real pseudo-terminals on Android via proot, no root privileges. TUI tools just work."
-                },
-                "sessions": {
-                    "title": "Persistent Sessions",
-                    "desc": "Export/import the full state of a session. Pick up on another device exactly where you left off."
-                },
-                "apk": {
-                    "title": "Built-in APK Manager",
-                    "desc": "Install Alpine packages directly from the terminal with a native Android UI."
-                }
-            }
-        },
-        "gravital_share": {
-            "title": "Gravital-Share",
-            "label": "VPN Hotspot Forwarding | Rust | Open Source",
-            "subtitle": "VPN routing for devices on the hotspot",
-            "description": "Solves a concrete Android VPN routing gap: ensures traffic from hotspot-connected devices is routed through the host device's VPN tunnel. Useful for remote teams sharing a secure network from a single device.",
-            "challenge": "Android by default doesn't route hotspot traffic through the host's VPN tunnel. The fix dynamically manipulates iptables/nftables rules and monitors VPN state to prevent leaks.",
-            "highlight": {
-                "forwarding": {
-                    "title": "Transparent Forwarding",
-                    "desc": "Dynamic iptables/nftables rules automatically route hotspot traffic through the active VPN tunnel."
-                },
-                "performance": {
-                    "title": "Zero Overhead",
-                    "desc": "Native Rust component with minimal memory footprint. Doesn't interfere with the host device's own traffic."
-                },
-                "fail_secure": {
-                    "title": "Fail-Secure by Default",
-                    "desc": "If the VPN drops, forwarding stops. Zero unprotected-traffic leakage."
-                }
-            }
-        },
-        "gravital_talk": {
-            "title": "Gravital-Talk",
-            "label": "Audio / Communication | Rust | Open Source",
-            "subtitle": "Standalone audio library with Gravital ID",
-            "description": "Standalone audio and communication library with native Gravital ID authentication and Gravital Cloud persistence. Designed to be embedded in apps needing secure voice channels without depending on proprietary SDKs.",
-            "challenge": "Most voice SDKs are proprietary black boxes with expensive licenses and little control over the audio chain. Building a native pipeline in Rust gives full control over filters, latency, and persistence, drawing on years of DSP experience.",
-            "highlight": {
-                "dsp": {
-                    "title": "Custom DSP Pipeline",
-                    "desc": "Low-latency audio filters built from Digital Signal Processing principles applied during my years as an audio engineer."
-                },
-                "auth": {
-                    "title": "Gravital ID Auth",
-                    "desc": "Native integration with the Gravital identity system, no client-side credential exposure."
-                },
-                "cloud": {
-                    "title": "Cloud Persistence",
-                    "desc": "Sessions, recordings, and metadata synced to Gravital Cloud with end-to-end encryption."
-                }
-            }
-        }
-    },
-    "metric": {
-        "facturas": {
-            "label": "Invoices Processed",
-            "desc": "Electronic invoices issued through Sago One with DGI compliance."
-        },
-        "uptime": {
-            "label": "Guaranteed Uptime",
-            "desc": "Availability of production services with serverless architecture."
-        },
-        "latency": {
-            "label": "Response Time",
-            "desc": "Average API latency in critical invoicing operations."
-        },
-        "offline": {
-            "label": "Offline Capable",
-            "desc": "Full offline functionality thanks to Service Workers and PWA."
-        },
-        "image_opt": {
-            "label": "Image Optimization"
-        },
-        "tti": {
-            "label": "Time to Interactive"
-        }
-    },
-    "cv": {
-        "download": {
-            "button": {
-                "label": "Download Profile",
-                "loading": "Generating Profile...",
-                "success": "Download started!"
-            },
-            "error": {
-                "ratelimit": "Too many downloads. Try again in 1 hour.",
-                "generic": "Download failed. Please try again."
-            }
-        },
-        "faq": {
-            "badge": "FAQ",
-            "title": "Frequently Asked Questions",
-            "subtitle": "Answers to the most common questions about my services and methodology.",
-            "items": [
-                {
-                    "question": "What development services does Ángel Nereira offer?",
-                    "answer": "I specialize in the development of high-performance Full Stack web applications, SaaS (Software as a Service) platforms for FinTech, integration of electronic invoicing systems, and development of Offline-First PWAs (Progressive Web Apps)."
-                },
-                {
-                    "question": "Do you work with international companies?",
-                    "answer": "Yes, I offer software consulting and development services for global clients, with experience working with teams in the United States, Europe, and Latin America."
-                },
-                {
-                    "question": "What is your main technology stack?",
-                    "answer": "My main stack focuses on the React and Next.js ecosystem, using TypeScript for type safety, Tailwind CSS for design, and PostgreSQL (with Prisma/Neon) for scalable databases."
-                },
-                {
-                    "question": "Do you offer AI integration services?",
-                    "answer": "Yes, I develop solutions that integrate Artificial Intelligence models (LLMs like GPT-4, Claude, Gemini) into business workflows for automation and data analysis."
-                }
-            ]
-        }
+    "badge": "Creator of Sago One · ERP SaaS",
+    "stats": {
+      "years": "Years of Experience",
+      "projects": "Projects Delivered",
+      "facturas": "Invoices Processed",
+      "uptime": "SaaS Uptime",
+      "responseTime": "Response time"
     }
+  },
+  "solutions": {
+    "title": "Solutions that Scale",
+    "subtitle": "High-level software engineering for products that need performance, security and availability.",
+    "enterprise": {
+      "title": "FinTech & Compliance",
+      "desc": "Electronic invoicing systems, government integrations (DGI, PAC) and bank-grade security.",
+      "stats": "AES-256 Encryption"
+    },
+    "digital": {
+      "title": "PWA Offline-First",
+      "desc": "Progressive applications that work without internet. Service Workers, strategic caching and smart sync.",
+      "stats": "100% Offline Capable"
+    },
+    "consulting": {
+      "title": "SaaS Development",
+      "desc": "Multi-tenant systems, horizontal scalability and PostgreSQL database optimization.",
+      "stats": "Multi-Tenant Ready"
+    },
+    "explore": "View Details"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "Full Stack Software Engineer specialized in FinTech and GovTech. I design and build scalable SaaS systems that process thousands of daily transactions, with a relentless focus on client ROI.",
+    "background": {
+      "title": "The Origin",
+      "text": "My engineering journey began by facing the most critical problem in business digitalization in emerging markets: systems that fail exactly when they are needed most. Building Sago One from scratch forced me to master offline-first architectures, government fiscal compliance, and bank-grade security protocols — not as academic exercises, but as business imperatives with real financial consequences. Every architectural decision I make starts with a central question: what is the direct impact on the client's operational balance sheet?"
+    },
+    "current": {
+      "title": "Production Ecosystem",
+      "text": "Sago One processes over 10,000 DGI-certified electronic invoices, operates a touch POS, manages legal payroll, and maintains 99.9% uptime with a PWA architecture that works without internet. Plenty Market integrates a logistics Partner Program with tax-free zones and real-time inventory sync. Both are technological assets protecting the financial interests of real businesses, every day, with latencies under 200ms."
+    },
+    "philosophy": {
+      "title": "My Philosophy",
+      "text": "Clean code, scalable solutions, clear documentation"
+    },
+    "values": {
+      "title": "Engineering Pillars",
+      "subtitle": "Principles guiding every architectural decision and every line of code",
+      "architecture": {
+        "title": "Architecture First",
+        "desc": "The tech stack is a consequence of the architecture, not the other way around. Every project starts with an analysis of non-functional requirements: scalability, fault tolerance, security. This prevents technical debt that erodes client ROI."
+      },
+      "security": {
+        "title": "Non-Negotiable Security",
+        "desc": "In FinTech systems, security is not a layer added at the end. AES-256, robust authentication, and strict data validation are part of the initial design. Regulatory compliance is not optional: it is the product."
+      },
+      "durability": {
+        "title": "Software as an Asset",
+        "desc": "Strict TypeScript, clear documentation, and modular architectures are the difference between a system that scales for years and one that accumulates technical debt. The software I deliver is a capital asset, not an operating expense."
+      },
+      "communication": {
+        "title": "Value in Business Terms",
+        "desc": "CTOs and CFOs don't invest in lines of code; they invest in predictable financial outcomes. I translate every technical decision — latency, uptime, scalability — into its direct impact on revenue, operating costs, and business risk."
+      }
+    }
+  },
+  "skills": {
+    "title": "Tech Stack",
+    "description": "The tools I use to build Sago One and Plenty Market.",
+    "cta": "View Full Stack",
+    "category": {
+      "core": "Core",
+      "data": "Data",
+      "infrastructure": "Infrastructure"
+    },
+    "page_title": "Tech Stack",
+    "page_subtitle": "7 areas of specialization. From frontend to AI Engineering — every technology selected for real production impact.",
+    "explore_area": "Explore area",
+    "tech_singular": "technology",
+    "tech_plural": "technologies",
+    "cta_subtitle": "Looking for an engineer with this stack for your team or project?",
+    "cta_button": "Let's talk",
+    "back_to_areas": "Back to all areas",
+    "skills_count": "{count, plural, one {# technology} other {# technologies}}",
+    "view_details": "View details",
+    "category_metadata_title": "{categoryName} | Ángel Nereira Technology Stack",
+    "skill_metadata_title": "Technical mastery in {skillName} | Ángel Nereira Software Engineer",
+    "expertise_level": "Expertise level",
+    "fundamentals": "Fundamentals",
+    "master": "Master",
+    "business_value_label": "Business Value",
+    "interested_area_title": "Interested in this area?",
+    "interested_area_desc": "If you're looking for an expert in {areaName} for your project or team, I'm available for technical consulting.",
+    "contact_btn": "Contact",
+    "all_areas_btn": "All areas",
+    "practical_abilities_title": "Practical Capabilities & Application",
+    "implementation_title": "How do I implement {skillName}?",
+    "implementation_desc": "I use {skillName} as a core building block in developing Sago One and Plenty Market. My approach goes beyond basic usage — I focus on resource optimization, security, and scalability, ensuring every line of code delivers real business value and a superior end-user experience.",
+    "performance_opt": "Performance Optimization",
+    "scalable_arch": "Scalable Architecture",
+    "interested_tech_title": "Interested in this technology?",
+    "interested_tech_desc": "If you're looking for an expert who masters {skillName} to take your project to the next engineering level, I'm available for technical consulting.",
+    "work_together": "Work Together",
+    "back_to_category": "Back to {categoryName}",
+    "back_to_stack": "Back to Tech Stack",
+    "explore_category": "Explore {categoryName}",
+    "explore_all_tech": "Explore all technologies",
+    "specialized_badge": "{category} Specialized"
+  },
+  "services": {
+    "title": "Services",
+    "description": "Software solutions for products that need to scale.",
+    "cta": "View all services",
+    "page_title": "Technology Solutions to Grow Your Business",
+    "page_subtitle": "From web development and mobile apps to cybersecurity, infrastructure, and business management — complete solutions for Panama and Latin America.",
+    "addons_title": "Optional Add-ons",
+    "addons_subtitle": "Add extra features to your project for greater impact.",
+    "custom_cta_title": "Can't find what you're looking for?",
+    "custom_cta_description": "These packages are starting points. Every project is unique. Contact me to create a 100% custom solution.",
+    "custom_cta_button": "Create Custom Plan",
+    "plans_from": "Plans from",
+    "ideal_for": "Ideal for",
+    "view_details": "View Details",
+    "popular": "Most Popular",
+    "quick_quote": "Quick Quote",
+    "quote": "Quote",
+    "tabs": {
+      "web-development": "Web Development",
+      "tienda-online-ecommerce": "E-commerce",
+      "aplicaciones-moviles": "Mobile Apps",
+      "portafolio-profesional": "Portfolio",
+      "gestion-de-negocios": "ERP",
+      "sistemas-fiscales-dgi": "DGI / PAC",
+      "ai-solutions": "AI",
+      "automatizacion-de-procesos": "RPA",
+      "planes-soporte-crecimiento": "SLA / CTO",
+      "mentoria-capacitacion": "Training",
+      "ciberseguridad-auditoria": "Cybersecurity",
+      "infraestructura-servidores": "Servers",
+      "soluciones-negocios-locales": "Local Business",
+      "investigacion-desarrollo": "R&D / Consulting"
+    }
+  },
+  "projects": {
+    "title": "Projects in Production",
+    "description": "Real systems processing transactions. The engineering behind each solution.",
+    "page_title": "Success Stories",
+    "page_subtitle": "FinTech and E-commerce systems in production. The engineering behind each solution.",
+    "challenge": "The Technical Challenge",
+    "tech_highlights": "Technical Highlights",
+    "status_production": "In Production",
+    "stack": "Tech Stack",
+    "back": "Back to Projects",
+    "similar_cta_title": "Interested in building something similar?",
+    "similar_cta_button": "Schedule Technical Consulting",
+    "metrics_title": "Production Metrics",
+    "view_repo": "View Repo",
+    "view_production": "View in Production"
+  },
+  "calculadora": {
+    "badge": "Interactive Calculator",
+    "title": "Budget Calculator",
+    "description": "Get a detailed cost estimate for your software project in minutes. Our calculator considers multiple factors to give you a precise, personalized quote.",
+    "instant_estimate": "Instant Estimation",
+    "detailed_breakdown": "Detailed Breakdown",
+    "export_pdf": "Export PDF",
+    "loading": "Loading calculator...",
+    "metadata_title": "Budget Calculator | Ángel Nereira",
+    "metadata_description": "Calculate the estimated budget for your software project. Get a detailed quote in minutes with our interactive calculator.",
+    "info": {
+      "precision_title": "Data-Driven Precision",
+      "precision_desc": "Our prices are based on years of experience and analysis of the technology market.",
+      "customization_title": "Full Customization",
+      "customization_desc": "Adjust complexity, urgency, and location to get a quote tailored to your needs.",
+      "transparency_title": "Full Transparency",
+      "transparency_desc": "Complete cost breakdown and personalized recommendations to maximize the value of your investment."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "How accurate is the calculated budget?",
+      "a1": "The budget is an estimate based on the parameters you select and our experience with similar projects. The final cost may vary based on additional specific requirements that emerge during the detailed project analysis.",
+      "q2": "Does the budget include all listed services?",
+      "a2": "Yes, the base budget includes all features listed for each service type. Additional add-ons are added separately and are optional but recommended depending on the project type.",
+      "q3": "How long is the quote valid?",
+      "a3": "Generated quotes are valid for 30 days from the generation date. After this period, we recommend generating a new quote to reflect possible changes in market conditions.",
+      "q4": "Can I modify the project after starting?",
+      "a4": "Yes, projects are flexible and can be adjusted during development. However, significant scope changes may affect the budget and timeline. We work in an agile way to adapt to your needs while maintaining cost transparency."
+    }
+  },
+  "metrics": {
+    "title": "Production Metrics",
+    "subtitle": "Real numbers from production systems."
+  },
+  "cta": {
+    "title": "Need high-level development?",
+    "subtitle": "Let's build systems that scale. Available for FinTech, E-commerce and SaaS projects.",
+    "button": "Book Consulting"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "projects": "Projects",
+    "skills": "Stack",
+    "contact": "Contact",
+    "calculator": "Calculator",
+    "blog": "Blog"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "built": "Developed with",
+    "quote": "\"Clean code, scalable solutions.\"",
+    "builtBy": "Built by Ángel Nereira."
+  },
+  "general": {
+    "learnMore": "Learn more",
+    "viewAll": "View all",
+    "viewCode": "View Code",
+    "viewLive": "View Live",
+    "notFound": "Not found"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "dashboard": "Dashboard",
+    "job_analysis": "Job Analysis",
+    "cover_letters": "Cover Letters",
+    "back_to_site": "Back to Site"
+  },
+  "blog": {
+    "page_title": "Tech & Thoughts",
+    "page_description": "Explorations on software architecture, development practices, and the tech ecosystem from a Panamanian perspective with a global vision.",
+    "metadata_title": "Blog | Ángel Nereira",
+    "metadata_description": "Articles on software development, cloud architecture, and the learning journey of a Panamanian engineer.",
+    "search_placeholder": "Search articles...",
+    "filter_by_topic": "Filter by topic:",
+    "clear_filters": "Clear filters",
+    "no_results": "No articles found matching your search.",
+    "view_all_articles": "View all articles",
+    "article_count": "{count, plural, one {# article} other {# articles}}",
+    "article_count_filtered": "{filtered} of {total, plural, one {# article} other {# articles}}"
+  },
+  "contact": {
+    "page_title": "Contact Me",
+    "page_description": "Whether for a new project, a job opportunity, a collaboration, or an invitation, I'm here to listen. Select the tab that best describes your reason for contact.",
+    "metadata_title": "Contact | Software Developer in Panama",
+    "metadata_description": "Looking for a Full Stack developer in Panama? Contact me for projects, consulting, or custom software development.",
+    "tabs": {
+      "client": "Client",
+      "employer": "Employer",
+      "collaboration": "Collaboration",
+      "invitation": "Invitation"
+    },
+    "client_card": {
+      "title": "Project Proposal",
+      "description": "Have an idea or project in mind? Tell me the details."
+    },
+    "employer_card": {
+      "title": "Job Opportunity",
+      "description": "Think I'd fit your team? Send me the role details."
+    },
+    "collaboration_card": {
+      "title": "Collaboration Proposal",
+      "description": "Interested in collaborating on a project, talk, or event? Contact me."
+    },
+    "invitation_card": {
+      "title": "Event Invitation",
+      "description": "For invitations to conferences, workshops, meetings, or any other professional event."
+    },
+    "form": {
+      "shared": {
+        "submitting": "Sending...",
+        "error_title": "Error sending",
+        "email_label": "Email",
+        "country_label": "Country (Optional)",
+        "industry_label": "Business Industry (Optional)",
+        "industry_placeholder": "Select an industry",
+        "industry_technology": "Technology & Software",
+        "industry_ecommerce": "E-commerce & Retail",
+        "industry_finance": "Finance & Banking",
+        "industry_health": "Health & Wellness",
+        "industry_education": "Education",
+        "industry_professional_services": "Professional Services",
+        "industry_real_estate": "Real Estate",
+        "industry_transport": "Transport & Logistics",
+        "industry_other": "Other"
+      },
+      "client": {
+        "name_label": "Full Name",
+        "name_placeholder": "Your name",
+        "email_placeholder": "your.email@example.com",
+        "company_label": "Company (Optional)",
+        "company_placeholder": "Your company name",
+        "country_placeholder": "Country of residence",
+        "service_label": "Service of Interest",
+        "service_placeholder": "Select a service",
+        "service_other": "Other",
+        "budget_label": "Estimated Budget",
+        "budget_placeholder": "Select a range",
+        "budget_more": "More than $25,000",
+        "message_label": "Tell me about your project",
+        "message_placeholder": "Describe your needs, goals, and any relevant details.",
+        "submit": "Send Proposal",
+        "success_title": "Message Sent!"
+      },
+      "employer": {
+        "recruiter_name_label": "Your Name",
+        "recruiter_name_placeholder": "Recruiter name",
+        "email_label": "Contact Email",
+        "email_placeholder": "your.email@company.com",
+        "company_name_label": "Company Name",
+        "company_name_placeholder": "My Company Inc.",
+        "job_title_label": "Job Title",
+        "job_title_placeholder": "Senior Software Engineer",
+        "country_placeholder": "Company country",
+        "salary_label": "Salary Offer (Optional)",
+        "salary_placeholder": "e.g. $50k - $70k USD",
+        "contract_label": "Contract Type (Optional)",
+        "contract_placeholder": "Select contract type",
+        "contract_full_time": "Full Time",
+        "contract_part_time": "Part Time",
+        "contract_freelance": "Contract / Freelance",
+        "contract_internship": "Internship",
+        "job_description_label": "Job Description or Link",
+        "job_description_placeholder": "Paste the job description or a link to the job posting here.",
+        "submit": "Contact Professional",
+        "success_title": "Information Received!",
+        "success_description": "Thank you for considering me. I'll review the opportunity and get back to you soon."
+      },
+      "collaborator": {
+        "name_label": "Your Name",
+        "name_placeholder": "First and Last Name",
+        "email_placeholder": "your.email@example.com",
+        "linkedin_label": "LinkedIn Profile (Optional)",
+        "linkedin_placeholder": "https://linkedin.com/in/...",
+        "portfolio_label": "Portfolio or GitHub (Optional)",
+        "portfolio_placeholder": "https://github.com/...",
+        "expertise_label": "Area of Expertise (Optional)",
+        "expertise_placeholder": "Select your main area",
+        "expertise_frontend": "Frontend Development",
+        "expertise_backend": "Backend Development",
+        "expertise_fullstack": "Full-Stack Development",
+        "expertise_devops": "DevOps / SRE",
+        "expertise_mobile": "Mobile Development (iOS/Android)",
+        "expertise_ux_ui": "UX/UI Design",
+        "expertise_data_ai": "Data Science / AI / ML",
+        "expertise_pm": "Project Management",
+        "expertise_other": "Other",
+        "subject_label": "What is the collaboration about?",
+        "subject_placeholder": "Main subject of your proposal",
+        "message_label": "Proposal or Idea",
+        "message_placeholder": "Describe the collaboration you have in mind, the project, or the idea you want to discuss.",
+        "submit": "Propose Collaboration",
+        "success_title": "Message Received!",
+        "success_description": "Thank you for your interest in collaborating. I've saved your proposal."
+      },
+      "invitation": {
+        "inviter_name_label": "Your Name",
+        "inviter_name_placeholder": "Name of the person inviting",
+        "email_label": "Contact Email",
+        "email_placeholder": "your.email@example.com",
+        "event_name_label": "Event Name",
+        "event_name_placeholder": "e.g. Tech Conf 2024",
+        "event_type_label": "Event Type",
+        "event_type_placeholder": "Select type",
+        "event_type_conference": "Conference",
+        "event_type_workshop": "Workshop",
+        "event_type_meetup": "Meetup / Community",
+        "event_type_business": "Business Meeting",
+        "event_type_podcast": "Podcast / Interview",
+        "event_type_other": "Other",
+        "proposed_role_label": "Proposed Role",
+        "proposed_role_placeholder": "Select your role",
+        "role_speaker": "Speaker / Presenter",
+        "role_panelist": "Panelist",
+        "role_special_guest": "Special Guest",
+        "role_mentor": "Mentor",
+        "role_interviewee": "Interviewee",
+        "event_date_label": "Event Date",
+        "select_date": "Select a date",
+        "event_time_label": "Time (Optional)",
+        "event_location_label": "Location or Link",
+        "event_location_placeholder": "Physical address or meeting URL",
+        "invitation_reason_label": "Reason for Invitation",
+        "invitation_reason_placeholder": "Briefly describe the event and the reason for the invitation.",
+        "submit": "Send Invitation",
+        "success_title": "Invitation Received!",
+        "success_description": "Thank you for the invitation. I'll review the details and get back to you soon."
+      }
+    }
+  },
+  "project": {
+    "sago_one": {
+      "title": "Sago One",
+      "label": "All-in-One ERP SaaS | POS & FinTech | Next.js 15",
+      "subtitle": "Enterprise ERP and Electronic Invoicing Platform",
+      "description": "All-in-One ERP SaaS that eliminates hours of redundant administrative work weekly for Panamanian businesses. Certifies invoices with the DGI, manages real-time inventory, and operates a touch POS — all under an offline-first architecture that guarantees operational continuity and uninterrupted revenue even without internet. Payroll and inventory automation directly reduces fixed costs and eliminates the risk of tax penalties from human transcription errors.",
+      "challenge": "The critical challenge: guarantee business continuity — and revenue — during connectivity outages, which in emerging markets represent direct sales losses. The Service Workers and background sync solution ensures every transaction is recorded and invoiced regardless of network stability, protecting business cash flow at its most vulnerable moment.",
+      "highlight": {
+        "security": {
+          "title": "Bank-Grade Security",
+          "desc": "AES-256 encryption for PAC/DGI credentials. Mitigates the risk of tax penalties and corporate data breaches that could represent five-figure losses."
+        },
+        "database": {
+          "title": "Modular Ecosystem (ERP)",
+          "desc": "DGI Invoicing, touch POS, real-time inventory, and legal payroll integrated. Eliminates data silos and reduces monthly accounting close time."
+        },
+        "performance": {
+          "title": "99.9% Uptime · <200ms",
+          "desc": "React Server Components for optimal rendering. Every guaranteed uptime minute protects revenue: no downtime, no lost sales, no penalties for missing invoices."
+        }
+      }
+    },
+    "plenty_market": {
+      "title": "Plenty Market",
+      "label": "International E-commerce | PWA | Complex Logistics",
+      "subtitle": "PWA E-commerce with Partner Program and Inventory Management",
+      "description": "Migration from static infrastructure to a high-performance e-commerce platform with a direct impact on conversion: TTI reduced to under 3 seconds, a critical factor given that each additional second of latency reduces conversion rates by 7%. Integrates a logistics Partner Program with tax-free zones and real-time inventory sync, enabling business models and revenue streams that the previous architecture made impossible.",
+      "challenge": "The challenge was migrating a static site to a full e-commerce platform without degrading user experience or losing existing SEO positioning. The Next.js 14 solution with aggressive asset optimization achieved sub-3s load times, increasing user retention and reducing cart abandonment at critical conversion funnel stages.",
+      "highlight": {
+        "state": {
+          "title": "Conversion Optimized",
+          "desc": "Zustand for overhead-free cart management. Persistent state between sessions: less checkout friction, higher conversion rate, lower cart abandonment."
+        },
+        "media": {
+          "title": "Performance = Revenue",
+          "desc": "Cloudinary with automatic WebP/AVIF transformation reduces image load time by 60%. In e-commerce, speed is a direct revenue lever."
+        },
+        "migration": {
+          "title": "Architecture That Scales",
+          "desc": "PostgreSQL (Neon) via Prisma ORM guarantees data integrity under massive volumes. Infrastructure ready for traffic peaks without degradation or over-provisioning costs."
+        }
+      }
+    },
+    "hka_sdk": {
+      "title": "HKA-SDK",
+      "label": "HKA/DGI Fiscal SDK | Go | Open Source",
+      "subtitle": "Multi-tenant SOAP fiscal gateway for HKA PAC",
+      "description": "SDK and fiscal gateway for HKA PAC that abstracts SOAP protocol complexity with strict validation, dynamic document-type routing, and native multi-tenant support. Extracted from Sago One so any fiscal project in Panama can integrate without re-implementing the protocol from scratch.",
+      "challenge": "Integrating HKA's SOAP is famously friction-heavy: inconsistent payloads, implicit validation, opaque error messages. The fix was a typed schema layer per document type, early compile-time errors, and stateless per-tenant configuration.",
+      "highlight": {
+        "validation": {
+          "title": "Strict Validation",
+          "desc": "Typed schemas per DGI document type. Payload errors are caught before the network call, reducing failed PAC round-trips."
+        },
+        "routing": {
+          "title": "Dynamic Routing",
+          "desc": "Endpoint resolution by document type with no hardcoding. Adding new documents doesn't touch the core."
+        },
+        "multitenant": {
+          "title": "Native Multi-Tenant",
+          "desc": "Per-tenant credentials and config, zero global state. SaaS-ready from the very first commit."
+        }
+      }
+    },
+    "gravital_shell": {
+      "title": "Gravital-Shell",
+      "label": "Linux Terminal for Android | Kotlin | Open Source",
+      "subtitle": "Alpine Linux in your pocket, no root needed",
+      "description": "Professional Linux terminal for Android — runs isolated Alpine Linux environments without root, with real PTY support, multiple sessions, APK package manager, and session export/import. Built for developers who need a serious environment on any device.",
+      "challenge": "Most Android terminals are approximate emulations that break tools needing a real TTY (vim, htop, less). Real PTY without root required combining proot with native Linux primitives from Kotlin/JNI.",
+      "highlight": {
+        "pty": {
+          "title": "Real PTY, No Root",
+          "desc": "Real pseudo-terminals on Android via proot, no root privileges. TUI tools just work."
+        },
+        "sessions": {
+          "title": "Persistent Sessions",
+          "desc": "Export/import the full state of a session. Pick up on another device exactly where you left off."
+        },
+        "apk": {
+          "title": "Built-in APK Manager",
+          "desc": "Install Alpine packages directly from the terminal with a native Android UI."
+        }
+      }
+    },
+    "gravital_share": {
+      "title": "Gravital-Share",
+      "label": "VPN Hotspot Forwarding | Rust | Open Source",
+      "subtitle": "VPN routing for devices on the hotspot",
+      "description": "Solves a concrete Android VPN routing gap: ensures traffic from hotspot-connected devices is routed through the host device's VPN tunnel. Useful for remote teams sharing a secure network from a single device.",
+      "challenge": "Android by default doesn't route hotspot traffic through the host's VPN tunnel. The fix dynamically manipulates iptables/nftables rules and monitors VPN state to prevent leaks.",
+      "highlight": {
+        "forwarding": {
+          "title": "Transparent Forwarding",
+          "desc": "Dynamic iptables/nftables rules automatically route hotspot traffic through the active VPN tunnel."
+        },
+        "performance": {
+          "title": "Zero Overhead",
+          "desc": "Native Rust component with minimal memory footprint. Doesn't interfere with the host device's own traffic."
+        },
+        "fail_secure": {
+          "title": "Fail-Secure by Default",
+          "desc": "If the VPN drops, forwarding stops. Zero unprotected-traffic leakage."
+        }
+      }
+    },
+    "gravital_talk": {
+      "title": "Gravital-Talk",
+      "label": "Audio / Communication | Rust | Open Source",
+      "subtitle": "Standalone audio library with Gravital ID",
+      "description": "Standalone audio and communication library with native Gravital ID authentication and Gravital Cloud persistence. Designed to be embedded in apps needing secure voice channels without depending on proprietary SDKs.",
+      "challenge": "Most voice SDKs are proprietary black boxes with expensive licenses and little control over the audio chain. Building a native pipeline in Rust gives full control over filters, latency, and persistence, drawing on years of DSP experience.",
+      "highlight": {
+        "dsp": {
+          "title": "Custom DSP Pipeline",
+          "desc": "Low-latency audio filters built from Digital Signal Processing principles applied during my years as an audio engineer."
+        },
+        "auth": {
+          "title": "Gravital ID Auth",
+          "desc": "Native integration with the Gravital identity system, no client-side credential exposure."
+        },
+        "cloud": {
+          "title": "Cloud Persistence",
+          "desc": "Sessions, recordings, and metadata synced to Gravital Cloud with end-to-end encryption."
+        }
+      }
+    }
+  },
+  "metric": {
+    "facturas": {
+      "label": "Invoices Processed",
+      "desc": "Electronic invoices issued through Sago One with DGI compliance."
+    },
+    "uptime": {
+      "label": "Guaranteed Uptime",
+      "desc": "Availability of production services with serverless architecture."
+    },
+    "latency": {
+      "label": "Response Time",
+      "desc": "Average API latency in critical invoicing operations."
+    },
+    "offline": {
+      "label": "Offline Capable",
+      "desc": "Full offline functionality thanks to Service Workers and PWA."
+    },
+    "image_opt": {
+      "label": "Image Optimization"
+    },
+    "tti": {
+      "label": "Time to Interactive"
+    }
+  },
+  "cv": {
+    "download": {
+      "button": {
+        "label": "Download Profile",
+        "loading": "Generating Profile...",
+        "success": "Download started!"
+      },
+      "error": {
+        "ratelimit": "Too many downloads. Try again in 1 hour.",
+        "generic": "Download failed. Please try again."
+      }
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Answers to the most common questions about my services and methodology.",
+      "items": [
+        {
+          "question": "What development services does Ángel Nereira offer?",
+          "answer": "I specialize in the development of high-performance Full Stack web applications, SaaS (Software as a Service) platforms for FinTech, integration of electronic invoicing systems, and development of Offline-First PWAs (Progressive Web Apps)."
+        },
+        {
+          "question": "Do you work with international companies?",
+          "answer": "Yes, I offer software consulting and development services for global clients, with experience working with teams in the United States, Europe, and Latin America."
+        },
+        {
+          "question": "What is your main technology stack?",
+          "answer": "My main stack focuses on the React and Next.js ecosystem, using TypeScript for type safety, Tailwind CSS for design, and PostgreSQL (with Prisma/Neon) for scalable databases."
+        },
+        {
+          "question": "Do you offer AI integration services?",
+          "answer": "Yes, I develop solutions that integrate Artificial Intelligence models (LLMs like GPT-4, Claude, Gemini) into business workflows for automation and data analysis."
+        }
+      ]
+    }
+  },
+  "language": {
+    "toggle_to": "Switch to Spanish",
+    "toggle_generic": "Change language"
+  },
+  "theme": {
+    "toggle": "Toggle theme"
+  },
+  "accessibility": {
+    "open_menu": "Open menu",
+    "mobile_menu": "Mobile menu"
+  },
+  "analytics": {
+    "active_visitors": "{count, plural, one {# visitor online} other {# visitors online}}"
+  },
+  "calculator": {
+    "steps": {
+      "service": "Service",
+      "configuration": "Configuration",
+      "timeline": "Timeline",
+      "addons": "Add-ons",
+      "results": "Results"
+    },
+    "common": {
+      "weeks": "weeks",
+      "from": "from"
+    },
+    "service": {
+      "title": "What type of project do you need?",
+      "subtitle": "Select the service that best fits your needs"
+    },
+    "configuration": {
+      "title": "Project Configuration",
+      "subtitle": "Set complexity and location for a more accurate estimate",
+      "complexity": "Complexity Level",
+      "country": "Country/Region",
+      "multiplier": "Multiplier"
+    },
+    "addons": {
+      "title": "Add-ons & Extra Services",
+      "subtitle": "Enhance your project with complementary services",
+      "recommended": "Recommended for your project",
+      "optional": "Optional"
+    }
+  }
 }

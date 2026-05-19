@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Check, ArrowRight, Code2, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/lib/routing";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { services, ServicePackage } from "@/lib/services";
@@ -14,20 +14,20 @@ import { MagneticWrapper } from "@/components/ui/magnetic-wrapper";
 
 // ── Service areas ──────────────────────────────────────────────────────────
 const serviceAreas = [
-  { id: "web-development",           tabLabel: "Desarrollo Web",   slug: "web-development" },
-  { id: "tienda-online-ecommerce",   tabLabel: "E-commerce",       slug: "tienda-online-ecommerce" },
-  { id: "aplicaciones-moviles",      tabLabel: "Apps Móviles",     slug: "aplicaciones-moviles" },
-  { id: "portafolio-profesional",    tabLabel: "Portafolio",       slug: "portafolio-profesional" },
-  { id: "gestion-de-negocios",       tabLabel: "ERP",              slug: "gestion-de-negocios" },
-  { id: "sistemas-fiscales-dgi",     tabLabel: "DGI / PAC",        slug: "sistemas-fiscales-dgi" },
-  { id: "ai-solutions",              tabLabel: "IA",               slug: "ai-solutions" },
-  { id: "automatizacion-de-procesos",tabLabel: "RPA",              slug: "automatizacion-de-procesos" },
-  { id: "planes-soporte-crecimiento",tabLabel: "SLA / CTO",        slug: "planes-soporte-crecimiento" },
-  { id: "mentoria-capacitacion",     tabLabel: "Capacitación",     slug: "mentoria-capacitacion" },
-  { id: "ciberseguridad-auditoria",  tabLabel: "Ciberseguridad",   slug: "ciberseguridad-auditoria" },
-  { id: "infraestructura-servidores",tabLabel: "Servidores",       slug: "infraestructura-servidores" },
-  { id: "soluciones-negocios-locales",tabLabel: "Negocios Locales",slug: "soluciones-negocios-locales" },
-  { id: "investigacion-desarrollo",  tabLabel: "I+D / Consultoría",slug: "investigacion-desarrollo" },
+  { id: "web-development",           tabLabelKey: "web-development",   slug: "web-development" },
+  { id: "tienda-online-ecommerce",   tabLabelKey: "tienda-online-ecommerce",       slug: "tienda-online-ecommerce" },
+  { id: "aplicaciones-moviles",      tabLabelKey: "aplicaciones-moviles",     slug: "aplicaciones-moviles" },
+  { id: "portafolio-profesional",    tabLabelKey: "portafolio-profesional",       slug: "portafolio-profesional" },
+  { id: "gestion-de-negocios",       tabLabelKey: "gestion-de-negocios",              slug: "gestion-de-negocios" },
+  { id: "sistemas-fiscales-dgi",     tabLabelKey: "sistemas-fiscales-dgi",        slug: "sistemas-fiscales-dgi" },
+  { id: "ai-solutions",              tabLabelKey: "ai-solutions",               slug: "ai-solutions" },
+  { id: "automatizacion-de-procesos",tabLabelKey: "automatizacion-de-procesos",              slug: "automatizacion-de-procesos" },
+  { id: "planes-soporte-crecimiento",tabLabelKey: "planes-soporte-crecimiento",        slug: "planes-soporte-crecimiento" },
+  { id: "mentoria-capacitacion",     tabLabelKey: "mentoria-capacitacion",     slug: "mentoria-capacitacion" },
+  { id: "ciberseguridad-auditoria",  tabLabelKey: "ciberseguridad-auditoria",   slug: "ciberseguridad-auditoria" },
+  { id: "infraestructura-servidores",tabLabelKey: "infraestructura-servidores",       slug: "infraestructura-servidores" },
+  { id: "soluciones-negocios-locales",tabLabelKey: "soluciones-negocios-locales",slug: "soluciones-negocios-locales" },
+  { id: "investigacion-desarrollo",  tabLabelKey: "investigacion-desarrollo",slug: "investigacion-desarrollo" },
 ] as const;
 
 // ── Helper ─────────────────────────────────────────────────────────────────
@@ -40,10 +40,12 @@ function PlanCard({
   pkg,
   serviceSlug,
   isPopular,
+  popularLabel,
 }: {
   pkg: ServicePackage;
   serviceSlug: string;
   isPopular: boolean;
+  popularLabel: string;
 }) {
   return (
     <SpotlightCard
@@ -56,7 +58,7 @@ function PlanCard({
       {isPopular && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
           <Badge className="bg-primary text-primary-foreground px-3 py-1 text-xs font-semibold shadow">
-            Más Popular
+            {popularLabel}
           </Badge>
         </div>
       )}
@@ -187,7 +189,7 @@ export default function ServicesPage() {
                 >
                   <Icon className="h-5 w-5 flex-shrink-0" />
                   <span className="text-xs font-medium leading-tight text-center whitespace-normal">
-                    {area.tabLabel}
+                    {t(`services.tabs.${area.tabLabelKey}`)}
                   </span>
                 </TabsTrigger>
               );
@@ -230,6 +232,7 @@ export default function ServicesPage() {
                         pkg={pkg}
                         serviceSlug={svc.slug}
                         isPopular={i === 1}
+                        popularLabel={t("services.popular")}
                       />
                     ))}
                   </div>

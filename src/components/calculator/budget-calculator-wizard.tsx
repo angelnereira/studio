@@ -23,6 +23,7 @@ import { StepConfiguration } from './step-configuration';
 import { StepTimeline } from './step-timeline';
 import { StepAddOns } from './step-addons';
 import { StepResults } from './step-results';
+import { useTranslations } from 'next-intl';
 
 // Helper component to safely handle URL params within Suspense
 function ServiceAutoSelector({ onSelect }: { onSelect: (type: ServiceType, defaults: AddOnType[]) => void }) {
@@ -62,6 +63,7 @@ function ServiceAutoSelector({ onSelect }: { onSelect: (type: ServiceType, defau
 }
 
 export function BudgetCalculatorWizard() {
+  const t = useTranslations('calculator');
   const [currentStep, setCurrentStep] = useState(1);
   const [result, setResult] = useState<CalculationResult | null>(null);
 
@@ -85,11 +87,11 @@ export function BudgetCalculatorWizard() {
   const progress = (currentStep / totalSteps) * 100;
 
   const stepTitles = [
-    'Servicio',
-    'Configuración',
-    'Cronograma',
-    'Complementos',
-    'Resultados',
+    t('steps.service'),
+    t('steps.configuration'),
+    t('steps.timeline'),
+    t('steps.addons'),
+    t('steps.results'),
   ];
 
   // Validation for each step

@@ -3,7 +3,7 @@ import { type SkillCategoryData } from "@/lib/data/skills-data";
 import { notFound } from "next/navigation";
 import * as React from "react";
 import { CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from "@/components/ui/card";
-import Link from "next/link";
+import { Link } from "@/lib/routing";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, Zap, Rocket, Star, ArrowRight } from "lucide-react";
 import { SpotlightCard } from "@/components/spotlight-card";
@@ -28,21 +28,23 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: SlugPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+  const t = await getTranslations({ locale, namespace: "skills" });
+  const tg = await getTranslations({ locale, namespace: "general" });
 
   const category = skillCategories.find(c => c.id === slug);
   if (category) {
     return {
-      title: `${category.name} | Stack Tecnológico de Ángel Nereira`,
+      title: t("category_metadata_title", { categoryName: category.name }),
       description: category.businessValue,
     };
   }
 
   const skill = skills.find(s => s.slug === slug);
-  if (!skill) return { title: "No encontrado" };
+  if (!skill) return { title: tg("notFound") };
 
   return {
-    title: `Dominio Técnico en ${skill.name} | Ingeniero de Software Ángel Nereira`,
+    title: t("skill_metadata_title", { skillName: skill.name }),
     description: skill.description,
   };
 }
@@ -190,6 +192,9 @@ interface SkillLabels {
   interestedTechDesc: string;
   workTogether: string;
   exploreCategory: string;
+  expertiseLevel: string;
+  fundamentals: string;
+  master: string;
 }
 
 const AbilityCard = ({ ability, index }: { ability: PracticalAbility; index: number }) => {
@@ -311,13 +316,13 @@ function SkillDetailPage({ skill, labels }: { skill: Skill; labels: SkillLabels 
           </SpotlightCard>
 
           <div className="px-4 space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Expertise Level</h4>
+            <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{labels.expertiseLevel}</h4>
             <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
               <div className="h-full bg-primary w-[95%] shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
             </div>
             <div className="flex justify-between text-[10px] font-bold text-muted-foreground">
-              <span>FUNDAMENTALS</span>
-              <span className="text-primary">MASTER</span>
+              <span>{labels.fundamentals}</span>
+              <span className="text-primary">{labels.master}</span>
             </div>
           </div>
         </div>
@@ -383,6 +388,9 @@ export default async function SkillsSlugPage({ params }: SlugPageProps) {
     exploreCategory: parentCategory
       ? t('explore_category', { categoryName: parentCategory.name })
       : t('explore_all_tech'),
+    expertiseLevel: t('expertise_level'),
+    fundamentals: t('fundamentals'),
+    master: t('master'),
   };
 
   return <SkillDetailPage skill={skill} labels={skillLabels} />;

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { ExternalLink, Github, Code2, Database, Target, Zap, Shield, Terminal, Network, AudioLines, FileCode2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/lib/routing";
 import { Badge } from "@/components/ui/badge";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
@@ -196,7 +196,7 @@ export default function ProyectosPage() {
                     <div className="mb-8">
                       <h3 className="font-semibold mb-4 flex items-center gap-2">
                         <Zap className="h-5 w-5 text-primary" />
-                        Métricas en Producción
+                        {t('projects.metrics_title')}
                       </h3>
                       <div className="grid grid-cols-3 gap-4">
                         {project.metrics.map((metric, i) => (
@@ -213,7 +213,7 @@ export default function ProyectosPage() {
                   <div className="mb-8">
                     <h3 className="font-semibold mb-4 flex items-center gap-2">
                       <Database className="h-5 w-5 text-primary" />
-                      Stack Tecnológico
+                      {t('projects.stack')}
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {project.stack.map((tech) => (
@@ -230,7 +230,7 @@ export default function ProyectosPage() {
                       <Button asChild variant="outline" size="sm">
                         <Link href={project.github} target="_blank">
                           <Github className="mr-2 h-4 w-4" />
-                          Ver Código
+                          {t('general.viewCode')}
                         </Link>
                       </Button>
                     )}
@@ -238,7 +238,7 @@ export default function ProyectosPage() {
                       <Button asChild size="sm">
                         <Link href={project.demo} target="_blank">
                           <ExternalLink className="mr-2 h-4 w-4" />
-                          {project.isOpenSource ? "Ver Repo" : "Ver en Producción"}
+                          {project.isOpenSource ? t('projects.view_repo') : t('projects.view_production')}
                         </Link>
                       </Button>
                     )}

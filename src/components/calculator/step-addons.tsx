@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Check, Star } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface StepAddOnsProps {
   selectedAddOns: AddOnType[];
@@ -19,6 +20,7 @@ export function StepAddOns({
   serviceType,
   onToggleAddOn,
 }: StepAddOnsProps) {
+  const t = useTranslations('calculator');
   const recommendedAddOns = RECOMMENDATIONS_BY_SERVICE[serviceType] || [];
 
   const allAddOns = Object.values(ADD_ONS);
@@ -71,9 +73,9 @@ export function StepAddOns({
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">Complementos y Servicios Adicionales</h2>
+        <h2 className="text-2xl font-bold mb-2">{t('addons.title')}</h2>
         <p className="text-muted-foreground">
-          Mejora tu proyecto con estos servicios complementarios
+          {t('addons.subtitle')}
         </p>
       </div>
 
@@ -94,7 +96,7 @@ export function StepAddOns({
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
-            <h3 className="text-sm font-semibold text-foreground">Recomendados para tu proyecto</h3>
+            <h3 className="text-sm font-semibold text-foreground">{t('addons.recommended')}</h3>
             <Badge variant="secondary" className="text-xs bg-amber-100 text-amber-900 dark:bg-amber-900 dark:text-amber-100">
               {recommended.length}
             </Badge>
@@ -109,7 +111,7 @@ export function StepAddOns({
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <Check className="h-4 w-4 text-muted-foreground" />
-            <h3 className="text-sm font-semibold text-muted-foreground">Opcionales</h3>
+            <h3 className="text-sm font-semibold text-muted-foreground">{t('addons.optional')}</h3>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {optional.map(renderAddOnCard)}
