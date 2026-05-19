@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 export function LivePulse() {
   const [active, setActive] = useState<number | null>(null);
+  const t = useTranslations();
 
   useEffect(() => {
     function fetchActive() {
@@ -33,7 +35,7 @@ export function LivePulse() {
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
       </span>
       <span className="text-muted-foreground">
-        {active} {active === 1 ? 'visitante' : 'visitantes'} en línea
+        {t('analytics.active_visitors', { count: active })}
       </span>
     </motion.div>
   );

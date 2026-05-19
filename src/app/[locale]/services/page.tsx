@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Check, ArrowRight, Code2, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/lib/routing";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { services, ServicePackage } from "@/lib/services";
@@ -40,10 +40,12 @@ function PlanCard({
   pkg,
   serviceSlug,
   isPopular,
+  popularLabel,
 }: {
   pkg: ServicePackage;
   serviceSlug: string;
   isPopular: boolean;
+  popularLabel: string;
 }) {
   return (
     <SpotlightCard
@@ -56,7 +58,7 @@ function PlanCard({
       {isPopular && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
           <Badge className="bg-primary text-primary-foreground px-3 py-1 text-xs font-semibold shadow">
-            Más Popular
+            {popularLabel}
           </Badge>
         </div>
       )}
@@ -230,6 +232,7 @@ export default function ServicesPage() {
                         pkg={pkg}
                         serviceSlug={svc.slug}
                         isPopular={i === 1}
+                        popularLabel={t("services.popular")}
                       />
                     ))}
                   </div>

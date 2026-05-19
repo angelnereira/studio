@@ -4,13 +4,14 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Languages } from "lucide-react";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/lib/routing";
 import { useTransition } from "react";
 
 export function LanguageToggle() {
     const [mounted, setMounted] = React.useState(false);
     const locale = useLocale();
+    const t = useTranslations();
     const router = useRouter();
     const pathname = usePathname();
     const [isPending, startTransition] = useTransition();
@@ -28,7 +29,7 @@ export function LanguageToggle() {
 
     if (!mounted) {
         return (
-            <Button variant="ghost" size="icon" className="relative" aria-label="Cambiar idioma">
+            <Button variant="ghost" size="icon" className="relative" aria-label={t('language.toggle_generic')}>
                 <Languages className="h-[1.2rem] w-[1.2rem]" />
             </Button>
         );
@@ -40,7 +41,7 @@ export function LanguageToggle() {
             size="icon"
             className="relative hover:bg-accent hover:text-accent-foreground"
             onClick={toggleLanguage}
-            aria-label={locale === 'es' ? "Cambiar a Inglés" : "Switch to Spanish"}
+            aria-label={t('language.toggle_to')}
         >
             <Languages className="h-[1.3rem] w-[1.3rem] transition-all" />
             <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground border border-background">

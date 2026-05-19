@@ -14,7 +14,8 @@
             "years": "Years of Experience",
             "projects": "Projects Delivered",
             "facturas": "Invoices Processed",
-            "uptime": "SaaS Uptime"
+            "uptime": "SaaS Uptime",
+            "responseTime": "Response time"
         }
     },
     "solutions": {
@@ -92,6 +93,11 @@
         "back_to_areas": "Back to all areas",
         "skills_count": "{count, plural, one {# technology} other {# technologies}}",
         "view_details": "View details",
+        "category_metadata_title": "{categoryName} | Ángel Nereira Technology Stack",
+        "skill_metadata_title": "Technical mastery in {skillName} | Ángel Nereira Software Engineer",
+        "expertise_level": "Expertise level",
+        "fundamentals": "Fundamentals",
+        "master": "Master",
         "business_value_label": "Business Value",
         "interested_area_title": "Interested in this area?",
         "interested_area_desc": "If you're looking for an expert in {areaName} for your project or team, I'm available for technical consulting.",
@@ -125,6 +131,7 @@
         "plans_from": "Plans from",
         "ideal_for": "Ideal for",
         "view_details": "View Details",
+        "popular": "Most Popular",
         "quick_quote": "Quick Quote",
         "quote": "Quote"
     },
@@ -139,7 +146,10 @@
         "stack": "Tech Stack",
         "back": "Back to Projects",
         "similar_cta_title": "Interested in building something similar?",
-        "similar_cta_button": "Schedule Technical Consulting"
+        "similar_cta_button": "Schedule Technical Consulting",
+        "metrics_title": "Production Metrics",
+        "view_repo": "View Repo",
+        "view_production": "View in Production"
     },
     "calculadora": {
         "badge": "Interactive Calculator",
@@ -200,7 +210,8 @@
         "learnMore": "Learn more",
         "viewAll": "View all",
         "viewCode": "View Code",
-        "viewLive": "View Live"
+        "viewLive": "View Live",
+        "notFound": "Not found"
     },
     "admin": {
         "title": "Admin Panel",
@@ -558,5 +569,19 @@
                 }
             ]
         }
+    },
+    "language": {
+        "toggle_to": "Switch to Spanish",
+        "toggle_generic": "Change language"
+    },
+    "theme": {
+        "toggle": "Toggle theme"
+    },
+    "accessibility": {
+        "open_menu": "Open menu",
+        "mobile_menu": "Mobile menu"
+    },
+    "analytics": {
+        "active_visitors": "{count, plural, one {# visitor online} other {# visitors online}}"
     }
 }

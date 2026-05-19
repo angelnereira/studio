@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from '@/lib/routing';
 import { ArrowRight, Github, Shield, Database, Zap, Code2, Target, ExternalLink, Terminal, Network, AudioLines, FileCode2 } from 'lucide-react';
 import { AnimatedDiv } from '@/components/animated-div';
 import { skills, skillCategories, getSkillsByCategory, categoryIconMap } from '@/lib/skills';
@@ -292,7 +292,7 @@ export function ProjectsSection() {
                       <div>
                         <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                           <Database className="h-5 w-5 text-primary" />
-                          Stack Tecnológico
+                          {t('projects.stack')}
                         </h4>
                         <div className="flex flex-wrap gap-2">
                           {project.technologies.map((tech) => (
