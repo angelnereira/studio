@@ -21,7 +21,7 @@ export const AnimatedDiv = memo(function AnimatedDiv({ children, className, dela
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "50px" }
+      { threshold: 0.05, rootMargin: "150px" }
     );
 
     if (ref.current) {
@@ -37,8 +37,8 @@ export const AnimatedDiv = memo(function AnimatedDiv({ children, className, dela
       className={cn(className)}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-        transition: `opacity 0.5s ease-out ${delay}s, transform 0.5s ease-out ${delay}s`,
+        transform: isVisible ? 'translateY(0)' : 'translateY(16px)',
+        transition: `opacity 0.35s ease-out ${delay}s, transform 0.35s ease-out ${delay}s`,
         willChange: isVisible ? 'auto' : 'opacity, transform',
       }}
     >

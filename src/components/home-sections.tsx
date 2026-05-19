@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Github, Shield, Database, Zap, Code2, Target, ExternalLink, Terminal, Network, AudioLines, FileCode2 } from 'lucide-react';
 import { AnimatedDiv } from '@/components/animated-div';
-import { skills, skillCategories, getSkillsByCategory, categoryIconMap } from '@/lib/skills';
+import { categoryIconMap, getSkillsForLocale, getSkillCategoriesForLocale } from '@/lib/skills';
 import { projectsData } from '@/lib/projects-and-testimonials';
 import type { Project, Metric } from '@/lib/projects-and-testimonials';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,7 @@ import { CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from 
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ServicesCarousel } from './services-carousel';
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 // Project Icons
 const SagoOneIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -91,6 +91,9 @@ const PROJECT_HIGHLIGHTS: Record<string, { key: string; icon: React.ElementType 
 
 export function SkillsSection() {
   const t = useTranslations();
+  const locale = useLocale();
+  const localizedCategories = getSkillCategoriesForLocale(locale);
+  const localizedSkills = getSkillsForLocale(locale);
 
   return (
     <TooltipProvider>
@@ -111,14 +114,14 @@ export function SkillsSection() {
 
           {/* Grid de Skills por Categoría - Engineering-First */}
           <div className="mt-12 space-y-12">
-            {skillCategories.map((category, catIndex) => (
+            {localizedCategories.map((category, catIndex) => (
               <AnimatedDiv key={category.id} delay={0.1 * catIndex}>
                 <div className="mb-6">
                   <h3 className="text-xl font-bold text-primary mb-1">{category.name}</h3>
                   <p className="text-sm text-muted-foreground">{category.description}</p>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                  {getSkillsByCategory(category.id).map((skill) => (
+                  {localizedSkills.filter(s => s.category === category.id).map((skill) => (
                     <Tooltip key={skill.slug}>
                       <TooltipTrigger asChild>
                         <Link href={`/skills/${skill.slug}`}>
@@ -292,7 +295,7 @@ export function ProjectsSection() {
                       <div>
                         <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                           <Database className="h-5 w-5 text-primary" />
-                          Stack Tecnológico
+                          {t('projects.stack')}
                         </h4>
                         <div className="flex flex-wrap gap-2">
                           {project.technologies.map((tech) => (

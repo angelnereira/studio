@@ -1,4 +1,4 @@
-import { skills, skillCategories, getSkillsByCategory, categoryIconMap, type Skill, type PracticalAbility } from "@/lib/skills";
+import { skillCategories, skills, categoryIconMap, getSkillsForLocale, getSkillCategoriesForLocale, type Skill, type PracticalAbility } from "@/lib/skills";
 import { type SkillCategoryData } from "@/lib/data/skills-data";
 import { notFound } from "next/navigation";
 import * as React from "react";
@@ -28,21 +28,23 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: SlugPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+  const localizedCategories = getSkillCategoriesForLocale(locale);
+  const localizedSkills = getSkillsForLocale(locale);
 
-  const category = skillCategories.find(c => c.id === slug);
+  const category = localizedCategories.find(c => c.id === slug);
   if (category) {
     return {
-      title: `${category.name} | Stack Tecnológico de Ángel Nereira`,
+      title: `${category.name} | Ángel Nereira`,
       description: category.businessValue,
     };
   }
 
-  const skill = skills.find(s => s.slug === slug);
-  if (!skill) return { title: "No encontrado" };
+  const skill = localizedSkills.find(s => s.slug === slug);
+  if (!skill) return { title: locale === 'en' ? 'Not Found' : 'No encontrado' };
 
   return {
-    title: `Dominio Técnico en ${skill.name} | Ingeniero de Software Ángel Nereira`,
+    title: `${skill.name} | Ángel Nereira`,
     description: skill.description,
   };
 }
@@ -342,11 +344,13 @@ export default async function SkillsSlugPage({ params }: SlugPageProps) {
   setRequestLocale(locale);
 
   const t = await getTranslations('skills');
+  const localizedCategories = getSkillCategoriesForLocale(locale);
+  const localizedSkills = getSkillsForLocale(locale);
 
   // Check if slug matches a category
-  const category = skillCategories.find(c => c.id === slug);
+  const category = localizedCategories.find(c => c.id === slug);
   if (category) {
-    const catSkills = getSkillsByCategory(category.id);
+    const catSkills = localizedSkills.filter(s => s.category === category.id);
     const categoryLabels: CategoryLabels = {
       backToAreas: t('back_to_areas'),
       skillsCount: t('skills_count', { count: catSkills.length }),
@@ -361,12 +365,12 @@ export default async function SkillsSlugPage({ params }: SlugPageProps) {
   }
 
   // Otherwise treat as an individual skill
-  const skill = skills.find(s => s.slug === slug);
+  const skill = localizedSkills.find(s => s.slug === slug);
   if (!skill) {
     notFound();
   }
 
-  const parentCategory = skillCategories.find(c => c.id === skill.category);
+  const parentCategory = localizedCategories.find(c => c.id === skill.category);
   const skillLabels: SkillLabels = {
     backToCategory: parentCategory
       ? t('back_to_category', { categoryName: parentCategory.name })

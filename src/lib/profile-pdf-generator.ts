@@ -1,12 +1,13 @@
 import jsPDF from 'jspdf';
 
-// Brand colors
-const ACID_LIME: [number, number, number] = [223, 255, 0];
-const DEEP_FOREST: [number, number, number] = [8, 12, 10];
-const TEXT_PRIMARY: [number, number, number] = [240, 240, 240];
-const TEXT_SECONDARY: [number, number, number] = [160, 168, 152];
-const SURFACE: [number, number, number] = [18, 24, 20];
-const SURFACE_2: [number, number, number] = [28, 36, 30];
+// White-paper color scheme — optimized for physical printing
+const ACCENT: [number, number, number] = [22, 78, 50];        // dark forest green (brand, print-safe)
+const TEXT_PRIMARY: [number, number, number] = [20, 20, 20];  // near-black body text
+const TEXT_SECONDARY: [number, number, number] = [80, 85, 80]; // dark gray secondary text
+const SURFACE: [number, number, number] = [235, 240, 235];    // light tinted card bg
+const SURFACE_2: [number, number, number] = [245, 248, 245];  // lighter card bg
+const PAGE_BG: [number, number, number] = [255, 255, 255];    // white page background
+const RULE: [number, number, number] = [210, 220, 210];       // light dividers
 
 const PAGE_W = 210; // A4 mm
 const PAGE_H = 297; // A4 mm
@@ -387,14 +388,22 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
     // ─────────────────────────────────────────
     // Helpers
     // ─────────────────────────────────────────
+    const paintPageBg = (): void => {
+        doc.setFillColor(...PAGE_BG);
+        doc.rect(0, 0, PAGE_W, PAGE_H, 'F');
+        doc.setFillColor(...ACCENT);
+        doc.rect(0, 0, PAGE_W, 3, 'F');
+    };
+
     const checkPageBreak = (needed: number): void => {
         if (y + needed > PAGE_H - MARGIN - 12) {
             doc.addPage();
+            paintPageBg();
             y = MARGIN;
         }
     };
 
-    const drawHRule = (color: [number, number, number] = SURFACE_2): void => {
+    const drawHRule = (color: [number, number, number] = RULE): void => {
         doc.setDrawColor(...color);
         doc.setLineWidth(0.3);
         doc.line(MARGIN, y, PAGE_W - MARGIN, y);
@@ -405,10 +414,10 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
         checkPageBreak(14);
         doc.setFontSize(8);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...ACID_LIME);
+        doc.setTextColor(...ACCENT);
         doc.text(text, MARGIN, y);
         y += 3;
-        doc.setDrawColor(...ACID_LIME);
+        doc.setDrawColor(...ACCENT);
         doc.setLineWidth(0.4);
         doc.line(MARGIN, y, PAGE_W - MARGIN, y);
         y += 6;
@@ -418,16 +427,16 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
     // PAGE 1 — Cover / Hero
     // ─────────────────────────────────────────
 
-    // Full-bleed dark background
-    doc.setFillColor(...DEEP_FOREST);
+    // White background
+    doc.setFillColor(...PAGE_BG);
     doc.rect(0, 0, PAGE_W, PAGE_H, 'F');
 
-    // Acid Lime top bar
-    doc.setFillColor(...ACID_LIME);
+    // Forest green top bar
+    doc.setFillColor(...ACCENT);
     doc.rect(0, 0, PAGE_W, 3, 'F');
 
     // Left accent stripe
-    doc.setFillColor(...ACID_LIME);
+    doc.setFillColor(...ACCENT);
     doc.rect(0, 3, 3, 60, 'F');
 
     // Tagline
@@ -448,7 +457,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
     // Subtitle line
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
-    doc.setTextColor(...ACID_LIME);
+    doc.setTextColor(...ACCENT);
     const subtitle = lang === 'es'
         ? 'Ingeniero de Software Full Stack  ·  FinTech & SaaS  ·  Panama'
         : 'Full Stack Software Engineer  ·  FinTech & SaaS  ·  Panama';
@@ -456,7 +465,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
     y += 14;
 
     // Divider
-    doc.setDrawColor(...SURFACE_2);
+    doc.setDrawColor(...RULE);
     doc.setLineWidth(0.3);
     doc.line(MARGIN + 6, y, PAGE_W - MARGIN, y);
     y += 8;
@@ -476,7 +485,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
     // ── Metrics bar ───────────────────────────
     doc.setFontSize(7.5);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(...ACID_LIME);
+    doc.setTextColor(...ACCENT);
     doc.text(content.metricsLabel, MARGIN + 6, y);
     y += 6;
 
@@ -491,7 +500,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
         // Value
         doc.setFontSize(16);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...ACID_LIME);
+        doc.setTextColor(...ACCENT);
         doc.text(m.value, bx + (metricBoxW - 3) / 2, by + 9, { align: 'center' });
 
         // Label (multi-line)
@@ -534,10 +543,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
     // PAGE 2 — Experience + Portfolio
     // ─────────────────────────────────────────
     doc.addPage();
-    doc.setFillColor(...DEEP_FOREST);
-    doc.rect(0, 0, PAGE_W, PAGE_H, 'F');
-    doc.setFillColor(...ACID_LIME);
-    doc.rect(0, 0, PAGE_W, 3, 'F');
+    paintPageBg();
     y = MARGIN;
 
     // ── Experience ─────────────────────────────
@@ -555,7 +561,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
         // Period right-aligned
         doc.setFontSize(8);
         doc.setFont('helvetica', 'normal');
-        doc.setTextColor(...ACID_LIME);
+        doc.setTextColor(...ACCENT);
         doc.text(exp.period, PAGE_W - MARGIN, y, { align: 'right' });
         y += 5;
 
@@ -593,15 +599,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
     // PAGE 3 — Portfolio + Open Source + Stack
     // ─────────────────────────────────────────
     doc.addPage();
-
-    // Dark background
-    doc.setFillColor(...DEEP_FOREST);
-    doc.rect(0, 0, PAGE_W, PAGE_H, 'F');
-
-    // Acid Lime top bar
-    doc.setFillColor(...ACID_LIME);
-    doc.rect(0, 0, PAGE_W, 3, 'F');
-
+    paintPageBg();
     y = MARGIN;
 
     sectionTitle(content.portfolioTitle);
@@ -614,12 +612,12 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
         doc.roundedRect(MARGIN, y, CONTENT_W, 14, 3, 3, 'F');
 
         // Accent left border
-        doc.setFillColor(...ACID_LIME);
+        doc.setFillColor(...ACCENT);
         doc.roundedRect(MARGIN, y, 3, 14, 1.5, 1.5, 'F');
 
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...ACID_LIME);
+        doc.setTextColor(...ACCENT);
         doc.text(proj.name, MARGIN + 7, y + 6);
 
         doc.setFontSize(7.5);
@@ -645,7 +643,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
         const roiLabel = lang === 'es' ? 'IMPACTO DE NEGOCIO / ROI' : 'BUSINESS IMPACT / ROI';
         doc.setFontSize(7.5);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...ACID_LIME);
+        doc.setTextColor(...ACCENT);
         doc.text(roiLabel, MARGIN, y);
         y += 4;
 
@@ -666,7 +664,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
         doc.roundedRect(MARGIN, y, metricTagW, 6, 2, 2, 'F');
         doc.setFontSize(7);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...ACID_LIME);
+        doc.setTextColor(...ACCENT);
         doc.text(proj.metric, MARGIN + 5, y + 4);
         y += 12;
 
@@ -688,7 +686,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
         // Project name + stack tag in one row
         doc.setFontSize(9.5);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...ACID_LIME);
+        doc.setTextColor(...ACCENT);
         doc.text(osp.name, MARGIN, y);
 
         const stackText = `· ${osp.stack}`;
@@ -797,8 +795,8 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
     doc.setFillColor(...SURFACE_2);
     doc.roundedRect(MARGIN, y, CONTENT_W, 48, 4, 4, 'F');
 
-    // Lime accent top border inside
-    doc.setFillColor(...ACID_LIME);
+    // Accent top border inside
+    doc.setFillColor(...ACCENT);
     doc.rect(MARGIN, y, CONTENT_W, 2, 'F');
 
     const ctaInnerX = MARGIN + 8;
@@ -807,7 +805,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
 
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(...ACID_LIME);
+    doc.setTextColor(...ACCENT);
     doc.text(content.ctaTitle, ctaInnerX, cy);
     cy += 7;
 
@@ -828,7 +826,7 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
         const cx = ctaInnerX + i * contactSpacing;
         doc.setFontSize(7);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...ACID_LIME);
+        doc.setTextColor(...ACCENT);
         doc.text(c.label, cx, cy);
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(...TEXT_SECONDARY);
@@ -869,8 +867,8 @@ export function generateProfileBuffer(lang: 'es' | 'en'): Buffer {
         const pageNumText = `${content.pageLabel} ${i} ${content.ofLabel} ${pageCount}`;
         doc.text(pageNumText, PAGE_W - MARGIN, PAGE_H - 5, { align: 'right' });
 
-        // Bottom lime accent
-        doc.setFillColor(...ACID_LIME);
+        // Bottom accent bar
+        doc.setFillColor(...ACCENT);
         doc.rect(0, PAGE_H - 1.5, PAGE_W, 1.5, 'F');
     }
 

@@ -2,16 +2,19 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { skillCategories, getSkillsByCategory, categoryIconMap } from "@/lib/skills";
+import { categoryIconMap, getSkillsForLocale, getSkillCategoriesForLocale } from "@/lib/skills";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 export default function SkillsPage() {
   const t = useTranslations("skills");
+  const locale = useLocale();
+  const localizedCategories = getSkillCategoriesForLocale(locale);
+  const localizedSkills = getSkillsForLocale(locale);
 
   return (
     <>
@@ -29,9 +32,9 @@ export default function SkillsPage() {
 
       {/* Category Cards Grid */}
       <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {skillCategories.map((cat, idx) => {
+        {localizedCategories.map((cat, idx) => {
           const Icon = categoryIconMap[cat.iconName];
-          const catSkills = getSkillsByCategory(cat.id);
+          const catSkills = localizedSkills.filter(s => s.category === cat.id);
           return (
             <AnimatedDiv key={cat.id} delay={0.07 * idx}>
               <Link href={`/skills/${cat.id}`} className="group block h-full">

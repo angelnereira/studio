@@ -376,3 +376,54 @@ export const skillCategories: SkillCategoryData[] = [
         iconName: "BrainCircuit"
     },
 ];
+
+// ─── English translations for skill categories ─────────────────────────────
+const skillCategoriesEn: SkillCategoryData[] = [
+    { id: "frontend",      name: "Frontend & Web Product",   description: "Next.js 15, React 19, TypeScript",                               businessValue: "TTI < 3s, SEO from the first render, high maintainability and prevention of technical debt that erodes client ROI.", iconName: "Code2" },
+    { id: "backend",       name: "Backend & API Services",   description: "Go, Rust, Node.js — concurrent APIs and native tools",             businessValue: "Low-latency services, fiscal microservices with microsecond response times and native tools with zero overhead.", iconName: "Server" },
+    { id: "data",          name: "Data & Persistence",       description: "PostgreSQL, Prisma, Neon, Redis, BullMQ, SQL",                    businessValue: "Elastic scalability, end-to-end type safety, distributed queues for background processing, and per-PR database branching.", iconName: "Database" },
+    { id: "devops",        name: "DevOps & Infrastructure",  description: "Docker, GitHub Actions, Linux, Railway",                          businessValue: "Automated CI/CD pipelines, reproducible builds, firewall configuration, and frictionless operational infrastructure.", iconName: "Settings2" },
+    { id: "cloud",         name: "Cloud Computing",          description: "Vercel Edge, Google Cloud",                                       businessValue: "Global high availability (99.9% uptime), auto-scaling for demand spikes, and compliance with corporate security standards.", iconName: "Cloud" },
+    { id: "security",      name: "Security & Compliance",    description: "AES-256-CBC, JWT, RLS, PWA Offline-First, DGI/PAC",               businessValue: "Bank-grade and DGI regulatory compliance, guaranteed multi-tenant isolation, and uninterrupted connectivity-free continuity.", iconName: "Shield" },
+    { id: "mobile-systems",name: "Mobile & Systems",         description: "Kotlin / Android, Alpine Linux, ESC/POS, Web Bluetooth",          businessValue: "Native developer tools, physical peripheral integration without drivers, and Linux environments in your pocket.", iconName: "Smartphone" },
+    { id: "ai-engineering",name: "AI Engineering",           description: "Vercel AI SDK, TensorFlow.js, code agents",                       businessValue: "Engineering process automation, edge AI without leaking sensitive data, and professional model orchestration.", iconName: "BrainCircuit" },
+];
+
+// ─── English translations for individual skill descriptions ───────────────
+const skillDescriptionsEn: Record<string, string> = {
+    "nextjs":              "Production React framework for high-performance web applications with SSR, SSG and React Server Components.",
+    "typescript":          "JavaScript superset with static typing. Essential for scalable and maintainable projects.",
+    "javascript":          "Fundamental language of the web. Deep mastery of ES6+, async/await and modern patterns.",
+    "golang":              "High-performance compiled language for concurrent backend services, low-latency APIs, and systems tooling.",
+    "rust":                "Systems language with memory safety guarantees without GC. Used for native Android tools (VPN routing, audio DSP) and critical modules with zero overhead.",
+    "kotlin":              "Primary language for native Android. Used to build developer tools like professional Linux terminals in your pocket.",
+    "postgresql":          "Robust, extensible relational database. The standard for enterprise applications with critical transactional workloads.",
+    "prisma":              "Modern ORM with automatic typing. Declarative schema, versioned migrations, and Client Extensions for secure multi-tenancy.",
+    "neon":                "Serverless PostgreSQL with native branching. Critical for resilient staging and production environments without extra costs.",
+    "sql":                 "Standard language for relational database queries. Essential for optimization and data analysis.",
+    "redis-upstash":       "In-memory and serverless database for high-speed caching, rate limiting, and pub/sub. Upstash for stateless edge computing.",
+    "bullmq":              "Distributed queue system on Redis for background processing, scheduled jobs, and task orchestration with exponential retries.",
+    "docker":              "Application containerization. Consistent environments from development to production, base for reproducible CI/CD.",
+    "git":                 "Distributed version control and pipeline automation. GitHub Actions for reproducible builds, tests, and deployments.",
+    "linux":               "Server operating system. Administration, scripting, firewall configuration, and operations in active client deployments.",
+    "railway":             "Modern PaaS platform for deploying containers and backend services with automatic networking, integrated secrets, and zero-config.",
+    "vercel":              "Deployment platform for Next.js. Edge functions, preview deployments, and automatic CI/CD with native observability.",
+    "google-cloud":        "Enterprise cloud platform. Cloud Run, Cloud SQL, and serverless services for workloads that don't fit edge runtime.",
+    "security-compliance": "Bank-grade security protocols and multi-tenant architecture: AES-256-CBC, JWT, Row Level Security, and DGI/PAC compliance.",
+    "pwa-offline-first":   "Progressive Web App architectures with Service Workers for uninterrupted operations without connectivity. Business continuity guarantee.",
+    "web-bluetooth-escpos":"Thermal printing and peripheral integration directly from the browser. No drivers, no native apps, no friction for the merchant.",
+    "alpine-linux-pty":    "Minimal Linux environments and real pseudo-terminals. Base of Gravital-Shell: runs Alpine on Android without root, with multiple persistent sessions.",
+    "ai-engineering":      "Advanced engineering with AI models — not vibecoding but programmatic orchestration, pipeline automation, and agent-guided administration.",
+};
+
+export function getSkillsData(locale: string = 'es'): SkillData[] {
+    if (locale !== 'en') return skillsData;
+    return skillsData.map(skill => ({
+        ...skill,
+        description: skillDescriptionsEn[skill.slug] ?? skill.description,
+    }));
+}
+
+export function getSkillCategories(locale: string = 'es'): SkillCategoryData[] {
+    return locale === 'en' ? skillCategoriesEn : skillCategories;
+}

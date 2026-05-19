@@ -126,7 +126,11 @@
                 "ideal_for": "Ideal para",
                 "view_details": "Ver Detalles",
                 "quick_quote": "Cotización Rápida",
-                "quote": "Cotizar"
+                "quote": "Cotizar",
+                "popular_badge": "Más Popular",
+                "unique_challenge_title": "¿Tienes un Reto Único?",
+                "unique_challenge_desc": "Cada proyecto es un mundo. Si tu idea no encaja perfectamente en estas categorías, es una excelente señal. Me especializo en crear soluciones a medida para problemas complejos.",
+                "unique_challenge_cta": "Hablemos de tu Proyecto"
         },
         "projects": {
                 "title": "Proyectos en Producción",

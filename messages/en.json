@@ -126,7 +126,11 @@
         "ideal_for": "Ideal for",
         "view_details": "View Details",
         "quick_quote": "Quick Quote",
-        "quote": "Quote"
+        "quote": "Quote",
+        "popular_badge": "Most Popular",
+        "unique_challenge_title": "Have a Unique Challenge?",
+        "unique_challenge_desc": "Every project is a world. If your idea doesn't perfectly fit these categories, that's an excellent sign. I specialize in creating custom solutions for complex problems.",
+        "unique_challenge_cta": "Let's Talk About Your Project"
     },
     "projects": {
         "title": "Projects in Production",

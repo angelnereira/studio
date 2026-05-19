@@ -6,7 +6,8 @@ import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
 import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import { services } from '@/lib/services';
+import { getServices } from '@/lib/services';
+import { useLocale } from 'next-intl';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -22,6 +23,7 @@ const carouselOptions: EmblaOptionsType = {
 };
 
 export const ServicesCarousel: React.FC = () => {
+  const locale = useLocale();
   const autoplayPlugin = React.useMemo(
     () => Autoplay({
       playOnInit: true,
@@ -52,7 +54,7 @@ export const ServicesCarousel: React.FC = () => {
     emblaApi.on('reInit', onSelect);
   }, [emblaApi, onSelect]);
 
-  const publishedServices = services.filter(s => s.published);
+  const publishedServices = getServices(locale).filter(s => s.published);
 
   return (
     <div className="relative w-full max-w-6xl mx-auto">

@@ -1,5 +1,5 @@
 
-import { services, Service, ServicePackage } from "@/lib/services";
+import { services, getServices, Service, ServicePackage } from "@/lib/services";
 import { notFound } from "next/navigation";
 import * as React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { AnimatedDiv } from "@/components/animated-div";
 import { SpotlightCard } from "@/components/spotlight-card";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale, getLocale } from "next-intl/server";
 
 export async function generateStaticParams() {
   return services.filter(s => s.published).map((service) => ({
@@ -73,7 +73,8 @@ const PackageCard = ({ pkg, serviceSlug }: { pkg: ServicePackage, serviceSlug: s
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string; locale: string }> }) {
   const resolvedParams = await params;
   setRequestLocale(resolvedParams.locale);
-  const service = services.find((s) => s.slug === resolvedParams.slug && s.published);
+  const locale = await getLocale();
+  const service = getServices(locale).find((s) => s.slug === resolvedParams.slug && s.published);
 
   if (!service) {
     notFound();

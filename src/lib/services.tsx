@@ -25,6 +25,7 @@ export type ServiceAddOn = {
 export type Service = {
   title: string;
   slug: string;
+  tabLabel: string;
   icon: React.ElementType;
   shortDescription: string;
   fullDescription: string;
@@ -41,6 +42,7 @@ export const services: Service[] = [
   {
     title: "Desarrollo Web",
     slug: "web-development",
+    tabLabel: "Desarrollo Web",
     icon: Rocket,
     category: "Web Development",
     shortDescription: "Soluciones web a medida, desde landing pages hasta aplicaciones empresariales complejas.",
@@ -106,6 +108,7 @@ export const services: Service[] = [
   {
     title: "Tienda Online (E-commerce)",
     slug: "tienda-online-ecommerce",
+    tabLabel: "E-commerce",
     icon: ShoppingCart,
     category: "Web Development",
     shortDescription: "Vende tus productos 24/7 con una tienda online potente, segura y fácil de gestionar.",
@@ -144,6 +147,7 @@ export const services: Service[] = [
   {
     title: "Gestión de Negocios",
     slug: "gestion-de-negocios",
+    tabLabel: "ERP",
     icon: Briefcase,
     category: "Business Management",
     shortDescription: "Sistemas a medida para inventario, planilla y facturación. Optimiza tus operaciones.",
@@ -182,6 +186,7 @@ export const services: Service[] = [
   {
     title: "Aplicaciones Móviles",
     slug: "aplicaciones-moviles",
+    tabLabel: "Apps Móviles",
     icon: Smartphone,
     category: "Web Development",
     shortDescription: "Apps para iOS y Android que conectan con tus usuarios y fortalecen tu marca.",
@@ -219,6 +224,7 @@ export const services: Service[] = [
   {
     title: "Portafolio Profesional y Marca Personal",
     slug: "portafolio-profesional",
+    tabLabel: "Portafolio",
     icon: Puzzle,
     category: "Web Development",
     shortDescription: "Destaca en tu sector con un portafolio web que refleje tu talento y construya tu marca personal.",
@@ -283,6 +289,7 @@ export const services: Service[] = [
   {
     title: "Soluciones con IA",
     slug: "ai-solutions",
+    tabLabel: "IA",
     icon: BrainCircuit,
     category: "AI Solutions",
     shortDescription: "Desde chatbots inteligentes hasta sistemas de recomendación y análisis predictivo.",
@@ -338,6 +345,7 @@ export const services: Service[] = [
   {
     title: "Automatización de Procesos",
     slug: "automatizacion-de-procesos",
+    tabLabel: "RPA",
     icon: Repeat,
     category: "AI Solutions",
     shortDescription: "Ahorra tiempo y reduce errores automatizando tareas manuales y repetitivas (RPA).",
@@ -376,6 +384,7 @@ export const services: Service[] = [
   {
     title: "Mentoría y Capacitación Técnica",
     slug: "mentoria-capacitacion",
+    tabLabel: "Capacitación",
     icon: Users,
     category: "Mentorías y Capacitación",
     shortDescription: "Eleva las habilidades de tu equipo con mentorías personalizadas y capacitación en tecnologías de vanguardia.",
@@ -415,6 +424,7 @@ export const services: Service[] = [
   {
     title: "Planes de Soporte y Crecimiento",
     slug: "planes-soporte-crecimiento",
+    tabLabel: "SLA / CTO",
     icon: ShieldCheck,
     category: "Infrastructure & Maintenance",
     shortDescription: "Asegura la salud y evolución de tu proyecto con nuestros planes de suscripción.",
@@ -455,6 +465,7 @@ export const services: Service[] = [
   {
     title: "Sistemas Fiscales & DGI",
     slug: "sistemas-fiscales-dgi",
+    tabLabel: "DGI / PAC",
     icon: Receipt,
     category: "Business Management",
     shortDescription: "Integración certificada con Facturación Electrónica de Panamá (DGI/PAC).",
@@ -496,6 +507,7 @@ export const services: Service[] = [
   {
     title: "Ciberseguridad y Auditoría",
     slug: "ciberseguridad-auditoria",
+    tabLabel: "Ciberseguridad",
     icon: Shield,
     category: "Ciberseguridad",
     shortDescription: "Protege tu empresa con auditorías de seguridad, pruebas de penetración y monitoreo continuo antes de que lo hagan los atacantes.",
@@ -561,6 +573,7 @@ export const services: Service[] = [
   {
     title: "Infraestructura y Servidores",
     slug: "infraestructura-servidores",
+    tabLabel: "Servidores",
     icon: Server,
     category: "Infrastructure & Maintenance",
     shortDescription: "Configura, administra y escala tu infraestructura tecnológica local o en la nube, sin necesidad de un equipo TI propio.",
@@ -625,6 +638,7 @@ export const services: Service[] = [
   {
     title: "Sistemas para Negocios Locales",
     slug: "soluciones-negocios-locales",
+    tabLabel: "Negocios Locales",
     icon: Building,
     category: "Business Management",
     shortDescription: "Sistemas de punto de venta y gestión completa para restaurantes, salones de belleza, bares y comercios locales.",
@@ -690,6 +704,7 @@ export const services: Service[] = [
   {
     title: "Consultoría e I+D Tecnológico",
     slug: "investigacion-desarrollo",
+    tabLabel: "I+D / Consultoría",
     icon: LineChart,
     category: "AI Solutions",
     shortDescription: "Acompaña la innovación y expansión de tu empresa con consultoría tecnológica estratégica y desarrollo de prototipos.",
@@ -748,3 +763,270 @@ export const services: Service[] = [
     published: true,
   },
 ];
+
+// ─── English text overrides ────────────────────────────────────────────────
+type ServiceTextOverride = Pick<Service, 'slug' | 'tabLabel' | 'title' | 'shortDescription' | 'fullDescription' | 'tags'> & {
+  packages: ServicePackage[];
+  addOns: ServiceAddOn[];
+};
+
+const servicesEn: ServiceTextOverride[] = [
+  {
+    slug: "web-development",
+    tabLabel: "Web Dev",
+    title: "Web Development",
+    shortDescription: "Custom web solutions, from landing pages to complex enterprise applications.",
+    fullDescription: "We create robust, scalable, user-centered web experiences. Whether you need a simple landing page to validate an idea or a complete enterprise web application, we have the solution.",
+    packages: [
+      { name: "Digital Launch", price: 1500, description: "Ideal for startups and small businesses needing a fast, effective online presence.", features: ["Responsive landing page", "Basic SEO optimization", "Contact form", "Google Analytics integration", "1-year hosting", "Post-delivery maintenance (from $250/mo)"], cta: "Start Launch", time: "2-3 weeks" },
+      { name: "Corporate Presence", price: 2800, description: "A complete website for medium businesses and established professionals looking to consolidate their brand.", features: ["Multi-page website", "Admin panel (CMS)", "Advanced blog system", "Basic CRM integration", "Speed optimization", "Premium SSL certificate", "Post-delivery maintenance (from $350/mo)"], cta: "Build Presence", time: "4-6 weeks" },
+      { name: "Enterprise Solution", price: "6,000+", description: "Custom, high-complexity web applications for large enterprises and corporations.", features: ["Custom web application", "Microservices architecture", "Full admin panel", "Custom REST API", "Integration with existing systems", "Enterprise-grade security", "Post-delivery maintenance (from $650/mo)"], cta: "Design Solution", time: "8-12+ weeks" },
+    ],
+    addOns: [
+      { name: "Integrated Blog", price: 240, description: "For the Digital Launch package." },
+      { name: "Live Chat", price: 160, description: "For any package." },
+      { name: "Multi-language (ES/EN)", price: 320, description: "For any package." },
+      { name: "Online Booking System", price: 640, description: "For the Corporate Presence package." },
+    ],
+    tags: ["Web", "Startups", "SMBs", "Corporate"],
+  },
+  {
+    slug: "tienda-online-ecommerce",
+    tabLabel: "E-commerce",
+    title: "Online Store (E-commerce)",
+    shortDescription: "Sell your products 24/7 with a powerful, secure, and easy-to-manage online store.",
+    fullDescription: "We take your business to the digital world with a complete e-commerce platform. From initial setup to payment gateway integration, we give you the tools to sell online successfully.",
+    packages: [
+      { name: "Digital Catalog", price: 1200, description: "Showcase your products in a professional online catalog with direct contact option for sales.", features: ["Catalog of up to 100 products", "Responsive design", "Product image gallery", "WhatsApp button for orders", "Management training", "Post-delivery maintenance (from $250/mo)"], cta: "Create Catalog", time: "3-4 weeks" },
+      { name: "Essential E-commerce", price: 1920, originalPrice: 2560, description: "A complete online store with shopping cart and online payments to start selling right away.", features: ["Everything in Digital Catalog", "Shopping cart", "Payment gateway integration (Stripe/PayPal)", "Basic inventory management", "Discount coupon system", "Post-delivery maintenance (from $350/mo)"], cta: "Launch Store", time: "5-7 weeks" },
+      { name: "Advanced E-commerce", price: "4,800+", description: "Custom e-commerce solutions for high sales volumes and complex functionalities.", features: ["Everything in Essential E-commerce", "Customer accounts and profiles", "Product review system", "Shipping system integration", "Automatic invoicing", "Post-delivery maintenance (from $650/mo)"], cta: "Scale Sales", time: "8-12+ weeks" },
+    ],
+    addOns: [],
+    tags: ["E-commerce", "SMBs", "Retail", "Sales"],
+  },
+  {
+    slug: "gestion-de-negocios",
+    tabLabel: "ERP",
+    title: "Business Management",
+    shortDescription: "Custom systems for inventory, payroll, and invoicing. Optimize your operations.",
+    fullDescription: "Digitize and automate your company's key processes with custom software. We develop inventory management, payroll, and electronic invoicing systems to reduce errors, save time, and give you full control over your business.",
+    packages: [
+      { name: "Individual Module", price: 2800, description: "Choose one module (Inventory, Payroll, or Invoicing) and digitize a key area of your company.", features: ["One module of your choice", "Initial data upload (up to 500 records)", "Basic reporting dashboard", "Training for 2 users", "Post-delivery maintenance (from $350/mo)"], cta: "Digitize Module", time: "4-6 weeks" },
+      { name: "SMB Suite", price: 3600, originalPrice: 4800, description: "An integrated solution with two modules of your choice for more complete management.", features: ["Two modules of your choice", "Integration between selected modules", "Unified reporting dashboard", "Training for 5 users", "Post-delivery maintenance (from $650/mo)"], cta: "Integrate Suite", time: "8-10 weeks" },
+      { name: "Custom ERP", price: "7,200+", description: "A complete, customized enterprise resource planning (ERP) system for your company.", features: ["Inventory, Payroll and Invoicing modules", "Additional modules (CRM, Purchasing, etc.)", "Hardware integration (scanners, fiscal printers)", "Complete data migration", "Post-delivery maintenance (from $1,500/mo)"], cta: "Build ERP", time: "12-20+ weeks" },
+    ],
+    addOns: [],
+    tags: ["SMBs", "ERP", "Management", "Operations"],
+  },
+  {
+    slug: "aplicaciones-moviles",
+    tabLabel: "Mobile Apps",
+    title: "Mobile Applications",
+    shortDescription: "iOS and Android apps that connect with your users and strengthen your brand.",
+    fullDescription: "Put your service or product in your customers' pocket with native or cross-platform mobile applications. We create intuitive, high-performance apps ready to publish on the App Store and Google Play.",
+    packages: [
+      { name: "MVP App", price: "3,200 - 6,400", description: "Launch a first version of your application to validate your idea in the market with key functionalities.", features: ["App for iOS or Android (cross-platform)", "Up to 5 key screens", "Standard UI design", "Integration with basic backend (Firebase)", "App store publishing", "Post-delivery maintenance (from $650/mo)"], cta: "Launch MVP", time: "6-8 weeks" },
+      { name: "Professional App", price: "6,400 - 12,000", description: "A complete application with custom design and advanced features for an established business.", features: ["App for iOS and Android", "100% custom UI design", "Push notifications", "User accounts and profiles", "Third-party API integration", "Post-delivery maintenance (from $650/mo)"], cta: "Develop App", time: "10-16 weeks" },
+      { name: "Enterprise App", price: "12,000+", description: "Complex mobile solutions with system-level integrations, advanced security, and scalability.", features: ["Everything in Professional plan", "In-app payments", "Offline functionality", "Web admin dashboard", "Post-delivery maintenance (from $1,500/mo)"], cta: "Create Mobile Solution", time: "16+ weeks" },
+    ],
+    addOns: [],
+    tags: ["Mobile", "iOS", "Android", "Startups"],
+  },
+  {
+    slug: "portafolio-profesional",
+    tabLabel: "Portfolio",
+    title: "Professional Portfolio & Personal Brand",
+    shortDescription: "Stand out in your field with a web portfolio that reflects your talent and builds your personal brand.",
+    fullDescription: "We create a digital platform for professionals (lawyers, architects, doctors, etc.) and freelancers looking to consolidate their personal brand. A self-manageable portfolio to showcase your projects, experience, and attract new opportunities.",
+    packages: [
+      { name: "Essential Portfolio", price: 480, originalPrice: 800, description: "Your digital business card. An elegant, straight-to-the-point site.", features: ["Website of up to 5 pages", "100% responsive design", "Basic appointment management", "Functional contact form", "1-year hosting and domain", "Post-delivery maintenance (from $250/mo)"], cta: "Create Portfolio", time: "1-2 weeks" },
+      { name: "Professional Brand", price: 1440, originalPrice: 1920, description: "A complete site to establish your market authority, with blog and appointment management.", features: ["Advanced multi-page website", "Self-manageable blog section", "Advanced appointment management", "Dynamic project gallery", "Post-delivery maintenance (from $350/mo)"], cta: "Build Brand", time: "3-4 weeks" },
+      { name: "Comprehensive Solution", price: "2880+", description: "The ultimate platform for professionals who want to manage their entire business from one place.", features: ["Everything in Professional Brand", "Client database (basic CRM)", "Private client area", "Integrated invoicing system", "Post-delivery maintenance (from $650/mo)"], cta: "Design Solution", time: "6-8+ weeks" },
+    ],
+    addOns: [
+      { name: "Invoicing System", price: 480, description: "Add a system to generate and send invoices." },
+      { name: "Advanced Appointment Management", price: 320, description: "Calendar and online bookings." },
+      { name: "Email & Campaign Management", price: 400, priceSuffix: "/mo", description: "Newsletter and marketing campaign management." },
+      { name: "Advanced SEO Positioning", price: 600, priceSuffix: "/mo", description: "Continuous SEO strategy to improve your ranking." },
+    ],
+    tags: ["Personal Brand", "Freelancers", "Professionals", "Web"],
+  },
+  {
+    slug: "ai-solutions",
+    tabLabel: "AI",
+    title: "AI Solutions",
+    shortDescription: "From intelligent chatbots to recommendation systems and predictive analytics.",
+    fullDescription: "We integrate the power of artificial intelligence into your operations to automate processes, personalize the customer experience, and extract valuable insights from your data.",
+    packages: [
+      { name: "Basic AI", price: "2,500 - 4,000", description: "Implement an intelligent virtual assistant to automate customer service.", features: ["Basic FAQ chatbot", "WhatsApp Business integration", "Conversation dashboard", "Initial training", "Post-delivery maintenance (from $350/mo)"], cta: "Implement Chatbot", time: "3-4 weeks" },
+      { name: "Advanced AI", price: "5,000 - 9,000", description: "Develop recommendation and analysis systems for deep personalization.", features: ["Chatbot with natural language processing (NLP)", "Product recommendation system", "Sentiment analysis on comments", "Multi-channel integration", "Post-delivery maintenance (from $650/mo)"], cta: "Develop AI", time: "6-8 weeks" },
+      { name: "Enterprise AI", price: "10,000+", description: "Custom AI solutions with proprietary machine learning models and big data analytics.", features: ["100% custom AI solution", "Proprietary machine learning models", "Big Data integration", "Automated data pipeline", "Post-delivery maintenance (from $1,500/mo)"], cta: "Create AI Solution", time: "10-16+ weeks" },
+    ],
+    addOns: [],
+    tags: ["AI", "Chatbot", "Machine Learning", "Automation"],
+  },
+  {
+    slug: "automatizacion-de-procesos",
+    tabLabel: "RPA",
+    title: "Process Automation",
+    shortDescription: "Save time and reduce errors by automating manual and repetitive tasks (RPA).",
+    fullDescription: "We identify bottlenecks in your workflows and develop automated scripts and systems to eliminate them. From report generation to data synchronization between platforms, we free your team to focus on high-value tasks.",
+    packages: [
+      { name: "Targeted Automation", price: "1,800 - 3,500", description: "Automate a specific repetitive task, such as generating a daily report or extracting data.", features: ["Task analysis", "Automation script development", "Scheduled execution (daily, weekly)", "Script documentation and delivery", "Post-delivery maintenance (from $250/mo)"], cta: "Automate Task", time: "1-2 weeks" },
+      { name: "Workflow Automation", price: "3,500 - 7,000", description: "Connect multiple applications and automate a complete workflow, such as new client onboarding.", features: ["Complete workflow analysis", "Integration of up to 3 applications (via API)", "Email/Slack notification system", "Flow monitoring dashboard", "Post-delivery maintenance (from $650/mo)"], cta: "Automate Flow", time: "3-5 weeks" },
+      { name: "Enterprise RPA", price: "8,500+", description: "Robotic Process Automation (RPA) implementation to automate complex processes at scale.", features: ["RPA consulting and strategy", "Development of multiple software 'bots'", "Integration with legacy systems", "Bot control panel and orchestration", "Post-delivery maintenance (from $1,500/mo)"], cta: "Implement RPA", time: "6-10+ weeks" },
+    ],
+    addOns: [],
+    tags: ["RPA", "Automation", "Efficiency", "Operations"],
+  },
+  {
+    slug: "mentoria-capacitacion",
+    tabLabel: "Training",
+    title: "Technical Mentorship & Training",
+    shortDescription: "Elevate your team's skills with personalized mentorships and training in cutting-edge technologies.",
+    fullDescription: "Enhance your organization's internal talent. I offer mentorship and training programs designed to accelerate the professional development of individuals and teams, focused on the most in-demand technologies and practices.",
+    packages: [
+      { name: "Professional Boost", price: 480, priceSuffix: "/ 4 sessions", description: "1-on-1 mentorship for developers looking to accelerate their career, unblock challenges, and improve skills.", features: ["4 individual 1-hour sessions", "Code and portfolio review", "Personalized career plan", "Network access", "Chat support between sessions"], cta: "Start Mentorship", time: "1 month" },
+      { name: "Team Accelerator", price: 1500, priceSuffix: "/mo", description: "Ongoing support for corporate development teams looking to modernize their practices and accelerate delivery.", features: ["8 hours group mentorship/month", "Project architecture review", "Best practices implementation (CI/CD, Testing)", "Problem-solving workshops", "Priority support for the team"], cta: "Accelerate Team", time: "Monthly subscription" },
+      { name: "Corporate Workshop", price: "3,500+", description: "Intensive, customized technology modernization program for corporate IT teams needing to update capabilities.", features: ["100% customized curriculum (React, AI, Cloud, etc.)", "8-16 hour practical workshop", "Study materials and resources", "Certificate of participation", "Post-workshop follow-up session"], cta: "Quote Workshop", time: "To be scheduled" },
+    ],
+    addOns: [],
+    tags: ["Mentorship", "Training", "Teams", "Corporate"],
+  },
+  {
+    slug: "planes-soporte-crecimiento",
+    tabLabel: "SLA / CTO",
+    title: "Support & Growth Plans",
+    shortDescription: "Ensure the health and evolution of your project with our subscription plans.",
+    fullDescription: "We offer subscription plans for ongoing maintenance, technical support, and new feature development. Ensure your technology investment continues generating value long-term.",
+    packages: [
+      { name: "Basic SLA", price: 250, priceSuffix: "/mo", description: "Operational guarantee for production systems: proactive monitoring, security patches, and guaranteed response.", features: ["24/7 availability monitoring", "Automated daily backups", "Critical security updates (dependencies, CVEs)", "Email technical support (guaranteed 24h response)", "Monthly system health report"], cta: "Get SLA", time: "Monthly subscription" },
+      { name: "Enterprise SLA", price: 650, priceSuffix: "/mo", description: "Continuous technical management for critical business platforms: database optimization, iterative improvements, and priority support.", features: ["Everything in Basic SLA", "Monthly PostgreSQL performance audit", "Priority chat support (4h response)", "6 hours development for improvements and new features", "Scheduled credential and security key rotation"], cta: "Get Enterprise SLA", time: "Monthly subscription" },
+      { name: "Fractional CTO", price: 1500, priceSuffix: "/mo", description: "Part-time strategic technical leadership. Your trusted architect for infrastructure decisions, technology roadmap, and development team leadership.", features: ["Everything in Enterprise SLA", "15 hours development or architecture/month", "Bi-weekly strategic call (roadmap, stack decisions)", "24/7 emergency support with 1h response time", "Technical representation to executives and stakeholders"], cta: "Hire Fractional CTO", time: "Monthly contract" },
+    ],
+    addOns: [],
+    tags: ["Support", "Subscription", "Maintenance", "Corporate"],
+  },
+  {
+    slug: "sistemas-fiscales-dgi",
+    tabLabel: "DGI / PAC",
+    title: "Fiscal Systems & DGI",
+    shortDescription: "Certified integration with Panama's Electronic Invoicing (DGI/PAC).",
+    fullDescription: "Development of certified electronic invoicing software compliant with Panama's DGI regulations. We implement complete solutions with electronic signatures, schema validation, QR/CUFE codes, and secure communication with authorized PACs.",
+    packages: [
+      { name: "API Integration", price: 3200, description: "Certified connection module to integrate your existing software with DGI electronic invoicing via PAC.", features: ["API integration (REST/SOAP) with certified PAC", "Signed XML generation with electronic signature", "DGI/PAC response handling and contingencies", "Homologation tests included", "Post-delivery maintenance (from $350/mo)"], cta: "Integrate Invoicing", time: "3-5 weeks" },
+      { name: "Invoicing Portal", price: 5500, description: "Complete web portal for issuing and receiving electronic invoices, ready for DGI Resolution N.° 201-6299 compliance.", features: ["Secure Web Portal with corporate authentication", "Issuance, Cancellation and Credit/Debit Notes", "Document reception and expense management", "Integrated client and product catalog", "Fiscal dashboard with reports 43 and 94", "Post-delivery maintenance (from $650/mo)"], cta: "Create Portal", time: "6-8 weeks" },
+      { name: "Complete Fiscal System", price: "11,000+", description: "Full enterprise fiscal ERP: the ultimate solution for companies exceeding Resolution N.° 201-6299 thresholds needing their own ISV integrated to PAC.", features: ["Everything in Invoicing Portal", "Advanced real-time inventory control", "Integrated basic accounting module", "Scalable multi-company (SaaS) architecture", "Offline-first touchscreen POS included", "Post-delivery maintenance (from $1,500/mo)"], cta: "Develop System", time: "10-14+ weeks" },
+    ],
+    addOns: [
+      { name: "PAC Homologation", price: 800, description: "Complete management of the certification process." },
+      { name: "24/7 Support", price: 500, priceSuffix: "/mo", description: "Critical support for invoice issuance." },
+    ],
+    tags: ["DGI", "Panama", "FinTech", "Legal"],
+  },
+  {
+    slug: "ciberseguridad-auditoria",
+    tabLabel: "Cybersecurity",
+    title: "Cybersecurity & Audit",
+    shortDescription: "Protect your company with security audits, penetration testing, and continuous monitoring before attackers do.",
+    fullDescription: "With institutions suffering recent cyberattacks, digital security is no longer optional. We ethically and professionally evaluate your system to find vulnerabilities before hackers do, delivering a clear action plan to secure your operation.",
+    packages: [
+      { name: "Security Assessment", price: 900, description: "A quick X-ray of your system's security risks, ideal for knowing where you stand.", features: ["Known vulnerability scan (OWASP Top 10)", "Basic server configuration review", "Port exposure and active services analysis", "Outdated software version verification", "Executive report with risk traffic light (High/Medium/Low)", "Prioritized remediation recommendations"], cta: "Start Assessment", time: "1-2 weeks" },
+      { name: "Full Audit", price: 2800, description: "Comprehensive evaluation of all attack vectors in your infrastructure and digital applications.", features: ["Everything in Security Assessment", "Web application code audit (static analysis)", "Authentication, session, and access control testing", "Data encryption analysis in transit and at rest", "Log review and user permission policies", "Detailed remediation plan with correction roadmap", "Technical results review meeting with team"], cta: "Audit System", time: "3-4 weeks" },
+      { name: "Professional Pentesting", price: "4,800+", description: "We simulate a real attack on your systems (ethical hacking) to find exactly what a hacker would find.", features: ["Everything in Full Audit", "Penetration testing on web apps and internal network", "Internal threat analysis (insider threats)", "Social engineering and controlled phishing (optional)", "Technical + executive results reports", "Personalized incident response plan", "Results presentation to management or board"], cta: "Hire Pentesting", time: "4-8 weeks" },
+    ],
+    addOns: [
+      { name: "Continuous Security Monitoring", price: 350, priceSuffix: "/mo", description: "Active threat surveillance and real-time alerts." },
+      { name: "Incident Response Plan", price: 1000, description: "Documentation and protocols to act in case of an attack." },
+      { name: "Staff Awareness Training", price: 800, description: "Workshop for your team to identify phishing and common threats." },
+    ],
+    tags: ["Cybersecurity", "Audit", "Pentesting", "Enterprises"],
+  },
+  {
+    slug: "infraestructura-servidores",
+    tabLabel: "Servers",
+    title: "Infrastructure & Servers",
+    shortDescription: "Configure, manage, and scale your local or cloud technology infrastructure, without needing your own IT team.",
+    fullDescription: "From installing and configuring a server in your office to designing a complete cloud architecture, I handle the entire technical layer so your business runs without interruption. Ideal for companies needing an external, reliable, and available IT department.",
+    packages: [
+      { name: "Server Setup", price: "700 - 1,200", description: "Install and properly configure your local or cloud server from scratch, production-ready.", features: ["OS installation and hardening (Linux/Windows Server)", "Firewall and secure access policy configuration", "Web services (Nginx/Apache) and database installation", "SSL/TLS and custom domain configuration", "Automated scheduled backup system", "Complete documentation of configured infrastructure"], cta: "Configure Server", time: "1-2 weeks" },
+      { name: "Monthly Administration", price: 400, priceSuffix: "/mo", description: "Your external IT department: we manage your infrastructure so you can focus on your business.", features: ["24/7 availability and performance monitoring", "Security patches and critical updates", "Backup management and recovery plans", "Remote technical support (guaranteed 4h response)", "Monthly server status and health report", "Up to 4 hours of changes and improvements per month"], cta: "Hire Administration", time: "Monthly subscription" },
+      { name: "Enterprise Infrastructure", price: "3,500+", description: "Design and implementation of complex infrastructure: on-premise, cloud, or hybrid architecture.", features: ["Custom network and server architecture design", "Secure corporate VPN implementation", "Virtualization (Proxmox) and containers (Docker/Kubernetes)", "High availability, load balancing, and failover", "Disaster recovery and business continuity strategy", "Legacy system migration to modern infrastructure"], cta: "Design Infrastructure", time: "4-10+ weeks" },
+    ],
+    addOns: [
+      { name: "Cloud Migration (AWS/GCP/Azure)", price: 1200, description: "Move your current infrastructure to the cloud without downtime." },
+      { name: "Corporate VPN Setup", price: 600, description: "Secure remote access for employees and remote offices." },
+      { name: "Offsite Cloud Backup", price: 200, priceSuffix: "/mo", description: "Encrypted backups stored off-site." },
+    ],
+    tags: ["Servers", "Cloud", "Infrastructure", "DevOps"],
+  },
+  {
+    slug: "soluciones-negocios-locales",
+    tabLabel: "Local Biz",
+    title: "Systems for Local Businesses",
+    shortDescription: "Point of sale and complete management systems for restaurants, salons, bars, and local businesses.",
+    fullDescription: "Digitize your business with a solution designed for local businesses. No jargon or complications: a system your team learns in a day that gives you total control over sales, inventory, and customers. Ideal for restaurants, beauty salons, bars, clothing stores, and any business with a physical location.",
+    packages: [
+      { name: "Basic POS System", price: 1200, description: "Your business in order: point of sale and inventory control on one touchscreen.", features: ["Touchscreen POS (tablet or touch screen)", "Inventory control with low stock alerts", "Sales records and receipt generation", "Daily sales reports and best-selling products", "Training for 2 users included", "Post-delivery support (from $150/mo)"], cta: "Implement POS", time: "2-3 weeks" },
+      { name: "Complete Management System", price: 3000, description: "Manage your restaurant, salon, or local business with all the tools a modern business needs.", features: ["Everything in Basic POS System", "Table/appointment/shift management (by business type)", "Customer module and basic loyalty program", "Cost and margin control per product or service", "Advanced business performance reports", "Integration with order printer (kitchen/service)", "Post-delivery support (from $250/mo)"], cta: "Digitize Business", time: "4-6 weeks" },
+      { name: "Premium Solution with App", price: "5,500+", description: "The ultimate tool for businesses that want to grow: complete management system plus customer app.", features: ["Everything in Complete Management System", "Customer mobile app (iOS and Android)", "Online orders and digital reservations from the app", "Loyalty program with points and rewards", "Real-time business analytics dashboard", "Integration with delivery platforms (Uber Eats, etc.)", "Post-delivery support (from $400/mo)"], cta: "Create Premium Solution", time: "8-12+ weeks" },
+    ],
+    addOns: [
+      { name: "QR Digital Menu", price: 350, description: "Interactive menu accessible from customer's phone." },
+      { name: "Delivery Platform Integration", price: 500, description: "Connect your system with Uber Eats, PedidosYa, or other platforms." },
+      { name: "Online Reservation System", price: 400, description: "Reservations and appointments via WhatsApp, web, or app." },
+    ],
+    tags: ["Restaurants", "Salons", "Local Business", "POS"],
+  },
+  {
+    slug: "investigacion-desarrollo",
+    tabLabel: "R&D / Consulting",
+    title: "Technology Consulting & R&D",
+    shortDescription: "Support your company's innovation and expansion with strategic technology consulting and prototype development.",
+    fullDescription: "If your company wants to innovate, adopt new technologies, or build a new product but doesn't know where to start, this is where we come in. We evaluate your situation, explore options, and build first prototypes to validate ideas before making a large investment.",
+    packages: [
+      { name: "Consulting Session", price: 750, priceSuffix: "/ 4 hours", description: "Technical clarity for strategic decisions: we evaluate your situation and chart a concrete path.", features: ["Discovery meeting to understand your goals and context", "Current technology state evaluation", "Solution architecture proposal with pros and cons", "Executive report with prioritized technology roadmap", "Email follow-up for 30 days"], cta: "Schedule Consulting", time: "1-2 weeks" },
+      { name: "Proof of Concept (POC)", price: "3,500 - 5,500", description: "Validate your idea before investing: we build a functional prototype to test the market quickly.", features: ["Joint scope and success criteria definition", "Functional prototype development (interface + core logic)", "Internal testing and live demo session", "Technical viability report and recommended next steps", "Source code delivered to client at completion"], cta: "Build POC", time: "4-8 weeks" },
+      { name: "Complete R&D Project", price: "8,000+", description: "Innovation with methodology: we research, develop, and launch new technological capabilities for your company.", features: ["Research sprint and state-of-the-art analysis", "Iterative development with feedback cycles and adjustments", "Integration with company's existing systems", "Complete technical project documentation", "Knowledge transfer to internal team", "Post-launch support for first 3 months"], cta: "Start R&D", time: "12-24+ weeks" },
+    ],
+    addOns: [
+      { name: "Technology Competitive Analysis", price: 500, description: "Evaluation of technology solutions used by your competition." },
+      { name: "Team Training on the Solution", price: 800, description: "Practical training for your team to adopt the new technology." },
+    ],
+    tags: ["R&D", "Innovation", "Consulting", "Technology"],
+  },
+];
+
+/**
+ * Returns services in the given locale (defaults to Spanish).
+ * Merges English text overrides while preserving shared fields (slug, icon, prices, published, category).
+ */
+export function getServices(locale: string = 'es'): Service[] {
+  if (locale !== 'en') return services;
+  return services.map(svc => {
+    const override = servicesEn.find(o => o.slug === svc.slug);
+    if (!override) return svc;
+    return {
+      ...svc,
+      tabLabel: override.tabLabel,
+      title: override.title,
+      shortDescription: override.shortDescription,
+      fullDescription: override.fullDescription,
+      tags: override.tags,
+      packages: svc.packages.map((pkg, i) => ({
+        ...pkg,
+        ...(override.packages[i] ?? {}),
+        price: pkg.price,
+        originalPrice: pkg.originalPrice,
+        priceSuffix: pkg.priceSuffix,
+      })),
+      addOns: svc.addOns.map((addon, i) => ({
+        ...addon,
+        ...(override.addOns[i] ?? {}),
+        price: addon.price,
+        originalPrice: addon.originalPrice,
+        priceSuffix: addon.priceSuffix,
+      })),
+    };
+  });
+}
