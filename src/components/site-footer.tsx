@@ -2,7 +2,7 @@
 
 import { Github, Linkedin, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/lib/routing";
 import { useTranslations } from "next-intl";
 import { LanguageToggle } from "./language-toggle";
 

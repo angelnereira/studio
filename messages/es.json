@@ -1,562 +1,698 @@
 {
-        "hero": {
-                "greeting": "Hola, soy",
-                "name": "Ángel Nereira",
-                "title": "Ingeniero de Software Full Stack",
-                "subtitle": "Desarrollador FinTech & Aplicaciones Web Modernas",
-                "description": "Ingeniero especializado en soluciones FinTech, GovTech y plataformas SaaS. Construyo aplicaciones modernas que funcionan en cualquier dispositivo, garantizando seguridad y escalabilidad.",
-                "cta": {
-                        "services": "Ver Proyectos",
-                        "contact": "Consultoría Técnica"
-                },
-                "badge": "Creador de Sago One · ERP SaaS",
-                "stats": {
-                        "years": "Años de Experiencia",
-                        "projects": "Proyectos Entregados",
-                        "facturas": "Facturas Procesadas",
-                        "uptime": "Uptime SaaS"
-                }
+  "hero": {
+    "greeting": "Hola, soy",
+    "name": "Ángel Nereira",
+    "title": "Ingeniero de Software Full Stack",
+    "subtitle": "Desarrollador FinTech & Aplicaciones Web Modernas",
+    "description": "Ingeniero especializado en soluciones FinTech, GovTech y plataformas SaaS. Construyo aplicaciones modernas que funcionan en cualquier dispositivo, garantizando seguridad y escalabilidad.",
+    "cta": {
+      "services": "Ver Proyectos",
+      "contact": "Consultoría Técnica"
+    },
+    "badge": "Creador de Sago One · ERP SaaS",
+    "stats": {
+      "years": "Años de Experiencia",
+      "projects": "Proyectos Entregados",
+      "facturas": "Facturas Procesadas",
+      "uptime": "Uptime SaaS",
+      "responseTime": "Tiempo de respuesta"
+    }
+  },
+  "solutions": {
+    "title": "Soluciones que Escalan",
+    "subtitle": "Ingeniería de software de alto nivel para productos que necesitan rendimiento, seguridad y disponibilidad.",
+    "enterprise": {
+      "title": "FinTech & Compliance",
+      "desc": "Sistemas de facturación electrónica, integración con entidades gubernamentales (DGI, PAC) y seguridad de nivel bancario.",
+      "stats": "AES-256 Encryption"
+    },
+    "digital": {
+      "title": "PWA Offline-First",
+      "desc": "Aplicaciones progresivas que funcionan sin internet. Service Workers, caché estratégico y sincronización inteligente.",
+      "stats": "100% Offline Capable"
+    },
+    "consulting": {
+      "title": "Desarrollo SaaS",
+      "desc": "Sistemas multi-tenant, escalabilidad horizontal y optimización de bases de datos PostgreSQL.",
+      "stats": "Multi-Tenant Ready"
+    },
+    "explore": "Ver Detalles"
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "description": "Ingeniero de Software Full Stack especializado en FinTech y GovTech. Diseño y construyo sistemas SaaS escalables que procesan miles de transacciones diarias, con un enfoque implacable en el retorno de inversión del cliente.",
+    "background": {
+      "title": "El Origen",
+      "text": "Mi trayectoria como ingeniero comenzó enfrentando el problema más crítico de la digitalización empresarial en mercados emergentes: sistemas que fallan exactamente cuando más se necesitan. Construir Sago One desde cero me obligó a dominar arquitecturas offline-first, cumplimiento fiscal con la DGI y protocolos de seguridad de nivel bancario —no como ejercicios académicos, sino como imperativos de negocio con consecuencias financieras reales. Cada decisión de arquitectura que tomo parte de una pregunta central: ¿qué impacto tiene esto en el balance operativo del cliente?"
+    },
+    "current": {
+      "title": "Ecosistema en Producción",
+      "text": "Sago One procesa más de 10,000 facturas electrónicas certificadas ante la DGI, opera un POS táctil, gestiona nómina legal y mantiene un 99.9% de uptime con arquitectura PWA que funciona sin internet. Plenty Market integra un Partner Program logístico con zonas libres de impuestos y sincronización de inventario en tiempo real. Ambos son activos tecnológicos que protegen los intereses financieros de negocios reales, cada día, con latencias menores a 200ms."
+    },
+    "philosophy": {
+      "title": "Mi Filosofía",
+      "text": "Código limpio, soluciones escalables, documentación clara"
+    },
+    "values": {
+      "title": "Pilares de Ingeniería",
+      "subtitle": "Principios que guían cada decisión arquitectónica y cada línea de código",
+      "architecture": {
+        "title": "Arquitectura Primero",
+        "desc": "El stack tecnológico es consecuencia de la arquitectura, no al revés. Cada proyecto inicia con un análisis de requerimientos no funcionales: escalabilidad, tolerancia a fallos, seguridad. Esto previene la deuda técnica que erosiona el ROI del cliente."
+      },
+      "security": {
+        "title": "Seguridad No Negociable",
+        "desc": "En sistemas FinTech, la seguridad no es una capa que se añade al final. AES-256, autenticación robusta y validación estricta de datos son parte del diseño inicial. El cumplimiento normativo con la DGI no es opcional: es el producto."
+      },
+      "durability": {
+        "title": "Software Como Activo",
+        "desc": "TypeScript estricto, documentación clara y arquitecturas modulares son la diferencia entre un sistema que escala durante años y uno que acumula deuda técnica. El software que entrego es un activo de capital, no un gasto operativo."
+      },
+      "communication": {
+        "title": "Valor en Términos de Negocio",
+        "desc": "Los CTOs y CFOs no invierten en líneas de código; invierten en resultados financieros predecibles. Traduzco cada decisión técnica —latencia, uptime, escalabilidad— en su impacto directo sobre los ingresos, costos operativos y riesgo del negocio."
+      }
+    }
+  },
+  "skills": {
+    "title": "Stack Tecnológico",
+    "description": "Las herramientas que uso para construir Sago One y Plenty Market.",
+    "cta": "Ver Stack Completo",
+    "category": {
+      "core": "Core",
+      "data": "Data",
+      "infrastructure": "Infrastructure"
+    },
+    "page_title": "Stack Tecnológico",
+    "page_subtitle": "7 áreas de especialización. Desde frontend hasta AI Engineering — cada tecnología seleccionada por impacto real en producción.",
+    "explore_area": "Explorar área",
+    "tech_singular": "tecnología",
+    "tech_plural": "tecnologías",
+    "cta_subtitle": "¿Buscas un ingeniero con este stack para tu equipo o proyecto?",
+    "cta_button": "Hablemos",
+    "back_to_areas": "Volver a todas las áreas",
+    "skills_count": "{count, plural, one {# tecnología} other {# tecnologías}}",
+    "view_details": "Ver detalles",
+    "category_metadata_title": "{categoryName} | Stack tecnológico de Ángel Nereira",
+    "skill_metadata_title": "Dominio técnico en {skillName} | Ingeniero de software Ángel Nereira",
+    "expertise_level": "Nivel de expertise",
+    "fundamentals": "Fundamentos",
+    "master": "Maestro",
+    "business_value_label": "Valor de Negocio",
+    "interested_area_title": "¿Interesado en esta área?",
+    "interested_area_desc": "Si buscas un experto en {areaName} para tu proyecto o equipo, estoy disponible para consultoría técnica.",
+    "contact_btn": "Contactar",
+    "all_areas_btn": "Todas las áreas",
+    "practical_abilities_title": "Capacidades Prácticas & Aplicación",
+    "implementation_title": "¿Cómo implemento {skillName}?",
+    "implementation_desc": "Utilizo {skillName} como pieza fundamental en el desarrollo de Sago One y Plenty Market. Mi enfoque no es solo el uso básico, sino la optimización de recursos, seguridad y escalabilidad, asegurando que cada línea de código aporte valor real al negocio y una experiencia superior al usuario final.",
+    "performance_opt": "Optimización de Performance",
+    "scalable_arch": "Arquitectura Escalable",
+    "interested_tech_title": "¿Interesado en esta tecnología?",
+    "interested_tech_desc": "Si estás buscando un experto que domine {skillName} para llevar tu proyecto al siguiente nivel de ingeniería, estoy disponible para consultoría técnica.",
+    "work_together": "Trabajemos Juntos",
+    "back_to_category": "Volver a {categoryName}",
+    "back_to_stack": "Volver al Stack Tecnológico",
+    "explore_category": "Explorar {categoryName}",
+    "explore_all_tech": "Explorar todas las tecnologías",
+    "specialized_badge": "{category} Especializado"
+  },
+  "services": {
+    "title": "Servicios",
+    "description": "Soluciones de software para productos que necesitan escalar.",
+    "cta": "Ver todos los servicios",
+    "page_title": "Soluciones Tecnológicas para Hacer Crecer tu Negocio",
+    "page_subtitle": "Desde desarrollo web y apps hasta ciberseguridad, infraestructura y gestión empresarial — soluciones completas, en español, para el mercado de Panamá y América Latina.",
+    "addons_title": "Complementos Opcionales",
+    "addons_subtitle": "Añade funcionalidades extra a tu proyecto para un mayor impacto.",
+    "custom_cta_title": "¿No encuentras lo que buscas?",
+    "custom_cta_description": "Estos paquetes son puntos de partida. Cada proyecto es único. Contáctame para crear una solución 100% a tu medida.",
+    "custom_cta_button": "Crear Plan Personalizado",
+    "plans_from": "Planes desde",
+    "ideal_for": "Ideal para",
+    "view_details": "Ver Detalles",
+    "popular": "Más Popular",
+    "quick_quote": "Cotización Rápida",
+    "quote": "Cotizar",
+    "tabs": {
+      "web-development": "Desarrollo Web",
+      "tienda-online-ecommerce": "E-commerce",
+      "aplicaciones-moviles": "Apps Móviles",
+      "portafolio-profesional": "Portafolio",
+      "gestion-de-negocios": "ERP",
+      "sistemas-fiscales-dgi": "DGI / PAC",
+      "ai-solutions": "IA",
+      "automatizacion-de-procesos": "RPA",
+      "planes-soporte-crecimiento": "SLA / CTO",
+      "mentoria-capacitacion": "Capacitación",
+      "ciberseguridad-auditoria": "Ciberseguridad",
+      "infraestructura-servidores": "Servidores",
+      "soluciones-negocios-locales": "Negocios Locales",
+      "investigacion-desarrollo": "I+D / Consultoría"
+    },
+    "not_found_title": "Servicio no encontrado"
+  },
+  "projects": {
+    "title": "Proyectos en Producción",
+    "description": "Sistemas reales procesando transacciones. La ingeniería detrás de cada solución.",
+    "page_title": "Casos de Éxito",
+    "page_subtitle": "Sistemas FinTech y E-commerce en producción. La ingeniería detrás de cada solución.",
+    "challenge": "El Desafío Técnico",
+    "tech_highlights": "Highlights Técnicos",
+    "status_production": "En Producción",
+    "stack": "Stack Tecnológico",
+    "back": "Volver a Proyectos",
+    "similar_cta_title": "¿Te interesa construir algo similar?",
+    "similar_cta_button": "Agendar Consultoría Técnica",
+    "metrics_title": "Métricas en Producción",
+    "view_repo": "Ver repo",
+    "view_production": "Ver en producción"
+  },
+  "calculadora": {
+    "badge": "Calculadora Interactiva",
+    "title": "Calculadora de Presupuestos",
+    "description": "Obtén una estimación detallada del costo de tu proyecto de software en pocos minutos. Nuestra calculadora considera múltiples factores para brindarte un presupuesto preciso y personalizado.",
+    "instant_estimate": "Estimación instantánea",
+    "detailed_breakdown": "Desglose detallado",
+    "export_pdf": "Exportar PDF",
+    "loading": "Cargando calculadora...",
+    "metadata_title": "Calculadora de Presupuestos | Ángel Nereira",
+    "metadata_description": "Calcula el presupuesto estimado para tu proyecto de software. Obtén una cotización detallada en minutos con nuestra calculadora interactiva.",
+    "info": {
+      "precision_title": "Precisión Basada en Datos",
+      "precision_desc": "Nuestros precios están basados en años de experiencia y análisis del mercado tecnológico",
+      "customization_title": "Personalización Total",
+      "customization_desc": "Ajusta complejidad, urgencia y ubicación para obtener un presupuesto que se adapte a tus necesidades",
+      "transparency_title": "Transparencia Total",
+      "transparency_desc": "Desglose completo de costos y recomendaciones personalizadas para maximizar el valor de tu inversión"
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "q1": "¿Qué tan preciso es el presupuesto calculado?",
+      "a1": "El presupuesto es una estimación basada en los parámetros que seleccionas y nuestra experiencia en proyectos similares. El costo final puede variar según requisitos específicos adicionales que surjan durante el análisis detallado del proyecto.",
+      "q2": "¿El presupuesto incluye todos los servicios mencionados?",
+      "a2": "Sí, el presupuesto base incluye todos los features listados para cada tipo de servicio. Los complementos adicionales se agregan por separado y son opcionales pero recomendados según el tipo de proyecto.",
+      "q3": "¿Cuánto tiempo es válida la cotización?",
+      "a3": "Las cotizaciones generadas son válidas por 30 días desde la fecha de generación. Después de este período, recomendamos generar una nueva cotización para reflejar posibles cambios en las condiciones del mercado.",
+      "q4": "¿Puedo modificar el proyecto después de iniciar?",
+      "a4": "Sí, los proyectos son flexibles y pueden ajustarse durante el desarrollo. Sin embargo, cambios significativos en el alcance pueden afectar el presupuesto y timeline. Trabajamos de forma ágil para adaptarnos a tus necesidades mientras mantenemos transparencia en los costos."
+    }
+  },
+  "metrics": {
+    "title": "Métricas en Producción",
+    "subtitle": "Números reales de sistemas en producción."
+  },
+  "cta": {
+    "title": "¿Necesitas un desarrollo de alto nivel?",
+    "subtitle": "Construyamos sistemas que escalen. Disponible para proyectos FinTech, E-commerce y SaaS.",
+    "button": "Agendar Consultoría"
+  },
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre Mí",
+    "services": "Servicios",
+    "projects": "Proyectos",
+    "skills": "Stack",
+    "contact": "Contacto",
+    "calculator": "Calculadora",
+    "blog": "Blog"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "built": "Desarrollado con",
+    "quote": "\"Código limpio, soluciones escalables.\"",
+    "builtBy": "Construido por Ángel Nereira."
+  },
+  "general": {
+    "learnMore": "Ver más",
+    "viewAll": "Ver todo",
+    "viewCode": "Ver Código",
+    "viewLive": "Ver en Vivo",
+    "notFound": "No encontrado"
+  },
+  "admin": {
+    "title": "Panel de Administración",
+    "dashboard": "Dashboard",
+    "job_analysis": "Análisis de Empleos",
+    "cover_letters": "Cartas de Presentación",
+    "back_to_site": "Volver al Sitio"
+  },
+  "blog": {
+    "page_title": "Tech & Thoughts",
+    "page_description": "Exploraciones sobre arquitectura de software, prácticas de desarrollo y el ecosistema tecnológico desde una perspectiva panameña con visión global.",
+    "metadata_title": "Blog | Ángel Nereira",
+    "metadata_description": "Artículos sobre desarrollo de software, arquitectura en la nube, y el viaje de aprendizaje de un ingeniero panameño.",
+    "search_placeholder": "Buscar artículos...",
+    "filter_by_topic": "Filtrar por tema:",
+    "clear_filters": "Limpiar filtros",
+    "no_results": "No se encontraron artículos que coincidan con tu búsqueda.",
+    "view_all_articles": "Ver todos los artículos",
+    "article_count": "{count, plural, one {# artículo} other {# artículos}}",
+    "article_count_filtered": "{filtered} de {total, plural, one {# artículo} other {# artículos}}",
+    "cta_title": "¿Te interesa implementar algo similar?",
+    "cta_description": "Ayudo a empresas a construir soluciones web de alto impacto. Hablemos sobre tu próximo proyecto.",
+    "cta_button": "Iniciar Conversación",
+    "keep_reading": "Seguir Leyendo"
+  },
+  "contact": {
+    "page_title": "Contáctame",
+    "page_description": "Ya sea para un nuevo proyecto, una oportunidad laboral, una colaboración o una invitación, estoy aquí para escucharte. Selecciona la pestaña que mejor describa tu motivo de contacto.",
+    "metadata_title": "Contacto | Desarrollador de Software en Panamá",
+    "metadata_description": "¿Buscas un desarrollador Full Stack en Panamá? Contáctame para proyectos, consultorías o desarrollo de Software a la medida.",
+    "tabs": {
+      "client": "Cliente",
+      "employer": "Empleador",
+      "collaboration": "Colaboración",
+      "invitation": "Invitación"
+    },
+    "client_card": {
+      "title": "Propuesta de Proyecto",
+      "description": "¿Tienes una idea o proyecto en mente? Cuéntame los detalles."
+    },
+    "employer_card": {
+      "title": "Oportunidad Laboral",
+      "description": "¿Crees que encajaría en tu equipo? Envíame los detalles del rol."
+    },
+    "collaboration_card": {
+      "title": "Propuesta de Colaboración",
+      "description": "¿Interesado en colaborar en un proyecto, charla o evento? Contáctame."
+    },
+    "invitation_card": {
+      "title": "Invitación a Evento",
+      "description": "Para invitaciones a conferencias, talleres, reuniones o cualquier otro evento profesional."
+    },
+    "form": {
+      "shared": {
+        "submitting": "Enviando...",
+        "error_title": "Error al enviar",
+        "email_label": "Email",
+        "country_label": "País (Opcional)",
+        "industry_label": "Rubro de la Empresa (Opcional)",
+        "industry_placeholder": "Selecciona el rubro",
+        "industry_technology": "Tecnología y Software",
+        "industry_ecommerce": "E-commerce y Retail",
+        "industry_finance": "Finanzas y Banca",
+        "industry_health": "Salud y Bienestar",
+        "industry_education": "Educación",
+        "industry_professional_services": "Servicios Profesionales",
+        "industry_real_estate": "Bienes Raíces",
+        "industry_transport": "Transporte y Logística",
+        "industry_other": "Otro"
+      },
+      "client": {
+        "name_label": "Nombre Completo",
+        "name_placeholder": "Tu nombre",
+        "email_placeholder": "tu.email@ejemplo.com",
+        "company_label": "Empresa (Opcional)",
+        "company_placeholder": "Nombre de tu empresa",
+        "country_placeholder": "País de residencia",
+        "service_label": "Servicio de Interés",
+        "service_placeholder": "Selecciona un servicio",
+        "service_other": "Otro",
+        "budget_label": "Presupuesto Estimado",
+        "budget_placeholder": "Selecciona un rango",
+        "budget_more": "Más de $25,000",
+        "message_label": "Cuéntame sobre tu proyecto",
+        "message_placeholder": "Describe tus necesidades, objetivos y cualquier detalle relevante.",
+        "submit": "Enviar Propuesta",
+        "success_title": "¡Mensaje Enviado!"
+      },
+      "employer": {
+        "recruiter_name_label": "Tu Nombre",
+        "recruiter_name_placeholder": "Nombre del reclutador",
+        "email_label": "Email de Contacto",
+        "email_placeholder": "tu.email@empresa.com",
+        "company_name_label": "Nombre de la Empresa",
+        "company_name_placeholder": "Mi Empresa S.A.",
+        "job_title_label": "Título del Puesto",
+        "job_title_placeholder": "Senior Software Engineer",
+        "country_placeholder": "País de la empresa",
+        "salary_label": "Oferta Salarial (Opcional)",
+        "salary_placeholder": "Ej: $50k - $70k USD",
+        "contract_label": "Tipo de Contrato (Opcional)",
+        "contract_placeholder": "Selecciona el tipo de contrato",
+        "contract_full_time": "Tiempo Completo",
+        "contract_part_time": "Tiempo Parcial",
+        "contract_freelance": "Contrato / Freelance",
+        "contract_internship": "Pasantía",
+        "job_description_label": "Descripción o Enlace a la Vacante",
+        "job_description_placeholder": "Pega aquí la descripción del puesto o un enlace a la publicación de la vacante.",
+        "submit": "Contactar Profesional",
+        "success_title": "¡Información Recibida!",
+        "success_description": "Gracias por considerarme. Revisaré la oportunidad y te contactaré pronto."
+      },
+      "collaborator": {
+        "name_label": "Tu Nombre",
+        "name_placeholder": "Nombre y Apellido",
+        "email_placeholder": "tu.email@ejemplo.com",
+        "linkedin_label": "Perfil de LinkedIn (Opcional)",
+        "linkedin_placeholder": "https://linkedin.com/in/...",
+        "portfolio_label": "Portfolio o GitHub (Opcional)",
+        "portfolio_placeholder": "https://github.com/...",
+        "expertise_label": "Área de Expertise (Opcional)",
+        "expertise_placeholder": "Selecciona tu área principal",
+        "expertise_frontend": "Frontend Development",
+        "expertise_backend": "Backend Development",
+        "expertise_fullstack": "Full-Stack Development",
+        "expertise_devops": "DevOps / SRE",
+        "expertise_mobile": "Mobile Development (iOS/Android)",
+        "expertise_ux_ui": "UX/UI Design",
+        "expertise_data_ai": "Data Science / AI / ML",
+        "expertise_pm": "Project Management",
+        "expertise_other": "Otro",
+        "subject_label": "¿De qué trata la colaboración?",
+        "subject_placeholder": "Asunto principal de tu propuesta",
+        "message_label": "Propuesta o Idea",
+        "message_placeholder": "Describe la colaboración que tienes en mente, el proyecto, o la idea que quieres discutir.",
+        "submit": "Proponer Colaboración",
+        "success_title": "¡Mensaje Recibido!",
+        "success_description": "Gracias por tu interés en colaborar. He guardado tu propuesta."
+      },
+      "invitation": {
+        "inviter_name_label": "Tu Nombre",
+        "inviter_name_placeholder": "Nombre de quien invita",
+        "email_label": "Email de Contacto",
+        "email_placeholder": "tu.email@ejemplo.com",
+        "event_name_label": "Nombre del Evento",
+        "event_name_placeholder": "Ej: Tech Conf 2024",
+        "event_type_label": "Tipo de Evento",
+        "event_type_placeholder": "Selecciona el tipo",
+        "event_type_conference": "Conferencia",
+        "event_type_workshop": "Taller / Workshop",
+        "event_type_meetup": "Meetup / Comunidad",
+        "event_type_business": "Reunión de Negocios",
+        "event_type_podcast": "Podcast / Entrevista",
+        "event_type_other": "Otro",
+        "proposed_role_label": "Rol Propuesto",
+        "proposed_role_placeholder": "Selecciona tu rol",
+        "role_speaker": "Expositor / Ponente",
+        "role_panelist": "Panelista",
+        "role_special_guest": "Asistente Especial",
+        "role_mentor": "Mentor",
+        "role_interviewee": "Entrevistado",
+        "event_date_label": "Fecha del Evento",
+        "select_date": "Selecciona una fecha",
+        "event_time_label": "Hora (Opcional)",
+        "event_location_label": "Ubicación o Enlace",
+        "event_location_placeholder": "Dirección física o URL de la reunión",
+        "invitation_reason_label": "Motivo de la Invitación",
+        "invitation_reason_placeholder": "Describe brevemente el evento y el motivo de la invitación.",
+        "submit": "Enviar Invitación",
+        "success_title": "¡Invitación Recibida!",
+        "success_description": "Gracias por la invitación. Revisaré los detalles y te contactaré pronto."
+      }
+    }
+  },
+  "project": {
+    "sago_one": {
+      "title": "Sago One",
+      "label": "ERP SaaS Todo-en-Uno | POS & FinTech | Next.js 15",
+      "subtitle": "Plataforma Enterprise ERP y Facturación Electrónica",
+      "description": "ERP SaaS Todo-en-Uno que elimina horas semanales de trabajo administrativo redundante en negocios panameños. Certifica facturas ante la DGI, gestiona inventario en tiempo real y opera un POS táctil —todo bajo arquitectura offline-first que garantiza continuidad operativa e ingresos ininterrumpidos incluso sin conexión a internet. La automatización de nómina e inventario reduce directamente los costos fijos y elimina el riesgo de multas fiscales por errores de transcripción humana.",
+      "challenge": "El desafío crítico: garantizar continuidad del negocio —y de los ingresos— durante interrupciones de conectividad, que en mercados emergentes representan pérdidas directas de ventas. La solución con Service Workers y sincronización en segundo plano asegura que cada transacción se registra y factura sin importar la estabilidad de la red, protegiendo el flujo de caja del negocio en su momento más vulnerable.",
+      "highlight": {
+        "security": {
+          "title": "Seguridad Nivel Bancario",
+          "desc": "Encriptación AES-256 para credenciales PAC/DGI. Mitiga el riesgo de sanciones fiscales y filtraciones de datos corporativos que podrían representar pérdidas de cinco cifras."
         },
-        "solutions": {
-                "title": "Soluciones que Escalan",
-                "subtitle": "Ingeniería de software de alto nivel para productos que necesitan rendimiento, seguridad y disponibilidad.",
-                "enterprise": {
-                        "title": "FinTech & Compliance",
-                        "desc": "Sistemas de facturación electrónica, integración con entidades gubernamentales (DGI, PAC) y seguridad de nivel bancario.",
-                        "stats": "AES-256 Encryption"
-                },
-                "digital": {
-                        "title": "PWA Offline-First",
-                        "desc": "Aplicaciones progresivas que funcionan sin internet. Service Workers, caché estratégico y sincronización inteligente.",
-                        "stats": "100% Offline Capable"
-                },
-                "consulting": {
-                        "title": "Desarrollo SaaS",
-                        "desc": "Sistemas multi-tenant, escalabilidad horizontal y optimización de bases de datos PostgreSQL.",
-                        "stats": "Multi-Tenant Ready"
-                },
-                "explore": "Ver Detalles"
+        "database": {
+          "title": "Ecosistema Modular (ERP)",
+          "desc": "Facturación DGI, POS táctil, inventario en tiempo real y nómina legal integrados. Erradica silos de datos y reduce el tiempo de cierre contable mensual."
         },
-        "about": {
-                "title": "Sobre Mí",
-                "description": "Ingeniero de Software Full Stack especializado en FinTech y GovTech. Diseño y construyo sistemas SaaS escalables que procesan miles de transacciones diarias, con un enfoque implacable en el retorno de inversión del cliente.",
-                "background": {
-                        "title": "El Origen",
-                        "text": "Mi trayectoria como ingeniero comenzó enfrentando el problema más crítico de la digitalización empresarial en mercados emergentes: sistemas que fallan exactamente cuando más se necesitan. Construir Sago One desde cero me obligó a dominar arquitecturas offline-first, cumplimiento fiscal con la DGI y protocolos de seguridad de nivel bancario —no como ejercicios académicos, sino como imperativos de negocio con consecuencias financieras reales. Cada decisión de arquitectura que tomo parte de una pregunta central: ¿qué impacto tiene esto en el balance operativo del cliente?"
-                },
-                "current": {
-                        "title": "Ecosistema en Producción",
-                        "text": "Sago One procesa más de 10,000 facturas electrónicas certificadas ante la DGI, opera un POS táctil, gestiona nómina legal y mantiene un 99.9% de uptime con arquitectura PWA que funciona sin internet. Plenty Market integra un Partner Program logístico con zonas libres de impuestos y sincronización de inventario en tiempo real. Ambos son activos tecnológicos que protegen los intereses financieros de negocios reales, cada día, con latencias menores a 200ms."
-                },
-                "philosophy": {
-                        "title": "Mi Filosofía",
-                        "text": "Código limpio, soluciones escalables, documentación clara"
-                },
-                "values": {
-                        "title": "Pilares de Ingeniería",
-                        "subtitle": "Principios que guían cada decisión arquitectónica y cada línea de código",
-                        "architecture": {
-                                "title": "Arquitectura Primero",
-                                "desc": "El stack tecnológico es consecuencia de la arquitectura, no al revés. Cada proyecto inicia con un análisis de requerimientos no funcionales: escalabilidad, tolerancia a fallos, seguridad. Esto previene la deuda técnica que erosiona el ROI del cliente."
-                        },
-                        "security": {
-                                "title": "Seguridad No Negociable",
-                                "desc": "En sistemas FinTech, la seguridad no es una capa que se añade al final. AES-256, autenticación robusta y validación estricta de datos son parte del diseño inicial. El cumplimiento normativo con la DGI no es opcional: es el producto."
-                        },
-                        "durability": {
-                                "title": "Software Como Activo",
-                                "desc": "TypeScript estricto, documentación clara y arquitecturas modulares son la diferencia entre un sistema que escala durante años y uno que acumula deuda técnica. El software que entrego es un activo de capital, no un gasto operativo."
-                        },
-                        "communication": {
-                                "title": "Valor en Términos de Negocio",
-                                "desc": "Los CTOs y CFOs no invierten en líneas de código; invierten en resultados financieros predecibles. Traduzco cada decisión técnica —latencia, uptime, escalabilidad— en su impacto directo sobre los ingresos, costos operativos y riesgo del negocio."
-                        }
-                }
-        },
-        "skills": {
-                "title": "Stack Tecnológico",
-                "description": "Las herramientas que uso para construir Sago One y Plenty Market.",
-                "cta": "Ver Stack Completo",
-                "category": {
-                        "core": "Core",
-                        "data": "Data",
-                        "infrastructure": "Infrastructure"
-                },
-                "page_title": "Stack Tecnológico",
-                "page_subtitle": "7 áreas de especialización. Desde frontend hasta AI Engineering — cada tecnología seleccionada por impacto real en producción.",
-                "explore_area": "Explorar área",
-                "tech_singular": "tecnología",
-                "tech_plural": "tecnologías",
-                "cta_subtitle": "¿Buscas un ingeniero con este stack para tu equipo o proyecto?",
-                "cta_button": "Hablemos",
-                "back_to_areas": "Volver a todas las áreas",
-                "skills_count": "{count, plural, one {# tecnología} other {# tecnologías}}",
-                "view_details": "Ver detalles",
-                "business_value_label": "Valor de Negocio",
-                "interested_area_title": "¿Interesado en esta área?",
-                "interested_area_desc": "Si buscas un experto en {areaName} para tu proyecto o equipo, estoy disponible para consultoría técnica.",
-                "contact_btn": "Contactar",
-                "all_areas_btn": "Todas las áreas",
-                "practical_abilities_title": "Capacidades Prácticas & Aplicación",
-                "implementation_title": "¿Cómo implemento {skillName}?",
-                "implementation_desc": "Utilizo {skillName} como pieza fundamental en el desarrollo de Sago One y Plenty Market. Mi enfoque no es solo el uso básico, sino la optimización de recursos, seguridad y escalabilidad, asegurando que cada línea de código aporte valor real al negocio y una experiencia superior al usuario final.",
-                "performance_opt": "Optimización de Performance",
-                "scalable_arch": "Arquitectura Escalable",
-                "interested_tech_title": "¿Interesado en esta tecnología?",
-                "interested_tech_desc": "Si estás buscando un experto que domine {skillName} para llevar tu proyecto al siguiente nivel de ingeniería, estoy disponible para consultoría técnica.",
-                "work_together": "Trabajemos Juntos",
-                "back_to_category": "Volver a {categoryName}",
-                "back_to_stack": "Volver al Stack Tecnológico",
-                "explore_category": "Explorar {categoryName}",
-                "explore_all_tech": "Explorar todas las tecnologías",
-                "specialized_badge": "{category} Especializado"
-        },
-        "services": {
-                "title": "Servicios",
-                "description": "Soluciones de software para productos que necesitan escalar.",
-                "cta": "Ver todos los servicios",
-                "page_title": "Soluciones Tecnológicas para Hacer Crecer tu Negocio",
-                "page_subtitle": "Desde desarrollo web y apps hasta ciberseguridad, infraestructura y gestión empresarial — soluciones completas, en español, para el mercado de Panamá y América Latina.",
-                "addons_title": "Complementos Opcionales",
-                "addons_subtitle": "Añade funcionalidades extra a tu proyecto para un mayor impacto.",
-                "custom_cta_title": "¿No encuentras lo que buscas?",
-                "custom_cta_description": "Estos paquetes son puntos de partida. Cada proyecto es único. Contáctame para crear una solución 100% a tu medida.",
-                "custom_cta_button": "Crear Plan Personalizado",
-                "plans_from": "Planes desde",
-                "ideal_for": "Ideal para",
-                "view_details": "Ver Detalles",
-                "quick_quote": "Cotización Rápida",
-                "quote": "Cotizar"
-        },
-        "projects": {
-                "title": "Proyectos en Producción",
-                "description": "Sistemas reales procesando transacciones. La ingeniería detrás de cada solución.",
-                "page_title": "Casos de Éxito",
-                "page_subtitle": "Sistemas FinTech y E-commerce en producción. La ingeniería detrás de cada solución.",
-                "challenge": "El Desafío Técnico",
-                "tech_highlights": "Highlights Técnicos",
-                "status_production": "En Producción",
-                "stack": "Stack Tecnológico",
-                "back": "Volver a Proyectos",
-                "similar_cta_title": "¿Te interesa construir algo similar?",
-                "similar_cta_button": "Agendar Consultoría Técnica"
-        },
-        "calculadora": {
-                "badge": "Calculadora Interactiva",
-                "title": "Calculadora de Presupuestos",
-                "description": "Obtén una estimación detallada del costo de tu proyecto de software en pocos minutos. Nuestra calculadora considera múltiples factores para brindarte un presupuesto preciso y personalizado.",
-                "instant_estimate": "Estimación instantánea",
-                "detailed_breakdown": "Desglose detallado",
-                "export_pdf": "Exportar PDF",
-                "loading": "Cargando calculadora...",
-                "metadata_title": "Calculadora de Presupuestos | Ángel Nereira",
-                "metadata_description": "Calcula el presupuesto estimado para tu proyecto de software. Obtén una cotización detallada en minutos con nuestra calculadora interactiva.",
-                "info": {
-                        "precision_title": "Precisión Basada en Datos",
-                        "precision_desc": "Nuestros precios están basados en años de experiencia y análisis del mercado tecnológico",
-                        "customization_title": "Personalización Total",
-                        "customization_desc": "Ajusta complejidad, urgencia y ubicación para obtener un presupuesto que se adapte a tus necesidades",
-                        "transparency_title": "Transparencia Total",
-                        "transparency_desc": "Desglose completo de costos y recomendaciones personalizadas para maximizar el valor de tu inversión"
-                },
-                "faq": {
-                        "title": "Preguntas Frecuentes",
-                        "q1": "¿Qué tan preciso es el presupuesto calculado?",
-                        "a1": "El presupuesto es una estimación basada en los parámetros que seleccionas y nuestra experiencia en proyectos similares. El costo final puede variar según requisitos específicos adicionales que surjan durante el análisis detallado del proyecto.",
-                        "q2": "¿El presupuesto incluye todos los servicios mencionados?",
-                        "a2": "Sí, el presupuesto base incluye todos los features listados para cada tipo de servicio. Los complementos adicionales se agregan por separado y son opcionales pero recomendados según el tipo de proyecto.",
-                        "q3": "¿Cuánto tiempo es válida la cotización?",
-                        "a3": "Las cotizaciones generadas son válidas por 30 días desde la fecha de generación. Después de este período, recomendamos generar una nueva cotización para reflejar posibles cambios en las condiciones del mercado.",
-                        "q4": "¿Puedo modificar el proyecto después de iniciar?",
-                        "a4": "Sí, los proyectos son flexibles y pueden ajustarse durante el desarrollo. Sin embargo, cambios significativos en el alcance pueden afectar el presupuesto y timeline. Trabajamos de forma ágil para adaptarnos a tus necesidades mientras mantenemos transparencia en los costos."
-                }
-        },
-        "metrics": {
-                "title": "Métricas en Producción",
-                "subtitle": "Números reales de sistemas en producción."
-        },
-        "cta": {
-                "title": "¿Necesitas un desarrollo de alto nivel?",
-                "subtitle": "Construyamos sistemas que escalen. Disponible para proyectos FinTech, E-commerce y SaaS.",
-                "button": "Agendar Consultoría"
-        },
-        "nav": {
-                "home": "Inicio",
-                "about": "Sobre Mí",
-                "services": "Servicios",
-                "projects": "Proyectos",
-                "skills": "Stack",
-                "contact": "Contacto",
-                "calculator": "Calculadora",
-                "blog": "Blog"
-        },
-        "footer": {
-                "rights": "Todos los derechos reservados.",
-                "built": "Desarrollado con",
-                "quote": "\"Código limpio, soluciones escalables.\"",
-                "builtBy": "Construido por Ángel Nereira."
-        },
-        "general": {
-                "learnMore": "Ver más",
-                "viewAll": "Ver todo",
-                "viewCode": "Ver Código",
-                "viewLive": "Ver en Vivo"
-        },
-        "admin": {
-                "title": "Panel de Administración",
-                "dashboard": "Dashboard",
-                "job_analysis": "Análisis de Empleos",
-                "cover_letters": "Cartas de Presentación",
-                "back_to_site": "Volver al Sitio"
-        },
-        "blog": {
-                "page_title": "Tech & Thoughts",
-                "page_description": "Exploraciones sobre arquitectura de software, prácticas de desarrollo y el ecosistema tecnológico desde una perspectiva panameña con visión global.",
-                "metadata_title": "Blog | Ángel Nereira",
-                "metadata_description": "Artículos sobre desarrollo de software, arquitectura en la nube, y el viaje de aprendizaje de un ingeniero panameño.",
-                "search_placeholder": "Buscar artículos...",
-                "filter_by_topic": "Filtrar por tema:",
-                "clear_filters": "Limpiar filtros",
-                "no_results": "No se encontraron artículos que coincidan con tu búsqueda.",
-                "view_all_articles": "Ver todos los artículos",
-                "article_count": "{count, plural, one {# artículo} other {# artículos}}",
-                "article_count_filtered": "{filtered} de {total, plural, one {# artículo} other {# artículos}}"
-        },
-        "contact": {
-                "page_title": "Contáctame",
-                "page_description": "Ya sea para un nuevo proyecto, una oportunidad laboral, una colaboración o una invitación, estoy aquí para escucharte. Selecciona la pestaña que mejor describa tu motivo de contacto.",
-                "metadata_title": "Contacto | Desarrollador de Software en Panamá",
-                "metadata_description": "¿Buscas un desarrollador Full Stack en Panamá? Contáctame para proyectos, consultorías o desarrollo de Software a la medida.",
-                "tabs": {
-                        "client": "Cliente",
-                        "employer": "Empleador",
-                        "collaboration": "Colaboración",
-                        "invitation": "Invitación"
-                },
-                "client_card": {
-                        "title": "Propuesta de Proyecto",
-                        "description": "¿Tienes una idea o proyecto en mente? Cuéntame los detalles."
-                },
-                "employer_card": {
-                        "title": "Oportunidad Laboral",
-                        "description": "¿Crees que encajaría en tu equipo? Envíame los detalles del rol."
-                },
-                "collaboration_card": {
-                        "title": "Propuesta de Colaboración",
-                        "description": "¿Interesado en colaborar en un proyecto, charla o evento? Contáctame."
-                },
-                "invitation_card": {
-                        "title": "Invitación a Evento",
-                        "description": "Para invitaciones a conferencias, talleres, reuniones o cualquier otro evento profesional."
-                },
-                "form": {
-                        "shared": {
-                                "submitting": "Enviando...",
-                                "error_title": "Error al enviar",
-                                "email_label": "Email",
-                                "country_label": "País (Opcional)",
-                                "industry_label": "Rubro de la Empresa (Opcional)",
-                                "industry_placeholder": "Selecciona el rubro",
-                                "industry_technology": "Tecnología y Software",
-                                "industry_ecommerce": "E-commerce y Retail",
-                                "industry_finance": "Finanzas y Banca",
-                                "industry_health": "Salud y Bienestar",
-                                "industry_education": "Educación",
-                                "industry_professional_services": "Servicios Profesionales",
-                                "industry_real_estate": "Bienes Raíces",
-                                "industry_transport": "Transporte y Logística",
-                                "industry_other": "Otro"
-                        },
-                        "client": {
-                                "name_label": "Nombre Completo",
-                                "name_placeholder": "Tu nombre",
-                                "email_placeholder": "tu.email@ejemplo.com",
-                                "company_label": "Empresa (Opcional)",
-                                "company_placeholder": "Nombre de tu empresa",
-                                "country_placeholder": "País de residencia",
-                                "service_label": "Servicio de Interés",
-                                "service_placeholder": "Selecciona un servicio",
-                                "service_other": "Otro",
-                                "budget_label": "Presupuesto Estimado",
-                                "budget_placeholder": "Selecciona un rango",
-                                "budget_more": "Más de $25,000",
-                                "message_label": "Cuéntame sobre tu proyecto",
-                                "message_placeholder": "Describe tus necesidades, objetivos y cualquier detalle relevante.",
-                                "submit": "Enviar Propuesta",
-                                "success_title": "¡Mensaje Enviado!"
-                        },
-                        "employer": {
-                                "recruiter_name_label": "Tu Nombre",
-                                "recruiter_name_placeholder": "Nombre del reclutador",
-                                "email_label": "Email de Contacto",
-                                "email_placeholder": "tu.email@empresa.com",
-                                "company_name_label": "Nombre de la Empresa",
-                                "company_name_placeholder": "Mi Empresa S.A.",
-                                "job_title_label": "Título del Puesto",
-                                "job_title_placeholder": "Senior Software Engineer",
-                                "country_placeholder": "País de la empresa",
-                                "salary_label": "Oferta Salarial (Opcional)",
-                                "salary_placeholder": "Ej: $50k - $70k USD",
-                                "contract_label": "Tipo de Contrato (Opcional)",
-                                "contract_placeholder": "Selecciona el tipo de contrato",
-                                "contract_full_time": "Tiempo Completo",
-                                "contract_part_time": "Tiempo Parcial",
-                                "contract_freelance": "Contrato / Freelance",
-                                "contract_internship": "Pasantía",
-                                "job_description_label": "Descripción o Enlace a la Vacante",
-                                "job_description_placeholder": "Pega aquí la descripción del puesto o un enlace a la publicación de la vacante.",
-                                "submit": "Contactar Profesional",
-                                "success_title": "¡Información Recibida!",
-                                "success_description": "Gracias por considerarme. Revisaré la oportunidad y te contactaré pronto."
-                        },
-                        "collaborator": {
-                                "name_label": "Tu Nombre",
-                                "name_placeholder": "Nombre y Apellido",
-                                "email_placeholder": "tu.email@ejemplo.com",
-                                "linkedin_label": "Perfil de LinkedIn (Opcional)",
-                                "linkedin_placeholder": "https://linkedin.com/in/...",
-                                "portfolio_label": "Portfolio o GitHub (Opcional)",
-                                "portfolio_placeholder": "https://github.com/...",
-                                "expertise_label": "Área de Expertise (Opcional)",
-                                "expertise_placeholder": "Selecciona tu área principal",
-                                "expertise_frontend": "Frontend Development",
-                                "expertise_backend": "Backend Development",
-                                "expertise_fullstack": "Full-Stack Development",
-                                "expertise_devops": "DevOps / SRE",
-                                "expertise_mobile": "Mobile Development (iOS/Android)",
-                                "expertise_ux_ui": "UX/UI Design",
-                                "expertise_data_ai": "Data Science / AI / ML",
-                                "expertise_pm": "Project Management",
-                                "expertise_other": "Otro",
-                                "subject_label": "¿De qué trata la colaboración?",
-                                "subject_placeholder": "Asunto principal de tu propuesta",
-                                "message_label": "Propuesta o Idea",
-                                "message_placeholder": "Describe la colaboración que tienes en mente, el proyecto, o la idea que quieres discutir.",
-                                "submit": "Proponer Colaboración",
-                                "success_title": "¡Mensaje Recibido!",
-                                "success_description": "Gracias por tu interés en colaborar. He guardado tu propuesta."
-                        },
-                        "invitation": {
-                                "inviter_name_label": "Tu Nombre",
-                                "inviter_name_placeholder": "Nombre de quien invita",
-                                "email_label": "Email de Contacto",
-                                "email_placeholder": "tu.email@ejemplo.com",
-                                "event_name_label": "Nombre del Evento",
-                                "event_name_placeholder": "Ej: Tech Conf 2024",
-                                "event_type_label": "Tipo de Evento",
-                                "event_type_placeholder": "Selecciona el tipo",
-                                "event_type_conference": "Conferencia",
-                                "event_type_workshop": "Taller / Workshop",
-                                "event_type_meetup": "Meetup / Comunidad",
-                                "event_type_business": "Reunión de Negocios",
-                                "event_type_podcast": "Podcast / Entrevista",
-                                "event_type_other": "Otro",
-                                "proposed_role_label": "Rol Propuesto",
-                                "proposed_role_placeholder": "Selecciona tu rol",
-                                "role_speaker": "Expositor / Ponente",
-                                "role_panelist": "Panelista",
-                                "role_special_guest": "Asistente Especial",
-                                "role_mentor": "Mentor",
-                                "role_interviewee": "Entrevistado",
-                                "event_date_label": "Fecha del Evento",
-                                "select_date": "Selecciona una fecha",
-                                "event_time_label": "Hora (Opcional)",
-                                "event_location_label": "Ubicación o Enlace",
-                                "event_location_placeholder": "Dirección física o URL de la reunión",
-                                "invitation_reason_label": "Motivo de la Invitación",
-                                "invitation_reason_placeholder": "Describe brevemente el evento y el motivo de la invitación.",
-                                "submit": "Enviar Invitación",
-                                "success_title": "¡Invitación Recibida!",
-                                "success_description": "Gracias por la invitación. Revisaré los detalles y te contactaré pronto."
-                        }
-                }
-        },
-        "project": {
-                "sago_one": {
-                        "title": "Sago One",
-                        "label": "ERP SaaS Todo-en-Uno | POS & FinTech | Next.js 15",
-                        "subtitle": "Plataforma Enterprise ERP y Facturación Electrónica",
-                        "description": "ERP SaaS Todo-en-Uno que elimina horas semanales de trabajo administrativo redundante en negocios panameños. Certifica facturas ante la DGI, gestiona inventario en tiempo real y opera un POS táctil —todo bajo arquitectura offline-first que garantiza continuidad operativa e ingresos ininterrumpidos incluso sin conexión a internet. La automatización de nómina e inventario reduce directamente los costos fijos y elimina el riesgo de multas fiscales por errores de transcripción humana.",
-                        "challenge": "El desafío crítico: garantizar continuidad del negocio —y de los ingresos— durante interrupciones de conectividad, que en mercados emergentes representan pérdidas directas de ventas. La solución con Service Workers y sincronización en segundo plano asegura que cada transacción se registra y factura sin importar la estabilidad de la red, protegiendo el flujo de caja del negocio en su momento más vulnerable.",
-                        "highlight": {
-                                "security": {
-                                        "title": "Seguridad Nivel Bancario",
-                                        "desc": "Encriptación AES-256 para credenciales PAC/DGI. Mitiga el riesgo de sanciones fiscales y filtraciones de datos corporativos que podrían representar pérdidas de cinco cifras."
-                                },
-                                "database": {
-                                        "title": "Ecosistema Modular (ERP)",
-                                        "desc": "Facturación DGI, POS táctil, inventario en tiempo real y nómina legal integrados. Erradica silos de datos y reduce el tiempo de cierre contable mensual."
-                                },
-                                "performance": {
-                                        "title": "99.9% Uptime · <200ms",
-                                        "desc": "React Server Components para renderizado óptimo. Cada minuto de uptime garantizado protege ingresos: sin downtime, sin pérdida de ventas, sin multas por no emitir factura."
-                                }
-                        }
-                },
-                "plenty_market": {
-                        "title": "Plenty Market",
-                        "label": "E-commerce Internacional | PWA | Logística Compleja",
-                        "subtitle": "PWA E-commerce con Partner Program y Gestión de Inventarios",
-                        "description": "Migración de infraestructura estática a plataforma e-commerce de alto rendimiento con impacto directo en conversión: TTI reducido a menos de 3 segundos, factor crítico dado que cada segundo adicional de latencia reduce la tasa de conversión en un 7%. Integra un Partner Program logístico con zonas libres de impuestos y sincronización de inventario en tiempo real, habilitando modelos de negocio y fuentes de ingreso que la arquitectura anterior hacía imposibles.",
-                        "challenge": "El desafío era migrar un sitio estático a una plataforma e-commerce completa sin degradar la experiencia del usuario ni perder el posicionamiento SEO existente. La solución con Next.js 14 y optimización agresiva de assets logró tiempos de carga sub-3s, aumentando la retención de usuarios y reduciendo el abandono de carrito en fases críticas del funnel de conversión.",
-                        "highlight": {
-                                "state": {
-                                        "title": "Conversión Optimizada",
-                                        "desc": "Zustand para manejo de carrito sin overhead. Estado persistente entre sesiones: menos fricción en el checkout, mayor tasa de conversión y menor abandono de carrito."
-                                },
-                                "media": {
-                                        "title": "Performance = Ingresos",
-                                        "desc": "Cloudinary con transformación automática a WebP/AVIF reduce el tiempo de carga de imágenes en un 60%. En e-commerce, la velocidad es una palanca directa de ingresos."
-                                },
-                                "migration": {
-                                        "title": "Arquitectura que Escala",
-                                        "desc": "PostgreSQL (Neon) vía Prisma ORM garantiza integridad de datos bajo volúmenes masivos. Infraestructura preparada para picos de tráfico sin degradación ni costos de sobre-aprovisionamiento."
-                                }
-                        }
-                },
-                "hka_sdk": {
-                        "title": "HKA-SDK",
-                        "label": "SDK Fiscal HKA/DGI | Go | Open Source",
-                        "subtitle": "Gateway fiscal SOAP multi-tenant para HKA PAC",
-                        "description": "SDK y gateway fiscal para HKA PAC que abstrae la complejidad del protocolo SOAP con validación estricta, enrutamiento dinámico de tipos de documento y soporte multi-tenant nativo. Extraído de Sago One para que cualquier proyecto fiscal en Panamá pueda integrarse sin reimplementar el protocolo desde cero.",
-                        "challenge": "Integrar el SOAP de HKA es famoso por su fricción: payloads inconsistentes, validaciones implícitas y mensajes de error opacos. La solución fue construir una capa con esquemas tipados por documento, errores tempranos en compilación y configuración por tenant sin estado global.",
-                        "highlight": {
-                                "validation": {
-                                        "title": "Validación Estricta",
-                                        "desc": "Esquemas tipados por tipo de documento DGI. Los errores de payload se detectan antes de tocar la red, reduciendo intentos fallidos contra el PAC."
-                                },
-                                "routing": {
-                                        "title": "Routing Dinámico",
-                                        "desc": "Resolución de endpoints por tipo de documento sin hardcoding. Configurable por interfaces; agregar nuevos documentos no toca el core."
-                                },
-                                "multitenant": {
-                                        "title": "Multi-Tenant Nativo",
-                                        "desc": "Credenciales y configuración por tenant, sin estado global. Listo para SaaS desde el primer commit."
-                                }
-                        }
-                },
-                "gravital_shell": {
-                        "title": "Gravital-Shell",
-                        "label": "Terminal Linux para Android | Kotlin | Open Source",
-                        "subtitle": "Alpine Linux en el bolsillo, sin root",
-                        "description": "Terminal Linux profesional para Android — ejecuta entornos Alpine Linux aislados sin root, con soporte PTY real, sesiones múltiples, gestor de paquetes APK y exportación/importación de sesiones. Para desarrolladores que necesitan un entorno serio en cualquier dispositivo.",
-                        "challenge": "La mayoría de terminales en Android son emulaciones aproximadas que rompen herramientas que requieren TTY real (vim, htop, less). Construir PTY real sin root requirió combinar proot con primitivas nativas Linux desde Kotlin/JNI.",
-                        "highlight": {
-                                "pty": {
-                                        "title": "PTY Real Sin Root",
-                                        "desc": "Pseudo-terminales reales en Android usando proot, sin privilegios root. Herramientas TUI funcionan tal cual."
-                                },
-                                "sessions": {
-                                        "title": "Sesiones Persistentes",
-                                        "desc": "Exportar/importar el estado completo de una sesión. Continúa trabajando en otro dispositivo desde donde lo dejaste."
-                                },
-                                "apk": {
-                                        "title": "Gestor APK Integrado",
-                                        "desc": "Instalación de paquetes Alpine directamente desde el terminal con interfaz nativa Android."
-                                }
-                        }
-                },
-                "gravital_share": {
-                        "title": "Gravital-Share",
-                        "label": "VPN Hotspot Forwarding | Rust | Open Source",
-                        "subtitle": "Reenrutamiento VPN para dispositivos conectados al hotspot",
-                        "description": "Resuelve un problema concreto de enrutamiento VPN en Android: garantiza que el tráfico de dispositivos conectados al hotspot del anfitrión atraviese el túnel VPN del mismo. Útil para equipos remotos que comparten una red segura desde un único dispositivo.",
-                        "challenge": "Android por defecto no enruta el tráfico del hotspot a través del túnel VPN del anfitrión. La solución manipula reglas iptables/nftables dinámicamente y monitorea el estado de la VPN para evitar filtraciones.",
-                        "highlight": {
-                                "forwarding": {
-                                        "title": "Forwarding Transparente",
-                                        "desc": "Reglas iptables/nftables dinámicas que enrutan automáticamente el tráfico del hotspot a través del túnel VPN activo."
-                                },
-                                "performance": {
-                                        "title": "Sin Overhead",
-                                        "desc": "Componente nativo en Rust con uso de memoria mínimo. No interfiere con el tráfico del dispositivo anfitrión."
-                                },
-                                "fail_secure": {
-                                        "title": "Seguro por Defecto",
-                                        "desc": "Si la VPN cae, el forwarding se detiene. Cero filtración de tráfico sin protección."
-                                }
-                        }
-                },
-                "gravital_talk": {
-                        "title": "Gravital-Talk",
-                        "label": "Comunicación / Audio | Rust | Open Source",
-                        "subtitle": "Librería de audio standalone con Gravital ID",
-                        "description": "Biblioteca de comunicación y audio standalone con integración nativa de autenticación Gravital ID y persistencia en Gravital Cloud. Diseñada para ser embebida en aplicaciones que necesitan canales de voz seguros sin depender de SDKs propietarios.",
-                        "challenge": "La mayoría de SDKs de voz son cajas negras propietarias con licencias caras y poco control sobre la cadena de audio. Construir un pipeline propio en Rust permite control total sobre filtros, latencia y persistencia, aplicando años de experiencia en DSP.",
-                        "highlight": {
-                                "dsp": {
-                                        "title": "Pipeline DSP Propio",
-                                        "desc": "Filtros de audio de baja latencia construidos desde principios de Procesamiento Digital de Señales aplicados en mis años como audio engineer."
-                                },
-                                "auth": {
-                                        "title": "Auth Gravital ID",
-                                        "desc": "Integración nativa con el sistema de identidad Gravital sin exponer credenciales en el cliente."
-                                },
-                                "cloud": {
-                                        "title": "Persistencia Cloud",
-                                        "desc": "Sesiones, grabaciones y metadatos sincronizados a Gravital Cloud con encriptación end-to-end."
-                                }
-                        }
-                }
-        },
-        "metric": {
-                "facturas": {
-                        "label": "Facturas Procesadas",
-                        "desc": "Facturas electrónicas emitidas a través de Sago One con cumplimiento DGI."
-                },
-                "uptime": {
-                        "label": "Uptime Garantizado",
-                        "desc": "Disponibilidad de servicios en producción con arquitectura serverless."
-                },
-                "latency": {
-                        "label": "Tiempo de Respuesta",
-                        "desc": "Latencia promedio de API en operaciones críticas de facturación."
-                },
-                "offline": {
-                        "label": "Funcional Sin Conexión",
-                        "desc": "Funcionalidad completa sin conexión gracias a Service Workers y PWA."
-                },
-                "image_opt": {
-                        "label": "Optimización de Imágenes"
-                },
-                "tti": {
-                        "label": "Tiempo de Interacción"
-                }
-        },
-        "cv": {
-                "download": {
-                        "button": {
-                                "label": "Descargar Perfil",
-                                "loading": "Generando Perfil...",
-                                "success": "¡Descarga iniciada!"
-                        },
-                        "error": {
-                                "ratelimit": "Demasiadas descargas. Intenta en 1 hora.",
-                                "generic": "Error al descargar. Intenta de nuevo."
-                        }
-                },
-                "faq": {
-                        "badge": "FAQ",
-                        "title": "Preguntas Frecuentes",
-                        "subtitle": "Respuestas a las dudas más comunes sobre mis servicios y metodología.",
-                        "items": [
-                                {
-                                        "question": "¿Qué servicios de desarrollo ofrece Ángel Nereira?",
-                                        "answer": "Me especializo en el desarrollo de aplicaciones web Full Stack de alto rendimiento, plataformas SaaS (Software as a Service) para FinTech, integración de sistemas de facturación electrónica y desarrollo de PWAs (Progressive Web Apps) Offline-First."
-                                },
-                                {
-                                        "question": "¿Trabajas con empresas internacionales?",
-                                        "answer": "Sí, ofrezco servicios de consultoría y desarrollo de software para clientes globales, con experiencia trabajando con equipos en Estados Unidos, Europa y Latinoamérica."
-                                },
-                                {
-                                        "question": "¿Cuál es tu stack tecnológico principal?",
-                                        "answer": "Mi stack principal se centra en el ecosistema de React y Next.js, utilizando TypeScript para seguridad de tipos, Tailwind CSS para diseño, y PostgreSQL (con Prisma/Neon) para bases de datos escalables."
-                                },
-                                {
-                                        "question": "¿Ofreces servicios de integración de IA?",
-                                        "answer": "Sí, desarrollo soluciones que integran modelos de Inteligencia Artificial (LLMs como GPT-4, Claude, Gemini) en flujos de trabajo empresariales para automatización y análisis de datos."
-                                }
-                        ]
-                }
+        "performance": {
+          "title": "99.9% Uptime · <200ms",
+          "desc": "React Server Components para renderizado óptimo. Cada minuto de uptime garantizado protege ingresos: sin downtime, sin pérdida de ventas, sin multas por no emitir factura."
         }
+      }
+    },
+    "plenty_market": {
+      "title": "Plenty Market",
+      "label": "E-commerce Internacional | PWA | Logística Compleja",
+      "subtitle": "PWA E-commerce con Partner Program y Gestión de Inventarios",
+      "description": "Migración de infraestructura estática a plataforma e-commerce de alto rendimiento con impacto directo en conversión: TTI reducido a menos de 3 segundos, factor crítico dado que cada segundo adicional de latencia reduce la tasa de conversión en un 7%. Integra un Partner Program logístico con zonas libres de impuestos y sincronización de inventario en tiempo real, habilitando modelos de negocio y fuentes de ingreso que la arquitectura anterior hacía imposibles.",
+      "challenge": "El desafío era migrar un sitio estático a una plataforma e-commerce completa sin degradar la experiencia del usuario ni perder el posicionamiento SEO existente. La solución con Next.js 14 y optimización agresiva de assets logró tiempos de carga sub-3s, aumentando la retención de usuarios y reduciendo el abandono de carrito en fases críticas del funnel de conversión.",
+      "highlight": {
+        "state": {
+          "title": "Conversión Optimizada",
+          "desc": "Zustand para manejo de carrito sin overhead. Estado persistente entre sesiones: menos fricción en el checkout, mayor tasa de conversión y menor abandono de carrito."
+        },
+        "media": {
+          "title": "Performance = Ingresos",
+          "desc": "Cloudinary con transformación automática a WebP/AVIF reduce el tiempo de carga de imágenes en un 60%. En e-commerce, la velocidad es una palanca directa de ingresos."
+        },
+        "migration": {
+          "title": "Arquitectura que Escala",
+          "desc": "PostgreSQL (Neon) vía Prisma ORM garantiza integridad de datos bajo volúmenes masivos. Infraestructura preparada para picos de tráfico sin degradación ni costos de sobre-aprovisionamiento."
+        }
+      }
+    },
+    "hka_sdk": {
+      "title": "HKA-SDK",
+      "label": "SDK Fiscal HKA/DGI | Go | Open Source",
+      "subtitle": "Gateway fiscal SOAP multi-tenant para HKA PAC",
+      "description": "SDK y gateway fiscal para HKA PAC que abstrae la complejidad del protocolo SOAP con validación estricta, enrutamiento dinámico de tipos de documento y soporte multi-tenant nativo. Extraído de Sago One para que cualquier proyecto fiscal en Panamá pueda integrarse sin reimplementar el protocolo desde cero.",
+      "challenge": "Integrar el SOAP de HKA es famoso por su fricción: payloads inconsistentes, validaciones implícitas y mensajes de error opacos. La solución fue construir una capa con esquemas tipados por documento, errores tempranos en compilación y configuración por tenant sin estado global.",
+      "highlight": {
+        "validation": {
+          "title": "Validación Estricta",
+          "desc": "Esquemas tipados por tipo de documento DGI. Los errores de payload se detectan antes de tocar la red, reduciendo intentos fallidos contra el PAC."
+        },
+        "routing": {
+          "title": "Routing Dinámico",
+          "desc": "Resolución de endpoints por tipo de documento sin hardcoding. Configurable por interfaces; agregar nuevos documentos no toca el core."
+        },
+        "multitenant": {
+          "title": "Multi-Tenant Nativo",
+          "desc": "Credenciales y configuración por tenant, sin estado global. Listo para SaaS desde el primer commit."
+        }
+      }
+    },
+    "gravital_shell": {
+      "title": "Gravital-Shell",
+      "label": "Terminal Linux para Android | Kotlin | Open Source",
+      "subtitle": "Alpine Linux en el bolsillo, sin root",
+      "description": "Terminal Linux profesional para Android — ejecuta entornos Alpine Linux aislados sin root, con soporte PTY real, sesiones múltiples, gestor de paquetes APK y exportación/importación de sesiones. Para desarrolladores que necesitan un entorno serio en cualquier dispositivo.",
+      "challenge": "La mayoría de terminales en Android son emulaciones aproximadas que rompen herramientas que requieren TTY real (vim, htop, less). Construir PTY real sin root requirió combinar proot con primitivas nativas Linux desde Kotlin/JNI.",
+      "highlight": {
+        "pty": {
+          "title": "PTY Real Sin Root",
+          "desc": "Pseudo-terminales reales en Android usando proot, sin privilegios root. Herramientas TUI funcionan tal cual."
+        },
+        "sessions": {
+          "title": "Sesiones Persistentes",
+          "desc": "Exportar/importar el estado completo de una sesión. Continúa trabajando en otro dispositivo desde donde lo dejaste."
+        },
+        "apk": {
+          "title": "Gestor APK Integrado",
+          "desc": "Instalación de paquetes Alpine directamente desde el terminal con interfaz nativa Android."
+        }
+      }
+    },
+    "gravital_share": {
+      "title": "Gravital-Share",
+      "label": "VPN Hotspot Forwarding | Rust | Open Source",
+      "subtitle": "Reenrutamiento VPN para dispositivos conectados al hotspot",
+      "description": "Resuelve un problema concreto de enrutamiento VPN en Android: garantiza que el tráfico de dispositivos conectados al hotspot del anfitrión atraviese el túnel VPN del mismo. Útil para equipos remotos que comparten una red segura desde un único dispositivo.",
+      "challenge": "Android por defecto no enruta el tráfico del hotspot a través del túnel VPN del anfitrión. La solución manipula reglas iptables/nftables dinámicamente y monitorea el estado de la VPN para evitar filtraciones.",
+      "highlight": {
+        "forwarding": {
+          "title": "Forwarding Transparente",
+          "desc": "Reglas iptables/nftables dinámicas que enrutan automáticamente el tráfico del hotspot a través del túnel VPN activo."
+        },
+        "performance": {
+          "title": "Sin Overhead",
+          "desc": "Componente nativo en Rust con uso de memoria mínimo. No interfiere con el tráfico del dispositivo anfitrión."
+        },
+        "fail_secure": {
+          "title": "Seguro por Defecto",
+          "desc": "Si la VPN cae, el forwarding se detiene. Cero filtración de tráfico sin protección."
+        }
+      }
+    },
+    "gravital_talk": {
+      "title": "Gravital-Talk",
+      "label": "Comunicación / Audio | Rust | Open Source",
+      "subtitle": "Librería de audio standalone con Gravital ID",
+      "description": "Biblioteca de comunicación y audio standalone con integración nativa de autenticación Gravital ID y persistencia en Gravital Cloud. Diseñada para ser embebida en aplicaciones que necesitan canales de voz seguros sin depender de SDKs propietarios.",
+      "challenge": "La mayoría de SDKs de voz son cajas negras propietarias con licencias caras y poco control sobre la cadena de audio. Construir un pipeline propio en Rust permite control total sobre filtros, latencia y persistencia, aplicando años de experiencia en DSP.",
+      "highlight": {
+        "dsp": {
+          "title": "Pipeline DSP Propio",
+          "desc": "Filtros de audio de baja latencia construidos desde principios de Procesamiento Digital de Señales aplicados en mis años como audio engineer."
+        },
+        "auth": {
+          "title": "Auth Gravital ID",
+          "desc": "Integración nativa con el sistema de identidad Gravital sin exponer credenciales en el cliente."
+        },
+        "cloud": {
+          "title": "Persistencia Cloud",
+          "desc": "Sesiones, grabaciones y metadatos sincronizados a Gravital Cloud con encriptación end-to-end."
+        }
+      }
+    }
+  },
+  "metric": {
+    "facturas": {
+      "label": "Facturas Procesadas",
+      "desc": "Facturas electrónicas emitidas a través de Sago One con cumplimiento DGI."
+    },
+    "uptime": {
+      "label": "Uptime Garantizado",
+      "desc": "Disponibilidad de servicios en producción con arquitectura serverless."
+    },
+    "latency": {
+      "label": "Tiempo de Respuesta",
+      "desc": "Latencia promedio de API en operaciones críticas de facturación."
+    },
+    "offline": {
+      "label": "Funcional Sin Conexión",
+      "desc": "Funcionalidad completa sin conexión gracias a Service Workers y PWA."
+    },
+    "image_opt": {
+      "label": "Optimización de Imágenes"
+    },
+    "tti": {
+      "label": "Tiempo de Interacción"
+    }
+  },
+  "cv": {
+    "download": {
+      "button": {
+        "label": "Descargar Perfil",
+        "loading": "Generando Perfil...",
+        "success": "¡Descarga iniciada!"
+      },
+      "error": {
+        "ratelimit": "Demasiadas descargas. Intenta en 1 hora.",
+        "generic": "Error al descargar. Intenta de nuevo."
+      }
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "Preguntas Frecuentes",
+      "subtitle": "Respuestas a las dudas más comunes sobre mis servicios y metodología.",
+      "items": [
+        {
+          "question": "¿Qué servicios de desarrollo ofrece Ángel Nereira?",
+          "answer": "Me especializo en el desarrollo de aplicaciones web Full Stack de alto rendimiento, plataformas SaaS (Software as a Service) para FinTech, integración de sistemas de facturación electrónica y desarrollo de PWAs (Progressive Web Apps) Offline-First."
+        },
+        {
+          "question": "¿Trabajas con empresas internacionales?",
+          "answer": "Sí, ofrezco servicios de consultoría y desarrollo de software para clientes globales, con experiencia trabajando con equipos en Estados Unidos, Europa y Latinoamérica."
+        },
+        {
+          "question": "¿Cuál es tu stack tecnológico principal?",
+          "answer": "Mi stack principal se centra en el ecosistema de React y Next.js, utilizando TypeScript para seguridad de tipos, Tailwind CSS para diseño, y PostgreSQL (con Prisma/Neon) para bases de datos escalables."
+        },
+        {
+          "question": "¿Ofreces servicios de integración de IA?",
+          "answer": "Sí, desarrollo soluciones que integran modelos de Inteligencia Artificial (LLMs como GPT-4, Claude, Gemini) en flujos de trabajo empresariales para automatización y análisis de datos."
+        }
+      ]
+    }
+  },
+  "language": {
+    "toggle_to": "Cambiar a inglés",
+    "toggle_generic": "Cambiar idioma"
+  },
+  "theme": {
+    "toggle": "Alternar tema"
+  },
+  "accessibility": {
+    "open_menu": "Abrir menú",
+    "mobile_menu": "Menú móvil"
+  },
+  "analytics": {
+    "active_visitors": "{count, plural, one {# visitante en línea} other {# visitantes en línea}}"
+  },
+  "calculator": {
+    "steps": {
+      "service": "Servicio",
+      "configuration": "Configuración",
+      "timeline": "Cronograma",
+      "addons": "Complementos",
+      "results": "Resultados"
+    },
+    "common": {
+      "weeks": "semanas",
+      "from": "desde"
+    },
+    "service": {
+      "title": "¿Qué tipo de proyecto necesitas?",
+      "subtitle": "Selecciona el servicio que mejor se adapte a tus necesidades"
+    },
+    "configuration": {
+      "title": "Configuración del Proyecto",
+      "subtitle": "Define la complejidad y ubicación para un presupuesto preciso",
+      "complexity": "Nivel de Complejidad",
+      "country": "País/Región",
+      "multiplier": "Multiplicador"
+    },
+    "addons": {
+      "title": "Complementos y Servicios Adicionales",
+      "subtitle": "Mejora tu proyecto con estos servicios complementarios",
+      "recommended": "Recomendados para tu proyecto",
+      "optional": "Opcionales"
+    },
+    "nav": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "calculate": "Calcular Presupuesto",
+      "new_quote": "Nueva Cotización"
+    },
+    "timeline": {
+      "title": "Timeline y Urgencia",
+      "subtitle": "Define cuándo necesitas el proyecto y el nivel de urgencia",
+      "urgency_level": "Nivel de Urgencia",
+      "reduction": "Reducción",
+      "start_date_title": "Fecha de Inicio Estimada",
+      "start_date_question": "¿Cuándo planeas iniciar el proyecto?",
+      "start_date_help": "Opcional: Nos ayuda a estimar la fecha de entrega",
+      "note_label": "Nota",
+      "note_body": "Los proyectos urgentes pueden requerir recursos adicionales y priorización. El costo adicional refleja la disponibilidad inmediata y aceleración del timeline."
+    },
+    "results": {
+      "title": "Presupuesto Estimado",
+      "subtitle": "Resumen completo de tu proyecto y costos",
+      "total_project": "Total del Proyecto",
+      "cost_breakdown": "Desglose de Costos",
+      "base_price": "Precio base",
+      "complexity_adjustment": "Ajuste por complejidad",
+      "location_adjustment": "Ajuste por ubicación",
+      "urgency_adjustment": "Ajuste por urgencia",
+      "client_type_adjustment": "Ajuste por tipo de cliente",
+      "addons_count": "Complementos ({count})",
+      "timeline_title": "Timeline Estimado",
+      "estimated_duration": "Duración estimada",
+      "start_date": "Fecha de inicio",
+      "estimated_delivery": "Fecha estimada de entrega",
+      "addons_included": "Complementos Incluidos",
+      "recommendations": "Recomendaciones",
+      "export_pdf": "Exportar PDF",
+      "send_email": "Enviar por Email",
+      "disclaimer": "Este presupuesto es una estimación y puede variar según los requisitos específicos del proyecto. Válido por 30 días desde la fecha de generación."
+    },
+    "email_dialog": {
+      "title": "Enviar Presupuesto por Email",
+      "description": "Ingresa tu email para recibir el presupuesto detallado en tu bandeja de entrada.",
+      "success": "¡Email enviado exitosamente! Revisa tu bandeja de entrada.",
+      "send_error": "Error al enviar email",
+      "unexpected_error": "Error al enviar el email. Por favor intenta de nuevo.",
+      "name_optional": "Nombre (opcional)",
+      "name_placeholder": "Tu nombre",
+      "cancel": "Cancelar",
+      "sending": "Enviando...",
+      "send": "Enviar",
+      "footer": "El presupuesto se enviará a tu email con todos los detalles y recomendaciones."
+    }
+  },
+  "verify_subscriber": {
+    "loading": "Verificando...",
+    "success_title": "¡Email Verificado!",
+    "success_desc": "Ya puedes publicar tus comentarios en el blog.",
+    "back_to_blog": "Volver al Blog",
+    "error_title": "Error de Verificación",
+    "error_desc": "El enlace no es válido o ha expirado.",
+    "page_loading": "Cargando..."
+  }
 }

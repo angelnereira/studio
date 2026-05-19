@@ -2,7 +2,7 @@
 "use client";
 
 import * as React from 'react';
-import Link from 'next/link';
+import { Link } from '@/lib/routing';
 import useEmblaCarousel from 'embla-carousel-react';
 import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';

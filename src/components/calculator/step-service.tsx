@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { SpotlightCard } from '@/components/spotlight-card';
 import { Badge } from '@/components/ui/badge';
 import { Check } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface StepServiceProps {
   selectedService: ServiceType | null;
@@ -13,12 +14,13 @@ interface StepServiceProps {
 }
 
 export function StepService({ selectedService, onSelect }: StepServiceProps) {
+  const t = useTranslations('calculator');
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">¿Qué tipo de proyecto necesitas?</h2>
+        <h2 className="text-2xl font-bold mb-2">{t('service.title')}</h2>
         <p className="text-muted-foreground">
-          Selecciona el servicio que mejor se adapte a tus necesidades
+          {t('service.subtitle')}
         </p>
       </div>
 
@@ -50,10 +52,10 @@ export function StepService({ selectedService, onSelect }: StepServiceProps) {
 
               <div className="flex gap-2 flex-wrap mb-4">
                 <Badge variant="secondary">
-                  {service.estimatedWeeks} semanas
+                  {service.estimatedWeeks} {t('common.weeks')}
                 </Badge>
                 <Badge variant="outline">
-                  desde ${(service.basePrice / 1000).toFixed(0)}k
+                  {t('common.from')} ${(service.basePrice / 1000).toFixed(0)}k
                 </Badge>
               </div>
 

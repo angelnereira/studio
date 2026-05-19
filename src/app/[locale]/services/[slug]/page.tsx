@@ -5,7 +5,7 @@ import * as React from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight, PlusCircle } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/lib/routing";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { AnimatedDiv } from "@/components/animated-div";
@@ -21,11 +21,12 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
+  const t = await getTranslations('services');
   const service = services.find((p) => p.slug === resolvedParams.slug);
 
   if (!service) {
     return {
-      title: 'Servicio no encontrado',
+      title: t('not_found_title'),
     };
   }
 

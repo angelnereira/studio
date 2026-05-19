@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import Link from 'next/link';
+import { Link } from '@/lib/routing';
 import { CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';

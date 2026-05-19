@@ -2,7 +2,7 @@
 import { getPostBySlug, getRelatedPosts, getAllPostSlugs, getCachedPostBySlug, getCachedRelatedPosts } from '@/lib/blog';
 import { ViewCounter } from '@/components/analytics/view-counter';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from '@/lib/routing';
 import { SpotlightCard } from '@/components/spotlight-card';
 import { CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import ReactMarkdown from 'react-markdown';
@@ -12,6 +12,7 @@ import { ModernPostLayout } from '@/components/blog/ModernPostLayout';
 import { ShareButtons } from '@/components/blog/ShareButtons';
 import { CommentsSection } from '@/components/blog/CommentsSection';
 import { prisma } from '@/lib/prisma';
+import { getTranslations } from 'next-intl/server';
 
 export async function generateStaticParams() {
   const slugs = getAllPostSlugs();
@@ -88,6 +89,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   // Obtener posts relacionados (cached)
   const relatedPosts = await getCachedRelatedPosts(slug, 3);
+  const t = await getTranslations('blog');
 
   return (
     <ModernPostLayout
@@ -151,15 +153,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* CTA al final */}
       <div className="mt-16 p-8 bg-secondary/10 rounded-2xl border border-primary/20 backdrop-blur-sm">
-        <h3 className="text-2xl font-bold mb-3 font-headline">¿Te interesa implementar algo similar?</h3>
+        <h3 className="text-2xl font-bold mb-3 font-headline">{t("cta_title")}</h3>
         <p className="text-muted-foreground mb-6 text-lg">
-          Ayudo a empresas a construir soluciones web de alto impacto. Hablemos sobre tu próximo proyecto.
+          {t("cta_description")}
         </p>
         <Link
           href="/contact"
           className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-full hover:bg-primary/90 transition-all hover:scale-105 shadow-lg shadow-primary/25"
         >
-          Iniciar Conversación
+          {t("cta_button")}
         </Link>
       </div>
 
@@ -170,7 +172,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="mt-24">
           <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
             <span className="w-8 h-1 bg-primary rounded-full inline-block"></span>
-            Seguir Leyendo
+            {t("keep_reading")}
           </h2>
           <div className="grid gap-6 md:grid-cols-3">
             {relatedPosts.map((relatedPost) => (

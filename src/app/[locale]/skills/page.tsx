@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
+import { Link } from "@/lib/routing";
 import { skillCategories, getSkillsByCategory, categoryIconMap } from "@/lib/skills";
 import { SpotlightCard } from "@/components/spotlight-card";
 import { AnimatedDiv } from "@/components/animated-div";

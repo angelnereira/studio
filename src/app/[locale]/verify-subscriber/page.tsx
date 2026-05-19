@@ -2,15 +2,17 @@
 
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState, Suspense } from "react"
+import { useTranslations } from "next-intl"
 import { confirmVerification } from "@/app/[locale]/blog/actions"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/lib/routing"
 
 function VerifyContent() {
     const searchParams = useSearchParams()
     const token = searchParams.get('token')
     const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
+    const t = useTranslations('verify_subscriber')
 
     useEffect(() => {
         if (!token) {
@@ -32,7 +34,7 @@ function VerifyContent() {
                 {status === 'loading' && (
                     <div className="flex flex-col items-center">
                         <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
-                        <h2 className="text-xl font-bold">Verificando...</h2>
+                        <h2 className="text-xl font-bold">{t("loading")}</h2>
                     </div>
                 )}
 
@@ -41,12 +43,12 @@ function VerifyContent() {
                         <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mb-6">
                             <CheckCircle2 className="w-8 h-8 text-green-500" />
                         </div>
-                        <h2 className="text-2xl font-bold mb-2">¡Email Verificado!</h2>
+                        <h2 className="text-2xl font-bold mb-2">{t("success_title")}</h2>
                         <p className="text-muted-foreground mb-8">
-                            Ya puedes publicar tus comentarios en el blog.
+                            {t("success_desc")}
                         </p>
                         <Button asChild className="w-full">
-                            <Link href="/blog">Volver al Blog</Link>
+                            <Link href="/blog">{t("back_to_blog")}</Link>
                         </Button>
                     </div>
                 )}
@@ -56,12 +58,12 @@ function VerifyContent() {
                         <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
                             <XCircle className="w-8 h-8 text-red-500" />
                         </div>
-                        <h2 className="text-2xl font-bold mb-2">Error de Verificación</h2>
+                        <h2 className="text-2xl font-bold mb-2">{t("error_title")}</h2>
                         <p className="text-muted-foreground mb-8">
-                            El enlace no es válido o ha expirado.
+                            {t("error_desc")}
                         </p>
                         <Button asChild variant="outline" className="w-full">
-                            <Link href="/blog">Volver al Blog</Link>
+                            <Link href="/blog">{t("back_to_blog")}</Link>
                         </Button>
                     </div>
                 )}
@@ -72,7 +74,7 @@ function VerifyContent() {
 
 export default function VerifySubscriberPage() {
     return (
-        <Suspense fallback={<div>Cargando...</div>}>
+        <Suspense fallback={<div className="p-4 text-center text-sm text-muted-foreground">Loading...</div>}>
             <VerifyContent />
         </Suspense>
     )

@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Mail, Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface EmailDialogProps {
   result: CalculationResult;
@@ -21,6 +22,7 @@ interface EmailDialogProps {
 }
 
 export function EmailDialog({ result, open, onOpenChange }: EmailDialogProps) {
+  const t = useTranslations('calculator.email_dialog');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -40,16 +42,16 @@ export function EmailDialog({ result, open, onOpenChange }: EmailDialogProps) {
       });
 
       if (emailResult.success) {
-        alert('¡Email enviado exitosamente! Revisa tu bandeja de entrada.');
+        alert(t('success'));
         onOpenChange(false);
         setEmail('');
         setName('');
       } else {
-        alert(`Error al enviar email: ${emailResult.error}`);
+        alert(`${t('send_error')}: ${emailResult.error}`);
       }
     } catch (error) {
       console.error('Error sending email:', error);
-      alert('Error al enviar el email. Por favor intenta de nuevo.');
+      alert(t('unexpected_error'));
     } finally {
       setIsSending(false);
     }
@@ -61,10 +63,10 @@ export function EmailDialog({ result, open, onOpenChange }: EmailDialogProps) {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Mail className="h-5 w-5" />
-            Enviar Presupuesto por Email
+            {t('title')}
           </DialogTitle>
           <DialogDescription>
-            Ingresa tu email para recibir el presupuesto detallado en tu bandeja de entrada.
+            {t('description')}
           </DialogDescription>
         </DialogHeader>
 
@@ -83,11 +85,11 @@ export function EmailDialog({ result, open, onOpenChange }: EmailDialogProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="name">Nombre (opcional)</Label>
+            <Label htmlFor="name">{t('name_optional')}</Label>
             <Input
               id="name"
               type="text"
-              placeholder="Tu nombre"
+              placeholder={t('name_placeholder')}
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={isSending}
@@ -102,18 +104,18 @@ export function EmailDialog({ result, open, onOpenChange }: EmailDialogProps) {
               className="flex-1"
               disabled={isSending}
             >
-              Cancelar
+              {t('cancel')}
             </Button>
             <Button type="submit" className="flex-1" disabled={isSending || !email}>
               {isSending ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Enviando...
+                  {t('sending')}
                 </>
               ) : (
                 <>
                   <Mail className="h-4 w-4 mr-2" />
-                  Enviar
+                  {t('send')}
                 </>
               )}
             </Button>
@@ -121,7 +123,7 @@ export function EmailDialog({ result, open, onOpenChange }: EmailDialogProps) {
         </form>
 
         <p className="text-xs text-muted-foreground text-center">
-          El presupuesto se enviará a tu email con todos los detalles y recomendaciones.
+          {t('footer')}
         </p>
       </DialogContent>
     </Dialog>
