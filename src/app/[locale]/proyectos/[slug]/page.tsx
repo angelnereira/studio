@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@/lib/routing";
 import { ArrowLeft, ExternalLink, Github, Code2, Database, Zap, Shield, Target, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,17 +23,19 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-    const { slug } = await params;
+    const { slug, locale } = await params;
+    const t = await getTranslations({ locale, namespace: "projects" });
+    const tg = await getTranslations({ locale, namespace: "general" });
     const project = projectsData.find((p) => p.id === slug);
 
     if (!project) {
         return {
-            title: "Proyecto no encontrado",
+            title: tg("notFound"),
         };
     }
 
     return {
-        title: `${project.title} | Caso de Estudio FinTech & PWA`,
+        title: `${project.title} | ${t("page_title")}`,
         description: project.description,
     };
 }

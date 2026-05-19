@@ -14,7 +14,8 @@
                         "years": "Años de Experiencia",
                         "projects": "Proyectos Entregados",
                         "facturas": "Facturas Procesadas",
-                        "uptime": "Uptime SaaS"
+                        "uptime": "Uptime SaaS",
+                        "responseTime": "Tiempo de respuesta"
                 }
         },
         "solutions": {
@@ -92,6 +93,11 @@
                 "back_to_areas": "Volver a todas las áreas",
                 "skills_count": "{count, plural, one {# tecnología} other {# tecnologías}}",
                 "view_details": "Ver detalles",
+                "category_metadata_title": "{categoryName} | Stack tecnológico de Ángel Nereira",
+                "skill_metadata_title": "Dominio técnico en {skillName} | Ingeniero de software Ángel Nereira",
+                "expertise_level": "Nivel de expertise",
+                "fundamentals": "Fundamentos",
+                "master": "Maestro",
                 "business_value_label": "Valor de Negocio",
                 "interested_area_title": "¿Interesado en esta área?",
                 "interested_area_desc": "Si buscas un experto en {areaName} para tu proyecto o equipo, estoy disponible para consultoría técnica.",
@@ -125,6 +131,7 @@
                 "plans_from": "Planes desde",
                 "ideal_for": "Ideal para",
                 "view_details": "Ver Detalles",
+                "popular": "Más Popular",
                 "quick_quote": "Cotización Rápida",
                 "quote": "Cotizar"
         },
@@ -139,7 +146,10 @@
                 "stack": "Stack Tecnológico",
                 "back": "Volver a Proyectos",
                 "similar_cta_title": "¿Te interesa construir algo similar?",
-                "similar_cta_button": "Agendar Consultoría Técnica"
+                "similar_cta_button": "Agendar Consultoría Técnica",
+                "metrics_title": "Métricas en Producción",
+                "view_repo": "Ver repo",
+                "view_production": "Ver en producción"
         },
         "calculadora": {
                 "badge": "Calculadora Interactiva",
@@ -200,7 +210,8 @@
                 "learnMore": "Ver más",
                 "viewAll": "Ver todo",
                 "viewCode": "Ver Código",
-                "viewLive": "Ver en Vivo"
+                "viewLive": "Ver en Vivo",
+                "notFound": "No encontrado"
         },
         "admin": {
                 "title": "Panel de Administración",
@@ -558,5 +569,19 @@
                                 }
                         ]
                 }
+        },
+        "language": {
+                "toggle_to": "Cambiar a inglés",
+                "toggle_generic": "Cambiar idioma"
+        },
+        "theme": {
+                "toggle": "Alternar tema"
+        },
+        "accessibility": {
+                "open_menu": "Abrir menú",
+                "mobile_menu": "Menú móvil"
+        },
+        "analytics": {
+                "active_visitors": "{count, plural, one {# visitante en línea} other {# visitantes en línea}}"
         }
 }

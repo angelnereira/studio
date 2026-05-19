@@ -2,7 +2,7 @@
 import { getPostBySlug, getRelatedPosts, getAllPostSlugs, getCachedPostBySlug, getCachedRelatedPosts } from '@/lib/blog';
 import { ViewCounter } from '@/components/analytics/view-counter';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from '@/lib/routing';
 import { SpotlightCard } from '@/components/spotlight-card';
 import { CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import ReactMarkdown from 'react-markdown';

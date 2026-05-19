@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/lib/routing";
 import { usePathname } from "next/navigation";
 import { BrainCircuit, Menu, Moon, Sun, Home, Briefcase, Code2, FileText, Mail, FolderKanban, Calculator } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -29,9 +29,9 @@ export function SiteHeader() {
     { href: "/proyectos", label: t('nav.projects'), icon: <FolderKanban className="h-4 w-4" /> },
     { href: "/calculadora", label: t('nav.calculator'), icon: <Calculator className="h-4 w-4" /> },
     { href: "/skills", label: t('skills.title'), icon: <Code2 className="h-4 w-4" /> },
-    { href: "/blog", label: "Blog", icon: <FileText className="h-4 w-4" /> },
+    { href: "/blog", label: t('nav.blog'), icon: <FileText className="h-4 w-4" /> },
     { href: "/contact", label: t('nav.contact'), icon: <Mail className="h-4 w-4" /> },
-    ...(session?.user ? [{ href: "/admin", label: "Admin", icon: <BrainCircuit className="h-4 w-4 text-primary" /> }] : []),
+    ...(session?.user ? [{ href: "/admin", label: t('admin.title'), icon: <BrainCircuit className="h-4 w-4 text-primary" /> }] : []),
   ], [t, session]);
 
   return (
@@ -70,23 +70,23 @@ export function SiteHeader() {
             variant="ghost"
             size="icon"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            aria-label="Alternar tema"
+            aria-label={t('theme.toggle')}
           >
             <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Alternar tema</span>
+            <span className="sr-only">{t('theme.toggle')}</span>
           </Button>
 
           <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
-                <span className="sr-only">Abrir menú</span>
+                <span className="sr-only">{t('accessibility.open_menu')}</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <SheetHeader>
-                <SheetTitle className="sr-only">Menú Móvil</SheetTitle>
+                <SheetTitle className="sr-only">{t('accessibility.mobile_menu')}</SheetTitle>
               </SheetHeader>
               <div className="flex flex-col h-full">
                 <div className="flex items-center space-x-2 mb-8">
